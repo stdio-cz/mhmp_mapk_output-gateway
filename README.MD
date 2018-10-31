@@ -44,13 +44,14 @@ from the application's root directory.
 ## Run
 
 ```
-$env:DEBUG="data-platform:*"; $env:NODE_ENV="development"; npm run start-win
+npm run start-local
 ```
-on Windows, or
+This will load all environment variables from the .env file.
+Or
 ```
-npm start
+npm run start-prod
 ```
-on Linux, from the application's root directory.
+This will load all environment variables directly from environment.
 
 Application is now running locally on port 3000 or on port specified in the config file.
 

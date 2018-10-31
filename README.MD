@@ -44,11 +44,11 @@ from the application's root directory.
 ## Run
 
 ```
-$env:DEBUG="data-platform:*"; $env:NODE_ENV="development"; npm start
+$env:DEBUG="data-platform:*"; $env:NODE_ENV="development"; npm run start-win
 ```
 on Windows, or
 ```
-export DEBUG='*,-mquery' ; export NODE_ENV='development' ; node dist/App.js
+npm start
 ```
 on Linux, from the application's root directory.
 

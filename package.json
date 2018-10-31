@@ -4,19 +4,22 @@
   "description": "Output gateway for Golemio data platform",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/App.js",
-		"build": "tsc",
-		"build-watch": "tsc --watch --preserveWatchOutput",
+    "start": "echo To prevent error, run `npm run start-local` or `npm run start-prod` instead",
+    "start-local": "node -r dotenv/config dist/App.js",
+    "start-prod": "node dist/App.js",
+    "build": "tsc",
+    "build-watch": "tsc --watch --preserveWatchOutput",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Operator ICT, a.s.",
   "license": "ISC",
   "repository": {
-		"type": "git",
-		"url": "https://gitlab.oict.cz/data-platform/output-gateway"
-	},
+    "type": "git",
+    "url": "https://gitlab.oict.cz/data-platform/output-gateway"
+  },
   "dependencies": {
     "debug": "^4.1.0",
+    "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "mongoose": "^5.3.4"
   },

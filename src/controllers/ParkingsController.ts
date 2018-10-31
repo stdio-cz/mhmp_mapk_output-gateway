@@ -19,7 +19,11 @@ export class ParkingsController {
     }
 
     public GetByCoordinates = async (lat: number, lng: number, range?: number, limit?: number, offset?: number ) => {
-        return await this.model.GetByCoordinates(lat, lng, range, limit, offset);
+        try {
+            return await this.model.GetByCoordinates(lat, lng, range, limit, offset);
+        } catch (err) {
+            throw new CustomError("Database error", true, 500, err);
+        }
     }
 
     /**

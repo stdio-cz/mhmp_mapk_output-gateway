@@ -34,7 +34,10 @@ export class ParkingsRouter {
                 const [latStr, lngStr] = req.query.latlng.split(",");
                 const lat: number = +latStr;
                 const lng: number = +lngStr;
-                const range: number = parseInt(req.query.range, 10);
+                let range: number|undefined = parseInt(req.query.range, 10);
+                if (isNaN(range)) {
+                    range = undefined;
+                }
                 if (isNaN(lat) || isNaN(lng)) {
                     next(new CustomError("Bad request - wrong input parameters", true, 400));
                     return;

@@ -13,10 +13,10 @@ import ParkingsRouter from "./routes/ParkingsRouter";
 
 import handleError from "./helpers/errors/ErrorHandler";
 
+const config = require("./../config.js");
+
 const log = require("debug")("data-platform:output-gateway");
 const errorLog = require("debug")("data-platform:error");
-
-const config = require("../config.js");
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -26,7 +26,7 @@ class App {
     // Create a new express application instance
     public express: express.Application = express();
     // The port the express app will listen on
-    public port: number = config.app_port || 3000;
+    public port: number = parseInt(config.port || "3000", 10);
 
     /**
      * Runs configuration methods on the Express instance
@@ -87,14 +87,14 @@ class App {
     }
 
     private database = async (): Promise<void> => {
-        const uri: string = config.mongo_connection;
+        const uri: string = config.mongo_connection || "";
         await mongoose.connect(uri, {
             autoReconnect: true,
             useNewUrlParser: true,
         });
         log("Connected to DB!");
         mongoose.connection.on("disconnected", () => {
-            handleError(new CustomError("Database disconnected", false));
+            handleError(new CustomError("Database disconnected", false, 5001));
         });
     }
 }

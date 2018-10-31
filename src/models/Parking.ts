@@ -4,6 +4,7 @@
  */
 
 import { Document, Model, model, Schema, SchemaDefinition} from "mongoose";
+const log = require("debug")("data-platform:output-gateway");
 
 export default class Parking {
     /** The Mongoose Model */
@@ -69,20 +70,30 @@ export default class Parking {
         return await this.model.findOne({"properties.id": inId}).exec();
     }
 
+    /**
+     * Retrieves data from database based on coordinates.
+     * @param lat Latitude to sort results by (by proximity)
+     * @param lng Longitute to sort results by
+     * @param range Maximum range from specified latLng. Only data within this range will be returned.
+     * @param limit Limit
+     * @param offset Offset
+     * @returns Array of retrieved objects
+     */
     public GetByCoordinates = async (lat: number, lng: number, range?: number, limit?: number, offset?: number ) => {
         // Specify a query to search by geometry location
-        const selection = {
+        const selection: any = {
             geometry: {
                 $near: {
                     $geometry: {
                         coordinates: [ lng, lat ],
                         type: "Point",
                     },
-                    // TODO: Add max distance by ?range
                 },
             },
         };
-
+        if (range !== undefined) {
+            selection.geometry.$near.$maxDistance = range;
+        }
         const q = this.model.find({}).where(selection);
         if (limit) {
             q.limit(limit);

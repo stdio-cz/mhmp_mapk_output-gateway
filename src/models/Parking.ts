@@ -24,8 +24,9 @@ export default class Parking {
                     type: { type: String, required: true },
                 },
                 properties: {
+                    address: { type: String },
+                    district: { type: String },
                     id: { type: Number, required: true },
-                    last_updated: { type: String, required: true },
                     name: { type: String, required: true },
                     num_of_free_places: { type: Number, required: true },
                     num_of_taken_places: { type: Number, required: true },
@@ -33,6 +34,7 @@ export default class Parking {
                         description: { type: String, required: true },
                         id: { type: Number, required: true },
                     },
+                    timestamp: { type: Number, required: true },
                     total_num_of_places: { type: Number, required: true },
                 },
                 type: { type: String, required: true },
@@ -49,10 +51,17 @@ export default class Parking {
     }
 
     /** Retrieves all the records from database
+     * @param limit Limit
+     * @param offset Offset
+     * @param updatedSince Filters all results with older last_updated timestamp than this parameter
      * @returns Array of retrieved objects
      */
-    public GetAll = async (limit?: number, offset?: number) => {
+    public GetAll = async (limit?: number, offset?: number, updatedSince?: number) => {
         const q = this.model.find({});
+        if (updatedSince) {
+            const selection = { "properties.last_updated": { $gte: updatedSince } };
+            q.where(selection);
+        }
         if (limit) {
             q.limit(limit);
         }
@@ -77,9 +86,17 @@ export default class Parking {
      * @param range Maximum range from specified latLng. Only data within this range will be returned.
      * @param limit Limit
      * @param offset Offset
+     * @param updatedSince Filters all results with older last_updated timestamp than this parameter
+     * (filters not-updated data)
      * @returns Array of retrieved objects
      */
-    public GetByCoordinates = async (lat: number, lng: number, range?: number, limit?: number, offset?: number ) => {
+    public GetByCoordinates = async (   lat: number,
+                                        lng: number,
+                                        range?: number,
+                                        limit?: number,
+                                        offset?: number,
+                                        updatedSince?: number,
+    ) => {
         // Specify a query to search by geometry location
         const selection: any = {
             geometry: {
@@ -93,6 +110,9 @@ export default class Parking {
         };
         if (range !== undefined) {
             selection.geometry.$near.$maxDistance = range;
+        }
+        if (updatedSince) {
+            selection["properties.last_updated"] = { $gte: updatedSince };
         }
         const q = this.model.find({}).where(selection);
         if (limit) {

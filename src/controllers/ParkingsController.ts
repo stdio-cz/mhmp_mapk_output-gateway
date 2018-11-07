@@ -1,7 +1,8 @@
 /**
  * app/controllers/ParkingsController.ts
  *
- * Controller /LOGIC LAYER/: Performs application logic, uses model to retrieve data. Manipulates and combines data.
+ * Controller /LOGIC LAYER/: Performs application logic, uses model to retrieve data.
+ * Manipulates, combines and transports data.
  */
 
 import CustomError from "../helpers/errors/CustomError";
@@ -14,13 +15,23 @@ export class ParkingsController {
 
     private model = new Parking();
 
-    public GetAll = async (limit?: number, offset?: number) => {
-        return await this.model.GetAll(limit, offset);
+    public GetAll = async (limit?: number, offset?: number, updatedSince?: number) => {
+        try {
+            return await this.model.GetAll(limit, offset, updatedSince);
+        } catch (err) {
+            throw new CustomError("Database error", true, 500, err);
+        }
     }
 
-    public GetByCoordinates = async (lat: number, lng: number, range?: number, limit?: number, offset?: number ) => {
+    public GetByCoordinates = async (   lat: number,
+                                        lng: number,
+                                        range?: number,
+                                        limit?: number,
+                                        offset?: number,
+                                        updatedSince?: number,
+    ) => {
         try {
-            return await this.model.GetByCoordinates(lat, lng, range, limit, offset);
+            return await this.model.GetByCoordinates(lat, lng, range, limit, offset, updatedSince);
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }

@@ -24,18 +24,14 @@ from the application's root directory.
 
 ## Compilation of typescript code
 
-To compile typescript code into js you first need to install typescript globally
+To compile typescript code into js one-time
 
 ```
-npm install -g typescript
+npm run build
 ```
-and then a run this, to watch all changes
+or run this, to watch all changes
 ```
-tsc -w
-```
-Or run this, to compile all scripts one-time
-```
-tsc
+npm run build-watch
 ```
 from the application's root directory.
 

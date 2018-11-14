@@ -12,6 +12,8 @@ import * as mongoose from "mongoose";
 
 import CustomError from "./helpers/errors/CustomError";
 
+import Database from "./helpers/Database";
+
 // Import ParkingsController from controllers entry point
 import ParkingsRouter from "./routes/ParkingsRouter";
 
@@ -103,14 +105,7 @@ class App {
 
     private database = async (): Promise<void> => {
         const uri: string = config.mongo_connection || "";
-        await mongoose.connect(uri, {
-            autoReconnect: true,
-            useNewUrlParser: true,
-        });
-        log("Connected to DB!");
-        mongoose.connection.on("disconnected", () => {
-            handleError(new CustomError("Database disconnected", false, 5001));
-        });
+        return new Database(uri).connect();
     }
 }
 

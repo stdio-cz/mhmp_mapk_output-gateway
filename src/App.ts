@@ -4,6 +4,10 @@
 // Import everything from express and assign it to the express variable
 import * as express from "express";
 
+import { NextFunction, Request, Response, Router } from "express";
+
+import * as httpLogger from "morgan";
+
 import * as mongoose from "mongoose";
 
 import CustomError from "./helpers/errors/CustomError";
@@ -13,7 +17,7 @@ import ParkingsRouter from "./routes/ParkingsRouter";
 
 import handleError from "./helpers/errors/ErrorHandler";
 
-const config = require("./../config.js");
+const config = require("./config/config");
 
 const log = require("debug")("data-platform:output-gateway");
 const errorLog = require("debug")("data-platform:error");
@@ -53,8 +57,19 @@ class App {
         }
     }
 
+    private setHeaders = (req: Request, res: Response, next: NextFunction) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
+        next();
+    }
+
     private middleware = (): void => {
-        // todo
+        this.express.use(httpLogger(
+            ":remote-addr [:date[clf]] \":method :url HTTP/:http-version\" " +
+            ":status :res[content-length] [:clientName] \":referrer\" \":user-agent\"",
+        ));
+
+        this.express.use(this.setHeaders);
     }
 
     private routes = (): void => {

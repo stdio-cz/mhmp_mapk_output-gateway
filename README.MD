@@ -22,8 +22,6 @@ npm install
 
 from the application's root directory.
 
-Copy the `config.template.js` file into new `config.js` file in /app directory
-
 ## Compilation of typescript code
 
 To compile typescript code into js you first need to install typescript globally
@@ -44,16 +42,13 @@ from the application's root directory.
 ## Run
 
 ```
-npm run start-local
+npm start
 ```
-This will load all environment variables from the .env file.
-Or
-```
-npm run start-prod
-```
-This will load all environment variables directly from environment.
+This will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there.
 
-Application is now running locally on port 3000 or on port specified in the config file.
+Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
+
+Application is now running locally on port 3000 or on port specified in the environment variable.
 
 ## Tests
 

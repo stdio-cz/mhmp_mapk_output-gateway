@@ -11,8 +11,6 @@ export default class Parking {
     public model: Model<any>;
     /** The schema which contains schemaObject for creating the Mongoose Schema */
     protected schema: Schema;
-    /** Name of the collection where the model is stored in the mongo database */
-    protected collection: string;
 
     /**
      * Instantiates the model according to the given schema.
@@ -40,13 +38,13 @@ export default class Parking {
                 type: { type: String, required: true },
         });
 
-        this.collection = "prparkings";
-
         // assign existing mongo model or create new one
         try {
             this.model = model("Parking");
           } catch (error) {
-            this.model = model("Parking", this.schema, this.collection);
+            // uses "parkings" database collection (plural of model's name)
+            // to specify different one, pass it as 3rd parameter
+            this.model = model("Parking", this.schema);
           }
     }
 

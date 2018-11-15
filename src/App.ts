@@ -66,10 +66,11 @@ class App {
     }
 
     private middleware = (): void => {
-        this.express.use(httpLogger(
-            ":remote-addr [:date[clf]] \":method :url HTTP/:http-version\" " +
-            ":status :res[content-length] [:clientName] \":referrer\" \":user-agent\"",
-        ));
+        if (config.node_env === "development"){
+            this.express.use(httpLogger("dev"));
+        } else {
+            this.express.use(httpLogger("combined"));
+        }
 
         this.express.use(this.setHeaders);
     }

@@ -3,3 +3,4 @@ dist/
 test/REPORTING/test.txt
 package-lock.json
 .env
+.nyc_output

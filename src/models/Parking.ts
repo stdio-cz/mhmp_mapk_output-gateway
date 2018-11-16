@@ -40,12 +40,17 @@ export default class Parking {
 
         // assign existing mongo model or create new one
         try {
-            this.model = model("Parking");
-          } catch (error) {
+            this.model = model("Parking"); // existing "Parking" model
+        } catch (error) {
+            // create $geonear index
+            this.schema.index({ geometry : "2dsphere" });
+            // create $text index
+            this.schema.index({ "properties.name": "text", "properties.address": "text" },
+                {weights: { "properties.name": 5, "properties.address": 1 }});
             // uses "parkings" database collection (plural of model's name)
             // to specify different one, pass it as 3rd parameter
             this.model = model("Parking", this.schema);
-          }
+        }
     }
 
     /** Retrieves all the records from database
@@ -57,7 +62,7 @@ export default class Parking {
     public GetAll = async (limit?: number, offset?: number, updatedSince?: number) => {
         const q = this.model.find({});
         if (updatedSince) {
-            const selection = { "properties.last_updated": { $gte: updatedSince } };
+            const selection = { "properties.timestamp": { $gte: updatedSince } };
             q.where(selection);
         }
         if (limit) {
@@ -110,7 +115,7 @@ export default class Parking {
             selection.geometry.$near.$maxDistance = range;
         }
         if (updatedSince) {
-            selection["properties.last_updated"] = { $gte: updatedSince };
+            selection["properties.timestamp"] = { $gte: updatedSince };
         }
         const q = this.model.find({}).where(selection);
         if (limit) {

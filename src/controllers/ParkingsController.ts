@@ -2,18 +2,19 @@
  * app/controllers/ParkingsController.ts
  *
  * Controller /LOGIC LAYER/: Performs application logic, uses model to retrieve data.
- * Manipulates, combines and transports data.
+ * Manipulates, combines and transports data. 
+ * Serves as a layer between (replaceable) Data layer (model) and (replaceable) Web Layer (routes)
  */
 
 import CustomError from "../helpers/errors/CustomError";
-import Parking from "../models/Parking";
+import { ParkingsModel } from "../models";
 
 const errorLog = require("debug")("data-platform:error");
 const log = require("debug")("data-platform:output-gateway");
 
 export class ParkingsController {
 
-    private model = new Parking();
+    private model = new ParkingsModel();
 
     public GetAll = async (limit?: number, offset?: number, updatedSince?: number) => {
         try {

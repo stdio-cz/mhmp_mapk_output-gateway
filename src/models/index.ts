@@ -1,2 +1,3 @@
 /* app/models/index.ts */
-export * from "./Parking";
+export * from "./ParkingsModel";
+export * from "./GeojsonModel";

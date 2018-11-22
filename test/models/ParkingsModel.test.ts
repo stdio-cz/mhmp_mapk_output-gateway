@@ -1,7 +1,7 @@
 "use strict";
 
 import "mocha";
-import Parking from "../../src/models/Parking";
+import { ParkingsModel } from "../../src/models/ParkingsModel";
 const config = require("../../dist/config/config");
 import Database from "../../src/helpers/Database";
 
@@ -12,14 +12,14 @@ const log = require("debug")("data-platform:output-gateway");
 
 chai.use(chaiAsPromised);
 
-describe("ParkingModel", () => {
+describe("ParkingsModel", () => {
 
-    let model: Parking;
+    let model: ParkingsModel;
     let parkingId: number;
     let coordinates: Array<number>;
 
     before(() => {
-        model = new Parking();
+        model = new ParkingsModel();
         const uri: string = config.mongo_connection || "";
         new Database(uri).connect();
         parkingId = 534202;
@@ -31,7 +31,7 @@ describe("ParkingModel", () => {
     });
 
     it("should not fail trying to create the same model again", () => {
-        const model2 = new Parking();
+        const model2 = new ParkingsModel();
         expect(model).not.to.be.undefined;
     });
 
@@ -63,7 +63,8 @@ describe("ParkingModel", () => {
     });
 
     it("should return by last updated (timestamp)", async () => {
-        const data = await model.GetAll(0, 0, new Date().getUTCMilliseconds());
+        const currentDate = new Date().getTime();
+        const data = await model.GetAll(0, 0, currentDate);
         // TODO: Better test to check if the data are recently updated
         expect(data.length).to.be.equal(0);
     });

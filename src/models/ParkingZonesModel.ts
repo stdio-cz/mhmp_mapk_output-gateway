@@ -5,6 +5,7 @@
 
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
 import { GeojsonModel } from "./GeoJsonModel";
+import CustomError from "../helpers/errors/CustomError";
 const log = require("debug")("data-platform:output-gateway");
 
 export class ParkingZonesModel extends GeojsonModel {
@@ -71,11 +72,16 @@ export class ParkingZonesModel extends GeojsonModel {
     }
 
     /** Retrieves one record from database
-     * @param inId Id of the record to be retrieved
+     * @param inCode Code of the record to be retrieved
      * @returns Object of the retrieved record or null
      */
-    public GetOne = async (inId: number): Promise<object> => {
-        return await this.model.findOne({ "properties.code": inId }).exec();
+    public GetOne = async (inCode: String): Promise<object> => {
+        const found = await this.model.findOne({ "properties.code": inCode }).exec();
+        if (!found || found instanceof Array && found.length === 0) {
+            throw new CustomError("Parking not found", true, 404);
+        } else {
+            return found;
+        }
     }
 
 }

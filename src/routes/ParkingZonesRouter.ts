@@ -7,7 +7,7 @@
 
 // Import only what we need from express
 import { NextFunction, Request, Response, Router } from "express";
-import { ParkingZonesController } from "../controllers/";
+import { ParkingZonesModel } from "../models";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 
@@ -17,7 +17,7 @@ export class ParkingZonesRouter {
 
     // Assign router to the express.Router() instance
     public router: Router = Router();
-    private controller: ParkingZonesController = new ParkingZonesController();
+    private model: ParkingZonesModel = new ParkingZonesModel();
 
     constructor() {
         this.initRoutes();
@@ -28,7 +28,7 @@ export class ParkingZonesRouter {
      */
     private initRoutes = (): void => {
         this.router.get("/", this.GetAll);
-        this.router.get("/:id", this.GetOne);
+        this.router.get("/:code", this.GetOne);
     }
 
     private GetAll = (req: Request, res: Response, next: NextFunction) => {
@@ -48,7 +48,7 @@ export class ParkingZonesRouter {
                 next(new CustomError("Bad request - wrong input parameters", true, 400));
                 return;
             }
-            this.controller.GetByCoordinates(lat, lng, range, limit, offset, updatedSince).then((data) => {
+            this.model.GetByCoordinates(lat, lng, range, limit, offset, updatedSince).then((data) => {
                 res.status(200)
                     .send(data);
             }).catch((err) => {
@@ -56,7 +56,7 @@ export class ParkingZonesRouter {
             });
             return;
         } else { // Not searching by coordinates
-            this.controller.GetAll(limit, offset, updatedSince).then((data) => {
+            this.model.GetAll(limit, offset, updatedSince).then((data) => {
                 res.status(200)
                     .send(data);
             }).catch((err) => {
@@ -66,12 +66,9 @@ export class ParkingZonesRouter {
     }
 
     private GetOne = (req: Request, res: Response, next: NextFunction) => {
-        const id = +req.params.id;
-        if (isNaN(id)) {
-            next(new CustomError("Bad request - wrong input parameters", true, 400));
-            return;
-        }
-        this.controller.GetOne(id).then((data) => {
+        const code: String = req.params.code;
+
+        this.model.GetOne(code).then((data) => {
             res.status(200)
                 .send(data);
         }).catch((err) => {

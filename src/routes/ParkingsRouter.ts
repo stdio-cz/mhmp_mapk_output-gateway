@@ -7,7 +7,7 @@
 
 // Import only what we need from express
 import { NextFunction, Request, Response, Router } from "express";
-import { ParkingsController } from "../controllers/";
+import { ParkingsModel } from "../models/";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 
@@ -17,7 +17,7 @@ export class ParkingsRouter {
 
     // Assign router to the express.Router() instance
     public router: Router = Router();
-    private controller: ParkingsController = new ParkingsController();
+    private model: ParkingsModel = new ParkingsModel();
 
     constructor() {
         this.initRoutes();
@@ -48,7 +48,7 @@ export class ParkingsRouter {
                 next(new CustomError("Bad request - wrong input parameters", true, 400));
                 return;
             }
-            this.controller.GetByCoordinates(lat, lng, range, limit, offset, updatedSince).then((data) => {
+            this.model.GetByCoordinates(lat, lng, range, limit, offset, updatedSince).then((data) => {
                 res.status(200)
                     .send(data);
             }).catch((err) => {
@@ -56,7 +56,7 @@ export class ParkingsRouter {
             });
             return;
         } else { // Not searching by coordinates
-            this.controller.GetAll(limit, offset, updatedSince).then((data) => {
+            this.model.GetAll(limit, offset, updatedSince).then((data) => {
                 res.status(200)
                     .send(data);
             }).catch((err) => {
@@ -71,14 +71,13 @@ export class ParkingsRouter {
             next(new CustomError("Bad request - wrong input parameters", true, 400));
             return;
         }
-        this.controller.GetOne(id).then((data) => {
+        this.model.GetOne(id).then((data) => {
             res.status(200)
                 .send(data);
         }).catch((err) => {
             next(err);
         });
     }
-
 }
 
 export default new ParkingsRouter().router;

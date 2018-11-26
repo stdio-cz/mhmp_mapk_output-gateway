@@ -1,4 +1,5 @@
 import { Document, Model, model, Schema, SchemaDefinition} from "mongoose";
+import CustomError from "../helpers/errors/CustomError";
 const log = require("debug")("data-platform:output-gateway");
 
 /**
@@ -69,22 +70,27 @@ export abstract class GeojsonModel {
      * @returns Array of retrieved objects
      */
     public GetAll = async (limit?: number, offset?: number, updatedSince?: number) => {
-        const q = this.model.find({});
-        if (updatedSince) {
-            this.addSelection({ "properties.timestamp": { $gte: updatedSince } });
-        }
-        q.where(this.selection);
-        if (limit) {
-            q.limit(limit);
-        }
-        if (offset) {
-            q.skip(offset);
-        }
-        this.selection = {};
-        const data = await q.exec();
-        return {
-            features: data,
-            type: "FeatureCollection",
+        try {
+            const q = this.model.find({});
+            if (updatedSince) {
+                this.addSelection({ "properties.timestamp": { $gte: updatedSince } });
+            }
+            q.where(this.selection);
+            if (limit) {
+                q.limit(limit);
+            }
+            if (offset) {
+                q.skip(offset);
+            }
+            this.selection = {};
+            const data = await q.exec();
+            // Create GeoJSON FeatureCollection output
+            return {
+                features: data,
+                type: "FeatureCollection",
+            }
+        } catch (err) {
+            throw new CustomError("Database error", false, 500, err);
         }
     }
 }

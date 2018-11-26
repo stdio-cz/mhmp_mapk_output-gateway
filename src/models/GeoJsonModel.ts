@@ -17,11 +17,30 @@ export abstract class GeojsonModel {
      * Adds a new selection condition to filter the retrieved results by
      * @param newCondition New condition/filter object to be added to the "where" clause
      */
-    private addSelection(newCondition: Object) {
+    protected addSelection(newCondition: Object) {
         this.selection = {...this.selection, ...newCondition};
     }
 
     public constructor() {
+    }
+
+    /**
+     * Retrieves data from database, filtered by specified district.
+     * @param district City district name/slug to filter the data by
+     * @param limit Limit
+     * @param offset Offset
+     * @param updatedSince Filters all results with older last_updated timestamp than this parameter
+     * (filters not-updated data)
+     * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
+    */
+    public GetByDistrict = async (  district: String,
+                                    limit?: number,
+                                    offset?: number,
+                                    updatedSince?: number,
+    ) => {
+        const selection = {"properties.district": district};
+        this.addSelection(selection);
+        this.GetAll(limit, offset, updatedSince);
     }
 
     /**
@@ -33,7 +52,7 @@ export abstract class GeojsonModel {
      * @param offset Offset
      * @param updatedSince Filters all results with older last_updated timestamp than this parameter
      * (filters not-updated data)
-     * @returns Array of retrieved objects
+     * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
     */
     public GetByCoordinates = async (   lat: number,
                                         lng: number,
@@ -41,7 +60,7 @@ export abstract class GeojsonModel {
                                         limit?: number,
                                         offset?: number,
                                         updatedSince?: number,
-        ) => {
+    ) => {
         // Specify a query filter conditions to search by geometry location
         const selection: any = {
         geometry: {
@@ -67,7 +86,7 @@ export abstract class GeojsonModel {
      * @param offset Offset
      * @param updatedSince Filters all results with older last_updated timestamp than this parameter
      * (filters not-updated data)
-     * @returns Array of retrieved objects
+     * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
     public GetAll = async (limit?: number, offset?: number, updatedSince?: number) => {
         try {

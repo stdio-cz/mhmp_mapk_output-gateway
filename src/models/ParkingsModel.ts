@@ -5,6 +5,7 @@
 
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
 import { GeojsonModel } from "./GeoJsonModel";
+import CustomError from "../helpers/errors/CustomError";
 const log = require("debug")("data-platform:output-gateway");
 
 export class ParkingsModel extends GeojsonModel {
@@ -47,10 +48,10 @@ export class ParkingsModel extends GeojsonModel {
             this.model = model("Parkings"); // existing "Parking" model
         } catch (error) {
             // create $geonear index
-            this.schema.index({ geometry : "2dsphere" });
+            this.schema.index({ geometry: "2dsphere" });
             // create $text index
             this.schema.index({ "properties.name": "text", "properties.address": "text" },
-                {weights: { "properties.name": 5, "properties.address": 1 }});
+                { weights: { "properties.name": 5, "properties.address": 1 } });
             // uses "parkings" database collection (name of the model or plural of the model's name, eg. "parkings" for Parking model)
             // to specify different one, pass it as 3rd parameter
             this.model = model("Parkings", this.schema /*, this.collectionName*/);
@@ -62,7 +63,12 @@ export class ParkingsModel extends GeojsonModel {
      * @returns Object of the retrieved record or null
      */
     public GetOne = async (inId: number): Promise<object> => {
-        return await this.model.findOne({"properties.id": inId}).exec();
+        const found = await this.model.findOne({ "properties.id": inId }).exec();
+        if (!found || found instanceof Array && found.length === 0) {
+            throw new CustomError("Parking not found", true, 404);
+        } else {
+            return found;
+        }
     }
 
 }

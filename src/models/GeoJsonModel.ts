@@ -20,7 +20,7 @@ export abstract class GeojsonModel {
         this.selection = {...this.selection, ...newCondition};
     }
 
-    public constructor(){
+    public constructor() {
     }
 
     /**
@@ -81,6 +81,10 @@ export abstract class GeojsonModel {
             q.skip(offset);
         }
         this.selection = {};
-        return await q.exec();
+        const data = await q.exec();
+        return {
+            features: data,
+            type: "FeatureCollection",
+        }
     }
 }

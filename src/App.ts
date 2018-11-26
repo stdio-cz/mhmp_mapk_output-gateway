@@ -14,8 +14,9 @@ import CustomError from "./helpers/errors/CustomError";
 
 import Database from "./helpers/Database";
 
-// Import ParkingsController from controllers entry point
 import ParkingsRouter from "./routes/ParkingsRouter";
+
+import ParkingzonesRouter from "./routes/ParkingzonesRouter";
 
 import handleError from "./helpers/errors/ErrorHandler";
 
@@ -91,10 +92,15 @@ class App {
         // Mount the ParkingsRouter at the /parkings route
         this.express.use("/parkings", ParkingsRouter);
 
+        this.express.use("/parkingzones", ParkingzonesRouter);
+
+
+        // Not found error - no route was matched
         this.express.use((req, res, next) => {
             next(new CustomError("Not found", true, 404));
         });
 
+        // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
             handleError(err).then((error) => {
                 if (error) {

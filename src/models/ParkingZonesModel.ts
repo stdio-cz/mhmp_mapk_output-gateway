@@ -4,11 +4,11 @@
  */
 
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import { GeojsonModel } from "./GeoJsonModel";
+import { GeoJsonModel } from "./GeoJsonModel";
 import CustomError from "../helpers/errors/CustomError";
 const log = require("debug")("data-platform:output-gateway");
 
-export class ParkingZonesModel extends GeojsonModel {
+export class ParkingZonesModel extends GeoJsonModel {
     /** The Mongoose Model */
     public model: Model<any>;
     /** The schema which contains schemaObject for creating the Mongoose Schema */
@@ -71,17 +71,8 @@ export class ParkingZonesModel extends GeojsonModel {
         }
     }
 
-    /** Retrieves one record from database
-     * @param inCode Code of the record to be retrieved
-     * @returns Object of the retrieved record or null
-     */
-    public GetOne = async (inCode: String): Promise<object> => {
-        const found = await this.model.findOne({ "properties.code": inCode }).exec();
-        if (!found || found instanceof Array && found.length === 0) {
-            throw new CustomError("Parking not found", true, 404);
-        } else {
-            return found;
-        }
+    PrimaryIdentifierSelection = (inId: String) => {
+        return {"properties.code": inId};
     }
 
 }

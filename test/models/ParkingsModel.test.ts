@@ -2,7 +2,7 @@
 
 import "mocha";
 import { ParkingsModel } from "../../src/models/ParkingsModel";
-const config = require("../../dist/config/config");
+const config = require("../../src/config/config");
 import Database from "../../src/helpers/Database";
 
 const chai = require("chai");

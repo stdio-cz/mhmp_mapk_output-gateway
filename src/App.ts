@@ -16,7 +16,7 @@ import Database from "./helpers/Database";
 
 import ParkingsRouter from "./routes/ParkingsRouter";
 
-import ParkingzonesRouter from "./routes/ParkingzonesRouter";
+import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
 import handleError from "./helpers/errors/ErrorHandler";
 
@@ -92,7 +92,7 @@ class App {
         // Mount the ParkingsRouter at the /parkings route
         this.express.use("/parkings", ParkingsRouter);
 
-        this.express.use("/parkingzones", ParkingzonesRouter);
+        this.express.use("/parkingzones", ParkingZonesRouter);
 
 
         // Not found error - no route was matched

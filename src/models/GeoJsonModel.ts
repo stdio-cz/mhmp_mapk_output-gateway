@@ -3,9 +3,9 @@ import CustomError from "../helpers/errors/CustomError";
 const log = require("debug")("data-platform:output-gateway");
 
 /**
- * General model for Geojson data. Geo-spatial indexing and querying.
+ * General model for GeoJSON data. Geo-spatial indexing and querying.
  */
-export abstract class GeojsonModel {
+export abstract class GeoJsonModel {
     /** The Mongoose Model */
     public abstract model: Model<any>;
     /** The schema which contains schemaObject for creating the Mongoose Schema */
@@ -17,11 +17,16 @@ export abstract class GeojsonModel {
      * Adds a new selection condition to filter the retrieved results by
      * @param newCondition New condition/filter object to be added to the "where" clause
      */
-    protected addSelection(newCondition: Object) {
+    protected AddSelection = (newCondition: Object) => {
         this.selection = {...this.selection, ...newCondition};
     }
 
+    protected PrimaryIdentifierSelection = (inId: any): object => {
+        return { "properties.id": inId };
+    }
+
     public constructor() {
+
     }
 
     /**
@@ -39,7 +44,7 @@ export abstract class GeojsonModel {
                                     updatedSince?: number,
     ) => {
         const selection = {"properties.district": district};
-        this.addSelection(selection);
+        this.AddSelection(selection);
         this.GetAll(limit, offset, updatedSince);
     }
 
@@ -76,7 +81,7 @@ export abstract class GeojsonModel {
         if (range !== undefined) {
             selection.geometry.$near.$maxDistance = range;
         }
-        this.addSelection(selection);
+        this.AddSelection(selection);
         
         return await this.GetAll(limit, offset, updatedSince);
     }
@@ -92,7 +97,7 @@ export abstract class GeojsonModel {
         try {
             const q = this.model.find({});
             if (updatedSince) {
-                this.addSelection({ "properties.timestamp": { $gte: updatedSince } });
+                this.AddSelection({ "properties.timestamp": { $gte: updatedSince } });
             }
             q.where(this.selection);
             if (limit) {
@@ -112,4 +117,20 @@ export abstract class GeojsonModel {
             throw new CustomError("Database error", false, 500, err);
         }
     }
+
+    /** Retrieves one record from database
+     * @param inId Id of the record to be retrieved
+     * @returns Object of the retrieved record or null
+     */
+    public GetOne = async (inId: any): Promise<object> => {
+        const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId)).exec();
+        if (!found || found instanceof Array && found.length === 0) {
+            log ("Could not find any record by following selection:");
+            log (this.PrimaryIdentifierSelection(inId));
+            throw new CustomError("Id `" + inId + "` not found", true, 404);
+        } else {
+            return found;
+        }
+    }
+
 }

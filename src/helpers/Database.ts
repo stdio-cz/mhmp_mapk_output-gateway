@@ -17,11 +17,11 @@ export default class Database {
                 useNewUrlParser: true,
             });
         } catch (err) {
-            handleError(err);
+            throw new CustomError("Connection to DB not successful", false, 5001, err);
         }
         log("Connected to DB!");
         mongoose.connection.on("disconnected", () => {
-            handleError(new CustomError("Database disconnected", false, 5001));
+            handleError(new CustomError("Database disconnected", false, 5002));
         });
     }
 }

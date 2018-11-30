@@ -7,8 +7,8 @@
     "start": "node -r dotenv/config dist/App.js",
     "build": "tsc",
     "build-watch": "tsc --watch --preserveWatchOutput",
-    "test": "mocha --timeout 60000 -r ts-node/register -r dotenv/config test/**/*.test.ts --exit",
-		"code-coverage": "nyc mocha --timeout 60000 --require ts-node/register --recursive test/**/*.test.ts --exit"
+    "test": "mocha --timeout 6000 -r ts-node/register -r dotenv/config test/**/*.test.ts --exit",
+    "code-coverage": "nyc mocha --timeout 60000 -r ts-node/register -r source-map-support/register -r dotenv/config --recursive test/**/*.test.ts --exit"
   },
   "author": "Operator ICT, a.s.",
   "license": "ISC",
@@ -36,26 +36,27 @@
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
     "sinon": "^7.1.1",
+    "supertest": "^3.3.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.1.3"
-  },	
+  },
   "nyc": {
-		"check-coverage": true,
-		"extension": [
-			".ts",
-			".tsx"
-		],
-		"exclude": [
-			"**/*.d.ts"
-		],
-		"reporter": [
-			"text-summary"
-		],
-		"all": true,
-		"lines": 0,
-		"statements": 0,
-		"functions": 0,
-		"branches": 0
-	}
+    "check-coverage": true,
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "text-summary"
+    ],
+    "all": true,
+    "lines": 0,
+    "statements": 0,
+    "functions": 0,
+    "branches": 0
+  }
 }

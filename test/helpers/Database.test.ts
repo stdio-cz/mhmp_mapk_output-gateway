@@ -28,6 +28,7 @@ describe("Database", () => {
     });
 
     it("should connect ", async () => {
+        log("Connecting to: " + uri);
         let connection = database.connect();
         await expect(connection).to.be.fulfilled;
     });

@@ -23,6 +23,12 @@ describe("App", () => {
         expect(app).not.to.be.undefined;
     });
 
+    it('should have all config variables set', () => {
+        log(config);
+        expect(config).not.to.be.undefined;
+        expect(config.mongo_connection).not.to.be.undefined;
+    });
+
     it('should have health check on /', () => {
         request
           .get('/')

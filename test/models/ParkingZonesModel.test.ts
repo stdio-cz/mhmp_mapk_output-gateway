@@ -4,6 +4,7 @@ import "mocha";
 import { ParkingZonesModel } from "../../src/models";
 const config = require("../../src/config/config");
 import Database from "../../src/helpers/Database";
+import handleError from "../../src/helpers/errors/ErrorHandler";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -18,10 +19,10 @@ describe("ParkingZonesModel", () => {
     let parkingZoneCode: String;
     let coordinates: Array<number>;
 
-    before(() => {
-        model = new ParkingZonesModel();
+    before(async () => {
         const uri: string = config.mongo_connection || "";
-        new Database(uri).connect();
+        await new Database(uri).connect();
+        model = new ParkingZonesModel();
         parkingZoneCode = "P8-2023";
         coordinates = [50.032074, 14.492015];
     });

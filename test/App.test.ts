@@ -1,7 +1,7 @@
 "use strict";
 
 import "mocha";
-import * as app from "../src/App";
+import App from "../src/App";
 const config = require("../src/config/config");
 
 const chai = require("chai");
@@ -20,6 +20,7 @@ describe("App", () => {
     });
 
     it('should start', () => {
+        const app = new App().start();
         expect(app).not.to.be.undefined;
     });
 

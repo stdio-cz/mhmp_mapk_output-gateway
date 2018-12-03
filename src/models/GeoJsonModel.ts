@@ -106,6 +106,7 @@ export abstract class GeoJsonModel {
             if (offset) {
                 q.skip(offset);
             }
+            q.select("-_id -__v");
             this.selection = {};
             const data = await q.exec();
             // Create GeoJSON FeatureCollection output

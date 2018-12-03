@@ -21,7 +21,7 @@ export class ErrorHandler {
                     toReturn = {error_message: "Server error.", error_status: 500};
                 }
             }
-        } else { // Unexpected non-operational error, dam u ded
+        } else { // Unexpected non-operational error, damn u ded
             errorLog("Fatal error: " + err);
             process.exit(0); // if anything fails, process is killed
         }

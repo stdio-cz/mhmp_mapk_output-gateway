@@ -28,7 +28,7 @@ const errorLog = require("debug")("data-platform:error");
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
  */
-class App {
+export default class App {
 
     // Create a new express application instance
     public express: express.Application = express();
@@ -115,5 +115,3 @@ class App {
         return new Database(uri).connect();
     }
 }
-
-module.exports = new App().start();

@@ -14,6 +14,8 @@ import CustomError from "./helpers/errors/CustomError";
 
 import Database from "./helpers/Database";
 
+import LampsRouter from "./routes/LampsRouter";
+
 import ParkingsRouter from "./routes/ParkingsRouter";
 
 import ParkingZonesRouter from "./routes/ParkingZonesRouter";
@@ -89,9 +91,8 @@ export default class App {
         });
 
         this.express.use("/", defaultRouter);
-        // Mount the ParkingsRouter at the /parkings route
+        this.express.use("/lamps", LampsRouter);
         this.express.use("/parkings", ParkingsRouter);
-
         this.express.use("/parkingzones", ParkingZonesRouter);
 
 

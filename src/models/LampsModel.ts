@@ -47,8 +47,6 @@ export class LampsModel extends GeoJsonModel {
         } catch (error) {
             // create $geonear index
             this.schema.index({ geometry: "2dsphere" });
-            // create $text index
-            this.schema.index({ "properties.name": "text"});
             // uses "lamps" database collection
             // to specify different one, pass it as 3rd parameter
             this.model = model("Lamps", this.schema /*, this.collectionName*/);

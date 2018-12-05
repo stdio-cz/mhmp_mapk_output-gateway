@@ -17,23 +17,12 @@ const log = require("debug")("data-platform:output-gateway");
 export class ParkingsRouter extends GeoJsonRouter {
 
     public model = new ParkingsModel();
-    // Assign router to the express.Router() instance
-    public router: Router = Router();
 
     constructor() {
         super();
-        this.initRoutes();
     }
 
-    /**
-     * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
-     */
-    private initRoutes = (): void => {
-        this.router.get("/", this.GetAll);
-        this.router.get("/:id", this.GetOne);
-    }
-
-    private GetOne = (req: Request, res: Response, next: NextFunction) => {
+    public GetOne = (req: Request, res: Response, next: NextFunction) => {
         const id = +req.params.id;
         if (isNaN(id)) {
             next(new CustomError("Bad request - wrong input parameters", true, 400));

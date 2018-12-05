@@ -13,8 +13,20 @@ import handleError from "../helpers/errors/ErrorHandler";
 
 export abstract class GeoJsonRouter {
     protected abstract model: GeoJsonModel;
+    
+    // Assign router to the express.Router() instance
+    public router: Router = Router();
+
+    /**
+     * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
+     */
+    private initRoutes = (): void => {
+        this.router.get("/", this.GetAll);
+        this.router.get("/:id", this.GetOne);
+    }
 
     public constructor(){
+        this.initRoutes();
     }
 
     public GetAll = (req: Request, res: Response, next: NextFunction) => {
@@ -49,5 +61,16 @@ export abstract class GeoJsonRouter {
                 next(err);
             });
         }
+    }
+
+    public GetOne = (req: Request, res: Response, next: NextFunction) => {
+        const id: String = req.params.id;
+
+        this.model.GetOne(id).then((data) => {
+            res.status(200)
+                .send(data);
+        }).catch((err) => {
+            next(err);
+        });
     }
 }

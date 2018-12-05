@@ -5,13 +5,17 @@ const log = require("debug")("data-platform:output-gateway");
 /**
  * General model for GeoJSON data. Geo-spatial indexing and querying.
  */
-export abstract class GeoJsonModel {
+export class GeoJsonModel {
     /** The Mongoose Model */
-    public abstract model: Model<any>;
+    public model: Model<any>;
+    /** Name of the model */
+    protected name: string;
     /** The schema which contains schemaObject for creating the Mongoose Schema */
-    protected abstract schema: Schema;
+    protected schema: Schema;
     /** Selection object to filter the retrieved data */
-    private selection: Object = {};
+    private selection: Object = {};    
+    /** Name of the mongo collection where the model is stored in the database */
+    protected collectionName: string|undefined;
 
     /**
      * Adds a new selection condition to filter the retrieved results by
@@ -21,12 +25,27 @@ export abstract class GeoJsonModel {
         this.selection = {...this.selection, ...newCondition};
     }
 
+    /**
+     * Specify where to search by primary id
+     * The entity is uniquely identified by this property
+     */
     protected PrimaryIdentifierSelection = (inId: any): object => {
         return { "properties.id": inId };
     }
 
-    public constructor() {
-
+    public constructor(inName: string, inSchema: SchemaDefinition) {
+        this.name = inName;
+        this.schema = new Schema(inSchema);
+        // assign existing mongo model or create new one
+        try {
+            this.model = model(this.name); // existing "Lamps" model
+        } catch (error) {
+            // create $geonear index
+            this.schema.index({ geometry: "2dsphere" });
+            // uses database collection
+            // to specify different one, pass it as 3rd parameter
+            this.model = model(this.name, this.schema /*, this.collectionName*/);
+        }
     }
 
     /**
@@ -124,7 +143,7 @@ export abstract class GeoJsonModel {
      * @returns Object of the retrieved record or null
      */
     public GetOne = async (inId: any): Promise<object> => {
-        const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId)).exec();
+        const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").exec();
         if (!found || found instanceof Array && found.length === 0) {
             log ("Could not find any record by following selection:");
             log (this.PrimaryIdentifierSelection(inId));

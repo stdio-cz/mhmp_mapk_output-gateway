@@ -9,19 +9,12 @@ import CustomError from "../helpers/errors/CustomError";
 const log = require("debug")("data-platform:output-gateway");
 
 export class ParkingZonesModel extends GeoJsonModel {
-    /** The Mongoose Model */
-    public model: Model<any>;
-    /** The schema which contains schemaObject for creating the Mongoose Schema */
-    protected schema: Schema;
-    /** Name of the mongo collection where the model is stored in the database */
-    protected collectionName: string|undefined;
 
     /**
      * Instantiates the model according to the given schema.
      */
     constructor() {
-        super();
-        this.schema = new Schema({
+        super("ParkingZones", {
             geometry: {
                 coordinates: { type: Array, required: true },
                 type: { type: String, required: true },
@@ -57,18 +50,7 @@ export class ParkingZonesModel extends GeoJsonModel {
             type: { type: String, required: true },
         });
 
-        // assign existing mongo model or create new one
-        try {
-            this.model = model("ParkingZones"); // existing "Parking" model
-        } catch (error) {
-            // create $geonear index
-            this.schema.index({ geometry: "2dsphere" });
-            // create $text index
-            this.schema.index({ "properties.name": "text"});
-            // uses "parkingzones" database collection
-            // to specify different one, pass it as 3rd parameter
-            this.model = model("ParkingZones", this.schema /*, this.collectionName*/);
-        }
+        this.schema.index({ "properties.name": "text"});
     }
 
     PrimaryIdentifierSelection = (inId: String) => {

@@ -16,10 +16,8 @@ const log = require("debug")("data-platform:output-gateway");
 
 export class LampsRouter extends GeoJsonRouter {
 
-    public model = new LampsModel();
-
     constructor() {
-        super();
+        super(new LampsModel());
     }
 
 }

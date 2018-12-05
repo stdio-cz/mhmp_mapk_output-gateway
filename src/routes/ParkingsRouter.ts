@@ -16,10 +16,8 @@ const log = require("debug")("data-platform:output-gateway");
 
 export class ParkingsRouter extends GeoJsonRouter {
 
-    public model = new ParkingsModel();
-
     constructor() {
-        super();
+        super(new ParkingsModel());
     }
 
     public GetOne = (req: Request, res: Response, next: NextFunction) => {

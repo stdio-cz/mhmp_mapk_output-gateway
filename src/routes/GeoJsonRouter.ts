@@ -11,8 +11,8 @@ import { GeoJsonModel } from "../models/GeoJsonModel";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 
-export abstract class GeoJsonRouter {
-    protected abstract model: GeoJsonModel;
+export class GeoJsonRouter {
+    protected model: GeoJsonModel;
     
     // Assign router to the express.Router() instance
     public router: Router = Router();
@@ -25,7 +25,8 @@ export abstract class GeoJsonRouter {
         this.router.get("/:id", this.GetOne);
     }
 
-    public constructor(){
+    public constructor(inModel: GeoJsonModel){
+        this.model = inModel;
         this.initRoutes();
     }
 

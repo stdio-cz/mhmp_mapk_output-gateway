@@ -13,7 +13,7 @@ export class GeoJsonModel {
     /** The schema which contains schemaObject for creating the Mongoose Schema */
     protected schema: Schema;
     /** Selection object to filter the retrieved data */
-    private selection: Object = {};    
+    private selection: Object = {};
     /** Name of the mongo collection where the model is stored in the database */
     protected collectionName: string|undefined;
 

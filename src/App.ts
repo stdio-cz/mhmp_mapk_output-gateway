@@ -21,6 +21,8 @@ import ParkingsRouter from "./routes/ParkingsRouter";
 import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
 import handleError from "./helpers/errors/ErrorHandler";
+import RouterBuilder from "./routes/RouterBuilder";
+import { LampsModel } from "./models";
 
 const config = require("./config/config");
 
@@ -91,10 +93,11 @@ export default class App {
         });
 
         this.express.use("/", defaultRouter);
-        this.express.use("/lamps", LampsRouter);
         this.express.use("/parkings", ParkingsRouter);
         this.express.use("/parkingzones", ParkingZonesRouter);
-
+        
+        let builder: RouterBuilder = new RouterBuilder(defaultRouter);
+        builder.BuildAll();
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {

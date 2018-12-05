@@ -8,7 +8,7 @@ import { SchemaDefinition } from "mongoose";
 // Placeholder, will load from config
 let data = [
     {
-        name: "parkings",
+        name: "lamps",
         schema: {
             geometry: {
                 coordinates: { type: Array, required: true },

@@ -33,9 +33,12 @@ export class GeoJsonModel {
         return { "properties.id": inId };
     }
 
-    public constructor(inName: string, inSchema: SchemaDefinition) {
+    public constructor(inName: string, inSchema: SchemaDefinition, inCollectionName?: string) {
         this.name = inName;
         this.schema = new Schema(inSchema);
+        if (inCollectionName) {
+            this.collectionName = inCollectionName;
+        }
         // assign existing mongo model or create new one
         try {
             this.model = model(this.name); // existing "Lamps" model
@@ -44,7 +47,7 @@ export class GeoJsonModel {
             this.schema.index({ geometry: "2dsphere" });
             // uses database collection
             // to specify different one, pass it as 3rd parameter
-            this.model = model(this.name, this.schema /*, this.collectionName*/);
+            this.model = model(this.name, this.schema, this.collectionName);
         }
     }
 

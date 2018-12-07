@@ -14,7 +14,7 @@ export class LampsModel extends GeoJsonModel {
      * Instantiates the model according to the given schema.
      */
     constructor() {
-        super("Lamps", {
+        super("IGStreetLamps", {
             geometry: {
                 coordinates: { type: Array, required: true },
                 type: { type: String, required: true },

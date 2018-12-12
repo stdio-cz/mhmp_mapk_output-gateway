@@ -4,6 +4,12 @@ const log = require("debug")("data-platform:output-gateway");
 
 /**
  * General model for GeoJSON data. Geo-spatial indexing and querying.
+ * 
+ * Expects GeoJSON data structure:
+ * 
+ * geometry: { coordinates[], type },
+ * properties: { ... }
+ * type: Feature
  */
 export class GeoJsonModel {
     /** The Mongoose Model */
@@ -12,8 +18,10 @@ export class GeoJsonModel {
     protected name: string;
     /** The schema which contains schemaObject for creating the Mongoose Schema */
     protected schema: Schema;
-    /** Selection object to filter the retrieved data */
-    private selection: Object = {};    
+    /** Selection object to filter the retrieved records */
+    private selection: Object = {};
+    /** Projection object to filter the retrieved record's attributes */
+    private projection: Object = {};
     /** Name of the mongo collection where the model is stored in the database */
     protected collectionName: string|undefined;
 
@@ -22,7 +30,15 @@ export class GeoJsonModel {
      * @param newCondition New condition/filter object to be added to the "where" clause
      */
     protected AddSelection = (newCondition: Object) => {
-        this.selection = {...this.selection, ...newCondition};
+        this.selection = { ...this.selection, ...newCondition };
+    }
+
+    /**
+     * Adds a new projection to filter what attributes to retrieve from the selected objects
+     * @param newFilter New filter to be added to the "select" clause
+     */
+    protected AddProjection = (newFilter: Object) => {
+        this.projection = { ...this.projection, ...newFilter };
     }
 
     /**
@@ -41,7 +57,7 @@ export class GeoJsonModel {
         }
         // assign existing mongo model or create new one
         try {
-            this.model = model(this.name); // existing "Lamps" model
+            this.model = model(this.name); // existing model
         } catch (error) {
             // create $geonear index
             this.schema.index({ geometry: "2dsphere" });
@@ -49,6 +65,7 @@ export class GeoJsonModel {
             // to specify different one, pass it as 3rd parameter
             this.model = model(this.name, this.schema, this.collectionName);
         }
+        this.AddProjection({ "_id": 0, "__v": 0 });
     }
 
     /**
@@ -128,9 +145,9 @@ export class GeoJsonModel {
             if (offset) {
                 q.skip(offset);
             }
-            q.select("-_id -__v");
+            q.select(this.projection);
             this.selection = {};
-            const data = await q.exec();
+            let data = await q.exec();
             // Create GeoJSON FeatureCollection output
             return {
                 features: data,

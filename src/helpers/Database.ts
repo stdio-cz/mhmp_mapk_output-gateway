@@ -1,8 +1,7 @@
 import * as mongoose from "mongoose";
 import CustomError from "./errors/CustomError";
 import handleError from "./errors/ErrorHandler";
-const log = require("debug")("data-platform:output-gateway");
-const errorLog = require("debug")("data-platform:error");
+import log from "./Logger";
 
 export default class Database {
     private connectionString: string;
@@ -18,10 +17,10 @@ export default class Database {
                 useNewUrlParser: true,
             });
         } catch (err) {
-            errorLog("Could not connect to " + this.connectionString);
+            log.error("Could not connect to " + this.connectionString);
             throw new CustomError("Connection to DB not successful", false, 5001, err);
         }
-        log("Connected to DB!");
+        log.info("Connected to DB!");
         mongoose.connection.on("disconnected", () => {
             handleError(new CustomError("Database disconnected", false, 5002));
         });

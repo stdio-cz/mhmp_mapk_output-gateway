@@ -22,10 +22,12 @@ import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
 import handleError from "./helpers/errors/ErrorHandler";
 
-const config = require("./config/config");
+import log from "./helpers/Logger";
 
-const log = require("debug")("data-platform:output-gateway");
-const errorLog = require("debug")("data-platform:error");
+import RouterBuilder from "./routes/RouterBuilder";
+import { LampsModel } from "./models";
+
+const config = require("./config/config");
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -55,7 +57,7 @@ export default class App {
             // Serve the application at the given port
             this.express.listen(this.port, () => {
                 // Success callback
-                log(`Listening at http://localhost:${this.port}/`);
+                log.info(`Listening at http://localhost:${this.port}/`);
             });
         } catch (err) {
             handleError(err);
@@ -91,10 +93,11 @@ export default class App {
         });
 
         this.express.use("/", defaultRouter);
-        this.express.use("/lamps", LampsRouter);
         this.express.use("/parkings", ParkingsRouter);
         this.express.use("/parkingzones", ParkingZonesRouter);
-
+        
+        let builder: RouterBuilder = new RouterBuilder(defaultRouter);
+        builder.BuildAll();
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {

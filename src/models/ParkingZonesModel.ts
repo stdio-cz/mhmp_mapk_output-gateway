@@ -6,7 +6,7 @@
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
 import { GeoJsonModel } from "./GeoJsonModel";
 import CustomError from "../helpers/errors/CustomError";
-const log = require("debug")("data-platform:output-gateway");
+import log from "../helpers/Logger";
 
 export class ParkingZonesModel extends GeoJsonModel {
 
@@ -65,11 +65,11 @@ export class ParkingZonesModel extends GeoJsonModel {
     public GetTariffs = async (inId: any): Promise<object> => {
         const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), {"properties.tariffs": 1, "_id": 0}).exec();
         if (!found || found instanceof Array && found.length === 0) {
-            log ("Could not find any record by following selection:");
-            log (this.PrimaryIdentifierSelection(inId));
+            log.info("Could not find any record by following selection:");
+            log.info(this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, 404);
         } else if (!found.properties || found.properties.tariffs === undefined){
-            log ("Object doesn't have properties or properties.tariffs");
+            log.info("Object doesn't have properties or properties.tariffs");
             throw new CustomError("Id `" + inId + "` not found", true, 404);
         } else {
             return found.properties.tariffs;

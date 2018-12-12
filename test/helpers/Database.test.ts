@@ -7,7 +7,7 @@ import Database from "../../src/helpers/Database";
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-const log = require("debug")("data-platform:output-gateway");
+import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 
@@ -28,7 +28,7 @@ describe("Database", () => {
     });
 
     it("should connect ", async () => {
-        log("Connecting to: " + uri);
+        log.info("Connecting to: " + uri);
         let connection = database.connect();
         await expect(connection).to.be.fulfilled;
     });

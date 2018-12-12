@@ -1,6 +1,6 @@
 import { Document, Model, model, Schema, SchemaDefinition} from "mongoose";
 import CustomError from "../helpers/errors/CustomError";
-const log = require("debug")("data-platform:output-gateway");
+import log from "../helpers/Logger";
 
 /**
  * General model for GeoJSON data. Geo-spatial indexing and querying.
@@ -165,8 +165,8 @@ export class GeoJsonModel {
     public GetOne = async (inId: any): Promise<object> => {
         const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").exec();
         if (!found || found instanceof Array && found.length === 0) {
-            log ("Could not find any record by following selection:");
-            log (this.PrimaryIdentifierSelection(inId));
+            log.info("Could not find any record by following selection:");
+            log.info(this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, 404);
         } else {
             return found;

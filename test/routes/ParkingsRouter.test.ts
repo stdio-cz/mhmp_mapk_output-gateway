@@ -8,7 +8,6 @@ const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 const request = require('supertest');
 const express = require('express');
-const log = require("debug")("data-platform:output-gateway");
 
 import ParkingsRouter from "../../src/routes/ParkingsRouter";
 

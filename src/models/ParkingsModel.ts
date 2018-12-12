@@ -6,7 +6,6 @@
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
 import { GeoJsonModel } from "./GeoJsonModel";
 import CustomError from "../helpers/errors/CustomError";
-const log = require("debug")("data-platform:output-gateway");
 
 export class ParkingsModel extends GeoJsonModel {
 

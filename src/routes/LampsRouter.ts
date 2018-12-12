@@ -12,8 +12,6 @@ import { GeoJsonRouter } from "./GeoJsonRouter";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 
-const log = require("debug")("data-platform:output-gateway");
-
 export class LampsRouter extends GeoJsonRouter {
 
     constructor() {

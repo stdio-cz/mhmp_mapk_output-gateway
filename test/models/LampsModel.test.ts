@@ -9,7 +9,7 @@ import handleError from "../../src/helpers/errors/ErrorHandler";
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-const log = require("debug")("data-platform:output-gateway");
+import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 

@@ -7,8 +7,10 @@ const config = require("../src/config/config");
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-const log = require("debug")("data-platform:output-gateway");
 const request = require('supertest')('localhost:' + config.port);
+
+import log from "../src/helpers/Logger";
+""
 
 const express = require('express');
 
@@ -25,7 +27,6 @@ describe("App", () => {
     });
 
     it('should have all config variables set', () => {
-        log(config);
         expect(config).not.to.be.undefined;
         expect(config.mongo_connection).not.to.be.undefined;
     });

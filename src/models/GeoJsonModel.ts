@@ -61,10 +61,11 @@ export class GeoJsonModel {
         } catch (error) {
             // create $geonear index
             this.schema.index({ geometry: "2dsphere" });
-            // uses database collection
-            // to specify different one, pass it as 3rd parameter
+            // uses database collection named as plural of model's name (eg. "parkings" for "Parking" model)
+            // or collection name specified in the third parameter
             this.model = model(this.name, this.schema, this.collectionName);
         }
+        // Don't return default mongoose values and mongo internal ID
         this.AddProjection({ "_id": 0, "__v": 0 });
     }
 

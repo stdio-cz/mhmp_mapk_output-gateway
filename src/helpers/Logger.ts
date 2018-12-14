@@ -17,31 +17,31 @@ const logLevels: any = {
 
 export class Logger {
     public debug = (logText: any): void => {
-        if (logLevels[config.log_level] <= logLevels["DEBUG"] || config.log_level === undefined) {
+        if (config.log_level === undefined || logLevels[config.log_level] <= logLevels["DEBUG"]) {
             return debugLog(logText);
         }
     }
 
     public info = (logText: any): void => {
-        if (logLevels[config.log_level] <= logLevels["INFO"] || config.log_level === undefined) {
+        if (config.log_level === undefined || logLevels[config.log_level] <= logLevels["INFO"]) {
             return infoLog(logText);
         }
     }
 
     public warn = (logText: any): void => {
-        if (logLevels[config.log_level] <= logLevels["WARN"] || config.log_level === undefined) {
+        if (config.log_level === undefined || logLevels[config.log_level] <= logLevels["WARN"]) {
             return warnLog(logText);
         }
     }
 
     public error = (logText: any): void => {
-        if (logLevels[config.log_level] <= logLevels["ERROR"] || config.log_level === undefined) {
+        if (config.log_level === undefined || logLevels[config.log_level] <= logLevels["ERROR"]) {
             return errorLog(logText);
         }
     }
 
     public fatal = (logText: any): void => {
-        if (logLevels[config.log_level] <= logLevels["FATAL"] || config.log_level === undefined) {
+        if (config.log_level === undefined || logLevels[config.log_level] <= logLevels["FATAL"]) {
             return errorLog(logText);
         }
     }

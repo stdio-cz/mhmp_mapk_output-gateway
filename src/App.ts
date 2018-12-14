@@ -14,18 +14,15 @@ import CustomError from "./helpers/errors/CustomError";
 
 import Database from "./helpers/Database";
 
-import LampsRouter from "./routes/LampsRouter";
-
-import ParkingsRouter from "./routes/ParkingsRouter";
-
-import ParkingZonesRouter from "./routes/ParkingZonesRouter";
-
 import handleError from "./helpers/errors/ErrorHandler";
 
 import log from "./helpers/Logger";
 
 import RouterBuilder from "./routes/RouterBuilder";
-import { LampsModel } from "./models";
+
+import ParkingsRouter from "./routes/ParkingsRouter";
+
+import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
 const config = require("./config/config");
 
@@ -83,7 +80,7 @@ export default class App {
     private routes = (): void => {
         const defaultRouter = express.Router();
 
-        // base url route handler
+        // Create base url route handler
         defaultRouter.get(["/", "/health-check"], (req, res, next) => {
             res.json({
                 app_name: "Data Platform Output Gateway",
@@ -92,12 +89,14 @@ export default class App {
             });
         });
 
+        // Create specific routes with their own router
         this.express.use("/", defaultRouter);
         this.express.use("/parkings", ParkingsRouter);
         this.express.use("/parkingzones", ParkingZonesRouter);
-        
+
+        // Create general routes through builder
         let builder: RouterBuilder = new RouterBuilder(defaultRouter);
-        builder.BuildAll();
+        builder.BuildAllRoutes();
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {

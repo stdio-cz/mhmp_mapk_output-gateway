@@ -2,34 +2,41 @@ import { Router } from "express";
 import { GeoJsonModel } from "../models";
 import { GeoJsonRouter } from ".";
 import { SchemaDefinition } from "mongoose";
+import { Parkings } from "data-platform-schema-definitions";
+import { IceGatewaySensors } from "data-platform-schema-definitions";
+import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
 
 "use strict";
 
-// Placeholder, will load from config
+
 let data = [
     {
-        name: "lamps",
-        collectionName: "igstreetlamps",
+        collectionName: IceGatewayStreetLamps.mongoCollectionName,
+        name: IceGatewayStreetLamps.name,
+        schema: IceGatewayStreetLamps.outputMongooseSchemaObject
+    },
+    {
+        collectionName: IceGatewaySensors.mongoCollectionName,
+        name: IceGatewaySensors.name,
+        schema: IceGatewaySensors.outputMongooseSchemaObject
+    },
+    {
+        name: "city-districts",
+        collectionName: "city_districts",
         schema: {
             geometry: {
-                coordinates: { type: Array, required: true },
-                type: { type: String, required: true },
+                coordinates: { type: Array },
+                type: { type: String },
             },
             properties: {
-                dim_value: { type: Number },
-                groups: [ { type: String } ],
-                id: { type: String, required: true },
-                lamppost_id: { type: String, required: true },
-                last_dim_override: { type: Number },
-                state: {
-                    description: { type: String },
-                    id: { type: Number, required: true },
-                },
+                id: { type: Number, required: true },
+                name: { type: String, required: true },
+                slug: { type: String, required: true },
                 timestamp: { type: Number, required: true },
             },
-            type: { type: String, required: true },
-        }
-    }
+            type: { type: String, required: true}
+        }        
+    },
 ];
 
 /**
@@ -47,7 +54,7 @@ export default class RouterBuilder {
 
     /**
      * 
-     * @param inName Name of the route, serves as base url for the route's requests
+     * @param inName Name of the route, serves as base url for the route's requests {base router}/{inName}/
      * @param inModel Model whose methods are to be mounted on the routes
      * 
      * Creates a router with the model's methods mounted on {inName}/ and {inName}/:id
@@ -67,7 +74,7 @@ export default class RouterBuilder {
         });
     }
 
-    public BuildAll(){
+    public BuildAllRoutes(){
         this.CreateGeojsonRoutes(data);
     }
 }

@@ -20,7 +20,7 @@ describe("ParkingZonesRouter", () => {
     let parkingZoneCode: String;
 
     before(() => {
-        parkingZoneCode = "P8-2023";
+        parkingZoneCode = "P4-0265";
         app.use("/parkingzones", ParkingZonesRouter);
     });
 

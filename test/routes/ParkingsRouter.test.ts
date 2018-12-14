@@ -22,7 +22,7 @@ describe("ParkingsRouter", () => {
     before(() => {
         // Mount the tested router to the express instance
         app.use("/parkings", ParkingsRouter);
-        parkingId = 534202;
+        parkingId = 534017;
     });
 
     it('should respond with json to GET /parkings ', function(done) {

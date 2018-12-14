@@ -23,7 +23,7 @@ describe("ParkingsModel", () => {
         const uri: string = config.mongo_connection || "";
         await new Database(uri).connect();
         model = new ParkingsModel();
-        parkingId = 534202;
+        parkingId = 534017;
         coordinates = [50.032074, 14.492015];
     });
 

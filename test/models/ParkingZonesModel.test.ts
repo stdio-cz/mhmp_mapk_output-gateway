@@ -3,7 +3,7 @@
 import "mocha";
 import { ParkingZonesModel } from "../../src/models";
 const config = require("../../src/config/config");
-import Database from "../../src/helpers/Database";
+import MongoDatabase from "../../src/helpers/MongoDatabase";
 import handleError from "../../src/helpers/errors/ErrorHandler";
 
 const chai = require("chai");
@@ -21,7 +21,7 @@ describe("ParkingZonesModel", () => {
 
     before(async () => {
         const uri: string = config.mongo_connection || "";
-        await new Database(uri).connect();
+        await new MongoDatabase(uri).connect();
         model = new ParkingZonesModel();
         parkingZoneCode = "P4-0265";
         coordinates = [50.032074, 14.492015];

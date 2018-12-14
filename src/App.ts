@@ -12,7 +12,9 @@ import * as mongoose from "mongoose";
 
 import CustomError from "./helpers/errors/CustomError";
 
-import Database from "./helpers/Database";
+import MongoDatabase from "./helpers/MongoDatabase";
+
+import PostgreDatabase from "./helpers/PostgreDatabase";
 
 import handleError from "./helpers/errors/ErrorHandler";
 
@@ -24,7 +26,13 @@ import ParkingsRouter from "./routes/ParkingsRouter";
 
 import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
+import VehiclePositionsModel from "./models/VehiclePositionsModel";
+
+import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
+
 const config = require("./config/config");
+
+const { sequelizeConnection } = require("./helpers/PostgreDatabase");
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -56,6 +64,7 @@ export default class App {
                 // Success callback
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
+
         } catch (err) {
             handleError(err);
         }
@@ -93,6 +102,7 @@ export default class App {
         this.express.use("/", defaultRouter);
         this.express.use("/parkings", ParkingsRouter);
         this.express.use("/parkingzones", ParkingZonesRouter);
+        this.express.use("/vehiclepositions", VehiclePositionsRouter);
 
         // Create general routes through builder
         let builder: RouterBuilder = new RouterBuilder(defaultRouter);
@@ -114,7 +124,8 @@ export default class App {
     }
 
     private database = async (): Promise<void> => {
-        const uri: string = config.mongo_connection || "";
-        return new Database(uri).connect();
+        const mongoUri: string = config.mongo_connection || "";
+        await sequelizeConnection.authenticate();
+        await new MongoDatabase(mongoUri).connect();
     }
 }

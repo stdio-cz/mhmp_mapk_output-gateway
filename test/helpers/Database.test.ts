@@ -2,7 +2,7 @@
 
 import "mocha";
 const config = require("../../src/config/config");
-import Database from "../../src/helpers/Database";
+import Database from "../../src/helpers/MongoDatabase";
 
 const chai = require("chai");
 const expect = chai.expect;

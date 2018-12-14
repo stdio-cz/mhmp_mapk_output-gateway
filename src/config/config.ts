@@ -4,4 +4,5 @@ module.exports = {
     node_env: process.env.NODE_ENV,
     port: process.env.PORT,
     log_level: process.env.LOGLEVEL,
+    postgres_connection: process.env.POSTGRES_CONN,
 };

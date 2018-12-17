@@ -14,42 +14,46 @@ export default class VehiclePositionsModel {
     protected name: string;
 
     public constructor() {
-        this.name = "VehiclePositions";
-        this.sequelizeModel = sequelizeConnection.define("vehicle_positions_trips", VehiclePositions.trips.outputSequelizeAttributes);
+        this.name = VehiclePositions.name;
+        this.sequelizeModel = sequelizeConnection.define(VehiclePositions.trips.pgTableName, VehiclePositions.trips.outputSequelizeAttributes);
     }
 
     public GetAll = async (): Promise<any> => {
-        const data = await sequelizeConnection.query(
-"SELECT DISTINCT ON (line, route_id_cis) line, route_id_cis, created, timestamp, last_stop_id_cis, delay_stop_departure, tracking, start_date, lat, lng, is_low_floor, is_canceled " + 
-"FROM vehicle_positions_trips WHERE tracking = 2 AND created > (NOW() - INTERVAL '5 min')");
-        const retData: any = [];
-        for (let element of data[0]){
-            retData.push({
-                "type": "Feature",
-                "properties": {
-                    "line": element.line,
-                    "route_id_cis": element.route_id_cis,
-                    "created": element.created,
-                    "timestamp": element.timestamp,
-                    "last_stop_id_cis": element.last_stop_id_cis,
-                    "delay_stop_departure": element.delay_stop_departure,
-                    "tracking": element.tracking,
-                    "start_date": element.start_date,
-                    "is_low_floor": element.is_low_floor,
-                    "is_canceled": element.is_canceled,
-                },
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        +element.lng,
-                        +element.lat
-                    ]
-                }
-            });
-        }
-        return {
-            features: retData,
-            type: "FeatureCollection",
+        try {
+            const data = await sequelizeConnection.query(
+    "SELECT DISTINCT ON (line, route_id_cis) line, route_id_cis, created, timestamp, last_stop_id_cis, delay_stop_departure, tracking, start_date, lat, lng, is_low_floor, is_canceled " + 
+    "FROM " + VehiclePositions.trips.pgTableName + " WHERE tracking = 2 AND created > (NOW() - INTERVAL '5 min')");
+            const retData: any = [];
+            for (let element of data[0]){
+                retData.push({
+                    "type": "Feature",
+                    "properties": {
+                        "line": element.line,
+                        "route_id_cis": element.route_id_cis,
+                        "created": element.created,
+                        "timestamp": element.timestamp,
+                        "last_stop_id_cis": element.last_stop_id_cis,
+                        "delay_stop_departure": element.delay_stop_departure,
+                        "tracking": element.tracking,
+                        "start_date": element.start_date,
+                        "is_low_floor": element.is_low_floor,
+                        "is_canceled": element.is_canceled,
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            +element.lng,
+                            +element.lat
+                        ]
+                    }
+                });
+            }
+            return {
+                features: retData,
+                type: "FeatureCollection",
+            }
+        } catch (err) {
+            throw new CustomError("Database error", true, 500, err);
         }
     }
 

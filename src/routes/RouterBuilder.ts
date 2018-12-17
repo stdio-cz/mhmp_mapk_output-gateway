@@ -2,9 +2,7 @@ import { Router } from "express";
 import { GeoJsonModel } from "../models";
 import { GeoJsonRouter } from ".";
 import { SchemaDefinition } from "mongoose";
-import { Parkings } from "data-platform-schema-definitions";
-import { IceGatewaySensors } from "data-platform-schema-definitions";
-import { IceGatewayStreetLamps } from "data-platform-schema-definitions";
+import { Parkings, CityDistricts, IceGatewaySensors, IceGatewayStreetLamps } from "data-platform-schema-definitions";
 
 "use strict";
 
@@ -21,21 +19,9 @@ let data = [
         schema: IceGatewaySensors.outputMongooseSchemaObject
     },
     {
-        name: "city-districts",
-        collectionName: "city_districts",
-        schema: {
-            geometry: {
-                coordinates: { type: Array },
-                type: { type: String },
-            },
-            properties: {
-                id: { type: Number, required: true },
-                name: { type: String, required: true },
-                slug: { type: String, required: true },
-                timestamp: { type: Number, required: true },
-            },
-            type: { type: String, required: true}
-        }        
+        name: CityDistricts.name,
+        collectionName: CityDistricts.mongoCollectionName,
+        schema: CityDistricts.outputMongooseSchemaObject
     },
 ];
 

@@ -2,12 +2,13 @@ import * as mongoose from "mongoose";
 import CustomError from "./errors/CustomError";
 import handleError from "./errors/ErrorHandler";
 import log from "./Logger";
+const config = require("../config/config");
 
 export default class MongoDatabase {
     private connectionString: string;
 
-    constructor(uri: string) {
-        this.connectionString = uri;
+    constructor() {
+        this.connectionString = config.mongo_connection;
     }
 
     public connect = async () => {
@@ -26,3 +27,6 @@ export default class MongoDatabase {
         });
     }
 }
+
+
+module.exports.sequelizeConnection = new MongoDatabase().connect();

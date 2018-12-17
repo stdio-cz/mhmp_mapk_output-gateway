@@ -12,10 +12,6 @@ import * as mongoose from "mongoose";
 
 import CustomError from "./helpers/errors/CustomError";
 
-import MongoDatabase from "./helpers/MongoDatabase";
-
-import PostgreDatabase from "./helpers/PostgreDatabase";
-
 import handleError from "./helpers/errors/ErrorHandler";
 
 import log from "./helpers/Logger";
@@ -33,6 +29,8 @@ import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
 const config = require("./config/config");
 
 const { sequelizeConnection } = require("./helpers/PostgreDatabase");
+
+const { mongoConnection } = require("./helpers/MongoDatabase");
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -74,6 +72,12 @@ export default class App {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         next();
+    }
+
+    private database = async (): Promise<void> => {
+        const mongoUri: string = config.mongo_connection || "";
+        await sequelizeConnection.authenticate();
+        await mongoConnection;
     }
 
     private middleware = (): void => {
@@ -121,11 +125,5 @@ export default class App {
                 }
             });
         });
-    }
-
-    private database = async (): Promise<void> => {
-        const mongoUri: string = config.mongo_connection || "";
-        await sequelizeConnection.authenticate();
-        await new MongoDatabase(mongoUri).connect();
     }
 }

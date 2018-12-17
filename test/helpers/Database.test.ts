@@ -16,7 +16,7 @@ describe("Database", () => {
     let database: Database;
 
     before(() => {
-        database = new Database(uri);
+        database = new Database();
     });
 
     it("should instantiate", () => {

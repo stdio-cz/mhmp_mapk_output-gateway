@@ -5,6 +5,7 @@ import { ParkingsModel } from "../../src/models/ParkingsModel";
 const config = require("../../src/config/config");
 import MongoDatabase from "../../src/helpers/MongoDatabase";
 import handleError from "../../src/helpers/errors/ErrorHandler";
+const { mongoConnection } = require("../../src/helpers/MongoDatabase");
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -21,7 +22,7 @@ describe("ParkingsModel", () => {
 
     before(async () => {
         const uri: string = config.mongo_connection || "";
-        await new MongoDatabase(uri).connect();
+        await mongoConnection;
         model = new ParkingsModel();
         parkingId = 534017;
         coordinates = [50.032074, 14.492015];

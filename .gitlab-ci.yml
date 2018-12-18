@@ -17,6 +17,7 @@ build_image:
 run_tests:
   stage: test
   script:
+    - echo "mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform/"
     - mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform/
     - docker run $CONTAINER_IMAGE npm run code-coverage
 

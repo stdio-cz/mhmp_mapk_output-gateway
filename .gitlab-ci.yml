@@ -1,7 +1,7 @@
 variables:
   DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
   CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
-  MONGO_CONN: "-h localhost:27017 -d output-$CI_PIPELINE_ID"
+  MONGO_CONN: "-h localhost:27017"
 
 stages:
   - build
@@ -17,7 +17,7 @@ build_image:
 run_tests:
   stage: test
   script:
-    - mongorestore $MONGO_CONN ./test/data/dataplatform/*.bson 
+    - mongorestore -d "output-$CI_PIPELINE_ID" ./test/data/dataplatform/
     - docker run $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
@@ -46,6 +46,6 @@ production_deployment:
 remove_images:
   stage: clean
   script:
-    - mongo $MONGO_CONN --eval "db.dropDatabase()"
+    - mongo --eval "db.dropDatabase()"
     - docker rmi $CONTAINER_IMAGE:$CI_PIPELINE_ID
   when: always

@@ -1,7 +1,7 @@
 variables:
   DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
   CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
-  MONGO_CONN: mongodb://127.0.0.1:27017/output-$CI_PIPELINE_ID
+  MONGO_CONN: "-h localhost:27017 -d output-$CI_PIPELINE_ID"
 
 stages:
   - build
@@ -17,7 +17,7 @@ build_image:
 run_tests:
   stage: test
   script:
-    - mongorestore --uri=$MONGO_CONN ./test/data/dataplatform 
+    - mongorestore $MONGO_CONN ./test/data/dataplatform 
     - docker run $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:

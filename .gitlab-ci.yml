@@ -17,7 +17,7 @@ build_image:
 run_tests:
   stage: test
   script:
-    - mongorestore $MONGO_CONN ./test/data/dataplatform 
+    - mongorestore --uri=$MONGO_CONN ./test/data/dataplatform 
     - docker run $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:

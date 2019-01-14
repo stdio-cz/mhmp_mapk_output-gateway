@@ -5,6 +5,9 @@ const errorLog = require("debug")("data-platform:output-gateway:error");
 
 const config = require("../config/config");
 
+/**
+ * Define standard log levels
+ */
 const logLevels: any = {
     "ALL": 0,
     "DEBUG": 1,

@@ -29,4 +29,4 @@ export default class MongoDatabase {
 }
 
 
-module.exports.sequelizeConnection = new MongoDatabase().connect();
+module.exports.mongoConnection = new MongoDatabase().connect();

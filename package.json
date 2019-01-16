@@ -51,10 +51,9 @@
       ".tsx"
     ],
     "exclude": [
-      "**/*.d.ts"
-    ],
-    "reporter": [
-      "text-summary"
+      "**/*.d.ts",
+      "dist",
+      "**/*.test.ts"
     ],
     "all": true,
     "lines": 0,

@@ -11,6 +11,8 @@ const logFormat = (info: any) => {
     return `[${info.timestamp}] [${info.level}]: ${info.message}`;
 }
 
+const logLevelToSet = config.log_level ? config.log_level.toLowerCase() : "info";
+
 /**
  * Winston logger to provide levels
  */
@@ -22,7 +24,7 @@ const logger = winston.createLogger({
         printf(logFormat)
       ),
     transports: [
-      new winston.transports.Console({ level: config.log_level.toLowerCase() }),
+      new winston.transports.Console({ logLevelToSet }),
     ]
 });
 

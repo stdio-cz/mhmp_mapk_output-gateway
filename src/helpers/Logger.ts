@@ -26,10 +26,10 @@ const logger = winston.createLogger({
     ]
 });
 
-const winstonDebug = logger.debug;
+const winstonDebugLog = logger.debug;
 logger.debug = (logText:any) => {
     debugLog(logText);
-    winstonDebug(logText);
+    winstonDebugLog(logText);
 }
 
 export default logger;

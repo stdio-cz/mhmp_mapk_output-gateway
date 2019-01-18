@@ -32,11 +32,11 @@ export class ParkingZonesModel extends GeoJsonModel {
     public GetTariffs = async (inId: any): Promise<object> => {
         const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), {"properties.tariffs": 1, "_id": 0}).exec();
         if (!found || found instanceof Array && found.length === 0) {
-            log.info("Could not find any record by following selection:");
-            log.info(this.PrimaryIdentifierSelection(inId));
+            log.debug("Could not find any record by following selection:");
+            log.debug(this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, 404);
         } else if (!found.properties || found.properties.tariffs === undefined){
-            log.info("Object doesn't have properties or properties.tariffs");
+            log.debug("Object doesn't have properties or properties.tariffs");
             throw new CustomError("Id `" + inId + "` not found", true, 404);
         } else {
             return found.properties.tariffs;

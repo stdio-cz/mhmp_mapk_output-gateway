@@ -166,8 +166,8 @@ export class GeoJsonModel {
     public GetOne = async (inId: any): Promise<object> => {
         const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").exec();
         if (!found || found instanceof Array && found.length === 0) {
-            log.info("Could not find any record by following selection:");
-            log.info(this.PrimaryIdentifierSelection(inId));
+            log.debug("Could not find any record by following selection:");
+            log.debug(this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, 404);
         } else {
             return found;

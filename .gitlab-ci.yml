@@ -20,7 +20,7 @@ run_tests:
   stage: test
   script:
     - mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform
-    - docker run --net testnet -e MONGO_CONN=$MONGO_CONN $CONTAINER_IMAGE npm run code-coverage
+    - docker run --net testnet -e LOG_LEVEL=INFO -e MONGO_CONN=$MONGO_CONN $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy

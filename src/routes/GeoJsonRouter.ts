@@ -10,6 +10,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { GeoJsonModel } from "../models/GeoJsonModel";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 
 export class GeoJsonRouter {
     protected model: GeoJsonModel;
@@ -20,14 +21,13 @@ export class GeoJsonRouter {
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
-    private initRoutes = (): void => {
+    public initRoutes = (): void => {
         this.router.get("/", this.GetAll);
         this.router.get("/:id", this.GetOne);
     }
 
     public constructor(inModel: GeoJsonModel){
         this.model = inModel;
-        this.initRoutes();
     }
 
     public GetAll = (req: Request, res: Response, next: NextFunction) => {

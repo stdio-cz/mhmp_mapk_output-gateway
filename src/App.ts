@@ -12,20 +12,23 @@ import * as mongoose from "mongoose";
 
 import CustomError from "./helpers/errors/CustomError";
 
-import Database from "./helpers/Database";
+import handleError from "./helpers/errors/ErrorHandler";
 
-import LampsRouter from "./routes/LampsRouter";
+import log from "./helpers/Logger";
+
+import RouterBuilder from "./routes/RouterBuilder";
 
 import ParkingsRouter from "./routes/ParkingsRouter";
 
 import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
-import handleError from "./helpers/errors/ErrorHandler";
+import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
 
 const config = require("./config/config");
 
-const log = require("debug")("data-platform:output-gateway");
-const errorLog = require("debug")("data-platform:error");
+const { sequelizeConnection } = require("./helpers/PostgreDatabase");
+
+const { mongoConnection } = require("./helpers/MongoDatabase");
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -55,20 +58,31 @@ export default class App {
             // Serve the application at the given port
             this.express.listen(this.port, () => {
                 // Success callback
-                log(`Listening at http://localhost:${this.port}/`);
+                log.info(`Listening at http://localhost:${this.port}/`);
             });
+
         } catch (err) {
             handleError(err);
         }
     }
 
     private setHeaders = (req: Request, res: Response, next: NextFunction) => {
+        res.setHeader("x-powered-by", "shem");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         next();
     }
 
+    private database = async (): Promise<void> => {
+        const mongoUri: string = config.mongo_connection || "";
+        await sequelizeConnection.authenticate();
+        await mongoConnection;
+    }
+
     private middleware = (): void => {
+        httpLogger.token('date', function(){
+            return new Date().toISOString()
+        });
         if (config.node_env === "development"){
             this.express.use(httpLogger("dev"));
         } else {
@@ -81,8 +95,17 @@ export default class App {
     private routes = (): void => {
         const defaultRouter = express.Router();
 
-        // base url route handler
+        // Create base url route handler
         defaultRouter.get(["/", "/health-check"], (req, res, next) => {
+            log.silly("Health check called.");
+            
+            log.silly("silly test log.");
+            log.debug("debug test log.");
+            log.verbose("verbose test log.");
+            log.info("info test log.");
+            log.warn("warn test log");
+            log.error("error test log");
+
             res.json({
                 app_name: "Data Platform Output Gateway",
                 status: "Up",
@@ -90,11 +113,15 @@ export default class App {
             });
         });
 
+        // Create specific routes with their own router
         this.express.use("/", defaultRouter);
-        this.express.use("/lamps", LampsRouter);
         this.express.use("/parkings", ParkingsRouter);
         this.express.use("/parkingzones", ParkingZonesRouter);
+        this.express.use("/vehiclepositions", VehiclePositionsRouter);
 
+        // Create general routes through builder
+        let builder: RouterBuilder = new RouterBuilder(defaultRouter);
+        builder.BuildAllRoutes();
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {
@@ -105,14 +132,11 @@ export default class App {
         this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
             handleError(err).then((error) => {
                 if (error) {
+                    log.debug("ERROR");
+                    res.setHeader("Content-Type", "application/json; charset=utf-8");
                     res.status(error.error_status || 500).send(error);
                 }
             });
         });
-    }
-
-    private database = async (): Promise<void> => {
-        const uri: string = config.mongo_connection || "";
-        return new Database(uri).connect();
     }
 }

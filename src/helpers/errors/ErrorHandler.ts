@@ -1,12 +1,11 @@
-const errorLog = require("debug")("data-platform:error");
-const log = require("debug")("data-platform:output-gateway");
+import log from "../Logger";
 
 export class ErrorHandler {
     public handle = async (err: any) => {
         let toReturn: any;
         // Many operational errors, handle it!
         if (err.isOperational) {
-            log(err.toString());
+            log.error(err.toString());
             // Define what to return to user
             switch (err.code) {
                 case 400: {
@@ -22,7 +21,7 @@ export class ErrorHandler {
                 }
             }
         } else { // Unexpected non-operational error, damn u ded
-            errorLog("Fatal error: " + err);
+            log.error("Fatal error: " + err);
             process.exit(0); // if anything fails, process is killed
         }
         // If we're in development, send Error stack also in a response

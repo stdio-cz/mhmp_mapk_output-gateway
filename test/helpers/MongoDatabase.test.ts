@@ -2,21 +2,21 @@
 
 import "mocha";
 const config = require("../../src/config/config");
-import Database from "../../src/helpers/Database";
+import Database from "../../src/helpers/MongoDatabase";
 
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-const log = require("debug")("data-platform:output-gateway");
+import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 
-describe("Database", () => {
+describe("Mongo Database", () => {
     const uri: string = config.mongo_connection || "";
     let database: Database;
 
     before(() => {
-        database = new Database(uri);
+        database = new Database();
     });
 
     it("should instantiate", () => {
@@ -28,7 +28,7 @@ describe("Database", () => {
     });
 
     it("should connect ", async () => {
-        log("Connecting to: " + uri);
+        log.info("Connecting to: " + uri);
         let connection = database.connect();
         await expect(connection).to.be.fulfilled;
     });

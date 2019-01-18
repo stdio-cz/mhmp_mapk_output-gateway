@@ -3,13 +3,14 @@
 import "mocha";
 import { ParkingsModel } from "../../src/models/ParkingsModel";
 const config = require("../../src/config/config");
-import Database from "../../src/helpers/Database";
+import MongoDatabase from "../../src/helpers/MongoDatabase";
 import handleError from "../../src/helpers/errors/ErrorHandler";
+const { mongoConnection } = require("../../src/helpers/MongoDatabase");
 
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-const log = require("debug")("data-platform:output-gateway");
+import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 
@@ -21,9 +22,9 @@ describe("ParkingsModel", () => {
 
     before(async () => {
         const uri: string = config.mongo_connection || "";
-        await new Database(uri).connect();
+        await mongoConnection;
         model = new ParkingsModel();
-        parkingId = 534202;
+        parkingId = 534017;
         coordinates = [50.032074, 14.492015];
     });
 

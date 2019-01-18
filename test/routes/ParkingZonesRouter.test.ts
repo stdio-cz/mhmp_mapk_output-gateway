@@ -8,7 +8,7 @@ const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 const request = require('supertest');
 const express = require('express');
-const log = require("debug")("data-platform:output-gateway");
+import log from "../../src/helpers/Logger";
 
 import ParkingZonesRouter from "../../src/routes/ParkingZonesRouter";
 
@@ -20,7 +20,7 @@ describe("ParkingZonesRouter", () => {
     let parkingZoneCode: String;
 
     before(() => {
-        parkingZoneCode = "P8-2023";
+        parkingZoneCode = "P4-0265";
         app.use("/parkingzones", ParkingZonesRouter);
     });
 
@@ -60,6 +60,14 @@ describe("ParkingZonesRouter", () => {
               expect(res.body.properties.payment_link).to.be.a('string');
               done();
           });
+    });
+
+    it('should respond with json to GET /parkingzones/:code/tariffs ', function(done) {
+        request(app)
+          .get('/parkingzones/' + parkingZoneCode + '/tariffs')
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200, done);
     });
 
 });

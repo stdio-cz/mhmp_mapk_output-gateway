@@ -3,13 +3,14 @@
 import "mocha";
 import { ParkingZonesModel } from "../../src/models";
 const config = require("../../src/config/config");
-import Database from "../../src/helpers/Database";
+import MongoDatabase from "../../src/helpers/MongoDatabase";
 import handleError from "../../src/helpers/errors/ErrorHandler";
+const { mongoConnection } = require("../../src/helpers/MongoDatabase");
 
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-const log = require("debug")("data-platform:output-gateway");
+import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 
@@ -21,9 +22,9 @@ describe("ParkingZonesModel", () => {
 
     before(async () => {
         const uri: string = config.mongo_connection || "";
-        await new Database(uri).connect();
+        await mongoConnection;
         model = new ParkingZonesModel();
-        parkingZoneCode = "P8-2023";
+        parkingZoneCode = "P4-0265";
         coordinates = [50.032074, 14.492015];
     });
 
@@ -133,6 +134,35 @@ describe("ParkingZonesModel", () => {
 
     it("should fail on bad parameters", async () => {
         const promise = model.GetAll(-1, -2);
+        await expect(promise).to.be.rejected;
+    });
+
+    it("should have GetTariffs method", () => {
+        expect(model.GetTariffs).not.to.be.undefined;
+    });
+
+    it("should have GetTariffs method", () => {
+        expect(model.GetTariffs).not.to.be.undefined;
+    });
+
+    it("should return fulfilled promise to GetTariffs call", async () => {
+        const promise = model.GetTariffs(parkingZoneCode);
+        expect(Object.prototype.toString.call(promise)).to.equal("[object Promise]");
+        await expect(promise).to.be.fulfilled;
+    });
+
+    it("should return one parking zone tariffs by code", async () => {
+        const data = await model.GetTariffs(parkingZoneCode);
+        expect(data).to.be.an.instanceOf(Object);
+    });
+
+    it("should throw an error (reject promise) for non-existing parking zone by code", async () => {
+        const promise = model.GetTariffs("kovfefe");
+        await expect(promise).to.be.rejected;
+    });
+
+    it("should throw an error (reject promise) for parking zone which has no tariffs", async () => {
+        const promise = model.GetTariffs("kovfefe");
         await expect(promise).to.be.rejected;
     });
 

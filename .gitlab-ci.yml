@@ -1,3 +1,9 @@
+variables:
+  DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
+  CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
+  MONGO_DB_NAME: "$CI_PROJECT_NAME-$CI_PIPELINE_ID"
+  MONGO_CONN: mongodb://runner-mongo-test/$MONGO_DB_NAME
+
 stages:
   - build
   - test
@@ -13,7 +19,8 @@ build_image:
 run_tests:
   stage: test
   script:
-    - docker run $CI_REGISTRY_IMAGE npm run code-coverage
+    - mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform
+    - docker run --net testnet -e MONGO_CONN=$MONGO_CONN $CONTAINER_IMAGE npm run code-coverage
 
 registry_deployment:
   stage: deploy
@@ -29,5 +36,6 @@ registry_deployment:
 remove_images:
   stage: clean
   script:
-    - docker rmi $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
+    - mongo $MONGO_DB_NAME --eval "db.dropDatabase()"
+    - docker rmi $CONTAINER_IMAGE:$CI_PIPELINE_ID
   when: always

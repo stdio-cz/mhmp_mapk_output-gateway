@@ -81,6 +81,9 @@ export default class App {
     }
 
     private middleware = (): void => {
+        httpLogger.token('date', function(){
+            return new Date().toISOString()
+        });
         if (config.node_env === "development"){
             this.express.use(httpLogger("dev"));
         } else {
@@ -95,6 +98,15 @@ export default class App {
 
         // Create base url route handler
         defaultRouter.get(["/", "/health-check"], (req, res, next) => {
+            log.silly("Health check called.");
+            
+            log.silly("silly test log.");
+            log.debug("debug test log.");
+            log.verbose("verbose test log.");
+            log.info("info test log.");
+            log.warn("warn test log");
+            log.error("error test log");
+
             res.json({
                 app_name: "Data Platform Output Gateway",
                 status: "Up",

@@ -11,7 +11,7 @@ import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 
-describe("Database", () => {
+describe("Mongo Database", () => {
     const uri: string = config.mongo_connection || "";
     let database: Database;
 

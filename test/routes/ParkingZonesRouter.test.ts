@@ -62,4 +62,12 @@ describe("ParkingZonesRouter", () => {
           });
     });
 
+    it('should respond with json to GET /parkingzones/:code/tariffs ', function(done) {
+        request(app)
+          .get('/parkingzones/' + parkingZoneCode + '/tariffs')
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200, done);
+    });
+
 });

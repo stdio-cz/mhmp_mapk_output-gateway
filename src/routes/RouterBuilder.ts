@@ -46,7 +46,9 @@ export default class RouterBuilder {
      * Creates a router with the model's methods mounted on {inName}/ and {inName}/:id
      */
     public CreateGeojsonRoute (inName: string, inModel: GeoJsonModel){
-        this.router.use(inName, new GeoJsonRouter(inModel).router);
+        const generalRouter = new GeoJsonRouter(inModel);
+        generalRouter.initRoutes();
+        this.router.use(inName, generalRouter.router);
     }
 
     /**

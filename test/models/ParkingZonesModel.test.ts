@@ -137,4 +137,33 @@ describe("ParkingZonesModel", () => {
         await expect(promise).to.be.rejected;
     });
 
+    it("should have GetTariffs method", () => {
+        expect(model.GetTariffs).not.to.be.undefined;
+    });
+
+    it("should have GetTariffs method", () => {
+        expect(model.GetTariffs).not.to.be.undefined;
+    });
+
+    it("should return fulfilled promise to GetTariffs call", async () => {
+        const promise = model.GetTariffs(parkingZoneCode);
+        expect(Object.prototype.toString.call(promise)).to.equal("[object Promise]");
+        await expect(promise).to.be.fulfilled;
+    });
+
+    it("should return one parking zone tariffs by code", async () => {
+        const data = await model.GetTariffs(parkingZoneCode);
+        expect(data).to.be.an.instanceOf(Object);
+    });
+
+    it("should throw an error (reject promise) for non-existing parking zone by code", async () => {
+        const promise = model.GetTariffs("kovfefe");
+        await expect(promise).to.be.rejected;
+    });
+
+    it("should throw an error (reject promise) for parking zone which has no tariffs", async () => {
+        const promise = model.GetTariffs("kovfefe");
+        await expect(promise).to.be.rejected;
+    });
+
 });

@@ -7,7 +7,7 @@ import { VehiclePositions } from "data-platform-schema-definitions";
 /**
  * 
  */
-export default class VehiclePositionsModel {
+export class VehiclePositionsModel {
     /** The Sequelize Model */
     protected sequelizeModel: Sequelize.Model<any, any>;
     /** Name of the model */

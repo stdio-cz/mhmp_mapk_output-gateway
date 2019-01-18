@@ -11,11 +11,14 @@ import { ParkingsModel } from "../models/ParkingsModel";
 import { GeoJsonRouter } from "./GeoJsonRouter";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
+import log from "../helpers/Logger";
 
 export class ParkingsRouter extends GeoJsonRouter {
 
     constructor() {
         super(new ParkingsModel());
+        this.GetOne.bind(this);
+        this.initRoutes();
     }
 
     public GetOne = (req: Request, res: Response, next: NextFunction) => {

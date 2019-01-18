@@ -18,12 +18,12 @@ export class ParkingZonesRouter extends GeoJsonRouter {
 
     constructor() {
         super(new ParkingZonesModel());
+        this.initRoutes();
         this.router.get("/:id/tariffs", this.GetTariffs);
     }
 
     public GetTariffs = (req: Request, res: Response, next: NextFunction) => {
         const id: String = req.params.id;
-
         this.model.GetTariffs(id).then((data) => {
             res.status(200)
                 .send(data);

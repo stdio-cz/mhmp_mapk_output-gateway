@@ -9,7 +9,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
-import VehiclePositionsModel from "../models/VehiclePositionsModel";
+import { VehiclePositionsModel } from "../models/VehiclePositionsModel";
 import log from "../helpers/Logger";
 
 export class VehiclePositionsRouter {

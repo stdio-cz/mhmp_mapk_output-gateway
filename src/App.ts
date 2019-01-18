@@ -22,8 +22,6 @@ import ParkingsRouter from "./routes/ParkingsRouter";
 
 import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
-import VehiclePositionsModel from "./models/VehiclePositionsModel";
-
 import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
 
 const config = require("./config/config");
@@ -69,6 +67,7 @@ export default class App {
     }
 
     private setHeaders = (req: Request, res: Response, next: NextFunction) => {
+        res.setHeader("x-powered-by", "shem");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         next();
@@ -133,6 +132,8 @@ export default class App {
         this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
             handleError(err).then((error) => {
                 if (error) {
+                    log.debug("ERROR");
+                    res.setHeader("Content-Type", "application/json; charset=utf-8");
                     res.status(error.error_status || 500).send(error);
                 }
             });

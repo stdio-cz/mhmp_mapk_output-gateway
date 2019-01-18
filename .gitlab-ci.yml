@@ -2,11 +2,13 @@ variables:
   DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
   CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
   MONGO_DB_NAME: "$CI_PROJECT_NAME-$CI_PIPELINE_ID"
-  MONGO_CONN: mongodb://runner-mongo-test/$MONGO_DB_NAME
   POSTGRES_HOST: runner-postgre-test
   POSTGRES_USER: postgres
   POSTGRES_PASS: test-pass
   POSTGRES_DB: $CI_PROJECT_NAME
+
+before_script:
+  - export MONGO_CONN=mongodb://runner-mongo-test/$MONGO_DB_NAME
 
 stages:
   - build

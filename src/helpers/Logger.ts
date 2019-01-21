@@ -14,17 +14,29 @@ const logFormat = (info: any) => {
 const logLevelToSet = config.log_level ? config.log_level.toLowerCase() : "info";
 
 /**
- * Winston logger to provide levels
+ * Winston logger setup
  */
-const logger = winston.createLogger({
-    format: combine(
+let setFormat: any;
+
+if (!config.colorful_logs || config.colorful_logs.toLowerCase() === "false"){
+    setFormat = combine(
+        timestamp(),
+        align(),
+        printf(logFormat)
+    )
+} else {
+    setFormat = combine(
         timestamp(),
         colorize(),
         align(),
         printf(logFormat)
-      ),
+    )
+}
+
+const logger = winston.createLogger({
+    format: setFormat,
     transports: [
-      new winston.transports.Console({ logLevelToSet }),
+      new winston.transports.Console({ level: logLevelToSet }),
     ]
 });
 

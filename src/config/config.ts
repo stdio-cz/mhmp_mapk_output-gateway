@@ -5,4 +5,5 @@ module.exports = {
     port: process.env.PORT,
     log_level: process.env.LOG_LEVEL,
     postgres_connection: process.env.POSTGRES_CONN,
+    colorful_logs: process.env.COLORFUL_LOGS,
 };

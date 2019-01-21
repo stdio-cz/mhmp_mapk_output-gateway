@@ -83,11 +83,7 @@ export default class App {
         httpLogger.token('date', function(){
             return new Date().toISOString()
         });
-        if (config.node_env === "development"){
-            this.express.use(httpLogger("dev"));
-        } else {
-            this.express.use(httpLogger("combined"));
-        }
+        this.express.use(httpLogger("combined"));
 
         this.express.use(this.setHeaders);
     }
@@ -99,10 +95,10 @@ export default class App {
         defaultRouter.get(["/", "/health-check"], (req, res, next) => {
             log.silly("Health check called.");
             
-            log.silly("silly test log.");
-            log.debug("debug test log.");
-            log.verbose("verbose test log.");
-            log.info("info test log.");
+            log.silly("silly test log");
+            log.debug("debug test log");
+            log.verbose("verbose test log");
+            log.info("info test log");
             log.warn("warn test log");
             log.error("error test log");
 

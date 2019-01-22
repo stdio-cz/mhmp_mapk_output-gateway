@@ -1,10 +1,15 @@
 "use strict";
 
 export default class CustomError extends Error {
-  public name: string;
-  public isOperational?: boolean;
-  public code?: number;
-  public cause?: any;
+    /** Error description */
+    public name: string;
+    /** Defines that error is operational */
+    public isOperational?: boolean;
+    /** Error code for better identifing type of error */
+    public code?: number;
+    /** Additional info about error cause, parent error */
+    public cause?: any;
+
 
   constructor(message: string, isOperational?: boolean, code?: number, cause?: any) {
     super(message);
@@ -23,7 +28,10 @@ export default class CustomError extends Error {
         + ((process.env.NODE_ENV === "development") ? "\n" + this.stack : "");
   }
 
-  public toObject = (): object => {
+  /**
+   * Returns complete error description as object.
+   */
+  public toObject = (): {error_code: number, error_message: string, error_info: any} => {
       const toReturn: any = {
           error_message: this.message,
       };

@@ -78,7 +78,7 @@ export class GeoJsonModel {
      * (filters not-updated data)
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
     */
-    public GetByDistrict = async (  district: String,
+    public GetByDistrict = async (  district: string,
                                     limit?: number,
                                     offset?: number,
                                     updatedSince?: number,
@@ -88,8 +88,8 @@ export class GeoJsonModel {
         this.GetAll(limit, offset, updatedSince);
     }
 
-    /**
-     * Retrieves data from database based on coordinates.
+
+    /** Retrieves all the records from database
      * @param lat Latitude to sort results by (by proximity)
      * @param lng Longitute to sort results by
      * @param range Maximum range from specified latLng. Only data within this range will be returned.
@@ -98,47 +98,52 @@ export class GeoJsonModel {
      * @param updatedSince Filters all results with older last_updated timestamp than this parameter
      * (filters not-updated data)
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
-    */
-    public GetByCoordinates = async (   lat: number,
-                                        lng: number,
-                                        range?: number,
-                                        limit?: number,
-                                        offset?: number,
-                                        updatedSince?: number,
-    ) => {
-        // Specify a query filter conditions to search by geometry location
-        const selection: any = {
-        geometry: {
-            $near: {
-                $geometry: {
-                        coordinates: [ lng, lat ],
-                        type: "Point",
-                    },
-                },
-            },
-        };
-        // Specify max range filter condition
-        if (range !== undefined) {
-            selection.geometry.$near.$maxDistance = range;
-        }
-        this.AddSelection(selection);
-        
-        return await this.GetAll(limit, offset, updatedSince);
-    }
-
-    /** Retrieves all the records from database
-     * @param limit Limit
-     * @param offset Offset
-     * @param updatedSince Filters all results with older last_updated timestamp than this parameter
-     * (filters not-updated data)
-     * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
-    public GetAll = async (limit?: number, offset?: number, updatedSince?: number) => {
+    public GetAll = async ( lat?: number,
+                            lng?: number,
+                            range?: number,
+                            limit?: number, 
+                            offset?: number, 
+                            updatedSince?: number,
+                            districts?: Array<string>,
+                            ids?: Array<number>) => {
         try {
             const q = this.model.find({});
+
+            // Specify a query filter conditions to search by geometry location
+            if (lat){
+                const selection: any = {
+                    geometry: {
+                        $near: {
+                            $geometry: {
+                                    coordinates: [ lng, lat ],
+                                    type: "Point",
+                                },
+                            },
+                        },
+                    };
+                // Specify max range filter condition
+                if (range !== undefined) {
+                    selection.geometry.$near.$maxDistance = range;
+                }
+                this.AddSelection(selection);
+            }
+
+            // Specify a query filter conditions to search by last updated time
             if (updatedSince) {
                 this.AddSelection({ "properties.timestamp": { $gte: updatedSince } });
             }
+
+            // Specify a query filter conditions to search by districts
+            if (districts) {
+                this.AddSelection({ "properties.district": { $in: districts } });
+            }
+
+            // Specify a query filter conditions to search by IDs
+            if (ids) {
+                this.AddSelection(this.PrimaryIdentifierSelection({$in: ids}));
+            }
+
             q.where(this.selection);
             if (limit) {
                 q.limit(limit);

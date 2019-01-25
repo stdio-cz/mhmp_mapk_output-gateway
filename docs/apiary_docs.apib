@@ -24,8 +24,8 @@ Parameters:
 - range
    - filters the results by their distance from provided latlng in meters (range query)
 
-- district
-   - filters by Prague city districts (separated by comma)
+- districts
+   - filters by Prague city districts (in array format - eg. districts[]=praha7&districts[]=praha6)
 
 - limit
    - pagination - limits number of retrieved items (kNN query)
@@ -35,6 +35,9 @@ Parameters:
    
 - updatedSince
    - filters all results with older last_updated timestamp than this parameter
+   
+- ids
+   - filters by individual entity IDs (in array format - eg. ids[]=1&ids[]=3)
 
 # Group General
 General resources.
@@ -2443,7 +2446,7 @@ Data providers:
   - https://www.rekola.cz/ (json)
   - https://www.hoppygo.com/ (json)
 
-## Parkings [/parkings/{?latlng,range,district,limit,offset,updatedSince}]
+## Parkings [/parkings/{?latlng,range,districts,limit,offset,updatedSince}]
 
 Parking type enum:
 - 1 P+R parkoviště
@@ -2453,11 +2456,10 @@ Parking type enum:
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
     + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
     + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
-
 
 ### GET All Parkings [GET]
 

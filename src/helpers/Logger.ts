@@ -16,22 +16,12 @@ const logLevelToSet = config.log_level ? config.log_level.toLowerCase() : "info"
 /**
  * Winston logger setup
  */
-let setFormat: any;
-
-if (!config.colorful_logs || config.colorful_logs.toLowerCase() === "false"){
-    setFormat = combine(
-        timestamp(),
-        align(),
-        printf(logFormat)
-    )
-} else {
-    setFormat = combine(
+const setFormat = combine(
         timestamp(),
         colorize(),
         align(),
         printf(logFormat)
-    )
-}
+    );
 
 const logger = winston.createLogger({
     format: setFormat,

@@ -93,14 +93,8 @@ export default class App {
 
         // Create base url route handler
         defaultRouter.get(["/", "/health-check"], (req, res, next) => {
+
             log.silly("Health check called.");
-            
-            log.silly("silly test log");
-            log.debug("debug test log");
-            log.verbose("verbose test log");
-            log.info("info test log");
-            log.warn("warn test log");
-            log.error("error test log");
 
             res.json({
                 app_name: "Data Platform Output Gateway",
@@ -128,7 +122,7 @@ export default class App {
         this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
             handleError(err).then((error) => {
                 if (error) {
-                    log.debug("ERROR");
+                    log.silly("Error caught by the router error handler.");
                     res.setHeader("Content-Type", "application/json; charset=utf-8");
                     res.status(error.error_status || 500).send(error);
                 }

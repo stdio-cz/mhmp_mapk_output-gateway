@@ -17,27 +17,38 @@ Developed by https://operatorict.cz
 ## General info
 
 
-Parameters:
-- latlng
-   - location, API performs geo-spatial search to retrieve data close to the location
+### Parameters:
+- `latlng`
+   - location, API performs geo-spatial search to retrieve data close to the location (sorts data by proximity)
 
-- range
-   - filters the results by their distance from provided latlng in meters (range query)
+- `range`
+   - filters the results by their distance from provided latlng in meters (range query); is ignored when latlng is not specified
 
-- districts
-   - filters by Prague city districts (in array format - eg. districts[]=praha7&districts[]=praha6)
+- `districts`
+   - filters by Prague city districts (in array format - eg. `districts[]=praha7&districts[]=praha6`)
 
-- limit
+- `limit`
    - pagination - limits number of retrieved items (kNN query)
 
-- offset
+- `offset`
    - pagination - mumber of the first items that are skipped
    
-- updatedSince
-   - filters all results with older last_updated timestamp than this parameter
+- `updatedSince`
+   - filters all results with older "last updated" timestamp than this parameter
    
-- ids
-   - filters by individual entity IDs (in array format - eg. ids[]=1&ids[]=3)
+- `ids`
+   - filters by individual entity IDs (in array format - eg. `ids[]=1&ids[]=3`)
+
+All parameters are evaluated at the same time as AND (only results meeting all the conditions at the same time are returned). 
+
+Multiple values of the same parameter of type array are evaluated as OR (results meeting at least one condition are returned). Eg. `districts` or `ids`.
+
+### Possible headers:
+
+- `If-None-Match`
+    - Weak E-Tag implementation is used for caching
+    - API returns `ETag` response header, example: W/"21cf-vMBh8gdzFfYJ4qSGaPA6/dooVV0"
+    - If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed.
 
 # Group General
 General resources.
@@ -49,8 +60,8 @@ General resources.
  
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
     
 ### GET All Districts [GET]
@@ -2441,10 +2452,11 @@ Online traffic data from Prague.
 
 Data providers:
 
-  - http://www.tsk-praha.cz/ (json)
-  - https://api.ceskycarsharing.cz/ (json)
-  - https://www.rekola.cz/ (json)
-  - https://www.hoppygo.com/ (json)
+  - http://www.tsk-praha.cz/
+  - https://api.ceskycarsharing.cz/
+  - https://www.rekola.cz/
+  - https://www.hoppygo.com/
+  - http://www.geoportalpraha.cz/
 
 ## Parkings [/parkings/{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -2456,9 +2468,9 @@ Parking type enum:
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma. 
+    + limit: 10 (optional, number) - Limits number of retrieved items. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Parkings [GET]
@@ -2930,9 +2942,9 @@ Parking type enum:
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
+    + limit: 10 (optional, number) - Limits number of retrieved items. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Parking Zones [GET]
@@ -3428,9 +3440,9 @@ Parking type enum:
     
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
+    + limit: 10 (optional, number) - Limits number of retrieved items. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET Ice Gateway Street Lamps [GET]
@@ -3527,9 +3539,9 @@ Parking type enum:
     
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. .
+    + limit: 10 (optional, number) - Limits number of retrieved items. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET Ice Gateway Sensors [GET]

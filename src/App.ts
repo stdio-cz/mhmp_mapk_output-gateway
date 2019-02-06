@@ -92,9 +92,9 @@ export default class App {
         const defaultRouter = express.Router();
 
         // Create base url route handler
-        defaultRouter.get(["/", "/health-check"], (req, res, next) => {
+        defaultRouter.get(["/", "/health-check", "/status"], (req, res, next) => {
 
-            log.silly("Health check called.");
+            log.silly("Health check/status called.");
 
             res.json({
                 app_name: "Data Platform Output Gateway",

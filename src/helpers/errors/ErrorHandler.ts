@@ -16,6 +16,10 @@ export class ErrorHandler {
                     toReturn = {error_message: "Not Found.", error_status: 404};
                     break;
                 }
+                case 409: {
+                    toReturn = {error_message: "Conflict.", error_status: 404};
+                    break;
+                }
                 default: {
                     toReturn = {error_message: "Server error.", error_status: 500};
                 }
@@ -24,7 +28,7 @@ export class ErrorHandler {
             log.error("Fatal error: " + err);
             process.exit(0); // if anything fails, process is killed
         }
-        // If we're in development, send Error stack also in a response
+        // If we're in development, add stack trace to the error object
         if (process.env.NODE_ENV === "development") {
             toReturn.stack_trace = err.stack;
         }

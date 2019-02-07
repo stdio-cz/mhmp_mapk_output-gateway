@@ -17,7 +17,7 @@ export class ErrorHandler {
                     break;
                 }
                 case 409: {
-                    toReturn = {error_message: "Conflict.", error_status: 404};
+                    toReturn = {error_message: "Conflict.", error_status: 409};
                     break;
                 }
                 default: {
@@ -26,7 +26,7 @@ export class ErrorHandler {
             }
         } else { // Unexpected non-operational error, damn u ded
             log.error("Fatal error: " + err);
-            process.exit(0); // if anything fails, process is killed
+            process.exit(err.code); // if anything fails, process is killed
         }
         // If we're in development, add stack trace to the error object
         if (process.env.NODE_ENV === "development") {

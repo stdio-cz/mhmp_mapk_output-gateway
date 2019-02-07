@@ -60,7 +60,6 @@ export default class App {
                 // Success callback
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
-
         } catch (err) {
             handleError(err);
         }

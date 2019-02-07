@@ -8,9 +8,9 @@ const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 const request = require('supertest')('localhost:' + config.port);
+const sinon = require("sinon");
 
 import log from "../src/helpers/Logger";
-""
 
 const express = require('express');
 
@@ -18,12 +18,24 @@ chai.use(chaiAsPromised);
 
 describe("App", () => {
 
+    let sandbox: any;
+    let exitStub: any;
+
     before(() => {
     });
 
-    it('should start', () => {
-        const app = new App().start();
-        expect(app).not.to.be.undefined;
+    beforeEach(() => {
+        sandbox = sinon.createSandbox({ useFakeTimers : true });
+        exitStub = sandbox.stub(process, "exit");
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+
+    it('should start', async () => {
+        const app = await new App().start();
+        expect(app).to.be.undefined;
     });
 
     it('should have all config variables set', () => {
@@ -39,11 +51,6 @@ describe("App", () => {
           .expect(200);
     });
 
-    it('should have response time below 100ms', () => {
-        request
-          .get('/')
-          .expect(200);
-    });
 
     it('should have health check on /health-check', () => {
         request
@@ -59,5 +66,13 @@ describe("App", () => {
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(404);
+    });
+
+    it('should respond with 400 BAD REQUEST to GET /parkings/?latlng with bad parameters', function(done) {
+        request
+          .get('/parkings/?latlng=50.11548N,14.43732asdasd').end((err:any, res:any) => {
+              expect(res.statusCode).to.be.equal(400);
+              done();
+          });
     });
 });

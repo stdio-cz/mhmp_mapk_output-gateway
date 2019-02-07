@@ -30,6 +30,8 @@ const { sequelizeConnection } = require("./helpers/PostgreDatabase");
 
 const { mongoConnection } = require("./helpers/MongoDatabase");
 
+const http = require("http");
+
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
  */
@@ -55,8 +57,13 @@ export default class App {
             this.express = express();
             this.middleware();
             this.routes();
+            let server = http.createServer(this.express);
+            // Setup error handler hook on server error
+            server.on('error', (err: any) => {
+                handleError(new CustomError("Could not start a server", false, 1, err));
+            });
             // Serve the application at the given port
-            this.express.listen(this.port, () => {
+            server.listen(this.port, () => {
                 // Success callback
                 log.info(`Listening at http://localhost:${this.port}/`);
             });

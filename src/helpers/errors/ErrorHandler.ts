@@ -26,7 +26,8 @@ export class ErrorHandler {
             }
         } else { // Unexpected non-operational error, damn u ded
             log.error("Fatal error: " + err);
-            process.exit(err.code); // if anything fails, process is killed
+            log.silly("Calling process.exit");
+            return process.exit(err.code); // if anything fails, process is killed
         }
         // If we're in development, add stack trace to the error object
         if (process.env.NODE_ENV === "development") {

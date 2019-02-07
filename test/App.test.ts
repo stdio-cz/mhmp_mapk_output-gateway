@@ -71,7 +71,8 @@ describe("App", () => {
     it('should respond with 400 BAD REQUEST to GET /parkings/?latlng with bad parameters', function(done) {
         request
           .get('/parkings/?latlng=50.11548N,14.43732asdasd').end((err:any, res:any) => {
-              expect(res.statusCode).to.be.equal(400);
+              const status = res.statusCode ? res.statusCode : res.status;
+              expect(status).to.be.equal(400);
               done();
           });
     });

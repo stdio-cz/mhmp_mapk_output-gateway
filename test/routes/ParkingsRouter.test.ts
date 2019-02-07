@@ -70,7 +70,7 @@ describe("ParkingsRouter", () => {
     it('should respond with error to GET /parkings/?latlng with bad parameters', function(done) {
         request(app)
           .get('/parkings/?latlng=50.11548N,14.43732asdasd').end((err:any, res:any) => {
-              expect(err).not.to.be.equal(undefined);
+              expect(err).not.to.be.undefined;
               done();
           });
     });

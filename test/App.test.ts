@@ -75,6 +75,9 @@ describe("App", () => {
               const status = res.statusCode ? res.statusCode : res.status;
               expect(status).to.be.equal(400);
               done();
+          }).catch((err:any) => {
+              log.debug(err);
+              done();
           });
     });
 });

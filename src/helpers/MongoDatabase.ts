@@ -15,8 +15,8 @@ export default class MongoDatabase {
         try {
             await mongoose.connect(this.connectionString, {
                 autoReconnect: true,
+                useCreateIndex: true,
                 useNewUrlParser: true,
-                useCreateIndex: true
             });
         } catch (err) {
             log.error("Could not connect to " + this.connectionString);
@@ -28,6 +28,5 @@ export default class MongoDatabase {
         });
     }
 }
-
 
 module.exports.mongoConnection = new MongoDatabase().connect();

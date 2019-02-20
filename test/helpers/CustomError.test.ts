@@ -14,8 +14,6 @@ describe("CustomError", () => {
     let error1: CustomError;
     let error2: CustomError;
     let error3: CustomError;
-    let error4: CustomError;
-    let error5: CustomError;
     let tmpNodeEnv: string | undefined;
 
     before(() => {

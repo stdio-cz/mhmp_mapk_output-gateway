@@ -10,7 +10,6 @@ export default class CustomError extends Error {
     /** Additional info about error cause, parent error */
     public cause?: any;
 
-
   constructor(message: string, isOperational?: boolean, code?: number, cause?: any) {
     super(message);
     this.name = (this.constructor as any).name;

@@ -7,13 +7,13 @@
 
 // Import only what we need from express
 import { NextFunction, Request, Response, Router } from "express";
-import { ParkingZonesModel } from "../models/ParkingZonesModel";
-import { GeoJsonRouter } from "./GeoJsonRouter";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
+import { ParkingZonesModel } from "../models/ParkingZonesModel";
+import { GeoJsonRouter } from "./GeoJsonRouter";
 
 export class ParkingZonesRouter extends GeoJsonRouter {
-    
+
     protected model: ParkingZonesModel = new ParkingZonesModel();
 
     constructor() {
@@ -23,7 +23,7 @@ export class ParkingZonesRouter extends GeoJsonRouter {
     }
 
     public GetTariffs = (req: Request, res: Response, next: NextFunction) => {
-        const id: String = req.params.id;
+        const id: string = req.params.id;
         this.model.GetTariffs(id).then((data) => {
             res.status(200)
                 .send(data);

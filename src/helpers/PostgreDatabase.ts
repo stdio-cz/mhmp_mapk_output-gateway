@@ -6,10 +6,9 @@ import handleError from "./errors/ErrorHandler";
 import log from "./Logger";
 const config = require("../config/config");
 
-
 export default class PostgresDatabase {
 
-    // TODO: strictPropertyInitialization fails here - is it really wrong that the property is not initialized??
+    // TODO: TSLint strictPropertyInitialization fails here - is it really wrong that the property is not initialized??
     private sequelize: Sequelize.Sequelize;
     private connectionString: string;
 
@@ -37,7 +36,7 @@ export default class PostgresDatabase {
                 },
             });
             log.info("Connected to PostgresSQL DB!");
-                return this.sequelize;
+            return this.sequelize;
         } catch (err) {
             handleError(new CustomError("Error while connecting to PostgresSQL.", false,
                 5001, err));
@@ -46,4 +45,3 @@ export default class PostgresDatabase {
 }
 
 module.exports.sequelizeConnection = new PostgresDatabase().connect();
-

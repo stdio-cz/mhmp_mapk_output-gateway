@@ -57,9 +57,9 @@ export default class App {
             this.express = express();
             this.middleware();
             this.routes();
-            let server = http.createServer(this.express);
+            const server = http.createServer(this.express);
             // Setup error handler hook on server error
-            server.on('error', (err: any) => {
+            server.on("error", (err: any) => {
                 handleError(new CustomError("Could not start a server", false, 1, err));
             });
             // Serve the application at the given port
@@ -86,8 +86,8 @@ export default class App {
     }
 
     private middleware = (): void => {
-        httpLogger.token('date', function(){
-            return new Date().toISOString()
+        httpLogger.token("date", () => {
+            return new Date().toISOString();
         });
         this.express.use(httpLogger("combined"));
 
@@ -116,7 +116,7 @@ export default class App {
         this.express.use("/vehiclepositions", VehiclePositionsRouter);
 
         // Create general routes through builder
-        let builder: RouterBuilder = new RouterBuilder(defaultRouter);
+        const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.BuildAllRoutes();
 
         // Not found error - no route was matched

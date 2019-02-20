@@ -3,8 +3,8 @@
 import "mocha";
 import { ParkingsModel } from "../../src/models/ParkingsModel";
 const config = require("../../src/config/config");
-import MongoDatabase from "../../src/helpers/MongoDatabase";
 import handleError from "../../src/helpers/errors/ErrorHandler";
+import MongoDatabase from "../../src/helpers/MongoDatabase";
 const { mongoConnection } = require("../../src/helpers/MongoDatabase");
 
 const chai = require("chai");
@@ -18,7 +18,7 @@ describe("ParkingsModel", () => {
 
     let model: ParkingsModel;
     let parkingId: number;
-    let coordinates: Array<number>;
+    let coordinates: number[];
 
     before(async () => {
         const uri: string = config.mongo_connection || "";
@@ -99,7 +99,6 @@ describe("ParkingsModel", () => {
         const promise = model.GetOne(-1);
         await expect(promise).to.be.rejected;
     });
-
 
     it("should return fulfilled promise to GetByCoordinates call", async () => {
         const promise = model.GetAll(coordinates[0], coordinates[1]);

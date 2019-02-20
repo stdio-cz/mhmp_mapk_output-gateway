@@ -3,8 +3,8 @@
 import "mocha";
 import { ParkingZonesModel } from "../../src/models";
 const config = require("../../src/config/config");
-import MongoDatabase from "../../src/helpers/MongoDatabase";
 import handleError from "../../src/helpers/errors/ErrorHandler";
+import MongoDatabase from "../../src/helpers/MongoDatabase";
 const { mongoConnection } = require("../../src/helpers/MongoDatabase");
 
 const chai = require("chai");
@@ -17,8 +17,8 @@ chai.use(chaiAsPromised);
 describe("ParkingZonesModel", () => {
 
     let model: ParkingZonesModel;
-    let parkingZoneCode: String;
-    let coordinates: Array<number>;
+    let parkingZoneCode: string;
+    let coordinates: number[];
 
     before(async () => {
         const uri: string = config.mongo_connection || "";
@@ -100,7 +100,6 @@ describe("ParkingZonesModel", () => {
         await expect(promise).to.be.rejected;
     });
 
-
     it("should return at least 2 records, sorted by the closest one (GetByCoordinates)", async () => {
         const data = await model.GetAll(coordinates[0], coordinates[1]);
         const first = data.features[0];
@@ -118,7 +117,10 @@ describe("ParkingZonesModel", () => {
     it("should return by coordinates and range", async () => {
         const data = await model.GetAll(coordinates[0], coordinates[1], undefined, 1);
         const first = data.features[0];
-        const rangeData = await model.GetAll(first.geometry.coordinates[0][0][1], first.geometry.coordinates[0][0][0], 0.1);
+        const rangeData = await model.GetAll(   first.geometry.coordinates[0][0][1],
+                                                first.geometry.coordinates[0][0][0],
+                                                0.1,
+                                            );
         // TODO: Add test to check the last record in array that it is not further from coordinates than range
         expect(data.features.length).to.be.equal(1);
     });

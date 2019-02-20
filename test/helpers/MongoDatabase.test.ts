@@ -29,7 +29,7 @@ describe("Mongo Database", () => {
 
     it("should connect ", async () => {
         log.info("Connecting to: " + uri);
-        let connection = database.connect();
+        const connection = database.connect();
         await expect(connection).to.be.fulfilled;
     });
 

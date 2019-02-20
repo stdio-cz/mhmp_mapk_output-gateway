@@ -3,11 +3,11 @@
  * Performs database queries.
  */
 
+import { ParkingZones } from "data-platform-schema-definitions";
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import { GeoJsonModel } from "./GeoJsonModel";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
-import { ParkingZones } from "data-platform-schema-definitions";
+import { GeoJsonModel } from "./GeoJsonModel";
 
 export class ParkingZonesModel extends GeoJsonModel {
 
@@ -21,26 +21,28 @@ export class ParkingZonesModel extends GeoJsonModel {
         this.AddProjection({"properties.tariffs": 0});
     }
 
-    PrimaryIdentifierSelection = (inId: String) => {
-        return {"properties.code": inId};
-    }
-
     /** Retrieves tariffs to one zone
      * @param inId Id of the record which tariffs to be retrieved
      * @returns Object of the retrieved record or null
      */
     public GetTariffs = async (inId: any): Promise<object> => {
-        const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), {"properties.tariffs": 1, "_id": 0}).exec();
+        const found = await this.model.findOne( this.PrimaryIdentifierSelection(inId),
+                                                {"properties.tariffs": 1, "_id": 0},
+                                            ).exec();
         if (!found || found instanceof Array && found.length === 0) {
             log.debug("Could not find any record by following selection:");
             log.debug(this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, 404);
-        } else if (!found.properties || found.properties.tariffs === undefined){
+        } else if (!found.properties || found.properties.tariffs === undefined) {
             log.debug("Object doesn't have properties or properties.tariffs");
             throw new CustomError("Id `" + inId + "` not found", true, 404);
         } else {
             return found.properties.tariffs;
         }
+    }
+
+    protected PrimaryIdentifierSelection = (inId: string) => {
+        return {"properties.code": inId};
     }
 
 }

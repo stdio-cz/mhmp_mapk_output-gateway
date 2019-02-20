@@ -3,10 +3,9 @@ import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 
 /**
- * General model for GeoJSON data. Geo-spatial indexing and querying.
- * 
+ * General model for GeoJSON data. Geo-spatial indexing and querying. General GetAll and GetOne functions
+ *
  * Expects GeoJSON data structure:
- * 
  * geometry: { coordinates[], type },
  * properties: { ... }
  * type: Feature
@@ -18,37 +17,20 @@ export class GeoJsonModel {
     protected name: string;
     /** The schema which contains schemaObject for creating the Mongoose Schema */
     protected schema: Schema;
-    /** Selection object to filter the retrieved records */
-    private selection: Object = {};
-    /** Projection object to filter the retrieved record's attributes */
-    private projection: Object = {};
     /** Name of the mongo collection where the model is stored in the database */
     protected collectionName: string|undefined;
+    /** Selection object to filter the retrieved records */
+    private selection: object = {};
+    /** Projection object to filter the retrieved record's attributes */
+    private projection: object = {};
 
     /**
-     * Adds a new selection condition to filter the retrieved results by
-     * @param newCondition New condition/filter object to be added to the "where" clause
+     * Creates a model with specified schema definition
+     * @param inName Name of the model - corresponding with mongo collection name (eg. "parkings" for "Parking" model)
+     * @param inSchema Schema of the data
+     * @param inCollectionName (optional) Name of the mongo collection
+     * if empty, collection named as plural of model's name is used
      */
-    protected AddSelection = (newCondition: Object) => {
-        this.selection = { ...this.selection, ...newCondition };
-    }
-
-    /**
-     * Adds a new projection to filter what attributes to retrieve from the selected objects
-     * @param newFilter New filter to be added to the "select" clause
-     */
-    protected AddProjection = (newFilter: Object) => {
-        this.projection = { ...this.projection, ...newFilter };
-    }
-
-    /**
-     * Specify where to search by primary id
-     * The entity is uniquely identified by this property
-     */
-    protected PrimaryIdentifierSelection = (inId: any): object => {
-        return { "properties.id": inId };
-    }
-
     public constructor(inName: string, inSchema: SchemaDefinition, inCollectionName?: string) {
         this.name = inName;
         this.schema = new Schema(inSchema);
@@ -66,28 +48,8 @@ export class GeoJsonModel {
             this.model = model(this.name, this.schema, this.collectionName);
         }
         // Don't return default mongoose values and mongo internal ID
-        this.AddProjection({ "_id": 0, "__v": 0 });
+        this.AddProjection({ _id: 0, __v: 0 });
     }
-
-    /**
-     * Retrieves data from database, filtered by specified district.
-     * @param district City district name/slug to filter the data by
-     * @param limit Limit
-     * @param offset Offset
-     * @param updatedSince Filters all results with older last_updated timestamp than this parameter
-     * (filters not-updated data)
-     * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
-    */
-    public GetByDistrict = async (  district: string,
-                                    limit?: number,
-                                    offset?: number,
-                                    updatedSince?: number,
-    ) => {
-        const selection = {"properties.district": district};
-        this.AddSelection(selection);
-        this.GetAll(limit, offset, updatedSince);
-    }
-
 
     /** Retrieves all the records from database
      * @param lat Latitude to sort results by (by proximity)
@@ -97,21 +59,23 @@ export class GeoJsonModel {
      * @param offset Offset
      * @param updatedSince Filters all results with older last_updated timestamp than this parameter
      * (filters not-updated data)
+     * @param additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
     public GetAll = async ( lat?: number,
                             lng?: number,
                             range?: number,
-                            limit?: number, 
-                            offset?: number, 
+                            limit?: number,
+                            offset?: number,
                             updatedSince?: number,
-                            districts?: Array<string>,
-                            ids?: Array<number>) => {
+                            districts?: string[],
+                            ids?: number[],
+                            additionalFilters?: object ) => {
         try {
             const q = this.model.find({});
 
             // Specify a query filter conditions to search by geometry location
-            if (lat){
+            if (lat) {
                 const selection: any = {
                     geometry: {
                         $near: {
@@ -144,6 +108,11 @@ export class GeoJsonModel {
                 this.AddSelection(this.PrimaryIdentifierSelection({$in: ids}));
             }
 
+            // Specify a query filter conditions to search by additional filter parameters
+            if (additionalFilters) {
+                this.AddSelection(additionalFilters);
+            }
+
             q.where(this.selection);
             if (limit) {
                 q.limit(limit);
@@ -153,12 +122,12 @@ export class GeoJsonModel {
             }
             q.select(this.projection);
             this.selection = {};
-            let data = await q.exec();
+            const data = await q.exec();
             // Create GeoJSON FeatureCollection output
             return {
                 features: data,
                 type: "FeatureCollection",
-            }
+            };
         } catch (err) {
             throw new CustomError("Database error", false, 500, err);
         }
@@ -179,4 +148,27 @@ export class GeoJsonModel {
         }
     }
 
+    /**
+     * Adds a new selection condition to filter the retrieved results by
+     * @param newCondition New condition/filter object to be added to the "where" clause
+     */
+    protected AddSelection = (newCondition: object) => {
+        this.selection = { ...this.selection, ...newCondition };
+    }
+
+    /**
+     * Adds a new projection to filter what attributes to retrieve from the selected objects
+     * @param newFilter New filter to be added to the "select" clause
+     */
+    protected AddProjection = (newFilter: object) => {
+        this.projection = { ...this.projection, ...newFilter };
+    }
+
+    /**
+     * Specify where to search by primary id
+     * The entity is uniquely identified by this property
+     */
+    protected PrimaryIdentifierSelection = (inId: any): object => {
+        return { "properties.id": inId };
+    }
 }

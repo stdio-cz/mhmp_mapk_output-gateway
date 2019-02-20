@@ -3,10 +3,10 @@
  * Performs database queries.
  */
 
-import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import { GeoJsonModel } from "./GeoJsonModel";
-import CustomError from "../helpers/errors/CustomError";
 import { Parkings } from "data-platform-schema-definitions";
+import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
+import CustomError from "../helpers/errors/CustomError";
+import { GeoJsonModel } from "./GeoJsonModel";
 
 export class ParkingsModel extends GeoJsonModel {
 
@@ -19,7 +19,7 @@ export class ParkingsModel extends GeoJsonModel {
         // Set model-specific indexes
         this.schema.index(
             { "properties.name": "text", "properties.address": "text" },
-            { weights: { "properties.name": 5, "properties.address": 1 } }
+            { weights: { "properties.name": 5, "properties.address": 1 } },
         );
     }
 }

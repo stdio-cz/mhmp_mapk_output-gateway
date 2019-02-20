@@ -7,11 +7,11 @@
 
 // Import only what we need from express
 import { NextFunction, Request, Response, Router } from "express";
-import { ParkingsModel } from "../models/ParkingsModel";
-import { GeoJsonRouter } from "./GeoJsonRouter";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import log from "../helpers/Logger";
+import { ParkingsModel } from "../models/ParkingsModel";
+import { GeoJsonRouter } from "./GeoJsonRouter";
 
 export class ParkingsRouter extends GeoJsonRouter {
 

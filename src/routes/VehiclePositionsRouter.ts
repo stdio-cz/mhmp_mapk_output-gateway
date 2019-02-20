@@ -9,24 +9,17 @@
 import { NextFunction, Request, Response, Router } from "express";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
-import { VehiclePositionsModel } from "../models/VehiclePositionsModel";
 import log from "../helpers/Logger";
+import { VehiclePositionsModel } from "../models/VehiclePositionsModel";
 
 export class VehiclePositionsRouter {
-    protected model: VehiclePositionsModel;
-    
+
     // Assign router to the express.Router() instance
     public router: Router = Router();
 
-    /**
-     * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
-     */
-    private initRoutes = (): void => {
-        this.router.get("/", this.GetAll);
-        this.router.get("/:id", this.GetOne);
-    }
+    protected model: VehiclePositionsModel;
 
-    public constructor(){
+    public constructor() {
         this.model = new VehiclePositionsModel();
         this.initRoutes();
     }
@@ -49,6 +42,14 @@ export class VehiclePositionsRouter {
         }).catch((err) => {
             next(err);
         });
+    }
+
+    /**
+     * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
+     */
+    private initRoutes = (): void => {
+        this.router.get("/", this.GetAll);
+        this.router.get("/:id", this.GetOne);
     }
 }
 

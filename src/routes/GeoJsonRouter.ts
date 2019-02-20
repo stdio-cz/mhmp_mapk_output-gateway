@@ -7,16 +7,21 @@
 
 // Import only what we need from express
 import { NextFunction, Request, Response, Router } from "express";
-import { GeoJsonModel } from "../models/GeoJsonModel";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import log from "../helpers/Logger";
+import { GeoJsonModel } from "../models/GeoJsonModel";
 
 export class GeoJsonRouter {
-    protected model: GeoJsonModel;
-    
+
     // Assign router to the express.Router() instance
     public router: Router = Router();
+
+    protected model: GeoJsonModel;
+
+    public constructor(inModel: GeoJsonModel) {
+        this.model = inModel;
+    }
 
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
@@ -26,14 +31,10 @@ export class GeoJsonRouter {
         this.router.get("/:id", this.GetOne);
     }
 
-    public constructor(inModel: GeoJsonModel){
-        this.model = inModel;
-    }
-
     public ConvertToArray = (toBeArray: any) => {
-        if (! (toBeArray instanceof Array) ){
-            log.silly("Converting value `" + toBeArray + "` to array.")
-            let val = toBeArray;
+        if (! (toBeArray instanceof Array) ) {
+            log.silly("Converting value `" + toBeArray + "` to array.");
+            const val = toBeArray;
             toBeArray = [];
             toBeArray.push(val);
         }
@@ -48,21 +49,20 @@ export class GeoJsonRouter {
         let ids: number[] = req.query.ids;
         let districts: string[] = req.query.districts;
 
-
-        if (districts){
+        if (districts) {
             districts = this.ConvertToArray(districts);
         }
 
-        if (ids){
+        if (ids) {
             ids = this.ConvertToArray(ids);
         }
 
-        let lat: number|undefined = undefined;
-        let lng: number|undefined = undefined;
-        let range: number|undefined = undefined;
+        let lat: number|undefined;
+        let lng: number|undefined;
+        let range: number|undefined;
 
         // Searching by coordinates
-        if (req.query.latlng) { 
+        if (req.query.latlng) {
             const [latStr, lngStr] = req.query.latlng.split(",");
             lat = +latStr;
             lng = +lngStr;
@@ -87,7 +87,7 @@ export class GeoJsonRouter {
     }
 
     public GetOne = (req: Request, res: Response, next: NextFunction) => {
-        const id: String = req.params.id;
+        const id: string = req.params.id;
 
         this.model.GetOne(id).then((data) => {
             res.status(200)

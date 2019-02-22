@@ -53,7 +53,7 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 # Group General
 General resources.
 
-## Prague City Districts [/city-districts/{?latlng,range,limit,offset,updatedSince}]
+## Prague City Districts [/citydistricts/{?latlng,range,limit,offset,updatedSince}]
 
 + Parameters
 
@@ -1151,7 +1151,7 @@ General resources.
             }
 
 
-## Prague City District [/city-districts/{district_id}]
+## Prague City District [/citydistricts/{district_id}]
 
 + Parameters
 
@@ -2446,7 +2446,16 @@ General resources.
                 "type": "Feature"
             }
             
-            
+
++ Response 404 (application/json; charset=utf-8)
+
+    + Body
+    
+            {
+                    "error_message": "Not Found.",
+                    "error_status": 404,
+            }
+
 # Group Traffic
 Online traffic data from Prague.
 
@@ -2704,7 +2713,7 @@ Parking type enum:
 
 + Parameters
 
-    + parking_id: 534013 (number) - Identifier of the parking.
+    + parking_id: 534017 (number) - Identifier of the parking.
 
 ### GET Parking [GET]
 
@@ -2927,7 +2936,14 @@ Parking type enum:
                 "type": "Feature"
             }
 
-+ Response 404
++ Response 404 (application/json; charset=utf-8)
+
+    + Body
+    
+            {
+                    "error_message": "Not Found.",
+                    "error_status": 404,
+            }
 
 
 ## Parking Zones [/parkingzones/{?latlng,range,district,limit,offset,updatedSince}]
@@ -3170,7 +3186,7 @@ Parking type enum:
 
 + Parameters
 
-    + parkingzone_code: `P6-0545` (string) - Identifier of the parking zone.
+    + parkingzone_code: `P1-0101` (string) - Identifier of the parking zone.
 
 ### GET Parking Zone [GET]
 
@@ -3189,204 +3205,91 @@ Parking type enum:
                     "coordinates": [
                         [
                             [
-                                [
-                                    14.380471579000073,
-                                    50.084386219000066
-                                ],
-                                [
-                                    14.38045809700003,
-                                    50.084401049000064
-                                ],
-                                [
-                                    14.380472310000073,
-                                    50.08440725100007
-                                ],
-                                [
-                                    14.38049959600005,
-                                    50.08442319100004
-                                ],
-                                [
-                                    14.380511089000038,
-                                    50.08443175600007
-                                ],
-                                [
-                                    14.38052306000003,
-                                    50.08444373000003
-                                ],
-                                [
-                                    14.380597563000038,
-                                    50.08451820100004
-                                ],
-                                [
-                                    14.38068697500006,
-                                    50.08461349400005
-                                ],
-                                [
-                                    14.380875235000076,
-                                    50.08481296800005
-                                ],
-                                [
-                                    14.381051315000036,
-                                    50.08499939600006
-                                ],
-                                [
-                                    14.381215230000066,
-                                    50.08517305300006
-                                ],
-                                [
-                                    14.381286912000064,
-                                    50.08524857900005
-                                ],
-                                [
-                                    14.381311468000035,
-                                    50.085239589000025
-                                ],
-                                [
-                                    14.381196395000075,
-                                    50.08511965100007
-                                ],
-                                [
-                                    14.38066836400003,
-                                    50.084558850000064
-                                ],
-                                [
-                                    14.380584295000062,
-                                    50.08447086700005
-                                ],
-                                [
-                                    14.38054164600004,
-                                    50.08442772800004
-                                ],
-                                [
-                                    14.380512130000056,
-                                    50.08440594500007
-                                ],
-                                [
-                                    14.380478767000056,
-                                    50.08438873700004
-                                ],
-                                [
-                                    14.380471579000073,
-                                    50.084386219000066
-                                ]
-                            ]
-                        ],
-                        [
+                                14.3894141860001,
+                                50.091355085
+                            ],
                             [
-                                [
-                                    14.380576055000063,
-                                    50.08434487800008
-                                ],
-                                [
-                                    14.380552322000028,
-                                    50.08435547500005
-                                ],
-                                [
-                                    14.380635492000067,
-                                    50.084437732000026
-                                ],
-                                [
-                                    14.380675248000045,
-                                    50.084478381000054
-                                ],
-                                [
-                                    14.381098076000058,
-                                    50.08492977000003
-                                ],
-                                [
-                                    14.381466844000045,
-                                    50.08531846900007
-                                ],
-                                [
-                                    14.381490460000066,
-                                    50.08530886900007
-                                ],
-                                [
-                                    14.38114353800006,
-                                    50.08494404000004
-                                ],
-                                [
-                                    14.380862895000064,
-                                    50.084643655000036
-                                ],
-                                [
-                                    14.380642213000044,
-                                    50.08440735100004
-                                ],
-                                [
-                                    14.380576055000063,
-                                    50.08434487800008
-                                ]
+                                14.3894781020001,
+                                50.091373005
+                            ],
+                            [
+                                14.389616211,
+                                50.091213872
+                            ],
+                            [
+                                14.389593373,
+                                50.0912116800001
+                            ],
+                            [
+                                14.3895492180001,
+                                50.0911929920001
+                            ],
+                            [
+                                14.3894141860001,
+                                50.091355085
                             ]
                         ]
                     ],
-                    "type": "MultiPolygon"
+                    "type": "Polygon"
                 },
                 "properties": {
-                    "code": "P6-0545",
+                    "code": "P1-0101",
                     "midpoint": [
-                        14.380974273257781,
-                        50.08483167464439
+                        14.3895151983103,
+                        50.0912829985439
                     ],
-                    "name": "Smíšený úsek - P6-0545",
+                    "name": "Rezidentní úsek - P1-0101",
                     "northeast": [
-                        14.381490460000066,
-                        50.08531846900007
+                        14.389616211,
+                        50.091373005
                     ],
-                    "number_of_places": 39,
-                    "payment_link": "https://ke-utc.appspot.com/static/onstreet.html?shortname=P6-0545",
+                    "number_of_places": 8,
+                    "payment_link": "https://ke-utc.appspot.com/static/onstreet.html?shortname=P1-0101",
                     "southwest": [
-                        14.38045809700003,
-                        50.08434487800008
+                        14.3894141860001,
+                        50.0911929920001
                     ],
                     "tariffs": [
                         {
                             "days": [
+                                0,
                                 1,
                                 2,
-                                3
-                            ],
-                            "intervals": [
-                                {
-                                    "divisibility": 30,
-                                    "time_from": 480,
-                                    "max_parking_time": 1320,
-                                    "price_per_hour": 20,
-                                    "time_to": 359
-                                }
-                            ]
-                        },
-                        {
-                            "days": [
+                                3,
                                 4,
-                                5
+                                5,
+                                6
                             ],
                             "intervals": [
                                 {
-                                    "divisibility": 60,
+                                    "divisibility": 15,
                                     "time_from": 480,
-                                    "max_parking_time": 1320,
-                                    "price_per_hour": 20,
+                                    "max_parking_time": 60,
+                                    "price_per_hour": 80,
                                     "time_to": 359
                                 }
                             ]
                         }
                     ],
-                    "timestamp": 1546939550655,
+                    "timestamp": 1546939550394,
                     "type": {
-                        "description": "Smíšený úsek",
-                        "id": 2
+                        "description": "Rezidentní úsek",
+                        "id": 1
                     },
-                    "zps_id": null,
-                    "zps_ids": [
-                        7696,
-                        7943
-                    ]
+                    "zps_id": 3309
                 },
                 "type": "Feature"
             }
 
-+ Response 404
++ Response 404 (application/json; charset=utf-8)
+
+    + Body
+    
+            {
+                    "error_message": "Not Found.",
+                    "error_status": 404,
+            }
+
 
 ## Vehicle Positions [/vehiclepositions]
 
@@ -3405,31 +3308,52 @@ Parking type enum:
             {
                 "features": [
                     {
-                        "type": "Feature",
-                        "properties": {
-                            "line": "100110",
-                            "route_id_cis": 105,
-                            "created": "2019-01-14T12:58:45.295Z",
-                            "timestamp": "2019-01-14T12:58:19.000Z",
-                            "last_stop_id_cis": 55739,
-                            "delay_stop_departure": 156,
-                            "tracking": 2,
-                            "start_date": "2019-01-14T12:23:00.000Z",
-                            "is_low_floor": true,
-                            "is_canceled": false
-                        },
                         "geometry": {
-                            "type": "Point",
                             "coordinates": [
-                                14.57596,
-                                50.0857
-                            ]
-                        }
+                                14.50872,
+                                50.15012
+                            ],
+                            "type": "Point"
+                        },
+                        "properties": {
+                            "created": "2019-02-22T15:29:03.039Z",
+                            "delay_stop_departure": null,
+                            "is_canceled": false,
+                            "is_low_floor": false,
+                            "last_stop_id_cis": 51407,
+                            "line": "100110",
+                            "route_id_cis": 134,
+                            "start_date": "2019-02-22T14:56:00.000Z",
+                            "timestamp": "2019-02-22T15:28:37.000Z",
+                            "tracking": 2
+                        },
+                        "type": "Feature"
+                    },
+                    {
+                        "geometry": {
+                            "coordinates": [
+                                14.60805,
+                                50.11731
+                            ],
+                            "type": "Point"
+                        },
+                        "properties": {
+                            "created": "2019-02-22T15:28:37.967Z",
+                            "delay_stop_departure": null,
+                            "is_canceled": false,
+                            "is_low_floor": true,
+                            "last_stop_id_cis": null,
+                            "line": "100110",
+                            "route_id_cis": 135,
+                            "start_date": "2019-02-22T15:01:00.000Z",
+                            "timestamp": "2019-02-22T15:27:39.000Z",
+                            "tracking": 2
+                        },
+                        "type": "Feature"
                     }
-            }    
-
-+ Response 404
-
+                ],
+                "type": "FeatureCollection"
+            }
 
 
 # Group Sensors
@@ -3492,7 +3416,7 @@ Parking type enum:
 
 + Parameters
 
-    + icegeteway_code: `ICE-003-042-000-003` (string) - Identifier of the lamp.
+    + icegeteway_code: `ICE-003-042-000-001` (string) - Identifier of the lamp.
     
 ### GET Ice Gateway Street Lamp [GET]
 
@@ -3531,7 +3455,15 @@ Parking type enum:
             }
             
 
-+ Response 404
++ Response 404 (application/json; charset=utf-8)
+
+    + Body
+    
+            {
+                    "error_message": "Not Found.",
+                    "error_status": 404,
+            }
+
 
 ## IceGateway Sensors [/icegatewaysensors{?latlng,range,district,limit,offset,updatedSince}]
 
@@ -3587,15 +3519,13 @@ Parking type enum:
                 ],
                 "type": "FeatureCollection"
             }
-                
 
-+ Response 404
 
 ## IceGateway Sensor [/icegatewaysensors/{icegeteway_code}]
 
 + Parameters
 
-    + icegeteway_code: `ICE-003-042-000-030` (string) - Identifier of the sensor.
+    + icegeteway_code: `ICE-003-042-000-010` (string) - Identifier of the sensor.
 
 ### GET Ice Gate Way Sensor [GET]
 
@@ -3655,6 +3585,11 @@ Parking type enum:
             }
             
 
-+ Response 404
++ Response 404 (application/json; charset=utf-8)
 
-
+    + Body
+    
+            {
+                    "error_message": "Not Found.",
+                    "error_status": 404,
+            }

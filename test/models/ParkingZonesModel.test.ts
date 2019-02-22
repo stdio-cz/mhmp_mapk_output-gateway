@@ -24,8 +24,8 @@ describe("ParkingZonesModel", () => {
         const uri: string = config.mongo_connection || "";
         await mongoConnection;
         model = new ParkingZonesModel();
-        parkingZoneCode = "P4-0265";
-        coordinates = [50.032074, 14.492015];
+        parkingZoneCode = "P1-0101";
+        coordinates = [50.0912829985439, 14.3895151983103];
     });
 
     it("should instantiate", () => {

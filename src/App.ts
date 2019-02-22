@@ -22,6 +22,8 @@ import ParkingsRouter from "./routes/ParkingsRouter";
 
 import ParkingZonesRouter from "./routes/ParkingZonesRouter";
 
+import CityDistrictsRouter from "./routes/CityDistrictsRouter";
+
 import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
 
 const config = require("./config/config");
@@ -111,6 +113,7 @@ export default class App {
 
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
+        this.express.use("/citydistricts", CityDistrictsRouter);
         this.express.use("/parkings", ParkingsRouter);
         this.express.use("/parkingzones", ParkingZonesRouter);
         this.express.use("/vehiclepositions", VehiclePositionsRouter);

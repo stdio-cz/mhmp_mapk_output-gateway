@@ -30,11 +30,6 @@ export default class RouterBuilder {
                 name: IceGatewaySensors.name,
                 schema: IceGatewaySensors.outputMongooseSchemaObject,
             },
-            {
-                collectionName: CityDistricts.mongoCollectionName,
-                name: CityDistricts.name,
-                schema: CityDistricts.outputMongooseSchemaObject,
-            },
         ];
     }
 

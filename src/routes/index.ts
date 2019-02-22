@@ -1,4 +1,5 @@
 /* app/models/index.ts */
+export * from "./CityDistrictsRouter";
 export * from "./ParkingsRouter";
 export * from "./ParkingZonesRouter";
 export * from "./GeoJsonRouter";

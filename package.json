@@ -17,14 +17,14 @@
     "url": "https://gitlab.oict.cz/data-platform/output-gateway"
   },
   "dependencies": {
-    "data-platform-schema-definitions": "^0.1.1-753",
+    "data-platform-schema-definitions": "^0.1.3-1146",
     "debug": "^4.1.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "mongoose": "^5.3.4",
     "morgan": "^1.9.1",
     "pg": "^7.7.1",
-    "sequelize": "^4.42.0",
+    "sequelize": "4.41.2",
     "winston": "^3.1.0"
   },
   "devDependencies": {
@@ -35,7 +35,7 @@
     "@types/mongoose": "^5.2.19",
     "@types/morgan": "^1.7.35",
     "@types/node": "^10.12.7",
-    "@types/sequelize": "^4.27.37",
+    "@types/sequelize": "4.27.32",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^5.2.0",

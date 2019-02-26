@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // App version, statically defined here, does not depend on environment
     app_version: "0.0.1",
     colorful_logs: process.env.COLORFUL_LOGS,

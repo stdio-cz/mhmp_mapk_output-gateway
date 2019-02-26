@@ -14,7 +14,13 @@ import { GeoJsonModel } from "../models";
  * adds filtering parameters (geo, city district, limit, offset, last updated)
  */
 export default class RouterBuilder {
+    /**
+     * Router instance to build all the routes on
+     */
     private router: Router;
+    /**
+     * Routes data - name (base url) of the routes, data schemas and (optional) collection name
+     */
     private routesData: Array<{name: string, schema: SchemaDefinition, collectionName: string}>;
 
     constructor(inRouter: Router) {
@@ -50,7 +56,9 @@ export default class RouterBuilder {
      *
      * @param inData Array with data about the new created routes, contains object with name
      * (specifies where the routes will be available)
-     * and schema (format of the data to be returned at the routes)
+     * and schema (format of the data to be returned at the routes).
+     *
+     * Binds routes to /{name}
      */
     public CreateGeojsonRoutes(inData: Array<{name: string, schema: SchemaDefinition, collectionName: string}>) {
         inData.forEach((data) => {
@@ -60,6 +68,9 @@ export default class RouterBuilder {
         });
     }
 
+    /**
+     * Builds all routes based on data in this.data and mouts them to this.router
+     */
     public BuildAllRoutes() {
         this.CreateGeojsonRoutes(this.routesData);
     }

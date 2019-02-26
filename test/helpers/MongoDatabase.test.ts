@@ -2,7 +2,7 @@
 
 import "mocha";
 const config = require("../../src/config/config");
-import Database from "../../src/helpers/MongoDatabase";
+import { MongoDatabase } from "../../src/helpers/MongoDatabase";
 
 const chai = require("chai");
 const expect = chai.expect;
@@ -13,10 +13,10 @@ chai.use(chaiAsPromised);
 
 describe("Mongo Database", () => {
     const uri: string = config.mongo_connection || "";
-    let database: Database;
+    let database: MongoDatabase;
 
     before(() => {
-        database = new Database();
+        database = new MongoDatabase();
     });
 
     it("should instantiate", () => {

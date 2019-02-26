@@ -1,8 +1,8 @@
+import { VehiclePositions } from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
-const { sequelizeConnection } = require("../helpers/PostgreDatabase");
-import { VehiclePositions } from "data-platform-schema-definitions";
+import sequelizeConnection from "../helpers/PostgreDatabase";
 
 /**
  * TODO

@@ -1,6 +1,6 @@
-const debugLog = require("debug")("data-platform:output-gateway");
-
 const config = require("../config/config");
+
+const debugLog = require("debug")("data-platform:output-gateway");
 
 const winston = require("winston");
 const { combine, timestamp, label, printf, prettyPrint, colorize, align } = winston.format;
@@ -29,6 +29,15 @@ const logger = winston.createLogger({
 });
 
 const winstonDebugLog = logger.debug;
+const winstonSillyLog = logger.silly;
+
+// Log all "SILLY" logs also to debug module
+logger.silly = (logText: any) => {
+    debugLog(logText);
+    winstonSillyLog(logText);
+};
+
+// Log all "DEBUG" logs also to debug module
 logger.debug = (logText: any) => {
     debugLog(logText);
     winstonDebugLog(logText);

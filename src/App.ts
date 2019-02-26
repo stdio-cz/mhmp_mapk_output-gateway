@@ -26,13 +26,13 @@ import CityDistrictsRouter from "./routes/CityDistrictsRouter";
 
 import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
 
-const config = require("./config/config");
+import config from "./config/config";
 
-const { sequelizeConnection } = require("./helpers/PostgreDatabase");
+import sequelizeConnection from "./helpers/PostgreDatabase";
 
-const { mongoConnection } = require("./helpers/MongoDatabase");
+import mongoConnection from "./helpers/MongoDatabase";
 
-const http = require("http");
+import * as http from "http";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.

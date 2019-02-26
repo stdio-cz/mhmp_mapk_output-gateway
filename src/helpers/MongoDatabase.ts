@@ -1,14 +1,14 @@
 import * as mongoose from "mongoose";
+import config from "./../config/config";
 import CustomError from "./errors/CustomError";
 import handleError from "./errors/ErrorHandler";
 import log from "./Logger";
-const config = require("../config/config");
 
-export default class MongoDatabase {
+export class MongoDatabase {
     private connectionString: string;
 
     constructor() {
-        this.connectionString = config.mongo_connection;
+        this.connectionString = config.mongo_connection || "mongodb://localhost:27017";
     }
 
     public connect = async () => {
@@ -29,4 +29,4 @@ export default class MongoDatabase {
     }
 }
 
-module.exports.mongoConnection = new MongoDatabase().connect();
+export default new MongoDatabase().connect();

@@ -5,3 +5,4 @@ export * from "./ParkingZonesRouter";
 export * from "./GeoJsonRouter";
 export * from "./RouterBuilder";
 export * from "./VehiclePositionsRouter";
+export * from "./GTFSRouter";

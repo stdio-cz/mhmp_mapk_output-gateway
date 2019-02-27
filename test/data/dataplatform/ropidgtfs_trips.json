@@ -1,0 +1,750 @@
+[
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1151_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_4_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1152_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V4",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_6_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V5",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1153_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_8_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1154_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V6",
+      "trip_headsign": "Skalka",
+      "trip_id": "991_10_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1155_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_12_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1156_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_14_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1157_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V6",
+      "trip_headsign": "Skalka",
+      "trip_id": "991_16_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1158_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V6",
+      "trip_headsign": "Skalka",
+      "trip_id": "991_18_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1159_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V6",
+      "trip_headsign": "Skalka",
+      "trip_id": "991_20_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1160_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V7",
+      "trip_headsign": "Skalka",
+      "trip_id": "991_22_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1161_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V6",
+      "trip_headsign": "Skalka",
+      "trip_id": "991_24_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1162_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V7",
+      "trip_headsign": "Skalka",
+      "trip_id": "991_26_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V1",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1163_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_28_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1164_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_30_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1165_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_32_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1166_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_34_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1167_190107",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V4",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_36_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V5",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1168_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_38_180825",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1169_180825",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V4",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_40_180825",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V5",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1170_180825",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_42_180825",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V3",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1171_180825",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V4",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_2726_181117",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 0,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111100-1",
+      "shape_id": "L991V5",
+      "trip_headsign": "Nemocnice Motol",
+      "trip_id": "991_1172_180709",
+      "wheelchair_accessible": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_trips",
+    "data": {
+      "bikes_allowed": 1,
+      "block_id": "",
+      "created_time": null,
+      "direction_id": 1,
+      "exceptional": 0,
+      "last_modify": null,
+      "route_id": "L991",
+      "service_id": "1111111-1",
+      "shape_id": "L991V2",
+      "trip_headsign": "Depo Hostivař",
+      "trip_id": "991_45_180825",
+      "wheelchair_accessible": 1
+    }
+  }
+]

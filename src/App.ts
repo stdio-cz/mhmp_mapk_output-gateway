@@ -26,6 +26,8 @@ import CityDistrictsRouter from "./routes/CityDistrictsRouter";
 
 import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
 
+import GTFSRouter from "./routes/GTFSRouter";
+
 import config from "./config/config";
 
 import sequelizeConnection from "./helpers/PostgreDatabase";
@@ -117,6 +119,7 @@ export default class App {
         this.express.use("/parkings", ParkingsRouter);
         this.express.use("/parkingzones", ParkingZonesRouter);
         this.express.use("/vehiclepositions", VehiclePositionsRouter);
+        this.express.use("/gtfs", GTFSRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

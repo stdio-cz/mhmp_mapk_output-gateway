@@ -3,3 +3,4 @@ dist/
 test/REPORTING/test.txt
 .env
 .nyc_output
+/.idea/

@@ -9,7 +9,7 @@ export class ErrorHandler {
             // Define what to return to user
             switch (err.code) {
                 case 400: {
-                    toReturn = {error_message: "Bad request", error_status: 400};
+                    toReturn = {error_message: "Bad request", error_status: 400, ...(err.cause && {cause: err.cause})};
                     break;
                 }
                 case 404: {

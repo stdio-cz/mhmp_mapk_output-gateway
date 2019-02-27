@@ -5,15 +5,15 @@ import "mocha";
 const config = require("../../src/config/config");
 
 const chai = require("chai");
+const sinon = require("sinon");
 const express = require("express");
-const chaiAsPromised = require("chai-as-promised");
 const request = require("supertest");
+const chaiAsPromised = require("chai-as-promised");
+const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+const sequelize = require("../../src/helpers/PostgreDatabase").default;
 
 import log from "../../src/helpers/Logger";
-// const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
 
-// import * as path from "path";
-// import {PostgresDatabase} from "../../src/helpers/PostgreDatabase";
 import handleError from "../../src/helpers/errors/ErrorHandler";
 import GTFSRouter from "../../src/routes/GTFSRouter";
 
@@ -24,30 +24,23 @@ chai.use(chaiAsPromised);
 describe("GTFS Router", () => {
     // Create clean express instance
     const app = express();
+    // Basic configuration: create a sinon sandbox for testing
+    let sandbox: any = null;
 
-    // // Basic configuration: create a sinon sandbox for testing
-    // let sandbox: any = null;
-    //
-    // beforeEach(() => {
-    //     sandbox = sinon.sandbox.create();
-    // });
-    //
-    // afterEach(() => {
-    //     sandbox && sandbox.restore();
-    // });
-    //
-    // // Load fake data for the users
-    // sequelizeMockingMocha(
-    //     PostgresDatabase,
-    //     path.resolve(path.join(__dirname, "./fake-users-database.json")),
-    //     /* Or load array of files
-    //     [
-    //         path.resolve(path.join(__dirname, './fake-users-database.json')),
-    //         path.resolve(path.join(__dirname, './fake-candy-database.json')),
-    //     ]
-    //     */
-    //     {logging: false},
-    // );
+    beforeEach(() => {
+        sandbox = sinon.sandbox.create();
+    });
+
+    afterEach(() => {
+        sandbox && sandbox.restore();
+    });
+
+    // Load fake data for the users
+    sequelizeMockingMocha(
+        sequelize,
+        [],
+        {logging: false},
+    );
 
     before(() => {
         // Mount the tested router to the express instance

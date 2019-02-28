@@ -7,44 +7,38 @@ import sequelizeConnection from "../helpers/PostgreDatabase";
 /**
  * TODO
  */
-export class GTFSTripsModel {
+export class GTFSStopModel {
     /** The Sequelize Model */
     protected sequelizeModel: Sequelize.Model<any, any>;
     /** Name of the model */
     protected name: string;
 
     public constructor() {
-        this.name = RopidGTFS.trips.name;
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.trips.pgTableName,
-            RopidGTFS.trips.outputSequelizeAttributes,
+        this.name = RopidGTFS.stops.name;
+        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.stops.pgTableName,
+            RopidGTFS.stops.outputSequelizeAttributes,
         );
     }
 
     public Associate = (models: any) => {
-        this.sequelizeModel.hasMany(models.GTFSStopTimesModel.sequelizeModel, {
-            foreignKey: "trip_id",
-        });
+        // this.sequelizeModel.hasMany(models.GTFSStopTimesModel.sequelizeModel, {
+        //     foreignKey: "trip_id",
+        // });
     }
 
-    public GetAll = async (options: { limit?: number, offset?: number, stopId?: string } = {}): Promise<any> => {
-        const {limit, offset, stopId} = options;
+    public GetAll = async (options: {
+        limit?: number,
+        offset?: number,
+        lat?: number,
+        lng?: number,
+        range?: number,
+    } = {}): Promise<any> => {
+        const {limit, offset} = options;
         try {
-            const include = [];
-            if (stopId) {
-                include.push({
-                    attributes: [],
-                    model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
-                    where: {
-                        stop_id: stopId,
-                    },
-                });
-            }
-
             const data = await this.sequelizeModel.findAll({
-                include,
                 limit,
                 offset,
-                order: [["trip_id", "DESC"]],
+                order: [["stop_id", "DESC"]],
             });
             return {
                 features: data,

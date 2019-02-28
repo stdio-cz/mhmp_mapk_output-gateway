@@ -6,11 +6,12 @@
  */
 
 // Import only what we need from express
-import { NextFunction, Request, Response, Router } from "express";
+import {NextFunction, Request, Response, Router} from "express";
+import {parseCoordinates} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
 import handleError from "../helpers/errors/ErrorHandler";
 import log from "../helpers/Logger";
-import { GeoJsonModel } from "../models/GeoJsonModel";
+import {GeoJsonModel} from "../models/GeoJsonModel";
 
 export class GeoJsonRouter {
 
@@ -32,7 +33,7 @@ export class GeoJsonRouter {
     }
 
     public ConvertToArray = (toBeArray: any) => {
-        if (! (toBeArray instanceof Array) ) {
+        if (!(toBeArray instanceof Array)) {
             log.silly("Converting value `" + toBeArray + "` to array.");
             const val = toBeArray;
             toBeArray = [];
@@ -57,33 +58,16 @@ export class GeoJsonRouter {
             ids = this.ConvertToArray(ids);
         }
 
-        let lat: number|undefined;
-        let lng: number|undefined;
-        let range: number|undefined;
-
-        // Searching by coordinates
-        if (req.query.latlng) {
-            const [latStr, lngStr] = req.query.latlng.split(",");
-            lat = +latStr;
-            lng = +lngStr;
-            range = parseInt(req.query.range, 10);
-            if (isNaN(range)) {
-                range = undefined;
-            }
-            if (isNaN(lat) || isNaN(lng)) {
-                log.silly("Wrong input parameter lat: `" + lat + "` or lng: `" + lng + "`");
-                next(new CustomError("Bad request - wrong input parameters", true, 400));
-                return;
-            }
-        }
-
-        this.model.GetAll(lat, lng, range, limit, offset, updatedSince, districts, ids).then((data) => {
-            res.status(200)
-                .send(data);
-        }).catch((err) => {
-            next(err);
-        });
-        return;
+        parseCoordinates(req.query.latlng, req.query.range)
+            .then(({lat, lng, range}) =>
+                this.model.GetAll(lat, lng, range, limit, offset, updatedSince, districts, ids).then((data) => {
+                    res.status(200)
+                        .send(data);
+                }),
+            )
+            .catch((err) => {
+                next(err);
+            });
     }
 
     public GetOne = (req: Request, res: Response, next: NextFunction) => {

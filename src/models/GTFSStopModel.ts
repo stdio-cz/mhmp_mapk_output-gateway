@@ -33,12 +33,30 @@ export class GTFSStopModel {
         lng?: number,
         range?: number,
     } = {}): Promise<any> => {
-        const {limit, offset} = options;
+        const {limit, offset, lat, lng, range} = options;
         try {
+
+            const order: any = [];
+            const attributes: any = Object.keys(RopidGTFS.stops.outputSequelizeAttributes);
+            let where: any = {};
+            if (lat && lng) {
+                const location = Sequelize.literal(`ST_GeomFromText('POINT(${lng} ${lat})')`);
+                const distance = Sequelize
+                    .fn("ST_Distance_Sphere", Sequelize.literal("ST_MakePoint(stop_lon, stop_lat)"), location);
+                attributes.push([distance, "distance"]);
+                order.push([[Sequelize.literal("distance"), "asc"]]);
+                if (range) {
+                    where = Sequelize.where(distance, "<=",  range);
+                }
+            }
+
+            order.push([["stop_id", "asc"]]);
             const data = await this.sequelizeModel.findAll({
+                attributes,
                 limit,
                 offset,
-                order: [["stop_id", "DESC"]],
+                order,
+                where,
             });
             return {
                 features: data,

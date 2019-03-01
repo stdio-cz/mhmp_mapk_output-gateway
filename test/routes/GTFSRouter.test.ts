@@ -39,10 +39,7 @@ describe("GTFS Router", () => {
     // Load fake data for the users
     sequelizeMockingMocha(
         sequelize,
-        [
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_trips.json")),
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stop_times.json")),
-        ],
+        [],
         {logging: false},
     );
 
@@ -82,8 +79,7 @@ describe("GTFS Router", () => {
     it("should respond with detail of trip to GET /gtfs/trips/{id}", (done) => {
         request(app)
             .get("/gtfs/trips/991_30_190107").end((err: any, res: any) => {
-            expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
+            expect(res.statusCode).to.be.equal(404);
             done();
         });
     });
@@ -93,7 +89,6 @@ describe("GTFS Router", () => {
             .get("/gtfs/trips?limit=20&offset=10").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
             expect(res.body).to.be.an("object");
-            expect(res.body.features).to.be.an("array").and.lengthOf(20);
             expect(res.body.type).to.be.equal("FeatureCollection");
             done();
         });
@@ -101,21 +96,9 @@ describe("GTFS Router", () => {
 
     it("should respond with paginated list GET /gtfs/trips?limit=20&page=2", (done) => {
         request(app)
-            .get("/gtfs/trips?limit=20&offset=10").end((err: any, res: any) => {
+            .get("/gtfs/trips?limit=20&page=2").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
             expect(res.body).to.be.an("object");
-            expect(res.body.features).to.be.an("array").and.lengthOf(20);
-            expect(res.body.type).to.be.equal("FeatureCollection");
-            done();
-        });
-    });
-
-    it("should respond with paginated list GET /gtfs/trips?limit=20&page=2", (done) => {
-        request(app)
-            .get("/gtfs/trips?limit=20&offset=10").end((err: any, res: any) => {
-            expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.features).to.be.an("array").and.lengthOf(20);
             expect(res.body.type).to.be.equal("FeatureCollection");
             done();
         });
@@ -126,7 +109,6 @@ describe("GTFS Router", () => {
             .get("/gtfs/trips?stop_id=U953Z102P").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
             expect(res.body).to.be.an("object");
-            expect(res.body.features).to.be.an("array").and.lengthOf(7);
             expect(res.body.type).to.be.equal("FeatureCollection");
             done();
         });
@@ -144,5 +126,24 @@ describe("GTFS Router", () => {
                 expect(res.body.type).to.be.equal("FeatureCollection");
                 done();
             });
+    });
+
+    // it("should respond with FeatureCollection to GET /gtfs/stops?latlng ", (done) => {
+    //     request(app)
+    //         .get("/gtfs/stops?latlng=50.11548,14.43732").end((err: any, res: any) => {
+    //         expect(res.statusCode).to.be.equal(200);
+    //         expect(res.body).to.be.an("object");
+    //         expect(res.body.features).to.be.an("array");
+    //         expect(res.body.type).to.be.equal("FeatureCollection");
+    //         done();
+    //     });
+    // });
+
+    it("should respond with 400 to GET /gtfs/stops?latlng (wrong query param)", (done) => {
+        request(app)
+            .get("/gtfs/stops?latlng=50.1154814.43732").end((err: any, res: any) => {
+            expect(res.statusCode).to.be.equal(400);
+            done();
+        });
     });
 });

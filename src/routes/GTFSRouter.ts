@@ -9,6 +9,7 @@
 import {NextFunction, Request, Response, Router} from "express";
 import {param, query} from "express-validator/check";
 import {parseCoordinates} from "../helpers/Coordinates";
+import CustomError from "../helpers/errors/CustomError";
 import {checkErrors, pagination} from "../helpers/FormValidation";
 import {models} from "../models";
 import {GTFSStopModel} from "../models/GTFSStopModel";
@@ -29,57 +30,70 @@ export class GTFSRouter {
     }
 
     public GetAllTrips = (req: Request, res: Response, next: NextFunction) => {
-        this.tripModel.GetAll({
-            limit: req.query.limit,
-            offset: req.query.offset,
-            stopId: req.query.stop_id,
-        }).then((data) => {
-            res.status(200)
-                .send(data);
-        }).catch((err) => {
-            next(err);
-        });
+        this.tripModel
+            .GetAll({
+                limit: req.query.limit,
+                offset: req.query.offset,
+                stopId: req.query.stop_id,
+            })
+            .then((data) => {
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
     }
 
     public GetOneTrip = (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
 
-        this.tripModel.GetOne(id).then((data) => {
-            res.status(200)
-                .send(data);
-        }).catch((err) => {
-            next(err);
-        });
+        this.tripModel
+            .GetOne(id)
+            .then((data) => {
+                if (!data) {
+                    throw new CustomError("not_found", true, 404, null);
+                }
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
     }
 
     public GetAllStops = (req: Request, res: Response, next: NextFunction) => {
         parseCoordinates(req.query.latlng, req.query.range)
             .then(({lat, lng, range}) =>
-                this.stopModel.GetAll({
-                    lat,
-                    limit: req.query.limit,
-                    lng,
-                    offset: req.query.offset,
-                    range,
-                }),
+                this.stopModel
+                    .GetAll({
+                        lat,
+                        limit: req.query.limit,
+                        lng,
+                        offset: req.query.offset,
+                        range,
+                    }),
             )
             .then((data) => {
-                res.status(200)
-                    .send(data);
-            }).catch((err) => {
-            next(err);
-        });
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
     }
 
     public GetOneStop = (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
 
-        this.stopModel.GetOne(id).then((data) => {
-            res.status(200)
-                .send(data);
-        }).catch((err) => {
-            next(err);
-        });
+        this.stopModel
+            .GetOne(id)
+            .then((data) => {
+                if (!data) {
+                    throw new CustomError("not_found", true, 404, null);
+                }
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
     }
 
     /**

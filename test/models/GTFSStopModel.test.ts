@@ -16,13 +16,13 @@ const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 import log from "../../src/helpers/Logger";
 import {models} from "../../src/models";
-import {GTFSTripsModel} from "../../src/models/GTFSTripsModel";
+import {GTFSStopModel} from "../../src/models/GTFSStopModel";
 
 chai.use(chaiAsPromised);
 
 describe("GTFSStopModel", () => {
 
-    const stopModel: GTFSTripsModel = models.GTFSStopModel;
+    const stopModel: GTFSStopModel = models.GTFSStopModel;
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
@@ -71,20 +71,14 @@ describe("GTFSStopModel", () => {
         expect(stop).to.have.property("stop_id", stopId);
     });
 
-    // it("should return all items going through stop id U953Z102P", async () => {
-    //     const result = await tripModel.GetAll({stopId: "U953Z102P"});
-    //     expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+    // Mock database doesnt have postis functions for geo
+    // it("should return all stops close to the point", async () => {
+    //     const result: any = await stopModel.GetAll({
+    //         lat: 50.11548,
+    //         lng: 14.43732,
+    //         range: 1000,
+    //     });
+    //     expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);
     //     expect(result.type).to.be.equal("FeatureCollection");
-    //     expect(result.features.map((item: any) => item.trip_id))
-    //         .to.be.an("array").to.include.members(
-    //         [
-    //             "991_1156_180709",
-    //             "991_1155_180709",
-    //             "991_1154_180709",
-    //             "991_1153_190107",
-    //             "991_1152_190107",
-    //             "991_1151_190107",
-    //             "991_10_180709",
-    //         ]);
     // });
 });

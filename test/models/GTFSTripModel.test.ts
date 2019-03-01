@@ -56,7 +56,7 @@ describe("GTFSTripsModel", () => {
         expect(result.type).to.be.equal("FeatureCollection");
     });
 
-    let tripId: number;
+    let tripId: string;
     it("should return few items", async () => {
         const result = await tripModel.GetAll({limit: 10, offset: 10});
         expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);

@@ -71,7 +71,7 @@ describe("GTFSStopModel", () => {
         expect(stop).to.have.property("stop_id", stopId);
     });
 
-    // Mock database doesnt have postis functions for geo
+    // Mock database doesnt have postgis functions for geo
     // it("should return all stops close to the point", async () => {
     //     const result: any = await stopModel.GetAll({
     //         lat: 50.11548,

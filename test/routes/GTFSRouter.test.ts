@@ -114,6 +114,16 @@ describe("GTFS Router", () => {
         });
     });
 
+    it("should respond with routes for specific day GET /gtfs/trips?day=U953Z102P", (done) => {
+        request(app)
+            .get("/gtfs/trips?stop_id=U953Z102P").end((err: any, res: any) => {
+            expect(res.statusCode).to.be.equal(200);
+            expect(res.body).to.be.an("object");
+            expect(res.body.type).to.be.equal("FeatureCollection");
+            done();
+        });
+    });
+
     it("should respond with json to GET /gtfs/stops ", (done) => {
         request(app)
             .get("/gtfs/stops")

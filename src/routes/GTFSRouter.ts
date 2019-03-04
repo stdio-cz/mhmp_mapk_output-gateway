@@ -34,7 +34,12 @@ export class GTFSRouter {
             .GetAll({
                 limit: req.query.limit,
                 offset: req.query.offset,
+                route: req.query.iclude_route || false,
+                service: req.query.include_service || false,
+                shapes: req.query.include_shapes || false,
                 stopId: req.query.stop_id,
+                stopTimes: req.query.include_stop_times || false,
+                stops: req.query.include_stops || false,
             })
             .then((data) => {
                 res.status(200).send(data);
@@ -100,7 +105,14 @@ export class GTFSRouter {
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
     private initRoutes = (): void => {
-        this.router.get("/trips", [query("stop_id").optional()], pagination, this.GetAllTrips);
+        this.router.get("/trips", [
+            query("stop_id").optional(),
+            query("include_shapes").optional().isBoolean(),
+            query("include_stops").optional().isBoolean(),
+            query("include_stop_times").optional().isBoolean(),
+            query("include_service").optional().isBoolean(),
+            query("include_route").optional().isBoolean(),
+        ], pagination, this.GetAllTrips);
         this.router.get("/trips/:id", [param("id").exists()], checkErrors, this.GetOneTrip);
 
         this.router.get("/stops", [

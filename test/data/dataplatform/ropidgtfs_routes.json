@@ -1,0 +1,19 @@
+[
+  {
+    "model": "ropidgtfs_routes",
+    "data": {
+      "agency_id": "99",
+      "created_time": null,
+      "is_night": "0",
+      "last_modify": null,
+      "route_color": "00A562",
+      "route_desc": null,
+      "route_id": "L991",
+      "route_long_name": "Nemocnice Motol - Petřiny - Skalka - Depo Hostivař",
+      "route_short_name": "A",
+      "route_text_color": "FFFFFF",
+      "route_type": "1",
+      "route_url": "https://pid.cz/linka/A"
+    }
+  }
+]

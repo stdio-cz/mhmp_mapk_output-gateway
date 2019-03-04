@@ -1,0 +1,36 @@
+[
+  {
+    "model": "ropidgtfs_calendar",
+    "data": {
+      "created_time": null,
+      "end_date": "20190311",
+      "friday": 1,
+      "last_modify": null,
+      "monday": 1,
+      "saturday": 0,
+      "service_id": "1111100-1",
+      "start_date": "20190226",
+      "sunday": 0,
+      "thursday": 1,
+      "tuesday": 1,
+      "wednesday": 1
+    }
+  },
+  {
+    "model": "ropidgtfs_calendar",
+    "data": {
+      "created_time": null,
+      "end_date": "20190311",
+      "friday": 1,
+      "last_modify": null,
+      "monday": 1,
+      "saturday": 1,
+      "service_id": "1111111-1",
+      "start_date": "20190226",
+      "sunday": 1,
+      "thursday": 1,
+      "tuesday": 1,
+      "wednesday": 1
+    }
+  }
+]

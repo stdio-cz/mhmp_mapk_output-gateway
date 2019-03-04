@@ -39,9 +39,11 @@ describe("GTFSTripsModel", () => {
     sequelizeMockingMocha(
         sequelize,
         [
+            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_routes.json")),
+            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_services.json")),
             path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_trips.json")),
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stop_times.json")),
             path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stops.json")),
+            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stop_times.json")),
         ],
         {logging: false},
     );
@@ -93,5 +95,58 @@ describe("GTFSTripsModel", () => {
                 "991_1151_190107",
                 "991_10_180709",
             ]);
+    });
+
+    it("should return 7 items and include stops", async () => {
+        const result = await tripModel.GetAll({stopId: "U953Z102P", stops: true});
+        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+        expect(result.features[0]).to.have.property("stops").and.be.instanceOf(Array).and.lengthOf(17);
+        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return 7 items and include stop times", async () => {
+        const result = await tripModel.GetAll({stopId: "U953Z102P", stopTimes: true});
+        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+        expect(result.features[0]).to.have.property("stop_times").and.be.instanceOf(Array).and.lengthOf(17);
+        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return 7 items and include shapes", async () => {
+        const result = await tripModel.GetAll({stopId: "U953Z102P", shapes: true});
+        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+        expect(result.features[0]).to.have.property("shapes").and.be.instanceOf(Array).and.lengthOf(0);
+        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return 7 items and include services", async () => {
+        const result = await tripModel.GetAll({stopId: "U953Z102P", service: true});
+        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+        expect(result.features[0]).to.have.property("service").and.be.instanceOf(Object);
+        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return 7 items and include route", async () => {
+        const result = await tripModel.GetAll({stopId: "U953Z102P", route: true});
+        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+        expect(result.features[0]).to.have.property("route").and.be.instanceOf(Object);
+        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return 7 items and include all possible inclusions", async () => {
+        const result = await tripModel.GetAll({
+            route: true,
+            service: true,
+            shapes: true,
+            stopId: "U953Z102P",
+            stopTimes: true,
+            stops: true,
+        });
+        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+        expect(result.features[0]).to.have.property("route").and.be.instanceOf(Object);
+        expect(result.features[0]).to.have.property("service").and.be.instanceOf(Object);
+        expect(result.features[0]).to.have.property("stops").and.be.instanceOf(Array).and.lengthOf(17);
+        expect(result.features[0]).to.have.property("shapes").and.be.instanceOf(Array).and.lengthOf(0);
+        expect(result.features[0]).to.have.property("stop_times").and.be.instanceOf(Array).and.lengthOf(17);
+        expect(result.type).to.be.equal("FeatureCollection");
     });
 });

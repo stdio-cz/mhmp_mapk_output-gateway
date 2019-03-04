@@ -16,9 +16,22 @@ export class GTFSStopModel {
     public constructor() {
         this.name = RopidGTFS.stops.name;
         this.sequelizeModel = sequelizeConnection.define(RopidGTFS.stops.pgTableName,
-            RopidGTFS.stops.outputSequelizeAttributes,
-        );
+            RopidGTFS.stops.outputSequelizeAttributes);
     }
+
+    public buildResponse = (item: any): any => ({
+        geometry: {
+            coordinates: [
+                item.stop_lon,
+                item.stop_lat,
+            ],
+            type: "Point",
+        },
+        properties: {
+            ...item.toJSON(),
+        },
+        type: "Feature",
+    })
 
     public Associate = (models: any) => {
         // this.sequelizeModel.hasMany(models.GTFSStopTimesModel.sequelizeModel, {
@@ -46,7 +59,7 @@ export class GTFSStopModel {
                 attributes.push([distance, "distance"]);
                 order.push([[Sequelize.literal("distance"), "asc"]]);
                 if (range) {
-                    where = Sequelize.where(distance, "<=",  range);
+                    where = Sequelize.where(distance, "<=", range);
                 }
             }
 
@@ -59,7 +72,7 @@ export class GTFSStopModel {
                 where,
             });
             return {
-                features: data,
+                features: data.map(this.buildResponse),
                 type: "FeatureCollection",
             };
         } catch (err) {
@@ -67,7 +80,13 @@ export class GTFSStopModel {
         }
     }
 
-    public GetOne = async (id: string): Promise<object> => {
-        return this.sequelizeModel.findByPk(id);
-    }
+    public GetOne = async (id: string): Promise<any> => this
+        .sequelizeModel
+        .findByPk(id)
+        .then((data) => {
+            if (data) {
+                return this.buildResponse(data);
+            }
+            return null;
+        })
 }

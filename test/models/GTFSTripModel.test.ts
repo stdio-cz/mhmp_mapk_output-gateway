@@ -99,9 +99,11 @@ describe("GTFSTripsModel", () => {
 
     it("should return 7 items and include stops", async () => {
         const result = await tripModel.GetAll({stopId: "U953Z102P", stops: true});
-        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
-        expect(result.features[0]).to.have.property("stops").and.be.instanceOf(Array).and.lengthOf(17);
-        expect(result.type).to.be.equal("FeatureCollection");
+        expect(result).to.be.an.instanceOf(Array).and.lengthOf(7);
+        expect(result[0]).to.have.property("stops").and.be.instanceOf(Array).and.lengthOf(17);
+        expect(result[0].stops[0]).to.have.property("geometry");
+        expect(result[0].stops[0]).to.have.property("properties");
+        expect(result[0].stops[0]).to.have.property("type", "Feature");
     });
 
     it("should return 7 items and include stop times", async () => {
@@ -149,4 +151,12 @@ describe("GTFSTripsModel", () => {
         expect(result.features[0]).to.have.property("stop_times").and.be.instanceOf(Array).and.lengthOf(17);
         expect(result.type).to.be.equal("FeatureCollection");
     });
+
+    // it("should return trips for specific date", async () => {
+    //     const result = await tripModel.GetAll({date: "2019-15-02"});
+    //     console.log(result.features);
+    //     // expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
+    //     // expect(result.features[0]).to.have.property("shapes").and.be.instanceOf(Array).and.lengthOf(0);
+    //     // expect(result.type).to.be.equal("FeatureCollection");
+    // });
 });

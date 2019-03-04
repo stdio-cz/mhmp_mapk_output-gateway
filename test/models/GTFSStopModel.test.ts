@@ -60,15 +60,20 @@ describe("GTFSStopModel", () => {
         const result = await stopModel.GetAll({limit: 10, offset: 10});
         expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);
         expect(result.type).to.be.equal("FeatureCollection");
+        expect(result.features[0]).to.have.property("geometry");
+        expect(result.features[0]).to.have.property("properties");
+        expect(result.features[0]).to.have.property("type", "Feature");
         // expect(result.features[0]).to.have.property("trip_id");
         // tripId = result.features[0].trip_id;
     });
 
     it("should return single item", async () => {
-        const result: any = await stopModel.GetOne(stopId);
-        expect(result).not.to.be.empty;
-        const stop = result.toJSON();
-        expect(stop).to.have.property("stop_id", stopId);
+        const stop: any = await stopModel.GetOne(stopId);
+        expect(stop).not.to.be.empty;
+        expect(stop.properties).to.have.property("stop_id", stopId);
+        expect(stop).to.have.property("geometry");
+        expect(stop).to.have.property("properties");
+        expect(stop).to.have.property("type", "Feature");
     });
 
     // Mock database doesnt have postgis functions for geo

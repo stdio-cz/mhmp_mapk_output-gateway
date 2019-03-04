@@ -69,9 +69,7 @@ describe("GTFS Router", () => {
         request(app)
             .get("/gtfs/trips").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.features).to.be.an("array");
-            expect(res.body.type).to.be.equal("FeatureCollection");
+            expect(res.body).to.be.an("array");
             done();
         });
     });
@@ -88,8 +86,7 @@ describe("GTFS Router", () => {
         request(app)
             .get("/gtfs/trips?limit=20&offset=10").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.type).to.be.equal("FeatureCollection");
+            expect(res.body).to.be.an("array");
             done();
         });
     });
@@ -98,8 +95,7 @@ describe("GTFS Router", () => {
         request(app)
             .get("/gtfs/trips?limit=20&page=2").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.type).to.be.equal("FeatureCollection");
+            expect(res.body).to.be.an("array");
             done();
         });
     });
@@ -108,8 +104,7 @@ describe("GTFS Router", () => {
         request(app)
             .get("/gtfs/trips?stop_id=U953Z102P").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.type).to.be.equal("FeatureCollection");
+            expect(res.body).to.be.an("array");
             done();
         });
     });
@@ -118,8 +113,7 @@ describe("GTFS Router", () => {
         request(app)
             .get("/gtfs/trips?stop_id=U953Z102P").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.type).to.be.equal("FeatureCollection");
+            expect(res.body).to.be.an("array");
             done();
         });
     });

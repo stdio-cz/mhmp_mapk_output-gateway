@@ -1,8 +1,10 @@
 import {RopidGTFS} from "data-platform-schema-definitions";
+import moment = require("moment");
 import * as Sequelize from "sequelize";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
+import {models as sequelizeModels} from "./index";
 
 /**
  * TODO
@@ -66,9 +68,10 @@ export class GTFSTripsModel {
                                    service?: boolean,
                                    stops?: boolean,
                                    stopTimes?: boolean,
+                                   date?: string,
                                } = {},
     ): Promise<any> => {
-        const {limit, offset, stopId, stops, stopTimes, shapes, service, route} = options;
+        const {limit, offset, stopId, stops, stopTimes, shapes, service, route, date} = options;
         try {
             const include = [];
             if (stopId) {
@@ -98,10 +101,23 @@ export class GTFSTripsModel {
                 model: sequelizeConnection.models[RopidGTFS.shapes.pgTableName],
             });
 
-            service && include.push({
-                as: "service",
-                model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName],
-            });
+            if (date || service) {
+                const dateYMD = moment(date).format("YYYYMMDD");
+                include.push({
+                    as: "service",
+                    model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName],
+                    ...(date && {
+                        where: {
+                            end_date: {
+                                $lte: dateYMD,
+                            },
+                            start_date: {
+                                $gte: dateYMD,
+                            },
+                        },
+                    }),
+                });
+            }
 
             route && include.push({
                 as: "route",
@@ -114,10 +130,15 @@ export class GTFSTripsModel {
                 offset,
                 order: [["trip_id", "DESC"]],
             });
-            return {
-                features: data,
-                type: "FeatureCollection",
-            };
+
+            if (stops) {
+                return data.map((trip) => {
+                    trip.stops = trip.stops.map(sequelizeModels.GTFSStopModel.buildResponse);
+                    return trip;
+                });
+            }
+
+            return data;
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }

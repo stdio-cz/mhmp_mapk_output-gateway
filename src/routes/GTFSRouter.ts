@@ -32,6 +32,7 @@ export class GTFSRouter {
     public GetAllTrips = (req: Request, res: Response, next: NextFunction) => {
         this.tripModel
             .GetAll({
+                date: req.query.date || false,
                 limit: req.query.limit,
                 offset: req.query.offset,
                 route: req.query.iclude_route || false,
@@ -113,7 +114,7 @@ export class GTFSRouter {
             query("include_service").optional().isBoolean(),
             query("include_route").optional().isBoolean(),
             query("date").optional().isISO8601(),
-        ], pagination, checkErrors,  this.GetAllTrips);
+        ], pagination, checkErrors, this.GetAllTrips);
         this.router.get("/trips/:id", [param("id").exists()], checkErrors, this.GetOneTrip);
 
         this.router.get("/stops", [

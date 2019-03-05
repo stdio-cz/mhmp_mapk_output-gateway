@@ -73,7 +73,7 @@ export class GTFSTripsModel {
     ): Promise<any> => {
         const {limit, offset, stopId, stops, stopTimes, shapes, service, route, date} = options;
         try {
-            const include = [];
+            const include: any = [];
             if (stopId) {
                 include.push({
                     as: "has_stop_id",
@@ -102,20 +102,22 @@ export class GTFSTripsModel {
             });
 
             if (date || service) {
-                const dateYMD = moment(date).format("YYYYMMDD");
+                let where: any = {};
+                if (date) {
+                    where =
+                        sequelizeConnection.literal(
+                            `DATE('${date}') BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
+                        );
+                }
                 include.push({
                     as: "service",
-                    model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName],
-                    ...(date && {
-                        where: {
-                            end_date: {
-                                $lte: dateYMD,
-                            },
-                            start_date: {
-                                $gte: dateYMD,
-                            },
-                        },
-                    }),
+                    model:
+                        sequelizeConnection.models[RopidGTFS.calendar.pgTableName],
+                    ...
+                        (date && {
+                                where,
+                            }
+                        ),
                 });
             }
 
@@ -130,7 +132,6 @@ export class GTFSTripsModel {
                 offset,
                 order: [["trip_id", "DESC"]],
             });
-
             if (stops) {
                 return data.map((trip) => {
                     trip.stops = trip.stops.map(sequelizeModels.GTFSStopModel.buildResponse);
@@ -140,6 +141,7 @@ export class GTFSTripsModel {
 
             return data;
         } catch (err) {
+            console.log(err);
             throw new CustomError("Database error", true, 500, err);
         }
     }

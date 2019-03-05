@@ -143,11 +143,9 @@ describe("GTFSTripsModel", () => {
         expect(result[0]).to.have.property("stop_times").and.be.instanceOf(Array).and.lengthOf(17);
     });
 
+    // FN to_date doesnt exist in sqlite mock
     // it("should return trips for specific date", async () => {
-    //     const result = await tripModel.GetAll({date: "2019-15-02"});
-    //     console.log(result.features);
-    //     // expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(7);
-    //     // expect(result.features[0]).to.have.property("shapes").and.be.instanceOf(Array).and.lengthOf(0);
-    //     // expect(result.type).to.be.equal("FeatureCollection");
+    //     const result = await tripModel.GetAll({date: "2019-02-28"});
+    //     expect(result).to.be.an.instanceOf(Array).and.lengthOf(44);
     // });
 });

@@ -10,7 +10,7 @@ import {NextFunction, Request, Response, Router} from "express";
 import {param, query} from "express-validator/check";
 import {parseCoordinates} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
-import {checkErrors, pagination} from "../helpers/FormValidation";
+import {checkErrors, pagination} from "../helpers/Validation";
 import {models} from "../models";
 import {GTFSStopModel} from "../models/GTFSStopModel";
 import {GTFSTripsModel} from "../models/GTFSTripsModel";
@@ -113,12 +113,12 @@ export class GTFSRouter {
             query("include_service").optional().isBoolean(),
             query("include_route").optional().isBoolean(),
             query("date").optional().isISO8601(),
-        ], pagination, this.GetAllTrips);
+        ], pagination, checkErrors,  this.GetAllTrips);
         this.router.get("/trips/:id", [param("id").exists()], checkErrors, this.GetOneTrip);
 
         this.router.get("/stops", [
             query("latlng").optional().isLatLong(),
-        ], pagination, this.GetAllStops);
+        ], pagination, checkErrors, this.GetAllStops);
         this.router.get("/stops/:id", [param("id").exists()], checkErrors, this.GetOneStop);
     }
 }

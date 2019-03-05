@@ -14,7 +14,6 @@ export const pagination = [
     query("search").optional(),
     query("limit").optional().isInt({min: 1}),
     query("page").optional().isInt({min: 1}),
-    checkErrors,
     (req: any, res: any, next: any) => {
         !req.query.search && (req.query.search = false);
         req.query.limit && !req.query.page && (req.query.page = 1);

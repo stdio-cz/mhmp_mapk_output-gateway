@@ -141,7 +141,7 @@ describe("GTFSTripsModel", () => {
         expect(result[0]).to.have.property("stops").and.be.instanceOf(Array).and.lengthOf(17);
         expect(result[0]).to.have.property("shapes").and.be.instanceOf(Array).and.lengthOf(0);
         expect(result[0]).to.have.property("stop_times").and.be.instanceOf(Array).and.lengthOf(17);
-    });              
+    });
 
     // it("should return trips for specific date", async () => {
     //     const result = await tripModel.GetAll({date: "2019-15-02"});

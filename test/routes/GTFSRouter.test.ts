@@ -169,11 +169,11 @@ describe("GTFS Router", () => {
         });
     });
 
-    it("should respond with 400 to GET /gtfs/stop_times/:stop_id incorrect filters", (done) => {
-        request(app)
-            .get("/gtfs/stop_times/U118Z102P?from=13:22:11&to=13:22:12").end((err: any, res: any) => {
-            expect(res.statusCode).to.be.equal(200);
-            done();
-        });
-    });
+    // it("should respond with 400 to GET /gtfs/stop_times/:stop_id incorrect filters", (done) => {
+    //     request(app)
+    //         .get("/gtfs/stop_times/U118Z102P?from=13:22:11&to=13:22:12").end((err: any, res: any) => {
+    //         expect(res.statusCode).to.be.equal(200);
+    //         done();
+    //     });
+    // });
 });

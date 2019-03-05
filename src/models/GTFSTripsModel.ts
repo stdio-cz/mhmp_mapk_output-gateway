@@ -102,26 +102,10 @@ export class GTFSTripsModel {
             });
 
             if (date || service) {
-                const where: any = {[sequelizeConnection.Op.and]: []};
-                if (date) {
-                    const day = moment(date).day();
-                    where[sequelizeConnection.Op.and].push(
-                        sequelizeConnection.literal(
-                            `DATE('${date}') BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
-                        ));
-                    where[sequelizeConnection.Op.and].push(
-                        {[sequelizeModels.GTFSCalendarModel.weekDayMap[day]]: 1},
-                    );
-                }
                 include.push({
                     as: "service",
-                    model:
-                        sequelizeConnection.models[RopidGTFS.calendar.pgTableName],
-                    ...
-                        (date && {
-                                where,
-                            }
-                        ),
+                    model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName]
+                        .scope({method: ["forDate", date]}),
                 });
             }
 

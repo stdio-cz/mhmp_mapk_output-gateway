@@ -1,8 +1,10 @@
 import {RopidGTFS} from "data-platform-schema-definitions";
+import moment = require("moment");
 import * as Sequelize from "sequelize";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
+import {models as sequelizeModels} from "./index";
 
 /**
  * TODO
@@ -25,8 +27,28 @@ export class GTFSCalendarModel {
 
     public constructor() {
         this.name = RopidGTFS.calendar.name;
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.calendar.pgTableName,
+        this.sequelizeModel = sequelizeConnection.define(
+            RopidGTFS.calendar.pgTableName,
             RopidGTFS.calendar.outputSequelizeAttributes,
+            {
+                scopes: {
+                    forDate(date?: string) {
+                        if (!date) {
+                            return {};
+                        }
+                        const day = moment(date).day();
+                        const where: any = {
+                            [sequelizeConnection.Op.and]: [
+                                sequelizeConnection.literal(
+                                    `DATE('${date}') BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
+                                ),
+                                {[sequelizeModels.GTFSCalendarModel.weekDayMap[day]]: 1},
+                            ],
+                        };
+                        return {where};
+                    },
+                },
+            },
         );
     }
 }

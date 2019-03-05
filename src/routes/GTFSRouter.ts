@@ -179,11 +179,4 @@ export class GTFSRouter {
     }
 }
 
-// /stop_times/:stop_id
-// - získat všechny spoje a jejich časy na konkrétní zastávce
-// /stop_times/:stop_id&:from&:to
-// - + definovat lokální čas (H:mm:ss) od do
-// +optionally &:dayYMD
-// - jen spoje platné pro daný den
-
 export default new GTFSRouter().router;

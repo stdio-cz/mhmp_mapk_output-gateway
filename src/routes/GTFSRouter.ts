@@ -13,6 +13,7 @@ import {parseCoordinates} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
 import {checkErrors, pagination} from "../helpers/Validation";
 import {models} from "../models";
+import {GTFSRoutesModel} from "../models/GTFSRoutesModel";
 import {GTFSStopModel} from "../models/GTFSStopModel";
 import {GTFSStopTimesModel} from "../models/GTFSStopTimesModel";
 import {GTFSTripsModel} from "../models/GTFSTripsModel";
@@ -24,6 +25,7 @@ export class GTFSRouter {
 
     protected tripModel: GTFSTripsModel;
     protected stopModel: GTFSStopModel;
+    protected routeModel: GTFSRoutesModel;
     protected stopTimeModel: GTFSStopTimesModel;
 
     private timeRegex = /([0-1][0-9])|(2[0-3]):[0-5][0-9]:[0-5][0-9]/;
@@ -41,6 +43,7 @@ export class GTFSRouter {
         this.tripModel = models.GTFSTripsModel;
         this.stopModel = models.GTFSStopModel;
         this.stopTimeModel = models.GTFSStopTimesModel;
+        this.routeModel = models.GTFSRoutesModel;
         this.initRoutes();
     }
 
@@ -141,16 +144,56 @@ export class GTFSRouter {
             });
     }
 
+    public GetAllRoutes = (req: Request, res: Response, next: NextFunction) => {
+        this.routeModel
+            .GetAll({
+                limit: req.query.limit,
+                offset: req.query.offset,
+            })
+            .then((data) => {
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
+    }
+
+    public GetOneRoute = (req: Request, res: Response, next: NextFunction) => {
+        const id: string = req.params.id;
+
+        this.routeModel
+            .GetOne(id)
+            .then((data) => {
+                if (!data) {
+                    throw new CustomError("not_found", true, 404, null);
+                }
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
+    }
+
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
     private initRoutes = (): void => {
-        this.initTrips();
-        this.initStops();
-        this.initStopTimes();
+        this.initTripsEndpoints();
+        this.initStopsEndpoints();
+        this.initStopTimesEndpoints();
+        this.initRoutesEndpoints();
     }
 
-    private initTrips = (): void => {
+    private initRoutesEndpoints = (): void => {
+        this.router.get("/routes",
+            pagination,
+            checkErrors,
+            this.GetAllRoutes,
+        );
+        this.router.get("/routes/:id", param("id").exists(), this.GetOneRoute);
+    }
+
+    private initTripsEndpoints = (): void => {
         this.router.get("/trips",
             query("stop_id").optional(),
             this.tripInclusions,
@@ -161,14 +204,14 @@ export class GTFSRouter {
         this.router.get("/trips/:id", param("id").exists(), this.tripInclusions, checkErrors, this.GetOneTrip);
     }
 
-    private initStops = (): void => {
+    private initStopsEndpoints = (): void => {
         this.router.get("/stops", [
             query("latlng").optional().isLatLong(),
         ], pagination, checkErrors, this.GetAllStops);
         this.router.get("/stops/:id", [param("id").exists()], checkErrors, this.GetOneStop);
     }
 
-    private initStopTimes = (): void => {
+    private initStopTimesEndpoints = (): void => {
         this.router.get(
             "/stop_times/:stopId",
             [

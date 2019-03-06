@@ -219,4 +219,22 @@ describe("GTFS Router", () => {
             done();
         });
     });
+
+    it("should respond with 200 to GET /gtfs/services ", (done) => {
+        request(app)
+            .get("/gtfs/services").end((err: any, res: any) => {
+            expect(res.statusCode).to.be.equal(200);
+            expect(res.body).to.be.instanceOf(Array);
+            done();
+        });
+    });
+
+    // it("should respond with 404 to GET /gtfs/services?date=2019-02-28 ", (done) => {
+    //     request(app)
+    //         .get("/gtfs/services?date=2019-02-28").end((err: any, res: any) => {
+    //         expect(res.statusCode).to.be.equal(200);
+    //         expect(res.body).to.be.instanceOf(Array);
+    //         done();
+    //     });
+    // });
 });

@@ -1,6 +1,7 @@
 import {RopidGTFS} from "data-platform-schema-definitions";
 import moment = require("moment");
 import * as Sequelize from "sequelize";
+import {buildResponse} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
@@ -50,5 +51,25 @@ export class GTFSCalendarModel {
                 },
             },
         );
+    }
+
+    public GetAll = async (options: {
+        date?: string,
+        limit?: number,
+        offset?: number,
+    } = {}): Promise<any> => {
+        const {limit, offset, date} = options;
+        try {
+            const data = await this.sequelizeModel
+                .scope({method: ["forDate", date]})
+                .findAll({
+                    limit,
+                    offset,
+                    order: [["service_id", "asc"]],
+                });
+            return data;
+        } catch (err) {
+            throw new CustomError("Database error", true, 500, err);
+        }
     }
 }

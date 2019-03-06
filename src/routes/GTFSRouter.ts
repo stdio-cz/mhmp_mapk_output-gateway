@@ -13,11 +13,12 @@ import {parseCoordinates} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
 import {checkErrors, pagination} from "../helpers/Validation";
 import {models} from "../models";
+import {GTFSCalendarModel} from "../models/GTFSCalendarModel";
 import {GTFSRoutesModel} from "../models/GTFSRoutesModel";
+import {GTFSShapesModel} from "../models/GTFSShapesModel";
 import {GTFSStopModel} from "../models/GTFSStopModel";
 import {GTFSStopTimesModel} from "../models/GTFSStopTimesModel";
 import {GTFSTripsModel} from "../models/GTFSTripsModel";
-import {GTFSShapesModel} from "../models/GTFSShapesModel";
 
 export class GTFSRouter {
 
@@ -25,6 +26,7 @@ export class GTFSRouter {
     public router: Router = Router();
 
     protected tripModel: GTFSTripsModel;
+    protected serviceModel: GTFSCalendarModel;
     protected stopModel: GTFSStopModel;
     protected routeModel: GTFSRoutesModel;
     protected shapeModel: GTFSShapesModel;
@@ -47,7 +49,23 @@ export class GTFSRouter {
         this.stopTimeModel = models.GTFSStopTimesModel;
         this.routeModel = models.GTFSRoutesModel;
         this.shapeModel = models.GTFSShapesModel;
+        this.serviceModel = models.GTFSCalendarModel;
         this.initRoutes();
+    }
+
+    public GetAllServices = (req: Request, res: Response, next: NextFunction) => {
+        this.serviceModel
+            .GetAll({
+                date: req.query.date || null,
+                limit: req.query.limit,
+                offset: req.query.offset,
+            })
+            .then((data) => {
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
     }
 
     public GetAllStopTimes = (req: Request, res: Response, next: NextFunction) => {
@@ -216,6 +234,7 @@ export class GTFSRouter {
         this.initStopTimesEndpoints();
         this.initRoutesEndpoints();
         this.initShapesEndpoints();
+        this.initServicesEndpoints();
     }
 
     private initRoutesEndpoints = (): void => {
@@ -225,6 +244,15 @@ export class GTFSRouter {
             this.GetAllRoutes,
         );
         this.router.get("/routes/:id", param("id").exists(), this.GetOneRoute);
+    }
+
+    private initServicesEndpoints = (): void => {
+        this.router.get("/services",
+            query("date").optional().isISO8601(),
+            pagination,
+            checkErrors,
+            this.GetAllServices,
+        );
     }
 
     private initShapesEndpoints = (): void => {

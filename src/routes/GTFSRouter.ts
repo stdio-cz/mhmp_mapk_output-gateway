@@ -28,6 +28,15 @@ export class GTFSRouter {
 
     private timeRegex = /([0-1][0-9])|(2[0-3]):[0-5][0-9]:[0-5][0-9]/;
 
+    private tripInclusions = [
+        query("include_shapes").optional().isBoolean(),
+        query("include_stops").optional().isBoolean(),
+        query("include_stop_times").optional().isBoolean(),
+        query("include_service").optional().isBoolean(),
+        query("include_route").optional().isBoolean(),
+        query("date").optional().isISO8601(),
+    ];
+
     public constructor() {
         this.tripModel = models.GTFSTripsModel;
         this.stopModel = models.GTFSStopModel;
@@ -77,7 +86,14 @@ export class GTFSRouter {
         const id: string = req.params.id;
 
         this.tripModel
-            .GetOne(id)
+            .GetOne(id, {
+                date: req.query.date || false,
+                route: req.query.iclude_route || false,
+                service: req.query.include_service || false,
+                shapes: req.query.include_shapes || false,
+                stopTimes: req.query.include_stop_times || false,
+                stops: req.query.include_stops || false,
+            })
             .then((data) => {
                 if (!data) {
                     throw new CustomError("not_found", true, 404, null);
@@ -135,16 +151,14 @@ export class GTFSRouter {
     }
 
     private initTrips = (): void => {
-        this.router.get("/trips", [
+        this.router.get("/trips",
             query("stop_id").optional(),
-            query("include_shapes").optional().isBoolean(),
-            query("include_stops").optional().isBoolean(),
-            query("include_stop_times").optional().isBoolean(),
-            query("include_service").optional().isBoolean(),
-            query("include_route").optional().isBoolean(),
-            query("date").optional().isISO8601(),
-        ], pagination, checkErrors, this.GetAllTrips);
-        this.router.get("/trips/:id", [param("id").exists()], checkErrors, this.GetOneTrip);
+            this.tripInclusions,
+            pagination,
+            checkErrors,
+            this.GetAllTrips,
+        );
+        this.router.get("/trips/:id", param("id").exists(), this.tripInclusions, checkErrors, this.GetOneTrip);
     }
 
     private initStops = (): void => {

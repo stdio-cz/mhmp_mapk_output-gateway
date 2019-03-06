@@ -71,9 +71,9 @@ export class GTFSTripsModel {
                                    date?: string,
                                } = {},
     ): Promise<any> => {
-        const {limit, offset, stopId, stops, stopTimes, shapes, service, route, date} = options;
+        const {limit, offset, stopId, stops} = options;
         try {
-            const include: any = [];
+            let include: any = [];
             if (stopId) {
                 include.push({
                     as: "has_stop_id",
@@ -85,34 +85,7 @@ export class GTFSTripsModel {
                 });
             }
 
-            stops && include.push({
-                as: "stops",
-                model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
-                through: {attributes: []},
-            });
-
-            stopTimes && include.push({
-                as: "stop_times",
-                model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
-            });
-
-            shapes && include.push({
-                as: "shapes",
-                model: sequelizeConnection.models[RopidGTFS.shapes.pgTableName],
-            });
-
-            if (date || service) {
-                include.push({
-                    as: "service",
-                    model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName]
-                        .scope({method: ["forDate", date]}),
-                });
-            }
-
-            route && include.push({
-                as: "route",
-                model: sequelizeConnection.models[RopidGTFS.routes.pgTableName],
-            });
+            include = include.concat(this.GetInclusions(options));
 
             const data = await this.sequelizeModel.findAll({
                 include,
@@ -129,12 +102,61 @@ export class GTFSTripsModel {
 
             return data;
         } catch (err) {
-            console.log(err);
             throw new CustomError("Database error", true, 500, err);
         }
     }
 
-    public GetOne = async (id: string): Promise<object> => {
-        return this.sequelizeModel.findByPk(id);
+    public GetOne = async (id: string, options:
+        {
+            route?: boolean,
+            shapes?: boolean,
+            service?: boolean,
+            stops?: boolean,
+            stopTimes?: boolean,
+            date?: string,
+        } = {}): Promise<object> => {
+        return this.sequelizeModel.findByPk(id, {include: this.GetInclusions(options)});
+    }
+
+    private GetInclusions = (options: {
+        route?: boolean,
+        shapes?: boolean,
+        service?: boolean,
+        stops?: boolean,
+        stopTimes?: boolean,
+        date?: string,
+    }) => {
+        const {stops, stopTimes, shapes, service, route, date} = options;
+        const include: any = [];
+
+        stops && include.push({
+            as: "stops",
+            model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
+            through: {attributes: []},
+        });
+
+        stopTimes && include.push({
+            as: "stop_times",
+            model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
+        });
+
+        shapes && include.push({
+            as: "shapes",
+            model: sequelizeConnection.models[RopidGTFS.shapes.pgTableName],
+        });
+
+        if (date || service) {
+            include.push({
+                as: "service",
+                model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName]
+                    .scope({method: ["forDate", date]}),
+            });
+        }
+
+        route && include.push({
+            as: "route",
+            model: sequelizeConnection.models[RopidGTFS.routes.pgTableName],
+        });
+        return include;
     }
 }

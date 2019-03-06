@@ -1,7 +1,7 @@
 import {RopidGTFS} from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
+import {buildResponse} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
-import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
 
 /**
@@ -18,20 +18,6 @@ export class GTFSStopModel {
         this.sequelizeModel = sequelizeConnection.define(RopidGTFS.stops.pgTableName,
             RopidGTFS.stops.outputSequelizeAttributes);
     }
-
-    public buildResponse = (item: any): any => ({
-        geometry: {
-            coordinates: [
-                item.stop_lon,
-                item.stop_lat,
-            ],
-            type: "Point",
-        },
-        properties: {
-            ...item.toJSON(),
-        },
-        type: "Feature",
-    })
 
     public Associate = (models: any) => {
         // this.sequelizeModel.hasMany(models.GTFSStopTimesModel.sequelizeModel, {
@@ -72,7 +58,7 @@ export class GTFSStopModel {
                 where,
             });
             return {
-                features: data.map(this.buildResponse),
+                features: data.map((item) => buildResponse(item, "stop_lon", "stop_lat")),
                 type: "FeatureCollection",
             };
         } catch (err) {
@@ -85,7 +71,7 @@ export class GTFSStopModel {
         .findByPk(id)
         .then((data) => {
             if (data) {
-                return this.buildResponse(data);
+                return buildResponse(data, "stop_lon", "stop_lat");
             }
             return null;
         })

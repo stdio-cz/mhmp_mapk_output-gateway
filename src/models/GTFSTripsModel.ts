@@ -1,6 +1,7 @@
 import {RopidGTFS} from "data-platform-schema-definitions";
 import moment = require("moment");
 import * as Sequelize from "sequelize";
+import {buildResponse} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
@@ -95,7 +96,7 @@ export class GTFSTripsModel {
             });
             if (stops) {
                 return data.map((trip) => {
-                    trip.stops = trip.stops.map(sequelizeModels.GTFSStopModel.buildResponse);
+                    trip.stops = trip.stops.map((item: any) => buildResponse(item, "stop_lon", "stop_lat"));
                     return trip;
                 });
             }

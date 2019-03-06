@@ -16,17 +16,17 @@ const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
 import log from "../../src/helpers/Logger";
 import {models} from "../../src/models";
-import {GTFSRoutesModel} from "../../src/models/GTFSRoutesModel";
+import {GTFSShapesModel} from "../../src/models/GTFSShapesModel";
 
 chai.use(chaiAsPromised);
 
-describe("GTFSRoutesModel", () => {
+describe("GTFSShapesModel", () => {
 
-    const routeModel: GTFSRoutesModel = models.GTFSRoutesModel;
+    const shapeModel: GTFSShapesModel = models.GTFSShapesModel;
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
-    const routeId: string = "L991";
+    const shapeId: string = "L991V1";
 
     beforeEach(() => {
         sandbox = sinon.sandbox.create();
@@ -39,24 +39,25 @@ describe("GTFSRoutesModel", () => {
     // Load fake data for the users
     sequelizeMockingMocha(
         sequelize,
-        [
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_routes.json")),
-        ],
+        [],
         {logging: false},
     );
 
     it("should instantiate", () => {
-        expect(routeModel).not.to.be.undefined;
+        expect(shapeModel).not.to.be.undefined;
     });
 
-    it("should return all items", async () => {
-        const result = await routeModel.GetAll();
-        expect(result).to.be.an.instanceOf(Array).and.lengthOf(1);
-    });
-
-    it("should return single item", async () => {
-        const route: any = await routeModel.GetOne(routeId);
-        expect(route).not.to.be.empty;
-        expect(route).to.have.property("route_id", routeId);
-    });
+    // it("should return all items", async () => {
+    //     const result = await shapeModel.GetAll();
+    //     expect(result).to.be.an.instanceOf(Array).and.lengthOf(0);
+    // });
+    //
+    // it("should return single item", async () => {
+    //     const shape: any = await shapeModel.GetOne(shapeId);
+    //     expect(shape).to.be.null;
+    //     // expect(shape.properties).to.have.property("shape_id", shapeId);
+    //     // expect(shape).to.have.property("geometry");
+    //     // expect(shape).to.have.property("properties");
+    //     // expect(shape).to.have.property("type", "Feature");
+    // });
 });

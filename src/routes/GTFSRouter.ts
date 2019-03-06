@@ -17,6 +17,7 @@ import {GTFSRoutesModel} from "../models/GTFSRoutesModel";
 import {GTFSStopModel} from "../models/GTFSStopModel";
 import {GTFSStopTimesModel} from "../models/GTFSStopTimesModel";
 import {GTFSTripsModel} from "../models/GTFSTripsModel";
+import {GTFSShapesModel} from "../models/GTFSShapesModel";
 
 export class GTFSRouter {
 
@@ -26,6 +27,7 @@ export class GTFSRouter {
     protected tripModel: GTFSTripsModel;
     protected stopModel: GTFSStopModel;
     protected routeModel: GTFSRoutesModel;
+    protected shapeModel: GTFSShapesModel;
     protected stopTimeModel: GTFSStopTimesModel;
 
     private timeRegex = /([0-1][0-9])|(2[0-3]):[0-5][0-9]:[0-5][0-9]/;
@@ -44,6 +46,7 @@ export class GTFSRouter {
         this.stopModel = models.GTFSStopModel;
         this.stopTimeModel = models.GTFSStopTimesModel;
         this.routeModel = models.GTFSRoutesModel;
+        this.shapeModel = models.GTFSShapesModel;
         this.initRoutes();
     }
 
@@ -174,6 +177,36 @@ export class GTFSRouter {
             });
     }
 
+    public GetAllShapes = (req: Request, res: Response, next: NextFunction) => {
+        this.shapeModel
+            .GetAll({
+                limit: req.query.limit,
+                offset: req.query.offset,
+            })
+            .then((data) => {
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
+    }
+
+    public GetOneShape = (req: Request, res: Response, next: NextFunction) => {
+        const id: string = req.params.id;
+
+        this.shapeModel
+            .GetOne(id)
+            .then((data) => {
+                if (!data) {
+                    throw new CustomError("not_found", true, 404, null);
+                }
+                res.status(200).send(data);
+            })
+            .catch((err) => {
+                next(err);
+            });
+    }
+
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
@@ -182,6 +215,7 @@ export class GTFSRouter {
         this.initStopsEndpoints();
         this.initStopTimesEndpoints();
         this.initRoutesEndpoints();
+        this.initShapesEndpoints();
     }
 
     private initRoutesEndpoints = (): void => {
@@ -191,6 +225,15 @@ export class GTFSRouter {
             this.GetAllRoutes,
         );
         this.router.get("/routes/:id", param("id").exists(), this.GetOneRoute);
+    }
+
+    private initShapesEndpoints = (): void => {
+        this.router.get("/shapes",
+            pagination,
+            checkErrors,
+            this.GetAllShapes,
+        );
+        this.router.get("/shapes/:id", param("id").exists(), this.GetOneShape);
     }
 
     private initTripsEndpoints = (): void => {

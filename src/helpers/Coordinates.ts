@@ -22,3 +22,17 @@ export const parseCoordinates = (latlng: string, range: string) => {
 
     return Promise.resolve({lat, lng, range: ran});
 };
+
+export const buildResponse = (item: any, lonProperty: string, latProperty: string): any => ({
+    geometry: {
+        coordinates: [
+            item[lonProperty],
+            item[latProperty],
+        ],
+        type: "Point",
+    },
+    properties: {
+        ...item.toJSON(),
+    },
+    type: "Feature",
+});

@@ -205,7 +205,9 @@ describe("GTFS Router", () => {
         request(app)
             .get("/gtfs/shapes").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.instanceOf(Array);
+            expect(res.body).to.be.an("object");
+            expect(res.body.features).to.be.an("array");
+            expect(res.body.type).to.be.equal("FeatureCollection");
             done();
         });
     });

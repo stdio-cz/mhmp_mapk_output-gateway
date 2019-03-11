@@ -82,25 +82,25 @@ describe("GTFS Router", () => {
         });
     });
 
-    it("should respond with paginated list GET /gtfs/trips?limit=20&page=ahoj", (done) => {
+    it("should respond with paginated list GET /gtfs/trips?limit=20&offset=ahoj", (done) => {
         request(app)
-            .get("/gtfs/trips?limit=20&page=ahoj").end((err: any, res: any) => {
+            .get("/gtfs/trips?limit=20&offset=ahoj").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(400);
             done();
         });
     });
 
-    it("should respond with paginated list GET /gtfs/trips?limit=ahoj&page=1", (done) => {
+    it("should respond with paginated list GET /gtfs/trips?limit=ahoj&offset=1", (done) => {
         request(app)
-            .get("/gtfs/trips?limit=ahoj&page=1").end((err: any, res: any) => {
+            .get("/gtfs/trips?limit=ahoj&offset=1").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(400);
             done();
         });
     });
 
-    it("should respond with paginated list GET /gtfs/trips?limit=20&page=2", (done) => {
+    it("should respond with paginated list GET /gtfs/trips?limit=20&offset=2", (done) => {
         request(app)
-            .get("/gtfs/trips?limit=20&page=2").end((err: any, res: any) => {
+            .get("/gtfs/trips?limit=20&offset=2").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
             expect(res.body).to.be.an("array");
             done();

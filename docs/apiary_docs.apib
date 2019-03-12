@@ -3593,3 +3593,154 @@ Parking type enum:
                     "error_message": "Not Found.",
                     "error_status": 404,
             }
+
+# Group GTFS
+
+## GTFS Trips [/gtfs/trips{?limit,offset,stop_id,include_shapes,include_stops,include_stop_times,include_service,include_route,date}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + stop_id: U953Z102P (optional, string) - Filter trips that include specific stop.
+    + include_shapes: true (optional, boolean) - Enrich trip response object with shapes.
+    + include_stops: true (optional, boolean) - Enrich trip response object with stops.
+    + include_stop_times: true (optional, boolean) - Enrich trip response object with stops times.
+    + include_service: true (optional, boolean) - Enrich trip response object with service.
+    + include_route: true (optional, boolean) - Enrich trip response object with routes.
+    + date: true (optional, boolean) - Filter trips by specific date.
+
+### GET GTFS trips [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes
+        + array(Trip)
+            + stops (array[Stop])
+            + stop_times (array[Stop time])
+            + shapes (array[Shape])
+            + service (Service)
+            + route (Route)
+
+## GTFS Trip [/gtfs/trips/{id}{?limit,offset,stop_id,include_shapes,include_stops,include_stop_times,include_service,include_route,date}]
+
++ Parameters
+    + `id`: `991_30_190107` (string, required)
+    + stop_id: U953Z102P (optional, string) - Filter trips that include specific stop.
+    + include_shapes: true (optional, boolean) - Enrich trip response object with shapes.
+    + include_stops: true (optional, boolean) - Enrich trip response object with stops.
+    + include_stop_times: true (optional, boolean) - Enrich trip response object with stops times.
+    + include_service: true (optional, boolean) - Enrich trip response object with service.
+    + include_route: true (optional, boolean) - Enrich trip response object with routes.
+    + date: true (optional, boolean) - Filter trips by specific date.
+
+### GET GTFS trip [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Trip)
+        + stops (array[Stop])
+        + stop_times (array[Stop time])
+        + shapes (array[Shape])
+        + service (Service)
+        + route (Route)
+
+# Data structure
+
+## Trip (object)
+
++ `trip_id`: 991_1165_190107 (string, required)
++ bikes_allowed: 1 (number, required)
++ `block_id`: ` ` (string, optional)
++ created_time: `2018-09-09 12:32:45` (string, nullable)
++ direction_id: 0 (number, optional)
++ exceptional: 0 (number)
++ last_modify: `2018-09-09 12:32:45` (string, nullable)
++ route_id: L991 (string, required)
++ service_id: `1111100-1` (string, required)
++ shape_id: L991V3 (string, required)
++ trip_headsign: `Nemocnice Motol` (string, required)
++ wheelchair_accessible: 1 (number, required)
+
+## Stop (object)
+
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `location_type`: 0 (number, required)
++ `parent_station`: U118S1 (string, required)
++ `platform_code`: 1 (number, required)
++ `stop_id`: U118Z101P (string, required)
++ `stop_lat`: 50.07827 (number, required)
++ `stop_lon`: 14.4633 (number, required)
++ `stop_name`: Flora (string, required)
++ `stop_url`: ` ` (string, optional)
++ `wheelchair_boarding`: 2 (number, required)
++ `zone_id`: P (string, required)
+
+## Stop time (object)
+
++ `arrival_time`: `13:12:05` (string, required)
++ `arrival_time_seconds`: ` ` (number, optional, nullable)
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `departure_time`: `13:12:35` (string, required)
++ `departure_time_seconds`: ` ` (number, optional, nullable)
++ `drop_off_type`: 0 (number, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `pickup_type`: 0 (number, required)
++ `shape_dist_traveled`: 3.73622 (number, required)
++ `stop_headsign`: ` ` (string, optional)
++ `stop_id`: U921Z102P (string, required)
++ `stop_sequence`: 4 (number, required)
++ `trip_id`: `991_1156_180709` (string, required)
+
+## Shape (object)
+
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `shape_dist_traveled`: 16.46309 (number, required))
++ `shape_id`: L991V2 (string, required)
++ `shape_pt_lat`: 50.07274 (number, required)
++ `shape_pt_lon`: 14.51439 (number, required)
++ `shape_pt_sequence`: 123 (number, required)
+
+## Service (object)
+
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `end_date`: 20190311 (string, required)
++ `friday`: 1 (number, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `monday`: 1 (number, required)
++ `saturday`: 1 (number, required)
++ `service_id`: `1111111-1` (string, required)
++ `start_date`: 20190226 (string, required)
++ `sunday`: 1 (number, required)
++ `thursday`: 1 (number, required)
++ `tuesday`: 1 (number, required)
++ `wednesday`: 1 (number, required)
+
+## Route (object)
+
++ `agency_id`: 99 (number, required)
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `is_night`: 0 (number, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `route_color`: 00A562 (string, required)
++ `route_desc`: null (string, nullable)
++ `route_id`: L991 (string, required)
++ `route_long_name`: `Nemocnice Motol - Petřiny - Skalka - Depo Hostivař` (string, required)
++ `route_short_name`: A (string, required)
++ `route_text_color`: FFFFFF (string, required)
++ `route_type`: 1 (number, required)
++ `route_url`: https://pid.cz/linka/A (string, required)

@@ -62,6 +62,7 @@ export class GeoJsonModel {
      * @param additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
+    // TODO: change params to options = {}
     public GetAll = async ( lat?: number,
                             lng?: number,
                             range?: number,

@@ -1,9 +1,9 @@
-import {RopidGTFS} from "data-platform-schema-definitions";
+import { RopidGTFS } from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
+import { buildResponse } from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
-import {buildResponse} from "../helpers/Coordinates";
 
 /**
  * TODO

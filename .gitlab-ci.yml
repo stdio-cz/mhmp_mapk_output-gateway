@@ -24,7 +24,8 @@ run_tests:
   stage: test
   script:
     - mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform
-    - docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -c "CREATE DATABASE $POSTGRES_DB"
+    - export POSTGRES_DB="${POSTGRES_DB/-/_}"
+    - docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "CREATE DATABASE '$POSTGRES_DB'"
     - docker run --rm --net testnet -e LOG_LEVEL=INFO -e MONGO_CONN=$MONGO_CONN -e POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB $CI_REGISTRY_IMAGE npm run code-coverage
 
 registry_deployment:

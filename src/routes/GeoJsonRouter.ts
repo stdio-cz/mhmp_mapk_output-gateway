@@ -42,7 +42,7 @@ export class GeoJsonRouter {
         return toBeArray;
     }
 
-    public GetAll = (req: Request, res: Response, next: NextFunction) => {
+    public GetAll = async (req: Request, res: Response, next: NextFunction) => {
         // Parsing parameters
         const limit: number = parseInt(req.query.limit, 10);
         const offset: number = parseInt(req.query.offset, 10);
@@ -57,17 +57,22 @@ export class GeoJsonRouter {
         if (ids) {
             ids = this.ConvertToArray(ids);
         }
-
-        parseCoordinates(req.query.latlng, req.query.range)
-            .then(({lat, lng, range}) =>
-                this.model.GetAll(lat, lng, range, limit, offset, updatedSince, districts, ids).then((data) => {
-                    res.status(200)
-                        .send(data);
-                }),
-            )
-            .catch((err) => {
-                next(err);
-            });
+        try {
+            const coords = await parseCoordinates(req.query.latlng, req.query.range);
+            const data = await this.model.GetAll(
+                coords.lat,
+                coords.lng,
+                coords.range,
+                limit,
+                offset,
+                updatedSince,
+                districts,
+                ids,
+            );
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
     public GetOne = (req: Request, res: Response, next: NextFunction) => {

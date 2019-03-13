@@ -11,6 +11,7 @@ import {param, query} from "express-validator/check";
 import moment = require("moment");
 import {parseCoordinates} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
+import log from "../helpers/Logger";
 import {checkErrors, pagination} from "../helpers/Validation";
 import {models} from "../models";
 import {GTFSCalendarModel} from "../models/GTFSCalendarModel";
@@ -129,24 +130,20 @@ export class GTFSRouter {
             });
     }
 
-    public GetAllStops = (req: Request, res: Response, next: NextFunction) => {
-        parseCoordinates(req.query.latlng, req.query.range)
-            .then(({lat, lng, range}) =>
-                this.stopModel
-                    .GetAll({
-                        lat,
-                        limit: req.query.limit,
-                        lng,
-                        offset: req.query.offset,
-                        range,
-                    }),
-            )
-            .then((data) => {
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
+    public GetAllStops = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const coords = await parseCoordinates(req.query.latlng, req.query.range);
+            const data = await this.stopModel.GetAll({
+                lat: coords.lat,
+                limit: req.query.limit,
+                lng: coords.lng,
+                offset: req.query.offset,
+                range: coords.range,
             });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
     public GetOneStop = (req: Request, res: Response, next: NextFunction) => {

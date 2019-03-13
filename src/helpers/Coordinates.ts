@@ -1,7 +1,13 @@
 import CustomError from "./errors/CustomError";
 import log from "./Logger";
 
-export const parseCoordinates = (latlng: string, range: string) => {
+export const parseCoordinates = async ( latlng: string,
+                                        range: string,
+    ): Promise<{    lat: number|undefined,
+                    lng: number|undefined,
+                    range: number|undefined,
+    }> => {
+
     let lat: number | undefined;
     let lng: number | undefined;
     let ran: number | undefined;
@@ -19,8 +25,7 @@ export const parseCoordinates = (latlng: string, range: string) => {
             return Promise.reject(new CustomError("Bad request - wrong input parameters", true, 400));
         }
     }
-
-    return Promise.resolve({lat, lng, range: ran});
+    return {lat, lng, range: ran};
 };
 
 export const buildResponse = (item: any, lonProperty: string, latProperty: string): any => ({

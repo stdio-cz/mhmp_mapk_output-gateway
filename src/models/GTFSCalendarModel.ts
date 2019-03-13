@@ -41,7 +41,8 @@ export class GTFSCalendarModel {
                         const where: any = {
                             [sequelizeConnection.Op.and]: [
                                 sequelizeConnection.literal(
-                                    `DATE('${date}') BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
+                                    `DATE('${date}') ` +
+                                    `BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
                                 ),
                                 {[sequelizeModels.GTFSCalendarModel.weekDayMap[day]]: 1},
                             ],

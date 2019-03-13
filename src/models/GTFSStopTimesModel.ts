@@ -43,13 +43,15 @@ export class GTFSStopTimesModel {
 
             if (from) {
                 where[sequelizeConnection.Op.and].push(sequelizeConnection.literal(
-                    `to_timestamp('${from}', 'HH24:mm:ss') <= to_timestamp(regexp_replace(arrival_time, '^24', '00'), 'HH24:MI:SS')`,
+                    `to_timestamp('${from}', 'HH24:mm:ss') ` +
+                    `<= to_timestamp(regexp_replace(arrival_time, '^24', '00'), 'HH24:MI:SS')`,
                 ));
             }
 
             if (to) {
                 where[sequelizeConnection.Op.and].push(sequelizeConnection.literal(
-                    `to_timestamp('${to}', 'HH24:mm:ss') >= to_timestamp(regexp_replace(arrival_time, '^24', '00'), 'HH24:MI:SS')`,
+                    `to_timestamp('${to}', 'HH24:mm:ss') ` +
+                    `>= to_timestamp(regexp_replace(arrival_time, '^24', '00'), 'HH24:MI:SS')`,
                 ));
             }
 

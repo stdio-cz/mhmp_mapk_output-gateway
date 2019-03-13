@@ -4,7 +4,7 @@ variables:
   #POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASS - setup globally
 
 before_script:
-  - export MONGO_CONN=mongodb://runner-mongo-test/$MONGO_DB_NAME
+  - export MONGO_CONN=mongodb://$MONGO_HOST/$MONGO_DB_NAME
   - source ~/.rvm/scripts/rvm
   - gem install apiaryio
 

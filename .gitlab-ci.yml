@@ -48,6 +48,8 @@ api_documentation_deployment:
   script:
     - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgateway"
   only:
+    changes:
+      - docs/apiary_docs.apib
     refs:
       - master
 

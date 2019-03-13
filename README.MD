@@ -58,6 +58,10 @@ npm test
 ```
 from the application's root directory. All tests should pass.
 
+## API documentation
+
+Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) service.
+
 ## Problems?
 
 Contact benak@operatorict.cz or vycpalek@operatorict.cz

@@ -46,7 +46,7 @@ registry_deployment:
 api_documentation_deployment:
   stage: deploy
   script:
-    - apiary publish --api-name="outputgateway" --output="docs/apiary_docs.apib"
+    - apiary publish --api-name="outputgateway" --path="/docs/apiary_docs.apib"
   only:
     changes:
       - docs/apiary_docs.apib

@@ -7,8 +7,12 @@ variables:
   POSTGRES_PASS: test-pass
   POSTGRES_DB: $CI_PROJECT_NAME
 
+image: "ruby:2.3"  
+
 before_script:
   - export MONGO_CONN=mongodb://runner-mongo-test/$MONGO_DB_NAME
+  - source ~/.rvm/scripts/rvm
+  - gem install apiaryio
 
 stages:
   - build
@@ -39,6 +43,15 @@ registry_deployment:
     refs:
       - master
 
+api_documentation_deployment:
+  stage: deploy
+  script:
+    - apiary publish --api-name="outputgateway"
+  only:
+    changes:
+      - docs/apiary_docs.apib
+    refs:
+      - master
 
 remove_images:
   stage: clean

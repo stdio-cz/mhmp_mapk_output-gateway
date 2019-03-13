@@ -59,16 +59,16 @@ export class GeoJsonRouter {
         }
         try {
             const coords = await parseCoordinates(req.query.latlng, req.query.range);
-            const data = await this.model.GetAll(
-                coords.lat,
-                coords.lng,
-                coords.range,
-                limit,
-                offset,
-                updatedSince,
+            const data = await this.model.GetAll({
                 districts,
                 ids,
-            );
+                lat: coords.lat,
+                limit,
+                lng: coords.lng,
+                offset,
+                range: coords.range,
+                updatedSince,
+            });
             res.status(200).send(data);
         } catch (err) {
             next(err);

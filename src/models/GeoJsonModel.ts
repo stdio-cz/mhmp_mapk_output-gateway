@@ -52,18 +52,19 @@ export class GeoJsonModel {
     }
 
     /** Retrieves all the records from database
-     * @param lat Latitude to sort results by (by proximity)
-     * @param lng Longitute to sort results by
-     * @param range Maximum range from specified latLng. Only data within this range will be returned.
-     * @param limit Limit
-     * @param offset Offset
-     * @param updatedSince Filters all results with older last_updated timestamp than this parameter
+     * @param options Object with options settings, with following properties:
+     * lat Latitude to sort results by (by proximity)
+     * lng Longitute to sort results by
+     * range Maximum range from specified latLng. Only data within this range will be returned.
+     * limit Limit
+     * offset Offset
+     * updatedSince Filters all results with older last_updated timestamp than this parameter
      * (filters not-updated data)
-     * @param additionalFilters Object with additional filter conditions to be added to the selection
+     * additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
-    // TODO: change params to options = {}
-    public GetAll = async ( lat?: number,
+    public GetAll = async ( options: {
+                            lat?: number,
                             lng?: number,
                             range?: number,
                             limit?: number,
@@ -71,55 +72,56 @@ export class GeoJsonModel {
                             updatedSince?: number,
                             districts?: string[],
                             ids?: number[],
-                            additionalFilters?: object ) => {
+                            additionalFilters?: object,
+    } = {} ) => {
         try {
             const q = this.model.find({});
 
             // Specify a query filter conditions to search by geometry location
-            if (lat) {
+            if (options.lat) {
                 const selection: any = {
                     geometry: {
                         $near: {
                             $geometry: {
-                                    coordinates: [ lng, lat ],
+                                    coordinates: [ options.lng, options.lat ],
                                     type: "Point",
                                 },
                             },
                         },
                     };
                 // Specify max range filter condition
-                if (range !== undefined) {
-                    selection.geometry.$near.$maxDistance = range;
+                if (options.range !== undefined) {
+                    selection.geometry.$near.$maxDistance = options.range;
                 }
                 this.AddSelection(selection);
             }
 
             // Specify a query filter conditions to search by last updated time
-            if (updatedSince) {
-                this.AddSelection({ "properties.timestamp": { $gte: updatedSince } });
+            if (options.updatedSince) {
+                this.AddSelection({ "properties.timestamp": { $gte: options.updatedSince } });
             }
 
             // Specify a query filter conditions to search by districts
-            if (districts) {
-                this.AddSelection({ "properties.district": { $in: districts } });
+            if (options.districts) {
+                this.AddSelection({ "properties.district": { $in: options.districts } });
             }
 
             // Specify a query filter conditions to search by IDs
-            if (ids) {
-                this.AddSelection(this.PrimaryIdentifierSelection({$in: ids}));
+            if (options.ids) {
+                this.AddSelection(this.PrimaryIdentifierSelection({$in: options.ids}));
             }
 
             // Specify a query filter conditions to search by additional filter parameters
-            if (additionalFilters) {
-                this.AddSelection(additionalFilters);
+            if (options.additionalFilters) {
+                this.AddSelection(options.additionalFilters);
             }
 
             q.where(this.selection);
-            if (limit) {
-                q.limit(limit);
+            if (options.limit) {
+                q.limit(options.limit);
             }
-            if (offset) {
-                q.skip(offset);
+            if (options.offset) {
+                q.skip(options.offset);
             }
             q.select(this.projection);
             this.selection = {};

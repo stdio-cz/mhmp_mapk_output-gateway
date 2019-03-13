@@ -55,7 +55,7 @@ describe("ParkingZonesModel", () => {
     });
 
     it("should return 2 first records (limit)", async () => {
-        const data = await model.GetAll(undefined, undefined, undefined, 2);
+        const data = await model.GetAll({limit: 2});
         expect(data).to.be.an.instanceOf(Object);
         expect(data.features).to.be.an.instanceOf(Array);
         expect(data.type).to.be.equal("FeatureCollection");
@@ -63,20 +63,20 @@ describe("ParkingZonesModel", () => {
     });
 
     it("should return 2nd record first (offset)", async () => {
-        const dataFirst = await model.GetAll(undefined, undefined, undefined, 1, 0);
-        const dataSecond = await model.GetAll(undefined, undefined, undefined, 1, 1);
+        const dataFirst = await model.GetAll({limit: 1, offset: 0});
+        const dataSecond = await model.GetAll({limit: 1, offset: 1});
         expect(dataFirst).not.to.be.equal(dataSecond);
     });
 
     it("should return by last updated (timestamp)", async () => {
         const currentDate = new Date().getTime();
-        const data = await model.GetAll(undefined, undefined, undefined, 0, 0, currentDate);
+        const data = await model.GetAll({updatedSince: currentDate});
         // TODO: Better test to check if the data are recently updated
         expect(data.features.length).to.be.equal(0);
     });
 
     it("should fail on bad parameters", async () => {
-        const promise = model.GetAll(undefined, undefined, undefined, -1, -2);
+        const promise = model.GetAll({limit: -1, offset: -2});
         await expect(promise).to.be.rejected;
     });
 
@@ -101,26 +101,27 @@ describe("ParkingZonesModel", () => {
     });
 
     it("should return at least 2 records, sorted by the closest one (GetByCoordinates)", async () => {
-        const data = await model.GetAll(coordinates[0], coordinates[1]);
+        const data = await model.GetAll({lat: coordinates[0], lng: coordinates[1]});
         const first = data.features[0];
         const second = data.features[1];
         // TODO: Add test to check getting by coordinates
     });
 
     it("should return by coordinates and limit and offset", async () => {
-        const data = await model.GetAll(coordinates[0], coordinates[1], undefined, 2, 1);
+        const data = await model.GetAll({lat: coordinates[0], lng: coordinates[1], limit: 2, offset: 1});
         const first = data.features[0];
         const second = data.features[1];
         // TODO: Add test to check getting by coordinates
     });
 
     it("should return by coordinates and range", async () => {
-        const data = await model.GetAll(coordinates[0], coordinates[1], undefined, 1);
+        const data = await model.GetAll({lat: coordinates[0], lng: coordinates[1], limit: 1});
         const first = data.features[0];
-        const rangeData = await model.GetAll(   first.geometry.coordinates[0][0][1],
-                                                first.geometry.coordinates[0][0][0],
-                                                0.1,
-                                            );
+        const rangeData = await model.GetAll({
+            lat: first.geometry.coordinates[0][0][1],
+            lng: first.geometry.coordinates[0][0][0],
+            range: 0.1,
+        });
         // TODO: Add test to check the last record in array that it is not further from coordinates than range
         expect(data.features.length).to.be.equal(1);
     });

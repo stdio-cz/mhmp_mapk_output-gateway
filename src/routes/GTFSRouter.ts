@@ -278,6 +278,7 @@ export class GTFSRouter {
     private initStopsEndpoints = (): void => {
         this.router.get("/stops", [
             query("latlng").optional().isLatLong(),
+            query("range").optional().isNumeric(),
         ], pagination, checkErrors, this.GetAllStops);
         this.router.get("/stops/:id", [param("id").exists()], checkErrors, this.GetOneStop);
     }

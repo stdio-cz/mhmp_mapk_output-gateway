@@ -3610,7 +3610,7 @@ Parking type enum:
     + include_route: true (optional, boolean) - Enrich trip response object with routes.
     + date: true (optional, boolean) - Filter trips by specific date.
 
-### GET GTFS trips [GET]
+### GET GTFS Trips [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -3620,9 +3620,11 @@ Parking type enum:
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes
-        + array(Trip)
-            + stops (array[Stop])
+    + Attributes (array)
+        + (Trip)
+            + stops (array)
+                + (Feature)
+                    + properties (Stop)
             + stop_times (array[Stop time])
             + shapes (array[Shape])
             + service (Service)
@@ -3638,9 +3640,9 @@ Parking type enum:
     + include_stop_times: true (optional, boolean) - Enrich trip response object with stops times.
     + include_service: true (optional, boolean) - Enrich trip response object with service.
     + include_route: true (optional, boolean) - Enrich trip response object with routes.
-    + date: true (optional, boolean) - Filter trips by specific date.
+    + date: `2019-01-01` (optional, string) - Filter trips by specific date in format (YYYY-MM-DD).
 
-### GET GTFS trip [GET]
+### GET GTFS Trip [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -3651,11 +3653,122 @@ Parking type enum:
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Trip)
-        + stops (array[Stop])
+        + stops (array)
+            + (Feature)
+                + properties (Stop)
         + stop_times (array[Stop time])
         + shapes (array[Shape])
         + service (Service)
         + route (Route)
+
+## GTFS Services [/gtfs/services{?limit,offset,date}]
+
++ Parameters
+    + date: `2019-01-01` (optional, string) - Filter services by specific date in format (YYYY-MM-DD).
+
+### GET GTFS Services [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[Service])
+
+## GTFS Shapes [/gtfs/shapes{?limit,offset}]
+
+### GET GTFS Shapes [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature)
+                + properties (Shape)
+
+## GTFS Shape [/gtfs/shapes/{id}]
+
++ Parameters
+    + `id`: `L991V2` (string, required)
+
+### GET GTFS Shape [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature)
+        + properties (Shape)
+
+## GTFS Stops [/gtfs/stops{?limit,offset,latlng,range}]
+
+### GET GTFS Stops [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature)
+                + properties (Stop)
+
+## GTFS Stop [/gtfs/stop/{id}]
+
++ Parameters
+    + `id`: `U118Z101P` (string, required)
+
+### GET GTFS Stop [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature)
+        + properties (Stop)
+
+## GTFS Stops times [/gtfs/stop_times/{stopId}{?limit,offset,from,to,date}]
+
++ Parameters
+    + `stopId`: `U118Z101P` (string, required)
+    + date: `2019-01-01` (optional, string) - Filter stop times by specific date in format (YYYY-MM-DD).
+    + from: `07:12:33` (optional, string) - Filter stop times by time departure in format (H:mm:ss).
+    + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
+
+### GET GTFS Stop times [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[Stop time])
 
 # Data structure
 
@@ -3744,3 +3857,12 @@ Parking type enum:
 + `route_text_color`: FFFFFF (string, required)
 + `route_type`: 1 (number, required)
 + `route_url`: https://pid.cz/linka/A (string, required)
+
+## Feature (object)
+
++ geometry
+    + type: Point (required, string)
+    + coordinates: 50.07827, 14.4633 (array[number], required)
+
++ properties (required, object)
++ type: Feature (required, string)

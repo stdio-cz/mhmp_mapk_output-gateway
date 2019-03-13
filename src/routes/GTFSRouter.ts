@@ -54,80 +54,76 @@ export class GTFSRouter {
         this.initRoutes();
     }
 
-    public GetAllServices = (req: Request, res: Response, next: NextFunction) => {
-        this.serviceModel
-            .GetAll({
-                date: req.query.date || null,
-                limit: req.query.limit,
-                offset: req.query.offset,
-            })
-            .then((data) => {
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetAllServices = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.serviceModel
+                .GetAll({
+                    date: req.query.date || null,
+                    limit: req.query.limit,
+                    offset: req.query.offset,
+                });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
-    public GetAllStopTimes = (req: Request, res: Response, next: NextFunction) => {
-        this.stopTimeModel
-            .GetAll(req.params.stopId, {
-                date: req.query.date || null,
-                from: req.query.from || null,
-                limit: req.query.limit,
-                offset: req.query.offset,
-                to: req.query.to || null,
-            })
-            .then((data) => {
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetAllStopTimes = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.stopTimeModel
+                .GetAll(req.params.stopId, {
+                    date: req.query.date || null,
+                    from: req.query.from || null,
+                    limit: req.query.limit,
+                    offset: req.query.offset,
+                    to: req.query.to || null,
+                });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
-    public GetAllTrips = (req: Request, res: Response, next: NextFunction) => {
-        this.tripModel
-            .GetAll({
-                date: req.query.date || false,
-                limit: req.query.limit,
-                offset: req.query.offset,
-                route: req.query.iclude_route || false,
-                service: req.query.include_service || false,
-                shapes: req.query.include_shapes || false,
-                stopId: req.query.stop_id,
-                stopTimes: req.query.include_stop_times || false,
-                stops: req.query.include_stops || false,
-            })
-            .then((data) => {
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetAllTrips = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.tripModel
+                .GetAll({
+                    date: req.query.date || false,
+                    limit: req.query.limit,
+                    offset: req.query.offset,
+                    route: req.query.iclude_route || false,
+                    service: req.query.include_service || false,
+                    shapes: req.query.include_shapes || false,
+                    stopId: req.query.stop_id,
+                    stopTimes: req.query.include_stop_times || false,
+                    stops: req.query.include_stops || false,
+                });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
-    public GetOneTrip = (req: Request, res: Response, next: NextFunction) => {
-        const id: string = req.params.id;
+    public GetOneTrip = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id: string = req.params.id;
+            const data = await    this.tripModel
+                .GetOne(id, {
+                    date: req.query.date || false,
+                    route: req.query.iclude_route || false,
+                    service: req.query.include_service || false,
+                    shapes: req.query.include_shapes || false,
+                    stopTimes: req.query.include_stop_times || false,
+                    stops: req.query.include_stops || false,
+                });
 
-        this.tripModel
-            .GetOne(id, {
-                date: req.query.date || false,
-                route: req.query.iclude_route || false,
-                service: req.query.include_service || false,
-                shapes: req.query.include_shapes || false,
-                stopTimes: req.query.include_stop_times || false,
-                stops: req.query.include_stops || false,
-            })
-            .then((data) => {
-                if (!data) {
-                    throw new CustomError("not_found", true, 404, null);
-                }
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+            if (!data) {
+                throw new CustomError("not_found", true, 404, null);
+            }
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
     public GetAllStops = async (req: Request, res: Response, next: NextFunction) => {
@@ -146,80 +142,69 @@ export class GTFSRouter {
         }
     }
 
-    public GetOneStop = (req: Request, res: Response, next: NextFunction) => {
-        const id: string = req.params.id;
-
-        this.stopModel
-            .GetOne(id)
-            .then((data) => {
-                if (!data) {
-                    throw new CustomError("not_found", true, 404, null);
-                }
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetOneStop = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id: string = req.params.id;
+            const data = await this.stopModel.GetOne(id);
+            if (!data) {
+                throw new CustomError("not_found", true, 404, null);
+            }
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
-    public GetAllRoutes = (req: Request, res: Response, next: NextFunction) => {
-        this.routeModel
-            .GetAll({
-                limit: req.query.limit,
-                offset: req.query.offset,
-            })
-            .then((data) => {
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetAllRoutes = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.routeModel
+                .GetAll({
+                    limit: req.query.limit,
+                    offset: req.query.offset,
+                });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
-    public GetOneRoute = (req: Request, res: Response, next: NextFunction) => {
-        const id: string = req.params.id;
-
-        this.routeModel
-            .GetOne(id)
-            .then((data) => {
-                if (!data) {
-                    throw new CustomError("not_found", true, 404, null);
-                }
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetOneRoute = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id: string = req.params.id;
+            const data = await this.routeModel.GetOne(id);
+            if (!data) {
+                throw new CustomError("not_found", true, 404, null);
+            }
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
-    public GetAllShapes = (req: Request, res: Response, next: NextFunction) => {
-        this.shapeModel
-            .GetAll({
-                limit: req.query.limit,
-                offset: req.query.offset,
-            })
-            .then((data) => {
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetAllShapes = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.shapeModel
+                .GetAll({
+                    limit: req.query.limit,
+                    offset: req.query.offset,
+                });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
-    public GetOneShape = (req: Request, res: Response, next: NextFunction) => {
-        const id: string = req.params.id;
-
-        this.shapeModel
-            .GetOne(id)
-            .then((data) => {
-                if (!data) {
-                    throw new CustomError("not_found", true, 404, null);
-                }
-                res.status(200).send(data);
-            })
-            .catch((err) => {
-                next(err);
-            });
+    public GetOneShape = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id: string = req.params.id;
+            const data = await this.shapeModel.GetOne(id);
+            if (!data) {
+                throw new CustomError("not_found", true, 404, null);
+            }
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
     }
 
     /**

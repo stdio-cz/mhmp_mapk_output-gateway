@@ -71,7 +71,8 @@ export class GTFSRouter {
     public GetAllStopTimes = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const data = await this.stopTimeModel
-                .GetAll(req.params.stopId, {
+                .GetAll({
+                    stopId: req.params.stopId,
                     date: req.query.date || null,
                     from: req.query.from || null,
                     limit: req.query.limit,

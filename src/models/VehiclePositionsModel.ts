@@ -1,31 +1,26 @@
-import { VehiclePositions } from "data-platform-schema-definitions";
-import * as Sequelize from "sequelize";
+import {VehiclePositions} from "data-platform-schema-definitions";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
+import {SequelizeModel} from "./SequelizeModel";
 
 /**
  * TODO
  */
-export class VehiclePositionsModel {
-    /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
-    /** Name of the model */
-    protected name: string;
+export class VehiclePositionsModel extends SequelizeModel {
 
     public constructor() {
-        this.name = VehiclePositions.name;
-        this.sequelizeModel = sequelizeConnection.define(   VehiclePositions.trips.pgTableName,
-                                                            VehiclePositions.trips.outputSequelizeAttributes,
-                                                        );
+        super(VehiclePositions.name, VehiclePositions.trips.pgTableName,
+            VehiclePositions.trips.outputSequelizeAttributes);
     }
 
     public GetAll = async (): Promise<any> => {
         try {
             const data = await sequelizeConnection.query(
-    "SELECT DISTINCT ON (line, route_id_cis) line, route_id_cis, created, timestamp, last_stop_id_cis, " +
-    "delay_stop_departure, tracking, start_date, lat, lng, is_low_floor, is_canceled " +
-    "FROM " + VehiclePositions.trips.pgTableName + " WHERE tracking = 2 AND created > (NOW() - INTERVAL '5 min')");
+                "SELECT DISTINCT ON (line, route_id_cis) line, route_id_cis, created, timestamp, last_stop_id_cis, " +
+                "delay_stop_departure, tracking, start_date, lat, lng, is_low_floor, is_canceled " +
+                "FROM " + VehiclePositions.trips.pgTableName +
+                " WHERE tracking = 2 AND created > (NOW() - INTERVAL '5 min')");
             const retData: any = [];
             for (const element of data[0]) {
                 retData.push({

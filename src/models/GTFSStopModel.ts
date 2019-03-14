@@ -2,27 +2,13 @@ import {RopidGTFS} from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
 import {buildResponse} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
-import sequelizeConnection from "../helpers/PostgreDatabase";
+import {SequelizeModel} from "./SequelizeModel";
 
-/**
- * TODO
- */
-export class GTFSStopModel {
-    /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
-    /** Name of the model */
-    protected name: string;
+export class GTFSStopModel extends SequelizeModel {
 
     public constructor() {
-        this.name = RopidGTFS.stops.name;
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.stops.pgTableName,
+        super(RopidGTFS.stops.name, RopidGTFS.stops.pgTableName,
             RopidGTFS.stops.outputSequelizeAttributes);
-    }
-
-    public Associate = (models: any) => {
-        // this.sequelizeModel.hasMany(models.GTFSStopTimesModel.sequelizeModel, {
-        //     foreignKey: "trip_id",
-        // });
     }
 
     public GetAll = async (options: {

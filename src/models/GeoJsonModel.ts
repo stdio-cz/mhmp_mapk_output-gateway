@@ -1,6 +1,7 @@
-import { Document, Model, model, Schema, SchemaDefinition} from "mongoose";
+import {SchemaDefinition} from "mongoose";
 import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
+import {MongoModel} from "./MongoModel";
 
 /**
  * General model for GeoJSON data. Geo-spatial indexing and querying. General GetAll and GetOne functions
@@ -10,19 +11,7 @@ import log from "../helpers/Logger";
  * properties: { ... }
  * type: Feature
  */
-export class GeoJsonModel {
-    /** The Mongoose Model */
-    public model: Model<any>;
-    /** Name of the model */
-    protected name: string;
-    /** The schema which contains schemaObject for creating the Mongoose Schema */
-    protected schema: Schema;
-    /** Name of the mongo collection where the model is stored in the database */
-    protected collectionName: string|undefined;
-    /** Selection object to filter the retrieved records */
-    private selection: object = {};
-    /** Projection object to filter the retrieved record's attributes */
-    private projection: object = {};
+export class GeoJsonModel extends MongoModel {
 
     /**
      * Creates a model with specified schema definition
@@ -32,23 +21,10 @@ export class GeoJsonModel {
      * if empty, collection named as plural of model's name is used
      */
     public constructor(inName: string, inSchema: SchemaDefinition, inCollectionName?: string) {
-        this.name = inName;
-        this.schema = new Schema(inSchema);
-        if (inCollectionName) {
-            this.collectionName = inCollectionName;
-        }
-        // assign existing mongo model or create new one
-        try {
-            this.model = model(this.name); // existing model
-        } catch (error) {
-            // create $geonear index
-            this.schema.index({ geometry: "2dsphere" });
-            // uses database collection named as plural of model's name (eg. "parkings" for "Parking" model)
-            // or collection name specified in the third parameter
-            this.model = model(this.name, this.schema, this.collectionName);
-        }
-        // Don't return default mongoose values and mongo internal ID
-        this.AddProjection({ _id: 0, __v: 0 });
+        super(inName, inSchema, inCollectionName);
+
+        // create $geonear index
+        this.schema.index({geometry: "2dsphere"});
     }
 
     /** Retrieves all the records from database
@@ -62,16 +38,16 @@ export class GeoJsonModel {
      * @param additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
-    // TODO: change params to options = {}
-    public GetAll = async ( lat?: number,
-                            lng?: number,
-                            range?: number,
-                            limit?: number,
-                            offset?: number,
-                            updatedSince?: number,
-                            districts?: string[],
-                            ids?: number[],
-                            additionalFilters?: object ) => {
+        // TODO: change params to options = {}
+    public GetAll = async (lat?: number,
+                           lng?: number,
+                           range?: number,
+                           limit?: number,
+                           offset?: number,
+                           updatedSince?: number,
+                           districts?: string[],
+                           ids?: number[],
+                           additionalFilters?: object) => {
         try {
             const q = this.model.find({});
 
@@ -81,12 +57,12 @@ export class GeoJsonModel {
                     geometry: {
                         $near: {
                             $geometry: {
-                                    coordinates: [ lng, lat ],
-                                    type: "Point",
-                                },
+                                coordinates: [lng, lat],
+                                type: "Point",
                             },
                         },
-                    };
+                    },
+                };
                 // Specify max range filter condition
                 if (range !== undefined) {
                     selection.geometry.$near.$maxDistance = range;
@@ -96,12 +72,12 @@ export class GeoJsonModel {
 
             // Specify a query filter conditions to search by last updated time
             if (updatedSince) {
-                this.AddSelection({ "properties.timestamp": { $gte: updatedSince } });
+                this.AddSelection({"properties.timestamp": {$gte: updatedSince}});
             }
 
             // Specify a query filter conditions to search by districts
             if (districts) {
-                this.AddSelection({ "properties.district": { $in: districts } });
+                this.AddSelection({"properties.district": {$in: districts}});
             }
 
             // Specify a query filter conditions to search by IDs
@@ -147,29 +123,5 @@ export class GeoJsonModel {
         } else {
             return found;
         }
-    }
-
-    /**
-     * Adds a new selection condition to filter the retrieved results by
-     * @param newCondition New condition/filter object to be added to the "where" clause
-     */
-    protected AddSelection = (newCondition: object) => {
-        this.selection = { ...this.selection, ...newCondition };
-    }
-
-    /**
-     * Adds a new projection to filter what attributes to retrieve from the selected objects
-     * @param newFilter New filter to be added to the "select" clause
-     */
-    protected AddProjection = (newFilter: object) => {
-        this.projection = { ...this.projection, ...newFilter };
-    }
-
-    /**
-     * Specify where to search by primary id
-     * The entity is uniquely identified by this property
-     */
-    protected PrimaryIdentifierSelection = (inId: any): object => {
-        return { "properties.id": inId };
     }
 }

@@ -1,24 +1,13 @@
 import {RopidGTFS} from "data-platform-schema-definitions";
-import * as Sequelize from "sequelize";
 import CustomError from "../helpers/errors/CustomError";
-import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
-import {models as sequelizeModels} from "./index";
+import {SequelizeModel} from "./SequelizeModel";
 
-/**
- * TODO
- */
-export class GTFSStopTimesModel {
-    /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
-    /** Name of the model */
-    protected name: string;
+export class GTFSStopTimesModel extends SequelizeModel {
 
     public constructor() {
-        this.name = RopidGTFS.stop_times.name;
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.stop_times.pgTableName,
-            RopidGTFS.stop_times.outputSequelizeAttributes,
-        );
+        super(RopidGTFS.stop_times.name, RopidGTFS.stop_times.pgTableName,
+            RopidGTFS.stop_times.outputSequelizeAttributes);
     }
 
     public Associate = (models: any) => {
@@ -27,14 +16,15 @@ export class GTFSStopTimesModel {
         });
     }
 
-    public GetAll = async (stopId: string, options: {
+    public GetAll = async (options: {
+        stopId: string,
         limit?: number,
         offset?: number,
         from?: string,
         to?: string,
         date?: string,
-    } = {}): Promise<any> => {
-        const {limit, offset, to, from, date} = options;
+    }): Promise<any> => {
+        const {limit, offset, to, from, date, stopId} = options;
         const include: any = [];
         try {
             const where: any = {

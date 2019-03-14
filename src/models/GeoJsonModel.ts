@@ -59,9 +59,8 @@ export class GeoJsonModel extends MongoModel {
                     geometry: {
                         $near: {
                             $geometry: {
-                                    coordinates: [ options.lng, options.lat ],
-                                    type: "Point",
-                                },
+                                coordinates: [ options.lng, options.lat ],
+                                type: "Point",
                             },
                         },
                     },

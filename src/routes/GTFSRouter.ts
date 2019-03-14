@@ -72,11 +72,11 @@ export class GTFSRouter {
         try {
             const data = await this.stopTimeModel
                 .GetAll({
-                    stopId: req.params.stopId,
                     date: req.query.date || null,
                     from: req.query.from || null,
                     limit: req.query.limit,
                     offset: req.query.offset,
+                    stopId: req.params.stopId,
                     to: req.query.to || null,
                 });
             res.status(200).send(data);

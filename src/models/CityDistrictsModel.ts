@@ -3,10 +3,8 @@
  * Performs database queries.
  */
 
-import { CityDistricts } from "data-platform-schema-definitions";
-import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import CustomError from "../helpers/errors/CustomError";
-import { GeoJsonModel } from "./GeoJsonModel";
+import {CityDistricts} from "data-platform-schema-definitions";
+import {GeoJsonModel} from "./GeoJsonModel";
 
 export class CityDistrictsModel extends GeoJsonModel {
 

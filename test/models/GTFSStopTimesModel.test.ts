@@ -54,7 +54,7 @@ describe("GTFSStopTimesModel", () => {
     });
 
     it("should return all items", async () => {
-        const result = await stopTimesModel.GetAll(stopId);
+        const result = await stopTimesModel.GetAll({stopId});
         expect(result).to.be.an.instanceOf(Array).and.lengthOf(6);
     });
 

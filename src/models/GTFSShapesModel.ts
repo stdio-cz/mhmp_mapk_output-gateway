@@ -1,24 +1,13 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
-import * as Sequelize from "sequelize";
-import { buildResponse } from "../helpers/Coordinates";
+import {RopidGTFS} from "data-platform-schema-definitions";
+import {buildResponse} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
-import log from "../helpers/Logger";
-import sequelizeConnection from "../helpers/PostgreDatabase";
+import {SequelizeModel} from "./SequelizeModel";
 
-/**
- * TODO
- */
-export class GTFSShapesModel {
-    /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
-    /** Name of the model */
-    protected name: string;
+export class GTFSShapesModel extends SequelizeModel {
 
     public constructor() {
-        this.name = RopidGTFS.shapes.name;
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.shapes.pgTableName,
-            RopidGTFS.shapes.outputSequelizeAttributes,
-        );
+        super(RopidGTFS.shapes.name, RopidGTFS.shapes.pgTableName,
+            RopidGTFS.shapes.outputSequelizeAttributes);
     }
 
     public Associate = (models: any) => {
@@ -43,7 +32,7 @@ export class GTFSShapesModel {
                 order,
             });
             return {
-                features: data.map((item) => buildResponse(item,  "shape_pt_lon", "shape_pt_lat")),
+                features: data.map((item) => buildResponse(item, "shape_pt_lon", "shape_pt_lat")),
                 type: "FeatureCollection",
             };
         } catch (err) {

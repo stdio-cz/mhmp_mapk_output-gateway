@@ -6,21 +6,12 @@ import CustomError from "../helpers/errors/CustomError";
 import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
 import {models as sequelizeModels} from "./index";
+import {SequelizeModel} from "./SequelizeModel";
 
-/**
- * TODO
- */
-export class GTFSTripsModel {
-    /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
-    /** Name of the model */
-    protected name: string;
+export class GTFSTripsModel extends SequelizeModel {
 
     public constructor() {
-        this.name = RopidGTFS.trips.name;
-        this.sequelizeModel = sequelizeConnection.define(RopidGTFS.trips.pgTableName,
-            RopidGTFS.trips.outputSequelizeAttributes,
-        );
+        super(RopidGTFS.trips.name, RopidGTFS.trips.pgTableName, RopidGTFS.trips.outputSequelizeAttributes);
     }
 
     public Associate = (models: any) => {

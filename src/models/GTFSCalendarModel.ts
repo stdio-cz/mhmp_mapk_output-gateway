@@ -1,16 +1,12 @@
 import {RopidGTFS} from "data-platform-schema-definitions";
 import moment = require("moment");
 import * as Sequelize from "sequelize";
-import {buildResponse} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
-import log from "../helpers/Logger";
 import sequelizeConnection from "../helpers/PostgreDatabase";
 import {models as sequelizeModels} from "./index";
+import {SequelizeModel} from "./SequelizeModel";
 
-/**
- * TODO
- */
-export class GTFSCalendarModel {
+export class GTFSCalendarModel extends SequelizeModel {
 
     public weekDayMap = {
         1: "monday",
@@ -27,31 +23,26 @@ export class GTFSCalendarModel {
     protected name: string;
 
     public constructor() {
-        this.name = RopidGTFS.calendar.name;
-        this.sequelizeModel = sequelizeConnection.define(
-            RopidGTFS.calendar.pgTableName,
-            RopidGTFS.calendar.outputSequelizeAttributes,
-            {
-                scopes: {
-                    forDate(date?: string) {
-                        if (!date) {
-                            return {};
-                        }
-                        const day = moment(date).day();
-                        const where: any = {
-                            [sequelizeConnection.Op.and]: [
-                                sequelizeConnection.literal(
-                                    `DATE('${date}') ` +
-                                    `BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
-                                ),
-                                {[sequelizeModels.GTFSCalendarModel.weekDayMap[day]]: 1},
-                            ],
-                        };
-                        return {where};
-                    },
+        super(RopidGTFS.calendar.name, RopidGTFS.calendar.pgTableName, RopidGTFS.calendar.outputSequelizeAttributes, {
+            scopes: {
+                forDate(date?: string) {
+                    if (!date) {
+                        return {};
+                    }
+                    const day = moment(date).day();
+                    const where: any = {
+                        [sequelizeConnection.Op.and]: [
+                            sequelizeConnection.literal(
+                                `DATE('${date}') ` +
+                                `BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
+                            ),
+                            {[sequelizeModels.GTFSCalendarModel.weekDayMap[day]]: 1},
+                        ],
+                    };
+                    return {where};
                 },
             },
-        );
+        });
     }
 
     public GetAll = async (options: {

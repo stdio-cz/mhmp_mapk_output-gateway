@@ -4,7 +4,7 @@ import log from "../helpers/Logger";
 import {MongoModel} from "./MongoModel";
 
 /**
- * General model for GeoJSON data. Geo-spatial indexing and querying. General GetAll and GetOne functions
+ * General model for GeoJSON data. Geo-spatial indexing and querying. Implements general GetAll and GetOne functions
  *
  * Expects GeoJSON data structure:
  * geometry: { coordinates[], type },

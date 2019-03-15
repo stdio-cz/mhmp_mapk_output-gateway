@@ -73,4 +73,9 @@ export class GTFSStopTimesModel extends SequelizeModel {
             throw new CustomError("Database error", true, 500, err);
         }
     }
+
+    public GetOne = (id: any): Promise<any> => {
+        throw new CustomError("Method not implemented", false);
+    }
+
 }

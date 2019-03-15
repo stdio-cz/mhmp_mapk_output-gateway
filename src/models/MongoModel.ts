@@ -2,14 +2,9 @@ import {Model, model, Schema, SchemaDefinition} from "mongoose";
 import {BaseModel} from "./BaseModel";
 
 /**
- * General model for GeoJSON data. Geo-spatial indexing and querying. General GetAll and GetOne functions
- *
- * Expects GeoJSON data structure:
- * geometry: { coordinates[], type },
- * properties: { ... }
- * type: Feature
+ * General model for data stored in MongoDB.
  */
-export class MongoModel extends BaseModel {
+export abstract class MongoModel extends BaseModel {
     /** The Mongoose Model */
     public model: Model<any>;
     /** The schema which contains schemaObject for creating the Mongoose Schema */

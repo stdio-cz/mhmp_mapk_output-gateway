@@ -1,31 +1,52 @@
 "use strict";
 
 import "mocha";
-const config = require("../../src/config/config");
-import handleError from "../../src/helpers/errors/ErrorHandler";
-import MongoDatabase from "../../src/helpers/MongoDatabase";
-const { sequelizeConnection } = require("../../src/helpers/PostgreDatabase");
-import { VehiclePositionsModel } from "../../src/models";
+import * as path from "path";
+import {models} from "../../src/models";
+import {VehiclePositionsModel} from "../../src/models/VehiclePositionsModel";
 
+const config = require("../../src/config/config");
+
+const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+
+const sequelize = require("../../src/helpers/PostgreDatabase").default;
+
+const sinon = require("sinon");
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 
-// describe("VehiclePositionsModel", () => {
+describe("VehiclePositionsModel", () => {
 
-//     let model: VehiclePositionsModel;
-//     let parkingZoneCode: String;
-//     let coordinates: Array<number>;
+    const vehiclepositionsModel: VehiclePositionsModel = models.VehiclePositionsModel;
 
-//     before(async () => {
-//         TODO
-//     });
+    // Basic configuration: create a sinon sandbox for testing
+    let sandbox: any = null;
 
-//     it("should instantiate", () => {
-//         expect(model).not.to.be.undefined;
-//     });
+    beforeEach(() => {
+        sandbox = sinon.sandbox.create();
+    });
 
-// });
+    afterEach(() => {
+        sandbox && sandbox.restore();
+    });
+
+    // Load fake data for the users
+    sequelizeMockingMocha(
+        sequelize,
+        [],
+        {logging: false},
+    );
+
+    it("should instantiate", () => {
+        expect(vehiclepositionsModel).not.to.be.undefined;
+    });
+
+    // TODO - no distinct on in sqlite
+    // it("should return all items", async () => {
+    //     const result = await vehiclepositionsModel.GetAll();
+    //     expect(result).to.be.an.instanceOf(Array).and.lengthOf(0);
+    // });
+});

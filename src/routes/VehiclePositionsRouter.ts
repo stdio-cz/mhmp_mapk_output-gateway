@@ -6,11 +6,9 @@
  */
 
 // Import only what we need from express
-import { NextFunction, Request, Response, Router } from "express";
+import {NextFunction, Request, Response, Router} from "express";
 import CustomError from "../helpers/errors/CustomError";
-import handleError from "../helpers/errors/ErrorHandler";
-import log from "../helpers/Logger";
-import { VehiclePositionsModel } from "../models/VehiclePositionsModel";
+import {VehiclePositionsModel} from "../models/VehiclePositionsModel";
 
 export class VehiclePositionsRouter {
 
@@ -24,24 +22,27 @@ export class VehiclePositionsRouter {
         this.initRoutes();
     }
 
-    public GetAll = (req: Request, res: Response, next: NextFunction) => {
-        this.model.GetAll().then((data) => {
-            res.status(200)
-                .send(data);
-        }).catch((err) => {
+    public GetAll = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.model.GetAll();
+            res.status(200).send(data);
+        } catch (err) {
             next(err);
-        });
+        }
     }
 
-    public GetOne = (req: Request, res: Response, next: NextFunction) => {
+    public GetOne = async (req: Request, res: Response, next: NextFunction) => {
         const id: number = req.params.id;
 
-        this.model.GetOne(id).then((data) => {
-            res.status(200)
-                .send(data);
-        }).catch((err) => {
+        try {
+            const data = await this.model.GetOne(id);
+            if (!data) {
+                throw new CustomError("not_found", true, 404, null);
+            }
+            res.status(200).send(data);
+        } catch (err) {
             next(err);
-        });
+        }
     }
 
     /**

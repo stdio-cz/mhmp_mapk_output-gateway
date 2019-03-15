@@ -11,7 +11,6 @@ import {param, query} from "express-validator/check";
 import moment = require("moment");
 import {parseCoordinates} from "../helpers/Coordinates";
 import CustomError from "../helpers/errors/CustomError";
-import log from "../helpers/Logger";
 import {checkErrors, pagination} from "../helpers/Validation";
 import {models} from "../models";
 import {GTFSCalendarModel} from "../models/GTFSCalendarModel";

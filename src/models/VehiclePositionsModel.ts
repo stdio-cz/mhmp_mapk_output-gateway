@@ -16,26 +16,11 @@ export class VehiclePositionsModel extends SequelizeModel {
         try {
             const data = await this.sequelizeModel
                 .findAll({
-                    attributes: [
-                        sequelizeConnection.literal("DISTINCT ON (\"line\", \"route_id_cis\") \"line\""),
-                        "route_id_cis",
-                        "created",
-                        "timestamp",
-                        "last_stop_id_cis",
-                        "delay_stop_departure",
-                        "tracking",
-                        "start_date",
-                        "lat",
-                        "lng",
-                        "is_low_floor",
-                        "is_canceled",
-                    ],
                     where: {
                         created: {
                             [sequelizeConnection.Op.gt]:
                                 sequelizeConnection.literal("(NOW() - INTERVAL '5 min')"),
                         },
-                        tracking: 2,
                     },
                 });
 

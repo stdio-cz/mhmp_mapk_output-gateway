@@ -1,12 +1,13 @@
 import CustomError from "./errors/CustomError";
 import log from "./Logger";
 
-export const parseCoordinates = async ( latlng: string,
-                                        range: string,
-    ): Promise<{    lat: number|undefined,
-                    lng: number|undefined,
-                    range: number|undefined,
-    }> => {
+export const parseCoordinates = async (latlng: string,
+                                       range: string,
+): Promise<{
+    lat: number | undefined,
+    lng: number | undefined,
+    range: number | undefined,
+}> => {
 
     let lat: number | undefined;
     let lng: number | undefined;
@@ -28,16 +29,17 @@ export const parseCoordinates = async ( latlng: string,
     return {lat, lng, range: ran};
 };
 
-export const buildResponse = (item: any, lonProperty: string, latProperty: string): any => ({
-    geometry: {
-        coordinates: [
-            item[lonProperty],
-            item[latProperty],
-        ],
-        type: "Point",
-    },
-    properties: {
-        ...item.toJSON(),
-    },
-    type: "Feature",
-});
+export const buildResponse = (item: any, lonProperty: string, latProperty: string): any => {
+    const {[lonProperty]: lon, [latProperty]: lat, ...properties} = item.toJSON();
+    return ({
+        geometry: {
+            coordinates: [
+                lon,
+                lat,
+            ],
+            type: "Point",
+        },
+        properties,
+        type: "Feature",
+    });
+};

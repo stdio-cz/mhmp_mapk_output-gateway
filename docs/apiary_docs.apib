@@ -3608,7 +3608,7 @@ Parking type enum:
     + include_stop_times: true (optional, boolean) - Enrich trip response object with stops times.
     + include_service: true (optional, boolean) - Enrich trip response object with service.
     + include_route: true (optional, boolean) - Enrich trip response object with routes.
-    + date: true (optional, boolean) - Filter trips by specific date.
+    + date: `2018-01-01` (optional, string) - Filter trips by specific date.
 
 ### GET GTFS Trips [GET]
 
@@ -3780,7 +3780,7 @@ Parking type enum:
 + created_time: `2018-09-09 12:32:45` (string, nullable)
 + direction_id: 0 (number, optional)
 + exceptional: 0 (number)
-+ last_modify: `2018-09-09 12:32:45` (string, nullable)
++ last_modify: `2018-09-09 12:32:45` (string, optional, nullable)
 + route_id: L991 (string, required)
 + service_id: `1111100-1` (string, required)
 + shape_id: L991V3 (string, required)
@@ -3790,7 +3790,7 @@ Parking type enum:
 ## Stop (object)
 
 + `created_time`: `2018-09-09 12:32:45` (string, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `location_type`: 0 (number, required)
 + `parent_station`: U118S1 (string, required)
 + `platform_code`: 1 (number, required)
@@ -3810,7 +3810,7 @@ Parking type enum:
 + `departure_time`: `13:12:35` (string, required)
 + `departure_time_seconds`: ` ` (number, optional, nullable)
 + `drop_off_type`: 0 (number, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `pickup_type`: 0 (number, required)
 + `shape_dist_traveled`: 3.73622 (number, required)
 + `stop_headsign`: ` ` (string, optional)
@@ -3821,7 +3821,7 @@ Parking type enum:
 ## Shape (object)
 
 + `created_time`: `2018-09-09 12:32:45` (string, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `shape_dist_traveled`: 16.46309 (number, required))
 + `shape_id`: L991V2 (string, required)
 + `shape_pt_lat`: 50.07274 (number, required)
@@ -3833,7 +3833,7 @@ Parking type enum:
 + `created_time`: `2018-09-09 12:32:45` (string, required)
 + `end_date`: 20190311 (string, required)
 + `friday`: 1 (number, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `monday`: 1 (number, required)
 + `saturday`: 1 (number, required)
 + `service_id`: `1111111-1` (string, required)
@@ -3848,7 +3848,7 @@ Parking type enum:
 + `agency_id`: 99 (number, required)
 + `created_time`: `2018-09-09 12:32:45` (string, required)
 + `is_night`: 0 (number, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `route_color`: 00A562 (string, required)
 + `route_desc`: null (string, nullable)
 + `route_id`: L991 (string, required)

@@ -6,7 +6,8 @@ import {GTFSShapesModel} from "./GTFSShapesModel";
 import {GTFSStopModel} from "./GTFSStopModel";
 import {GTFSStopTimesModel} from "./GTFSStopTimesModel";
 import {GTFSTripsModel} from "./GTFSTripsModel";
-import {VehiclePositionsModel} from "./VehiclePositionsModel";
+import {VehiclePositionsPositionsModel} from "./VehiclePositionsPositionsModel";
+import {VehiclePositionsTripsModel} from "./VehiclePositionsTripsModel";
 
 const models: any = {
     GTFSCalendarModel: new GTFSCalendarModel(),
@@ -15,7 +16,8 @@ const models: any = {
     GTFSStopModel: new GTFSStopModel(),
     GTFSStopTimesModel: new GTFSStopTimesModel(),
     GTFSTripsModel: new GTFSTripsModel(),
-    VehiclePositionsModel: new VehiclePositionsModel(),
+    VehiclePositionsPositionsModel: new VehiclePositionsPositionsModel(),
+    VehiclePositionsTripsModel: new VehiclePositionsTripsModel(),
 };
 
 for (const type in models) {

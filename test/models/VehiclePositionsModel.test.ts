@@ -3,7 +3,7 @@
 import "mocha";
 import * as path from "path";
 import {models} from "../../src/models";
-import {VehiclePositionsModel} from "../../src/models/VehiclePositionsModel";
+import {VehiclePositionsTripsModel} from "../../src/models/VehiclePositionsTripsModel";
 
 const config = require("../../src/config/config");
 
@@ -18,9 +18,9 @@ const chaiAsPromised = require("chai-as-promised");
 
 chai.use(chaiAsPromised);
 
-describe("VehiclePositionsModel", () => {
+describe("VehiclePositionsTripsModel", () => {
 
-    const vehiclepositionsModel: VehiclePositionsModel = models.VehiclePositionsModel;
+    const vehiclepositionsModel: VehiclePositionsTripsModel = models.VehiclePositionsTripsModel;
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;

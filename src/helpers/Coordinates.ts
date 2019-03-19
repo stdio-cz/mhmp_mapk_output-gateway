@@ -34,8 +34,8 @@ export const buildResponse = (item: any, lonProperty: string, latProperty: strin
     return ({
         geometry: {
             coordinates: [
-                lon,
-                lat,
+                +lon,
+                +lat,
             ],
             type: "Point",
         },

@@ -8,17 +8,18 @@
 // Import only what we need from express
 import {NextFunction, Request, Response, Router} from "express";
 import CustomError from "../helpers/errors/CustomError";
-import {VehiclePositionsModel} from "../models/VehiclePositionsModel";
+import {VehiclePositionsTripsModel} from "../models/VehiclePositionsTripsModel";
+import {models} from "../models";
 
 export class VehiclePositionsRouter {
 
     // Assign router to the express.Router() instance
     public router: Router = Router();
 
-    protected model: VehiclePositionsModel;
+    protected model: VehiclePositionsTripsModel;
 
     public constructor() {
-        this.model = new VehiclePositionsModel();
+        this.model = models.VehiclePositionsTripsModel;
         this.initRoutes();
     }
 

@@ -30,7 +30,6 @@ export const parseCoordinates = async (latlng: string,
 };
 
 export const buildResponse = (item: any, lonProperty: string, latProperty: string): any => {
-    console.log(item.toJSON);
     const {[lonProperty]: lon, [latProperty]: lat, ...properties} = item.toJSON ? item.toJSON() : item;
     return ({
         geometry: {

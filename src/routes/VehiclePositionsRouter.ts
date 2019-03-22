@@ -43,7 +43,6 @@ export class VehiclePositionsRouter {
 
     public GetOne = async (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
-        console.log("query", req.query);
         try {
             const data = await this.model.GetOne(id, {
                     includeGTFS: req.query.includeGTFS || false,

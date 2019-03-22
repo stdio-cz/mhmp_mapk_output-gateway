@@ -83,7 +83,7 @@ export class GTFSTripsModel extends SequelizeModel {
             });
 
             if (stops || shapes) {
-                return data.map((trip) => this.ConvertItem(trip));
+                return data.map((trip) => this.ConvertItem(trip, {stops, shapes}));
             }
 
             return data;
@@ -92,16 +92,16 @@ export class GTFSTripsModel extends SequelizeModel {
         }
     }
 
-    public ConvertItem = (trip: any) => {
-        const {stops: stopItems = [], shapes: shapeItems = [], ...item} = trip;
+    public ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean }) => {
+        const {stops: stopItems = [], shapes: shapeItems = [], ...item} = trip.toJSON();
         return {
             ...item,
-            ...(stopItems.length &&
+            ...(options.stops &&
                 {
                     stops: stopItems
                         .map((stop: any) => buildResponse(stop, "stop_lon", "stop_lat")),
                 }),
-            ...(shapeItems.length
+            ...(options.shapes
                 && {
                     shapes: shapeItems
                         .map((shape: any) => buildResponse(shape, "shape_pt_lon", "shape_pt_lat")),
@@ -118,6 +118,7 @@ export class GTFSTripsModel extends SequelizeModel {
             stopTimes?: boolean,
             date?: string,
         } = {}): Promise<object> => {
+        const {stops, shapes} = options;
         return this.sequelizeModel
             .findByPk(id, {include: this.GetInclusions(options)})
             .then((trip) => {
@@ -125,7 +126,7 @@ export class GTFSTripsModel extends SequelizeModel {
                     return null;
                 }
 
-                return this.ConvertItem(trip);
+                return this.ConvertItem(trip, {stops, shapes});
             });
     }
 

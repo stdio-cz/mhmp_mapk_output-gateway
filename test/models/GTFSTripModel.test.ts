@@ -71,9 +71,8 @@ describe("GTFSTripsModel", () => {
     });
 
     it("should return single item", async () => {
-        const result: any = await tripModel.GetOne(tripId);
-        expect(result).not.to.be.empty;
-        const trip = result.toJSON();
+        const trip: any = await tripModel.GetOne(tripId);
+        expect(trip).not.to.be.empty;
         expect(trip).to.have.property("trip_id", tripId);
     });
 
@@ -144,14 +143,13 @@ describe("GTFSTripsModel", () => {
     });
 
     it("should return single trip with included resources", async () => {
-        const result: any = await tripModel.GetOne(tripId, {
+        const trip: any = await tripModel.GetOne(tripId, {
             route: true,
             service: true,
             shapes: true,
             stopTimes: true,
             stops: true,
         });
-        const trip = result.toJSON();
         expect(trip).to.be.an.instanceOf(Object);
         expect(trip).to.have.property("route").and.be.instanceOf(Object);
         expect(trip).to.have.property("service").and.be.instanceOf(Object);

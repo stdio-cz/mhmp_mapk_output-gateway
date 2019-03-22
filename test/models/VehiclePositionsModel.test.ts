@@ -44,7 +44,7 @@ describe("VehiclePositionsTripsModel", () => {
         expect(vehiclepositionsModel).not.to.be.undefined;
     });
 
-    // TODO - no distinct on in sqlite
+    // TODO - sqlite cannot process date functions correctly
     // it("should return all items", async () => {
     //     const result = await vehiclepositionsModel.GetAll();
     //     expect(result).to.be.an.instanceOf(Array).and.lengthOf(0);

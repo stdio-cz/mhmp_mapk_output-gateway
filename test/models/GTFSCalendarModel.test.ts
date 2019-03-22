@@ -14,10 +14,8 @@ const sinon = require("sinon");
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
 import {models} from "../../src/models";
 import {GTFSCalendarModel} from "../../src/models/GTFSCalendarModel";
-import {GTFSRoutesModel} from "../../src/models/GTFSRoutesModel";
 
 chai.use(chaiAsPromised);
 

@@ -10,17 +10,6 @@ export class VehiclePositionsPositionsModel extends SequelizeModel {
         // this.sequelizeModel.removeAttribute("id");
     }
 
-    public Associate = (models: any) => {
-        this.sequelizeModel.belongsTo(models.VehiclePositionsTripsModel.sequelizeModel, {
-            foreignKey: "trips_id",
-        });
-
-        this.sequelizeModel.belongsTo(this.sequelizeModel, {
-            foreignKey: "trips_id",
-            targetKey: "trips_id",
-        });
-    }
-
     public GetAll = async (): Promise<any> => {
         return null;
     }

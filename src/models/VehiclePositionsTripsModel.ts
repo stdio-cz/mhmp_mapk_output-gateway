@@ -20,9 +20,8 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             foreignKey: "trips_id",
         });
 
-        this.sequelizeModel.belongsTo(m.VehiclePositionsPositionsViewModel.sequelizeModel, {
-            foreignKey: "id",
-            targetKey: "trips_id",
+        this.sequelizeModel.hasOne(m.VehiclePositionsPositionsViewModel.sequelizeModel, {
+            foreignKey: "trips_id",
         });
 
         this.sequelizeModel.belongsTo(m.GTFSTripsModel.sequelizeModel, {

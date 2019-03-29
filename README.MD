@@ -8,6 +8,8 @@ Output Gateway for the Data Platform System.
 
 Developed by http://operatorict.cz
 
+Apiary definition at https://outputgateway.docs.apiary.io
+
 ## Prerequisites
 
 - node.js
@@ -71,6 +73,10 @@ Logging uses `Winston` for standard logging with levels, `morgan` for http acces
 All logs with `silly` and `debug` level are printed as standard log (if appropriate log level is set) using Winston as well as using `debug` module with `"data-platform:output-gateway"` settings.
 
 You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
+
+## Documentation
+
+For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
 ## Problems?
 

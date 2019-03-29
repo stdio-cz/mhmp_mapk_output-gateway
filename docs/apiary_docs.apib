@@ -3,7 +3,7 @@ HOST: http://private-07825d-golemiooutputgateway.apiary-mock.com
 
 # Golemio Output Gateway
 
-Documentation URL: https://golemiooutputgateway.docs.apiary.io/
+Documentation URL: https://outputgateway.docs.apiary.io/
 
 Open RESTful API gateway for Golemio.cz Prague data plafrorm. 
 Gathers, enriches and caches data from various sources and provides a single access point to the data. 
@@ -39,7 +39,7 @@ Developed by https://operatorict.cz
 - `ids`
    - filters by individual entity IDs (in array format - eg. `ids[]=1&ids[]=3`)
 
-All parameters are evaluated at the same time as AND (only results meeting all the conditions at the same time are returned). 
+All parameters are optional and are evaluated at the same time as AND (only results meeting all the conditions at the same time are returned). 
 
 Multiple values of the same parameter of type array are evaluated as OR (results meeting at least one condition are returned). Eg. `districts` or `ids`.
 
@@ -49,6 +49,23 @@ Multiple values of the same parameter of type array are evaluated as OR (results
     - Weak E-Tag implementation is used for caching
     - API returns `ETag` response header, example: W/"21cf-vMBh8gdzFfYJ4qSGaPA6/dooVV0"
     - If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed.
+
+## Example requests
+
+- get all parkings (without any parameters - all parameters are optional)
+    - `{baseurl}/parkings/`
+    
+- get all parkings in 300m range around location 50.11548,14.437327 (using `latlng` and `range` parameters)
+    - `{baseurl}/parkings/?latlng=50.11548,14.437327&range=300`
+    
+- get all parkings in Prague 7 (using `districts` array parameter - works also for single value)
+    - `{baseurl}/parkings/?districts[]=praha7`
+    
+- get 10th - 20th record (2nd page of 10 elements each when paginating) (using `limit` and `offset` parameters)
+    - `{baseurl}/parkings/?limit=10&offset=10`
+    
+- get 10th - 20th record (2nd page of 10 elements each when paginating) of parkings in Prague 7 or Prague 8, which are in 3000m range from location 50.11548,14.437327. All parameters are evaluated at the same time (AND condition), but multiple values of the same array parameter `districts` are taken as OR. All filtering parameters are evaluated first, pagination (`limit` and `offset`) at the end on already filtered results.
+    - `{baseurl}/parkings/?latlng=50.11548,14.437327&range=300&districts[]=praha7&districts[]=praha8&limit=10&offset=10`
 
 # Group General
 General resources.

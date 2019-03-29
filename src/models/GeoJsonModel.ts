@@ -7,8 +7,11 @@ import {MongoModel} from "./MongoModel";
  * General model for GeoJSON data. Geo-spatial indexing and querying. Implements general GetAll and GetOne functions
  *
  * Expects GeoJSON data structure:
+ *
  * geometry: { coordinates[], type },
+ *
  * properties: { ... }
+ *
  * type: Feature
  */
 export class GeoJsonModel extends MongoModel {
@@ -28,15 +31,15 @@ export class GeoJsonModel extends MongoModel {
     }
 
     /** Retrieves all the records from database
-     * @param options Object with options settings, with following properties:
-     * lat Latitude to sort results by (by proximity)
-     * lng Longitute to sort results by
-     * range Maximum range from specified latLng. Only data within this range will be returned.
-     * limit Limit
-     * offset Offset
-     * updatedSince Filters all results with older last_updated timestamp than this parameter
+     * @param options Object with options settings, with following properties.
+     * @param options.lat Latitude to sort results by (by proximity)
+     * @param options.lng Longitute to sort results by
+     * @param options.range Maximum range from specified latLng. Only data within this range will be returned.
+     * @param options.limit Limit
+     * @param options.offset Offset
+     * @param options.updatedSince Filters all results with older last_updated timestamp than this parameter
      * (filters not-updated data)
-     * additionalFilters Object with additional filter conditions to be added to the selection
+     * @param options.additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
     public GetAll = async ( options: {

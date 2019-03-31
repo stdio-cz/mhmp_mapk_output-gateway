@@ -4,8 +4,8 @@ import {SequelizeModel} from "./SequelizeModel";
 export class VehiclePositionsPositionsViewModel extends SequelizeModel {
 
     public constructor() {
-        super("VehiclePositionsPositionsViewModel", "v_vehiclepositions_last_position",
-            VehiclePositions.positions.outputSequelizeAttributes, {
+        super(VehiclePositions.lastPositions.name, VehiclePositions.lastPositions.pgTableName,
+            VehiclePositions.lastPositions.outputSequelizeAttributes, {
                 timestamps: false,
             });
     }

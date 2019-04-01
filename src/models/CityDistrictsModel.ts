@@ -1,8 +1,3 @@
-/**
- * Model /DATA ACCESS LAYER/: Defines data structure, connects to DB storage and retrieves data directly from database.
- * Performs database queries.
- */
-
 import {CityDistricts} from "data-platform-schema-definitions";
 import {GeoJsonModel} from "./GeoJsonModel";
 

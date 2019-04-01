@@ -4,6 +4,13 @@ import {DefineOptions} from "sequelize";
 import sequelizeConnection from "../helpers/PostgreDatabase";
 import {BaseModel} from "./BaseModel";
 
+/**
+ * General model for data stored in PostgreSQL.
+ *
+ * Model /DATA ACCESS LAYER/: Defines data structure, connects to DB storage and retrieves data directly from database.
+ * Performs database queries.
+ */
+
 export abstract class SequelizeModel extends BaseModel {
     /** Name of the model */
     protected name: string;

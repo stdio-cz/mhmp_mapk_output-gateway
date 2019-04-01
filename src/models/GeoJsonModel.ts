@@ -13,6 +13,9 @@ import {MongoModel} from "./MongoModel";
  * properties: { ... }
  *
  * type: Feature
+ *
+ * Model /DATA ACCESS LAYER/: Defines data structure, connects to DB storage and retrieves data directly from database.
+ * Performs database queries.
  */
 export class GeoJsonModel extends MongoModel {
 

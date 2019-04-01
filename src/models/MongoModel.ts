@@ -3,6 +3,9 @@ import {BaseModel} from "./BaseModel";
 
 /**
  * General model for data stored in MongoDB.
+ *
+ * Model /DATA ACCESS LAYER/: Defines data structure, connects to DB storage and retrieves data directly from database.
+ * Performs database queries.
  */
 export abstract class MongoModel extends BaseModel {
     /** The Mongoose Model */
@@ -59,7 +62,7 @@ export abstract class MongoModel extends BaseModel {
     }
 
     /**
-     * Specify where to search by primary id
+     * Specify (location within the object structure stored in DB) where to search by primary ID
      * The entity is uniquely identified by this property
      */
     protected PrimaryIdentifierSelection = (inId: any): object => {

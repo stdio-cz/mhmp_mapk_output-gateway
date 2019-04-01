@@ -1,5 +1,8 @@
 /**
  * Base model class, defines basic structure of a model. GetAll, GetOne functions, mandatory name
+ *
+ * Model /DATA ACCESS LAYER/: Defines data structure, connects to DB storage and retrieves data directly from database.
+ * Performs database queries.
  */
 export abstract class BaseModel {
 

@@ -1,8 +1,3 @@
-/**
- * Model /DATA ACCESS LAYER/: Defines data structure, connects to DB storage and retrieves data directly from database.
- * Performs database queries.
- */
-
 import { ParkingZones } from "data-platform-schema-definitions";
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
 import CustomError from "../helpers/errors/CustomError";

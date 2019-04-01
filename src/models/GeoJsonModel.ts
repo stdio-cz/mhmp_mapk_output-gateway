@@ -43,14 +43,25 @@ export class GeoJsonModel extends MongoModel {
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
     public GetAll = async ( options: {
+                            /** Latitude to sort results by (by proximity) */
                             lat?: number,
+                            /** Longitute to sort results by */
                             lng?: number,
+                            /** Maximum range from specified latLng. Only data within this range will be returned. */
                             range?: number,
+                            /** Limit (can be used for pagination). Evaluated last, after all filters applied. */
                             limit?: number,
+                            /** Offset (can be used for pagination). Evaluated last, after all filters applied. */
                             offset?: number,
+                            /** Filters all results with older last_updated timestamp than this parameter
+                             * (filters not-updated data)
+                             */
                             updatedSince?: number,
+                            /** Filters the data to include only these with one of the specified "district" value */
                             districts?: string[],
+                            /** Filters the data to include only specified IDs */
                             ids?: number[],
+                            /** Object with additional filter conditions to be added to the selection */
                             additionalFilters?: object,
     } = {} ) => {
         try {

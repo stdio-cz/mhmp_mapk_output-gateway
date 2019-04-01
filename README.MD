@@ -4,11 +4,11 @@
 
 # Data Platform Output Gateway
 
-Output Gateway for the Data Platform System.
+Output Gateway for the Data Platform System. Provides REST API for the data stored in Golemio data platform. 
+
+More in Apiary documentation at https://outputgateway.docs.apiary.io
 
 Developed by http://operatorict.cz
-
-Apiary definition at https://outputgateway.docs.apiary.io
 
 ## Prerequisites
 

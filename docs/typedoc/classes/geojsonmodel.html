@@ -369,7 +369,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getall">GetAll</a></p>
 								<ul>
-									<li>Defined in models/GeoJsonModel.ts:38</li>
+									<li>Defined in models/GeoJsonModel.ts:45</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -383,41 +383,88 @@
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>Object with options settings, with following properties</p>
+											<p>Object with options settings, with following properties.</p>
 										</div>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> additional<wbr>Filters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Object with additional filter conditions to be added to the selection</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> districts<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Filters the data to include only these with one of the specified &quot;district&quot; value</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> ids<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Filters the data to include only specified IDs</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> lat<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Latitude to sort results by (by proximity)</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> limit<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Limit (can be used for pagination). Evaluated last, after all filters applied.</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> lng<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Longitute to sort results by</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> offset<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Offset (can be used for pagination). Evaluated last, after all filters applied.</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> range<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Maximum range from specified latLng. Only data within this range will be returned.</p>
+												</div>
+											</div>
 										</li>
 										<li class="tsd-parameter">
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> updated<wbr>Since<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Filters all results with older last_updated timestamp than this parameter
+													(filters not-updated data)</p>
+												</div>
+											</div>
 										</li>
 									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>GeoJSON FeatureCollection with all retrieved objects in &quot;features&quot;</p>
 						</li>
 					</ul>
 				</section>
@@ -432,7 +479,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getone">GetOne</a></p>
 								<ul>
-									<li>Defined in models/GeoJsonModel.ts:115</li>
+									<li>Defined in models/GeoJsonModel.ts:133</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

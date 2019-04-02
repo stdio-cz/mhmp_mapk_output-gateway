@@ -60,7 +60,8 @@
     "exclude": [
       "**/*.d.ts",
       "dist",
-      "**/*.test.ts"
+      "**/*.test.ts",
+      "docs"
     ],
     "all": true,
     "lines": 0,

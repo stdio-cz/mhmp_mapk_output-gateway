@@ -78,6 +78,10 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
+## API documentation
+
+Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) service.
+
 ## Problems?
 
 Contact benak@operatorict.cz or vycpalek@operatorict.cz

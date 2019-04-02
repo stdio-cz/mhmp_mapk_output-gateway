@@ -1,20 +1,30 @@
+image: docker:stable
+
 variables:
-  DOCKER_REGISTRY_URL: gitlab.oict.cz:4567
-  CONTAINER_IMAGE: $DOCKER_REGISTRY_URL/$CI_PROJECT_PATH
-  MONGO_DB_NAME: "$CI_PROJECT_NAME-$CI_PIPELINE_ID"
-  POSTGRES_HOST: runner-postgre-test
+  POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASS: test-pass
-  POSTGRES_DB: $CI_PROJECT_NAME
-
-before_script:
-  - export MONGO_CONN=mongodb://runner-mongo-test/$MONGO_DB_NAME
+  POSTGRES_DB: testdb
+  MONGO_CONN: "mongodb://mongo/dataplatform"
 
 stages:
   - build
-  - test
   - deploy
-  - clean
+
+run_tests:
+  stage: build
+  image: gitlab.oict.cz:4567/data-platform/node-mongo:latest
+  services:
+    - postgres:10.6
+    - mongo:4.0.4
+  script:
+    - npm install
+    - npm run build
+    - mongorestore --uri=$MONGO_CONN -d dataplatform ./test/data/dataplatform
+    - export LOG_LEVEL=INFO 
+    - export MONGO_CONN=$MONGO_CONN 
+    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB 
+    - npm run code-coverage
 
 build_image:
   stage: build
@@ -22,27 +32,36 @@ build_image:
     - echo $CI_COMMIT_SHA > commitsha
     - docker build -t $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID .
 
-run_tests:
-  stage: test
-  script:
-    - mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform
-    - docker run --net=testnet --rm -e PGPASSWORD=$POSTGRES_PASS postgres psql -h $POSTGRES_HOST -U $POSTGRES_USER -tc "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || psql -h $POSTGRES_HOST -U $POSTGRES_USER -c "CREATE DATABASE $POSTGRES_DB"
-    - docker run --rm --net testnet -e LOG_LEVEL=INFO -e MONGO_CONN=$MONGO_CONN -e POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB $CONTAINER_IMAGE npm run code-coverage
-
 registry_deployment:
   stage: deploy
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker push $CI_REGISTRY_IMAGE:latest && docker push $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
-    - docker logout $CI_REGISTRY
   only:
     refs:
       - master
 
-
-remove_images:
-  stage: clean
+api_documentation_deployment:
+  stage: deploy
+  image: apiaryio/client:latest
   script:
-    - mongo $MONGO_DB_NAME --eval "db.dropDatabase()"
-    - docker rmi $CONTAINER_IMAGE:$CI_PIPELINE_ID
-  when: always
+    - gem install apiaryio
+    - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgateway"
+  only:
+    changes:
+      - docs/apiary_docs.apib
+    refs:
+      - master
+
+pages:
+  stage: deploy
+  script:
+  - mkdir .public
+  - cp -r docs/typedoc .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+

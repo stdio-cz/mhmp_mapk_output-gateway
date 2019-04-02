@@ -8,6 +8,7 @@ export class VehiclePositionsPositionsViewModel extends SequelizeModel {
             VehiclePositions.lastPositions.outputSequelizeAttributes, {
                 timestamps: false,
             });
+        this.sequelizeModel.removeAttribute("id");
     }
 
     public GetAll = async (): Promise<any> => {

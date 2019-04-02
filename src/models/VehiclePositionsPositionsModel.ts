@@ -7,18 +7,7 @@ export class VehiclePositionsPositionsModel extends SequelizeModel {
         super(VehiclePositions.positions.name, VehiclePositions.positions.pgTableName,
             VehiclePositions.positions.outputSequelizeAttributes);
         // todo - add some primary key to schema
-        this.sequelizeModel.removeAttribute("id");
-    }
-
-    public Associate = (models: any) => {
-        this.sequelizeModel.belongsTo(models.VehiclePositionsTripsModel.sequelizeModel, {
-            foreignKey: "trips_id",
-        });
-
-        this.sequelizeModel.belongsTo(this.sequelizeModel, {
-            foreignKey: "trips_id",
-            targetKey: "trips_id",
-        });
+        // this.sequelizeModel.removeAttribute("id");
     }
 
     public GetAll = async (): Promise<any> => {

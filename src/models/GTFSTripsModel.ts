@@ -59,7 +59,7 @@ export class GTFSTripsModel extends SequelizeModel {
                                    date?: string,
                                } = {},
     ): Promise<any> => {
-        const {limit, offset, stopId, stops} = options;
+        const {limit, offset, stopId, stops, shapes} = options;
         try {
             let include: any = [];
             if (stopId) {
@@ -81,17 +81,32 @@ export class GTFSTripsModel extends SequelizeModel {
                 offset,
                 order: [["trip_id", "DESC"]],
             });
-            if (stops) {
-                return data.map((trip) => {
-                    trip.stops = trip.stops.map((item: any) => buildResponse(item, "stop_lon", "stop_lat"));
-                    return trip;
-                });
+
+            if (stops || shapes) {
+                return data.map((trip) => this.ConvertItem(trip, {stops, shapes}));
             }
 
             return data;
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }
+    }
+
+    public ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean }) => {
+        const {stops: stopItems = [], shapes: shapeItems = [], ...item} = trip.toJSON();
+        return {
+            ...item,
+            ...(options.stops &&
+                {
+                    stops: stopItems
+                        .map((stop: any) => buildResponse(stop, "stop_lon", "stop_lat")),
+                }),
+            ...(options.shapes
+                && {
+                    shapes: shapeItems
+                        .map((shape: any) => buildResponse(shape, "shape_pt_lon", "shape_pt_lat")),
+                }),
+        };
     }
 
     public GetOne = async (id: string, options:
@@ -103,10 +118,19 @@ export class GTFSTripsModel extends SequelizeModel {
             stopTimes?: boolean,
             date?: string,
         } = {}): Promise<object> => {
-        return this.sequelizeModel.findByPk(id, {include: this.GetInclusions(options)});
+        const {stops, shapes} = options;
+        return this.sequelizeModel
+            .findByPk(id, {include: this.GetInclusions(options)})
+            .then((trip) => {
+                if (!trip) {
+                    return null;
+                }
+
+                return this.ConvertItem(trip, {stops, shapes});
+            });
     }
 
-    private GetInclusions = (options: {
+    public GetInclusions = (options: {
         route?: boolean,
         shapes?: boolean,
         service?: boolean,

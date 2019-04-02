@@ -55,7 +55,7 @@ describe("VehiclePositions Router", () => {
         });
     });
 
-    // TODO - no distinct on in sqlite
+    // TODO - sqlite cannot process date functions correctly
     // it("should respond with json to GET /vehiclepositions", (done) => {
     //     request(app)
     //         .get("/vehiclepositions")

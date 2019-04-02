@@ -5,8 +5,8 @@ HOST: http://private-07825d-golemiooutputgateway.apiary-mock.com
 
 Documentation URL: https://outputgateway.docs.apiary.io/
 
-Open RESTful API gateway for Golemio.cz Prague data plafrorm. 
-Gathers, enriches and caches data from various sources and provides a single access point to the data. 
+Open RESTful API gateway for Golemio.cz Prague data plafrorm.
+Gathers, enriches and caches data from various sources and provides a single access point to the data.
 
 Developed by https://operatorict.cz
 
@@ -32,10 +32,10 @@ Developed by https://operatorict.cz
 
 - `offset`
    - pagination - mumber of the first items that are skipped
-   
+
 - `updatedSince`
    - filters all results with older "last updated" timestamp than this parameter
-   
+
 - `ids`
    - filters by individual entity IDs (in array format - eg. `ids[]=1&ids[]=3`)
 
@@ -74,13 +74,13 @@ General resources.
 
 + Parameters
 
- 
+
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
-    
+
 ### GET All Districts [GET]
 
 + Request (application/json; charset=utf-8)
@@ -2462,12 +2462,12 @@ General resources.
                 },
                 "type": "Feature"
             }
-            
+
 
 + Response 404 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                     "error_message": "Not Found.",
                     "error_status": 404,
@@ -2494,9 +2494,9 @@ Parking type enum:
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma. 
-    + limit: 10 (optional, number) - Limits number of retrieved items. 
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Parkings [GET]
@@ -2743,7 +2743,7 @@ Parking type enum:
 + Response 200 (application/json; charset=utf-8)
 
     + Body
-            
+
             {
                 "geometry": {
                     "coordinates": [
@@ -2956,7 +2956,7 @@ Parking type enum:
 + Response 404 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                     "error_message": "Not Found.",
                     "error_status": 404,
@@ -2966,18 +2966,18 @@ Parking type enum:
 ## Parking Zones [/parkingzones/{?latlng,range,district,limit,offset,updatedSince}]
 
 "Category" definition:
-- RES - residential area (blue) 
-- VIS - visitor area (orange) 
-- MIX - mixed area (purple) 
+- RES - residential area (blue)
+- VIS - visitor area (orange)
+- MIX - mixed area (purple)
 - KOM - area only with ZTP or forbidden (grey)
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
-    + limit: 10 (optional, number) - Limits number of retrieved items. 
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Parking Zones [GET]
@@ -3216,7 +3216,7 @@ Parking type enum:
 + Response 200 (application/json; charset=utf-8)
 
     + Body
-            
+
             {
                 "geometry": {
                     "coordinates": [
@@ -3301,89 +3301,96 @@ Parking type enum:
 + Response 404 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                     "error_message": "Not Found.",
                     "error_status": 404,
             }
 
 
-## Vehicle Positions [/vehiclepositions]
+## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,includeGTFS,routeId,routeShortName}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + includePositions: true (optional, boolean) - Enrich result dataset with positions
+    + includeGTFS: true (optional, boolean) - Enrich result with GTFS data
+    + routeId: 100381 (string, optional) Filter result by route id
+    + routeShortName: 381 (string, optional) Filter result by short name
 
 ### GET Vehicle Positions [GET]
 
 + Request (application/json; charset=utf-8)
 
     + Headers
-    
+
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-    
-            {
-                "features": [
-                    {
-                        "geometry": {
-                            "coordinates": [
-                                14.50872,
-                                50.15012
-                            ],
-                            "type": "Point"
-                        },
-                        "properties": {
-                            "created": "2019-02-22T15:29:03.039Z",
-                            "delay_stop_departure": null,
-                            "is_canceled": false,
-                            "is_low_floor": false,
-                            "last_stop_id_cis": 51407,
-                            "line": "100110",
-                            "route_id_cis": 134,
-                            "start_date": "2019-02-22T14:56:00.000Z",
-                            "timestamp": "2019-02-22T15:28:37.000Z",
-                            "tracking": 2
-                        },
-                        "type": "Feature"
-                    },
-                    {
-                        "geometry": {
-                            "coordinates": [
-                                14.60805,
-                                50.11731
-                            ],
-                            "type": "Point"
-                        },
-                        "properties": {
-                            "created": "2019-02-22T15:28:37.967Z",
-                            "delay_stop_departure": null,
-                            "is_canceled": false,
-                            "is_low_floor": true,
-                            "last_stop_id_cis": null,
-                            "line": "100110",
-                            "route_id_cis": 135,
-                            "start_date": "2019-02-22T15:01:00.000Z",
-                            "timestamp": "2019-02-22T15:27:39.000Z",
-                            "tracking": 2
-                        },
-                        "type": "Feature"
-                    }
-                ],
-                "type": "FeatureCollection"
-            }
+    + Attributes (array)
+        + (Vehicleposition Trip)
+            + position (Feature)
+                + properties (Stop)
+            + all_positions (array)
+                + (Feature)
+                   + properties (Stop)
+            + gtfs_trip (Trip)
+                + stops (array)
+                    + (Feature)
+                        + properties (Stop)
+                + stop_times (array[Stop time])
+                + shapes (array)
+                    + (Feature)
+                        + properties (Shape)
+                + route (Route)
 
+## Vehicle Position [/vehiclepositions/{id}{?includePositions,includeGTFS}]
+
++ Parameters
+
+    + id: 100381 (string, required) Filter result by trip id
+    + includePositions: true (optional, boolean) - Enrich result dataset with positions
+    + includeGTFS: true (optional, boolean) - Enrich result with GTFS data
+
+### GET Vehicle Position [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Vehicleposition Trip)
+        + position (Feature)
+            + properties (Stop)
+        + all_positions (array)
+            + (Feature)
+               + properties (Stop)
+        + gtfs_trip (Trip)
+            + stops (array)
+                + (Feature)
+                    + properties (Stop)
+            + stop_times (array[Stop time])
+            + shapes (array)
+                + (Feature)
+                    + properties (Shape)
+            + route (Route)
 
 # Group Sensors
 
 ## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,district,limit,offset,updatedSince}]
 
 + Parameters
-    
+
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
-    + limit: 10 (optional, number) - Limits number of retrieved items. 
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET Ice Gateway Street Lamps [GET]
@@ -3391,14 +3398,14 @@ Parking type enum:
 + Request (application/json; charset=utf-8)
 
     + Headers
-    
+
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 
 + Response 200 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                 "features": [
                     {
@@ -3434,20 +3441,20 @@ Parking type enum:
 + Parameters
 
     + icegeteway_code: `ICE-003-042-000-001` (string) - Identifier of the lamp.
-    
+
 ### GET Ice Gateway Street Lamp [GET]
 
 + Request (application/json; charset=utf-8)
 
     + Headers
-    
+
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 
 + Response 200 (application/json; charset=utf-8)
 
     + Body
-            
+
             {
                 "geometry": {
                     "coordinates": [
@@ -3470,12 +3477,12 @@ Parking type enum:
                 },
                 "type": "Feature"
             }
-            
+
 
 + Response 404 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                     "error_message": "Not Found.",
                     "error_status": 404,
@@ -3485,12 +3492,12 @@ Parking type enum:
 ## IceGateway Sensors [/icegatewaysensors{?latlng,range,district,limit,offset,updatedSince}]
 
 + Parameters
-    
+
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. .
-    + limit: 10 (optional, number) - Limits number of retrieved items. 
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET Ice Gateway Sensors [GET]
@@ -3498,14 +3505,14 @@ Parking type enum:
 + Request (application/json; charset=utf-8)
 
     + Headers
-    
+
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 
 + Response 200 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                 "features": [
                     {
@@ -3549,14 +3556,14 @@ Parking type enum:
 + Request (application/json; charset=utf-8)
 
     + Headers
-    
+
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 
 + Response 200 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                 "geometry": {
                     "coordinates": [
@@ -3600,12 +3607,12 @@ Parking type enum:
                 },
                 "type": "Feature"
             }
-            
+
 
 + Response 404 (application/json; charset=utf-8)
 
     + Body
-    
+
             {
                     "error_message": "Not Found.",
                     "error_status": 404,
@@ -3643,7 +3650,9 @@ Parking type enum:
                 + (Feature)
                     + properties (Stop)
             + stop_times (array[Stop time])
-            + shapes (array[Shape])
+            + shapes (array)
+                + (Feature)
+                    + properties (Shape)
             + service (Service)
             + route (Route)
 
@@ -3674,7 +3683,9 @@ Parking type enum:
             + (Feature)
                 + properties (Stop)
         + stop_times (array[Stop time])
-        + shapes (array[Shape])
+        + shapes (array)
+            + (Feature)
+                + properties (Shape)
         + service (Service)
         + route (Route)
 
@@ -3812,8 +3823,6 @@ Parking type enum:
 + `parent_station`: U118S1 (string, required)
 + `platform_code`: 1 (number, required)
 + `stop_id`: U118Z101P (string, required)
-+ `stop_lat`: 50.07827 (number, required)
-+ `stop_lon`: 14.4633 (number, required)
 + `stop_name`: Flora (string, required)
 + `stop_url`: ` ` (string, optional)
 + `wheelchair_boarding`: 2 (number, required)
@@ -3841,8 +3850,6 @@ Parking type enum:
 + `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `shape_dist_traveled`: 16.46309 (number, required))
 + `shape_id`: L991V2 (string, required)
-+ `shape_pt_lat`: 50.07274 (number, required)
-+ `shape_pt_lon`: 14.51439 (number, required)
 + `shape_pt_sequence`: 123 (number, required)
 
 ## Service (object)
@@ -3883,3 +3890,37 @@ Parking type enum:
 
 + properties (required, object)
 + type: Feature (required, string)
+
+## Vehicleposition Trip (object)
+
++ `cis_id`: 100381 (number, required)
++ `cis_number`: 29 (number, required)
++ `cis_order`: 1 (number, required)
++ `cis_short_name`: 381 (string, required)
++ `created`: `2019-03-18T10:30:05.992Z` (string, required)
++ `gtfs_route_id`: L381 (string, required)
++ `gtfs_route_short_name`: 381 (string, required)
++ `gtfs_trip_id`: `381_51_180728` (string, required)
++ `id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
++ `modified`: `2019-03-18T12:34:41.000Z` (string, required)
++ `start_cis_stop_id`: 55083 (number, required)
++ `start_cis_stop_platform_code`: D (string, required)
++ `start_time`: `12:00:00` (string, required)
++ `start_timestamp`: `2019-03-18T11:00:00.000Z` (string, required)
++ `vehicle_type`: 4 (number, required)
++ `wheelchair_accessible`: true (boolean, required)
+
+## Vehicleposition Position (object)
+
++ `id`: 4679415 (number, required)
++ `created`: `2019-03-18T12:34:41.669Z` (string, required)
++ `delay`: 213 (number, optional, nullable)
++ `delay_stop_arrival`: 23 (number, optional, nullable)
++ `delay_stop_departure`: `-84` (number, optional, nullable)
++ `gtfs_next_stop_id`: 331 (string, optional, nullable)
++ `gtfs_shape_dist_traveled`: 12 (number, optional, nullable)
++ `is_canceled`: false (boolean, required)
++ `origin_time`: `13:34:27` (string, required)
++ `origin_timestamp`: `2019-03-18T12:34:27.000Z` (string, required)
++ `tracking`: 2 (number, required)
++ `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)

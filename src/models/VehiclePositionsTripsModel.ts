@@ -54,7 +54,10 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                     },
                 });
 
-            return data.map((item: any) => this.ConvertItem(item));
+            return {
+                features: data.map((item: any) => this.ConvertItem(item)),
+                type: "FeatureCollection",
+            };
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }
@@ -87,8 +90,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     private ConvertItem = (item: any) => {
         const {v_vehiclepositions_last_position, ropidgtfs_trip, all_positions = [], ...trip} = item.toJSON();
         return {
-            ...trip,
-            position: buildResponse(v_vehiclepositions_last_position, "lng", "lat"),
+            ...buildResponse({...v_vehiclepositions_last_position, ...trip}, "lng", "lat"),
             ...(all_positions.length &&
                 {all_positions: all_positions.map((position: any) => buildResponse(position, "lng", "lat"))}
             ),

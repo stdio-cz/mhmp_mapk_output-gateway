@@ -8,6 +8,8 @@ Documentation URL: https://outputgateway.docs.apiary.io/
 Open RESTful API gateway for Golemio.cz Prague data plafrorm.
 Gathers, enriches and caches data from various sources and provides a single access point to the data.
 
+Returns (mostly) data in GeoJSON http://geojson.org/ format specification. You can browse the data for example at http://geojson.io
+
 Developed by https://operatorict.cz
 
 ## Versions
@@ -3346,11 +3348,11 @@ Parking type enum:
                         + properties (Shape)
                 + route (Route)
 
-## Vehicle Position [/vehiclepositions/{id}{?includePositions,includeGTFS}]
+## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions,includeGTFS}]
 
 + Parameters
 
-    + id: 100381 (string, required) Filter result by trip id
+    + gtfs_trip_id: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
     + includeGTFS: true (optional, boolean) - Enrich result with GTFS data
 

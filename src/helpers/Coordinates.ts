@@ -1,3 +1,5 @@
+// TODO: Rename to "Geo"?
+
 import CustomError from "./errors/CustomError";
 import log from "./Logger";
 
@@ -29,6 +31,7 @@ export const parseCoordinates = async (latlng: string,
     return {lat, lng, range: ran};
 };
 
+// TODO: rename to buildGeojsonFeature
 export const buildResponse = (item: any, lonProperty: string, latProperty: string): any => {
     const {[lonProperty]: lon, [latProperty]: lat, ...properties} = item.toJSON ? item.toJSON() : item;
     return ({
@@ -43,3 +46,5 @@ export const buildResponse = (item: any, lonProperty: string, latProperty: strin
         type: "Feature",
     });
 };
+
+// TODO: add buildGeojsonFeatureCollection

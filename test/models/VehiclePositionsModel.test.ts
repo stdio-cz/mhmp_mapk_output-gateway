@@ -2,14 +2,14 @@
 
 import "mocha";
 import * as path from "path";
-import {models} from "../../src/models";
-import {VehiclePositionsTripsModel} from "../../src/models/VehiclePositionsTripsModel";
+import { models } from "../../src/resources/vehiclepositions/models";
+import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
 const config = require("../../src/config/config");
 
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
 
-const sequelize = require("../../src/helpers/PostgreDatabase").default;
+import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
 
 const sinon = require("sinon");
 const chai = require("chai");

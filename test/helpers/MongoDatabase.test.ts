@@ -2,12 +2,12 @@
 
 import "mocha";
 const config = require("../../src/config/config");
-import { MongoDatabase } from "../../src/helpers/MongoDatabase";
+import { MongoDatabase } from "../../src/core/database";
 
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
+import { log } from "../../src/core/Logger";
 
 chai.use(chaiAsPromised);
 

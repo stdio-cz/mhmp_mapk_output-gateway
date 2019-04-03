@@ -1,7 +1,7 @@
 "use strict";
 
 import "mocha";
-import CustomError from "../../src/helpers/errors/CustomError";
+import { CustomError } from "../../src/core/errors";
 
 const chai = require("chai");
 const expect = chai.expect;

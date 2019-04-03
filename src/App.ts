@@ -10,29 +10,29 @@ import * as httpLogger from "morgan";
 
 import * as mongoose from "mongoose";
 
-import CustomError from "./helpers/errors/CustomError";
-
-import handleError from "./helpers/errors/ErrorHandler";
-
-import log from "./helpers/Logger";
-
-import RouterBuilder from "./routes/RouterBuilder";
-
-import ParkingsRouter from "./routes/ParkingsRouter";
-
-import ParkingZonesRouter from "./routes/ParkingZonesRouter";
-
-import CityDistrictsRouter from "./routes/CityDistrictsRouter";
-
-import VehiclePositionsRouter from "./routes/VehiclePositionsRouter";
-
-import GTFSRouter from "./routes/GTFSRouter";
-
 import config from "./config/config";
 
-import sequelizeConnection from "./helpers/PostgreDatabase";
+import { CustomError } from "./core/errors";
 
-import mongoConnection from "./helpers/MongoDatabase";
+import { handleError } from "./core/errors";
+
+import { log } from "./core/Logger";
+
+import { RouterBuilder } from "./core/routes/";
+
+import { parkingsRouter } from "./resources/parkings/ParkingsRouter";
+
+import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
+
+import { cityDistrictsRouter } from "./resources/citydistricts/CityDistrictsRouter";
+
+import { vehiclepositionsRouter } from "./resources/vehiclepositions/VehiclePositionsRouter";
+
+import { gtfsRouter } from "./resources/gtfs/GTFSRouter";
+
+import { sequelizeConnection } from "./core/database";
+
+import { mongooseConnection } from "./core/database";
 
 import * as http from "http";
 
@@ -86,7 +86,7 @@ export default class App {
     private database = async (): Promise<void> => {
         const mongoUri: string = config.mongo_connection || "";
         await sequelizeConnection.authenticate();
-        await mongoConnection;
+        await mongooseConnection;
     }
 
     private middleware = (): void => {
@@ -115,11 +115,11 @@ export default class App {
 
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
-        this.express.use("/citydistricts", CityDistrictsRouter);
-        this.express.use("/parkings", ParkingsRouter);
-        this.express.use("/parkingzones", ParkingZonesRouter);
-        this.express.use("/vehiclepositions", VehiclePositionsRouter);
-        this.express.use("/gtfs", GTFSRouter);
+        this.express.use("/citydistricts", cityDistrictsRouter);
+        this.express.use("/parkings", parkingsRouter);
+        this.express.use("/parkingzones", parkingZonesRouter);
+        this.express.use("/vehiclepositions", vehiclepositionsRouter);
+        this.express.use("/gtfs", gtfsRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

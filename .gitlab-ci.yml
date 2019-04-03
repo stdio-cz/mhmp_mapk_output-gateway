@@ -44,7 +44,7 @@ registry_deployment:
 
 api_documentation_deployment:
   stage: deploy
-  image: apiaryio/client:latest
+  image: ruby:2.6
   script:
     - gem install apiaryio
     - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgateway"

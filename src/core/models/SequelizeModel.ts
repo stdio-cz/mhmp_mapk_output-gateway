@@ -10,7 +10,6 @@ import { BaseModel } from "./";
  * Model /DATA ACCESS LAYER/: Defines data structure, connects to DB storage and retrieves data directly from database.
  * Performs database queries.
  */
-
 export abstract class SequelizeModel extends BaseModel {
     /** Name of the model */
     protected name: string;
@@ -24,6 +23,9 @@ export abstract class SequelizeModel extends BaseModel {
         this.sequelizeModel = sequelizeConnection.define(tableName, attributes, options);
     }
 
+    /**
+     * Associate all database table relations
+     */
     public Associate = (models: any): void => {
         return;
     }

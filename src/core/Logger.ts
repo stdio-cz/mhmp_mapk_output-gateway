@@ -1,3 +1,4 @@
+/// Setup for logger - uses Winston logger for standard logging output and debug module for debugging logs
 import config from "../config/config";
 
 const debugLog = require("debug")("data-platform:output-gateway");
@@ -5,6 +6,9 @@ const debugLog = require("debug")("data-platform:output-gateway");
 const winston = require("winston");
 const { combine, timestamp, label, printf, prettyPrint, colorize, align } = winston.format;
 
+/**
+ * Sets up a Winston logger format - https://www.npmjs.com/package/winston#formats
+ */
 const logFormat = (info: any) => {
     return `[${info.timestamp}] [${info.level}]: ${info.message}`;
 };

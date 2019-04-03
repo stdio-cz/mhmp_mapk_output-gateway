@@ -1,6 +1,13 @@
 import { log } from "../Logger";
 
+/**
+ * Class responsible for error handling in the app. Catches errors and based on their type performs some action
+ */
 export class ErrorHandler {
+    /**
+     * Handle an error
+     * @param err Error object to catch
+     */
     public handle = async (err: any) => {
         let toReturn: any;
         // Many operational errors, handle it!
@@ -24,6 +31,7 @@ export class ErrorHandler {
                     toReturn = {error_message: "Server error.", error_status: 500};
                 }
             }
+        // Error in wrong format (err.isOperational is undefined) also falls here
         } else { // Unexpected non-operational error, damn u ded
             log.error("Fatal error: " + err);
             log.silly("Calling process.exit");

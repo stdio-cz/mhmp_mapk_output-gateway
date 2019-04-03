@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GeoJsonRouter | Golemio Output Gateway</title>
+	<title>VehiclePositionsPositionsViewModel | Golemio Output Gateway</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,40 +56,24 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="geojsonrouter.html">GeoJsonRouter</a>
+					<a href="vehiclepositionspositionsviewmodel.html">VehiclePositionsPositionsViewModel</a>
 				</li>
 			</ul>
-			<h1>Class GeoJsonRouter</h1>
+			<h1>Class VehiclePositionsPositionsViewModel</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Router for data in GeoJSON format using GeoJSON model -
-						binds / and /:id to GetAll and GetOne methods of GeoJsonModel.</p>
-					</div>
-					<p>Router /WEB LAYER/: maps routes to specific model functions, passes request parameters and handles responses.
-					Handles web logic (http request, response). Sets response headers, handles error responses.</p>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">GeoJsonRouter</span>
+						<a href="sequelizemodel.html" class="tsd-signature-type">SequelizeModel</a>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="parkingsrouter.html" class="tsd-signature-type">ParkingsRouter</a>
-							</li>
-							<li>
-								<a href="parkingzonesrouter.html" class="tsd-signature-type">ParkingZonesRouter</a>
-							</li>
-							<li>
-								<a href="citydistrictsrouter.html" class="tsd-signature-type">CityDistrictsRouter</a>
+								<span class="target">VehiclePositionsPositionsViewModel</span>
 							</li>
 						</ul>
 					</li>
@@ -102,23 +86,22 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="geojsonrouter.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="vehiclepositionspositionsviewmodel.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="geojsonrouter.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="geojsonrouter.html#router" class="tsd-kind-icon">router</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected"><a href="vehiclepositionspositionsviewmodel.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="vehiclepositionspositionsviewmodel.html#sequelizemodel" class="tsd-kind-icon">sequelize<wbr>Model</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geojsonrouter.html#converttoarray" class="tsd-kind-icon">Convert<wbr>ToArray</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geojsonrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geojsonrouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geojsonrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="vehiclepositionspositionsviewmodel.html#associate" class="tsd-kind-icon">Associate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="vehiclepositionspositionsviewmodel.html#getall" class="tsd-kind-icon">Get<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="vehiclepositionspositionsviewmodel.html#getone" class="tsd-kind-icon">Get<wbr>One</a></li>
 							</ul>
 						</section>
 					</div>
@@ -126,160 +109,131 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Geo<wbr>Json<wbr>Router<span class="tsd-signature-symbol">(</span>inModel<span class="tsd-signature-symbol">: </span><a href="geojsonmodel.html" class="tsd-signature-type">GeoJsonModel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="geojsonrouter.html" class="tsd-signature-type">GeoJsonRouter</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Vehicle<wbr>Positions<wbr>Positions<wbr>View<wbr>Model<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vehiclepositionspositionsviewmodel.html" class="tsd-signature-type">VehiclePositionsPositionsViewModel</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="sequelizemodel.html">SequelizeModel</a>.<a href="sequelizemodel.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in core/routes/GeoJsonRouter.ts:20</li>
+									<li>Defined in resources/vehiclepositions/models/VehiclePositionsPositionsViewModel.ts:4</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>inModel: <a href="geojsonmodel.html" class="tsd-signature-type">GeoJsonModel</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="geojsonrouter.html" class="tsd-signature-type">GeoJsonRouter</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="vehiclepositionspositionsviewmodel.html" class="tsd-signature-type">VehiclePositionsPositionsViewModel</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="model" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> model</h3>
-					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="geojsonmodel.html" class="tsd-signature-type">GeoJsonModel</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+					<a name="name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="sequelizemodel.html">SequelizeModel</a>.<a href="sequelizemodel.html#name">name</a></p>
+						<p>Overrides <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#name">name</a></p>
 						<ul>
-							<li>Defined in core/routes/GeoJsonRouter.ts:20</li>
+							<li>Defined in core/models/SequelizeModel.ts:15</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Name of the model</p>
+						</div>
+					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="router" class="tsd-anchor"></a>
-					<h3>router</h3>
-					<div class="tsd-signature tsd-kind-icon">router<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Router</span><span class="tsd-signature-symbol"> =&nbsp;Router()</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="sequelizemodel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> sequelize<wbr>Model</h3>
+					<div class="tsd-signature tsd-kind-icon">sequelize<wbr>Model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Sequelize.Model</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="sequelizemodel.html">SequelizeModel</a>.<a href="sequelizemodel.html#sequelizemodel-1">sequelizeModel</a></p>
 						<ul>
-							<li>Defined in core/routes/GeoJsonRouter.ts:18</li>
+							<li>Defined in core/models/SequelizeModel.ts:18</li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Sequelize Model</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="converttoarray" class="tsd-anchor"></a>
-					<h3>Convert<wbr>ToArray</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Convert<wbr>ToArray<span class="tsd-signature-symbol">(</span>toBeArray<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="associate" class="tsd-anchor"></a>
+					<h3>Associate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">Associate<span class="tsd-signature-symbol">(</span>models<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="sequelizemodel.html">SequelizeModel</a>.<a href="sequelizemodel.html#associate">Associate</a></p>
 								<ul>
-									<li>Defined in core/routes/GeoJsonRouter.ts:37</li>
+									<li>Defined in core/models/SequelizeModel.ts:29</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Converts a single value of <code>any</code> type to an array containing this element</p>
+									<p>Associate all database table relations</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>toBeArray: <span class="tsd-signature-type">any</span></h5>
+									<h5>models: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getall" class="tsd-anchor"></a>
 					<h3>Get<wbr>All</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Get<wbr>All<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>All<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getall">GetAll</a></p>
 								<ul>
-									<li>Defined in core/routes/GeoJsonRouter.ts:47</li>
+									<li>Defined in resources/vehiclepositions/models/VehiclePositionsPositionsViewModel.ts:14</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>req: <span class="tsd-signature-type">Request</span></h5>
-								</li>
-								<li>
-									<h5>res: <span class="tsd-signature-type">Response</span></h5>
-								</li>
-								<li>
-									<h5>next: <span class="tsd-signature-type">NextFunction</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getone" class="tsd-anchor"></a>
 					<h3>Get<wbr>One</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Get<wbr>One<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>One<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getone">GetOne</a></p>
 								<ul>
-									<li>Defined in core/routes/GeoJsonRouter.ts:80</li>
+									<li>Defined in resources/vehiclepositions/models/VehiclePositionsPositionsViewModel.ts:18</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>req: <span class="tsd-signature-type">Request</span></h5>
-								</li>
-								<li>
-									<h5>res: <span class="tsd-signature-type">Response</span></h5>
-								</li>
-								<li>
-									<h5>next: <span class="tsd-signature-type">NextFunction</span></h5>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="initroutes" class="tsd-anchor"></a>
-					<h3>init<wbr>Routes</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">init<wbr>Routes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in core/routes/GeoJsonRouter.ts:29</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Initiates all routes. Should respond with correct data to a HTTP requests to all routes.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -298,28 +252,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="geojsonrouter.html" class="tsd-kind-icon">Geo<wbr>Json<wbr>Router</a>
+						<a href="vehiclepositionspositionsviewmodel.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Positions<wbr>View<wbr>Model</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="geojsonrouter.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="vehiclepositionspositionsviewmodel.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="geojsonrouter.html#model" class="tsd-kind-icon">model</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected">
+								<a href="vehiclepositionspositionsviewmodel.html#name" class="tsd-kind-icon">name</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="geojsonrouter.html#router" class="tsd-kind-icon">router</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="vehiclepositionspositionsviewmodel.html#sequelizemodel" class="tsd-kind-icon">sequelize<wbr>Model</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="geojsonrouter.html#converttoarray" class="tsd-kind-icon">Convert<wbr>ToArray</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="vehiclepositionspositionsviewmodel.html#associate" class="tsd-kind-icon">Associate</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="geojsonrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="vehiclepositionspositionsviewmodel.html#getall" class="tsd-kind-icon">Get<wbr>All</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="geojsonrouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="geojsonrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="vehiclepositionspositionsviewmodel.html#getone" class="tsd-kind-icon">Get<wbr>One</a>
 							</li>
 						</ul>
 					</li>

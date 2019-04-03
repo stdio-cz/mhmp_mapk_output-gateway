@@ -1,10 +1,3 @@
-/**
- * app/routers/ParkingZonesRouter.ts
- *
- * Router /WEB LAYER/: maps routes to specific controller functions, passes request parameters and handles responses.
- * Handles web logic (http request, response). Sets response headers, handles error responses.
- */
-
 import { NextFunction, Request, Response, Router } from "express";
 import { CustomError } from "../errors";
 import { handleError } from "../errors";
@@ -12,6 +5,13 @@ import { parseCoordinates } from "../Geo";
 import { log } from "../Logger";
 import {GeoJsonModel} from "../models/GeoJsonModel";
 
+/**
+ * Router for data in GeoJSON format using GeoJSON model -
+ * binds / and /:id to GetAll and GetOne methods of GeoJsonModel.
+ *
+ * Router /WEB LAYER/: maps routes to specific model functions, passes request parameters and handles responses.
+ * Handles web logic (http request, response). Sets response headers, handles error responses.
+ */
 export class GeoJsonRouter {
 
     // Assign router to the express.Router() instance
@@ -31,6 +31,9 @@ export class GeoJsonRouter {
         this.router.get("/:id", this.GetOne);
     }
 
+    /**
+     * Converts a single value of `any` type to an array containing this element
+     */
     public ConvertToArray = (toBeArray: any) => {
         if (!(toBeArray instanceof Array)) {
             log.silly("Converting value `" + toBeArray + "` to array.");

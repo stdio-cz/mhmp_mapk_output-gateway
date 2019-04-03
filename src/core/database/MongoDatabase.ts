@@ -4,13 +4,18 @@ import { CustomError } from "../errors";
 import { handleError } from "../errors";
 import { log } from "../Logger";
 
+/**
+ * Class for connection to MongoDB database. Using mongoose https://www.npmjs.com/package/mongoose
+ */
 export class MongoDatabase {
     private connectionString: string;
 
+    /** Set up connection string */
     constructor() {
         this.connectionString = config.mongo_connection || "mongodb://localhost:27017";
     }
 
+    /** Connects to db */
     public connect = async () => {
         try {
             await mongoose.connect(this.connectionString, {

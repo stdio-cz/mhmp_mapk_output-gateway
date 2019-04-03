@@ -4,6 +4,9 @@ import { CustomError } from "../errors";
 import { handleError } from "../errors";
 import { log } from "../Logger";
 
+/**
+ * Class for connection to PostgreSQL database. Using sequelize https://www.npmjs.com/package/sequelize
+ */
 export class PostgresDatabase {
 
     // TODO: TSLint strictPropertyInitialization fails here - is it really wrong that the property is not initialized??
@@ -14,6 +17,7 @@ export class PostgresDatabase {
         this.connectionString = config.postgres_connection || "";
     }
 
+    /** Connects to db */
     public connect = () => {
         try {
             if (this.sequelize) {

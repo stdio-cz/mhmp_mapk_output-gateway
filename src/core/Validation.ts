@@ -1,15 +1,25 @@
 import { query, validationResult } from "express-validator/check";
 import { CustomError } from "./errors/CustomError";
 
+/**
+ * Checks for errors in request parameters, using express-validator https://www.npmjs.com/package/express-validator
+ * @param req Express request object
+ * @param res Express response object
+ * @param next Express next function
+ * @throws Error if request contains validation errors
+ * @returns Void, calls next() function
+ */
 export const checkErrors = (req: any, res: any, next: any) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         throw new CustomError("Validation error", true, 400, errors.mapped());
     }
-
     next();
 };
 
+/**
+ * Sets up pagination query parameters
+ */
 export const pagination = [
     query("search").optional(),
     query("limit").optional().isInt({min: 1}),

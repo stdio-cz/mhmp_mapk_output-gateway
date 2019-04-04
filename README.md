@@ -10,14 +10,38 @@ More in Apiary documentation at https://outputgateway.docs.apiary.io
 
 Developed by http://operatorict.cz
 
+
+## Docker instalation
+### Prerequisites
+- Docker Engine
+- Mongo
+- Postgres
+
+### Instalation
+1. Build docker image by `docker build -t output-gateway .`
+2. Setup ENV variables by `.env` file or add `-e VAR=VALUE` to docker run
+3. Run container by
+
+```
+docker run --rm \
+    -p 3004:3004 \ # expose port 3004
+    -e PORT=3004 \
+    -e MONGO_CONN: mongodb://user:pass@mongo.dp_database:27017/dataplatform?authSource=admin \
+    -e POSTGRES_CONN: postgres://user:pass@postgres.dp_database/dataplatform \
+    output-gateway # docker image label (defined by step 1)
+```
+
+
 ## Prerequisites
 
 - node.js
 - mongoDB
+- Postgres
 - npm
 - typescript
 
 ## Installation
+
 
 Install Node
 

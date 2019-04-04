@@ -47,7 +47,7 @@ api_documentation_deployment:
   image: ruby:2.6
   script:
     - gem install apiaryio
-    - P='<!-- __DATE__ -->';D='('`date '+%m/%d/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
+    - P='<!-- __DATE__ -->';D='('`date '+%m\/%d\/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
     - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgateway"
   only:
     changes:

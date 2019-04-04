@@ -74,7 +74,7 @@ This will load all config variables from environment variables or the .env file.
 
 Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 
-Application is now running locally on port 3000 or on port specified in the environment variable.
+Application is now running locally on port 3004 or on port specified in the environment variable.
 
 ## Tests
 

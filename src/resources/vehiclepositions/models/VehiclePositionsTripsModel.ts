@@ -29,7 +29,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         routeId?: string,
         routeShortName?: string,
         tripId?: string,
-        includeGTFS?: boolean,
         includePositions?: boolean,
         limit?: number,
         offset?: number,
@@ -61,7 +60,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
 
     public GetOne = async (id: string, options: {
         includePositions?: boolean,
-        includeGTFS?: boolean,
     } = {}): Promise<object | null> => {
         log.debug("Getting one");
         try {
@@ -98,7 +96,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
 
     private ComposeIncludes = (options: {
         includePositions?: boolean,
-        includeGTFS?: boolean,
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
             model: sequelizeConnection.models.v_vehiclepositions_last_position,
@@ -110,12 +107,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             include.push({
                 as: "all_positions",
                 model: sequelizeConnection.models[VehiclePositions.positions.pgTableName],
-            });
-        }
-        if (options.includeGTFS) {
-            include.push({
-                include: models.GTFSTripsModel.GetInclusions({shapes: true, route: true, stops: true, stopTimes: true}),
-                model: sequelizeConnection.models[RopidGTFS.trips.pgTableName],
             });
         }
         return include;

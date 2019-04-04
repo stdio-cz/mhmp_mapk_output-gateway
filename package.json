@@ -12,7 +12,7 @@
     "generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Output Gateway\" --mode file --out docs/typedoc src"
   },
   "author": "Operator ICT, a.s.",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://gitlab.oict.cz/data-platform/output-gateway"

@@ -31,7 +31,7 @@ export class GeoJsonRouter {
     public initRoutes = (): void => {
         this.router.get("/", [
             query("updatedSince").optional().isNumeric(),
-            query("districts"),
+            query("districts").optional(),
             query("districts.*").isString(),
         ], pagination, checkErrors, this.GetAll);
         this.router.get("/:id", [

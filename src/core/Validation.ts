@@ -21,11 +21,9 @@ export const checkErrors = (req: any, res: any, next: any) => {
  * Sets up pagination query parameters
  */
 export const pagination = [
-    query("search").optional(),
     query("limit").optional().isInt({min: 1}),
-    query("offset").optional().isInt({min: 1}),
+    query("offset").optional().isInt({min: 0}),
     (req: any, res: any, next: any) => {
-        !req.query.search && (req.query.search = false);
         req.query.limit && (req.query.limit = parseInt(req.query.limit, 10));
         req.query.offset && (req.query.offset = parseInt(req.query.offset, 10));
         next();

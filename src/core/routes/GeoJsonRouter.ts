@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response, Router } from "express";
+import { param, query } from "express-validator/check";
 import { CustomError } from "../errors";
 import { handleError } from "../errors";
 import { parseCoordinates } from "../Geo";
 import { log } from "../Logger";
-import {GeoJsonModel} from "../models/GeoJsonModel";
+import { GeoJsonModel } from "../models/GeoJsonModel";
+import { checkErrors, pagination } from "../Validation";
 
 /**
  * Router for data in GeoJSON format using GeoJSON model -
@@ -27,8 +29,14 @@ export class GeoJsonRouter {
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
     public initRoutes = (): void => {
-        this.router.get("/", this.GetAll);
-        this.router.get("/:id", this.GetOne);
+        this.router.get("/", [
+            query("updatedSince").optional().isNumeric(),
+            query("districts"),
+            query("districts.*").isString(),
+        ], pagination, checkErrors, this.GetAll);
+        this.router.get("/:id", [
+            param("id").exists(),
+        ], checkErrors, this.GetOne);
     }
 
     /**
@@ -46,16 +54,12 @@ export class GeoJsonRouter {
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
         // Parsing parameters
-        const limit: number = parseInt(req.query.limit, 10);
-        const offset: number = parseInt(req.query.offset, 10);
-        const updatedSince: number = parseInt(req.query.updated_since, 10);
         let ids: number[] = req.query.ids;
         let districts: string[] = req.query.districts;
 
         if (districts) {
             districts = this.ConvertToArray(districts);
         }
-
         if (ids) {
             ids = this.ConvertToArray(ids);
         }
@@ -65,11 +69,11 @@ export class GeoJsonRouter {
                 districts,
                 ids,
                 lat: coords.lat,
-                limit,
+                limit: req.query.limit,
                 lng: coords.lng,
-                offset,
+                offset: req.query.offset,
                 range: coords.range,
-                updatedSince,
+                updatedSince: req.query.updatedSince,
             });
             res.status(200).send(data);
         } catch (err) {

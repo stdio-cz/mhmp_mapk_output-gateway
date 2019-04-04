@@ -26,7 +26,6 @@ export class VehiclePositionsRouter {
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const data = await this.model.GetAll({
-                includeGTFS: req.query.includeGTFS || false,
                 includePositions: req.query.includePositions || false,
                 limit: req.query.limit,
                 offset: req.query.offset,
@@ -43,7 +42,6 @@ export class VehiclePositionsRouter {
         const id: string = req.params.id;
         try {
             const data = await this.model.GetOne(id, {
-                    includeGTFS: req.query.includeGTFS || false,
                     includePositions: req.query.includePositions || false,
                 },
             );

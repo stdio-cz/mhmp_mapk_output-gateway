@@ -1,11 +1,11 @@
-import { RopidGTFS, VehiclePositions } from "data-platform-schema-definitions";
-import { IncludeOptions, Model } from "sequelize";
-import { models } from ".";
-import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature } from "../../../core/Geo";
-import { log } from "../../../core/Logger";
-import { SequelizeModel } from "./../../../core/models/";
+import {VehiclePositions} from "data-platform-schema-definitions";
+import {IncludeOptions, Model} from "sequelize";
+import {models} from ".";
+import {sequelizeConnection} from "../../../core/database";
+import {CustomError} from "../../../core/errors";
+import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
+import {log} from "../../../core/Logger";
+import {SequelizeModel} from "./../../../core/models/";
 
 export class VehiclePositionsTripsModel extends SequelizeModel {
 
@@ -86,7 +86,9 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         return {
             ...buildGeojsonFeature({...v_vehiclepositions_last_position, ...trip}, "lng", "lat"),
             ...(all_positions.length &&
-                {all_positions: all_positions.map((position: any) => buildGeojsonFeature(position, "lng", "lat"))}
+                {
+                    all_positions: buildGeojsonFeatureCollection(all_positions, "lng", "lat"),
+                }
             ),
             ...(ropidgtfs_trip &&
                 {gtfs_trip: models.GTFSTripsModel.ConvertItem(ropidgtfs_trip)}

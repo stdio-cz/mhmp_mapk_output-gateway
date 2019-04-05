@@ -1,9 +1,9 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
+import {RopidGTFS} from "data-platform-schema-definitions";
 import * as Sequelize from "sequelize";
-import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature } from "../../../core/Geo";
-import { SequelizeModel } from "../../../core/models";
+import {sequelizeConnection} from "../../../core/database";
+import {CustomError} from "../../../core/errors";
+import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
+import {SequelizeModel} from "../../../core/models";
 
 export class GTFSStopModel extends SequelizeModel {
 
@@ -44,10 +44,7 @@ export class GTFSStopModel extends SequelizeModel {
                 order,
                 where,
             });
-            return {
-                features: data.map((item) => buildGeojsonFeature(item, "stop_lon", "stop_lat")),
-                type: "FeatureCollection",
-            };
+            return buildGeojsonFeatureCollection(data, "stop_lon", "stop_lat");
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }

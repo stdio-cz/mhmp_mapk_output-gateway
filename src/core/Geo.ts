@@ -1,5 +1,5 @@
-import { CustomError } from "./errors";
-import { log } from "./Logger";
+import {CustomError} from "./errors";
+import {log} from "./Logger";
 
 /**
  * Interface for http://geojson.org/ Feature format
@@ -17,6 +17,17 @@ export interface IGeoJSONFeature {
      *  GeoJSON type - always "Feature" in GeoJSONFeature
      */
     type: "Feature";
+}
+
+/**
+ * Interface for http://geojson.org/ Feature collection format
+ */
+export interface IGeoJSONFeatureCollection {
+    features: IGeoJSONFeature[];
+    /**
+     *  GeoJSON type - always "FeatureCollection" in GeoJSONFeature
+     */
+    type: "FeatureCollection";
 }
 
 /**
@@ -75,4 +86,16 @@ export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty:
     });
 };
 
-// TODO: add buildGeojsonFeatureCollection
+/**
+ * Builds a GeoJSON feature from object or JSON
+ * @param items Array of items to convert to GeoJSON Feature collection format
+ * @param lonProperty Location of lon property
+ * @param latProperty Location of lat property
+ * @returns {IGeoJSONFeatureCollection} GeoJSON feature collection - object with features and type = "FeatureCollection"
+ */
+export const buildGeojsonFeatureCollection =
+    (items: any, lonProperty: string, latProperty: string): IGeoJSONFeatureCollection =>
+        ({
+            features: items.map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty)),
+            type: "FeatureCollection",
+        });

@@ -3309,6 +3309,7 @@ Parking type enum:
                     "error_status": 404,
             }
 
+# Group Vehicle positions
 
 ## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName}]
 
@@ -3334,11 +3335,13 @@ Parking type enum:
         + (Vehicleposition Trip)
             + position (Feature)
                 + properties (Stop)
-            + all_positions (array)
-                + (Feature)
-                   + properties (Stop)
+            + all_positions (object)
+                + type: FeatureCollection (string, required)
+                + features (array)
+                    + (Feature)
+                        + properties (Stop)
 
-## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePosition}]
+## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
 
 + Parameters
 
@@ -3358,9 +3361,11 @@ Parking type enum:
     + Attributes (Vehicleposition Trip)
         + position (Feature)
             + properties (Stop)
-        + all_positions (array)
-            + (Feature)
-               + properties (Stop)
+            + all_positions (object)
+                + type: FeatureCollection (string, required)
+                + features (array)
+                    + (Feature)
+                        + properties (Stop)
 
 # Group Sensors
 

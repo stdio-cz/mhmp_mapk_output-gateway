@@ -1,9 +1,9 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
-import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature } from "../../../core/Geo";
-import { log } from "../../../core/Logger";
-import { SequelizeModel } from "../../../core/models";
+import {RopidGTFS} from "data-platform-schema-definitions";
+import {sequelizeConnection} from "../../../core/database";
+import {CustomError} from "../../../core/errors";
+import {buildGeojsonFeature} from "../../../core/Geo";
+import {log} from "../../../core/Logger";
+import {SequelizeModel} from "../../../core/models";
 
 export class GTFSTripsModel extends SequelizeModel {
 
@@ -47,6 +47,19 @@ export class GTFSTripsModel extends SequelizeModel {
         });
     }
 
+    /** Retrieves all gtfs trips
+     * @param {object} options Options object with params
+     * @param {number} [options.limit] Limit
+     * @param {number} [options.offset] Offset
+     * @param {boolean} [options.route] Enhance response with route data
+     * @param {string} [options.stopId] Filter routes by specific stop
+     * @param {boolean} [options.shapes] Enhance response with shape data
+     * @param {boolean} [options.service] Enhance response with service data
+     * @param {boolean} [options.stops] Enhance response with stop data
+     * @param {boolean} [options.stopTimes] Enhance response with stop times data
+     * @param {string} [options.date] Filter by specific date in the 'YYYY-MM-DD' format
+     * @returns Array of the retrieved records
+     */
     public GetAll = async (options:
                                {
                                    limit?: number,
@@ -93,6 +106,14 @@ export class GTFSTripsModel extends SequelizeModel {
         }
     }
 
+    /**
+     * Convert db result to proper output format
+     * @param {object} trip Trip object
+     * @param {object} options Options object with params
+     * @param {boolean} [options.shapes] If shapes were included in filter then convert shapes payload
+     * @param {boolean} [options.stops] If stops were included in filter then convert stops payload
+     * @return
+     */
     public ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean }) => {
         const {stops: stopItems = [], shapes: shapeItems = [], ...item} = trip.toJSON();
         return {
@@ -105,13 +126,24 @@ export class GTFSTripsModel extends SequelizeModel {
             ...(options.shapes
                 && {
                     shapes: shapeItems
-                        // TODO: Call {this}.buildResponse and call buildGeojsonFeature from there
-                        // don't call buildGeojsonFeature directly.
+                    // TODO: Call {this}.buildResponse and call buildGeojsonFeature from there
+                    // don't call buildGeojsonFeature directly.
                         .map((shape: any) => buildGeojsonFeature(shape, "shape_pt_lon", "shape_pt_lat")),
                 }),
         };
     }
 
+    /** Retrieves specific gtfs trip
+     * @param {string} id Id of the trip
+     * @param {object} [options] Options object with params
+     * @param {boolean} [options.route] Enhance response with route data
+     * @param {boolean} [options.shapes] Enhance response with shape data
+     * @param {boolean} [options.service] Enhance response with service data
+     * @param {boolean} [options.stops] Enhance response with stop data
+     * @param {boolean} [options.stopTimes] Enhance response with stop times data
+     * @param {string} [options.date] Filter by specific date in the 'YYYY-MM-DD' format
+     * @returns Object of the retrieved record or null
+     */
     public GetOne = async (id: string, options:
         {
             route?: boolean,
@@ -133,6 +165,16 @@ export class GTFSTripsModel extends SequelizeModel {
             });
     }
 
+    /** Prepare orm query with selected params
+     * @param {object} options Options object with params
+     * @param {boolean} [options.route] Enhance response with route data
+     * @param {boolean} [options.shapes] Enhance response with shape data
+     * @param {boolean} [options.service] Enhance response with service data
+     * @param {boolean} [options.stops] Enhance response with stop data
+     * @param {boolean} [options.stopTimes] Enhance response with stop times data
+     * @param {string} [options.date] Filter by specific date in the 'YYYY-MM-DD' format
+     * @returns Array of inclusions
+     */
     public GetInclusions = (options: {
         route?: boolean,
         shapes?: boolean,

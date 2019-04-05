@@ -1,11 +1,11 @@
-import { RopidGTFS, VehiclePositions } from "data-platform-schema-definitions";
-import { IncludeOptions, Model } from "sequelize";
-import { models } from ".";
-import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature } from "../../../core/Geo";
-import { log } from "../../../core/Logger";
-import { SequelizeModel } from "./../../../core/models/";
+import {RopidGTFS, VehiclePositions} from "data-platform-schema-definitions";
+import {IncludeOptions, Model} from "sequelize";
+import {models} from ".";
+import {sequelizeConnection} from "../../../core/database";
+import {CustomError} from "../../../core/errors";
+import {buildGeojsonFeature} from "../../../core/Geo";
+import {log} from "../../../core/Logger";
+import {SequelizeModel} from "./../../../core/models/";
 
 export class VehiclePositionsTripsModel extends SequelizeModel {
 
@@ -25,6 +25,16 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         });
     }
 
+    /** Retrieves all vehicle trips
+     * @param {object} options Options object with params
+     * @param {number} [options.limit] Limit
+     * @param {number} [options.offset] Offset
+     * @param {string} [options.routeId] Filter trips by specific route id
+     * @param {string} [options.routeShortName] Filter trips by specific route short name
+     * @param {string} [options.tripId] Filter trips by specific trip id
+     * @param {boolean} [options.includePositions] Should include all vehicle positions
+     * @returns Array of the retrieved records
+     */
     public GetAll = async (options: {
         routeId?: string,
         routeShortName?: string,
@@ -58,6 +68,12 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         }
     }
 
+    /** Retrieves specific vehicle trip
+     * @param {string} id Id of the trip
+     * @param {object} [options] Options object with params
+     * @param {boolean} [options.includePositions] Should include all vehicle positions
+     * @returns Object of the retrieved record or null
+     */
     public GetOne = async (id: string, options: {
         includePositions?: boolean,
     } = {}): Promise<object | null> => {
@@ -81,6 +97,11 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         }
     }
 
+    /**
+     * Convert db result to proper output format
+     * @param {object} item Trip object
+     * @return
+     */
     private ConvertItem = (item: any) => {
         const {v_vehiclepositions_last_position, ropidgtfs_trip, all_positions = [], ...trip} = item.toJSON();
         return {
@@ -94,6 +115,11 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         };
     }
 
+    /** Prepare orm query with selected params
+     * @param {object} options Options object with params
+     * @param {boolean} [options.includePositions] Should include all vehicle positions
+     * @returns Array of inclusions
+     */
     private ComposeIncludes = (options: {
         includePositions?: boolean,
     }): Array<Model<any, any> | IncludeOptions> => {

@@ -1,7 +1,7 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
-import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature } from "../../../core/Geo";
-import { SequelizeModel } from "../../../core/models";
+import {RopidGTFS} from "data-platform-schema-definitions";
+import {CustomError} from "../../../core/errors";
+import {buildGeojsonFeature} from "../../../core/Geo";
+import {SequelizeModel} from "../../../core/models";
 
 export class GTFSShapesModel extends SequelizeModel {
 
@@ -16,6 +16,12 @@ export class GTFSShapesModel extends SequelizeModel {
         });
     }
 
+    /** Retrieves all gtfs shapes
+     * @param {object} [options] Options object with params
+     * @param {number} [options.limit] Limit
+     * @param {number} [options.offset] Offset
+     * @returns Array of the retrieved records
+     */
     public GetAll = async (options: {
         limit?: number,
         offset?: number,
@@ -40,6 +46,10 @@ export class GTFSShapesModel extends SequelizeModel {
         }
     }
 
+    /** Retrieves specific gtfs shape
+     * @param {string} id Id of the shape
+     * @returns Object of the retrieved record or null
+     */
     public GetOne = async (id: string): Promise<any> => this
         .sequelizeModel
         .findByPk(id)

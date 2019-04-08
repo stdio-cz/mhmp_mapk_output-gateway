@@ -11,7 +11,7 @@ stages:
   - build
   - deploy
 
-run_unit_tests:
+run_tests:
   stage: build
   image: gitlab.oict.cz:4567/data-platform/node-mongo:latest
   services:

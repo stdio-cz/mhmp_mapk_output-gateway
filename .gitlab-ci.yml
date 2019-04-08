@@ -11,7 +11,7 @@ stages:
   - build
   - deploy
 
-run_tests:
+run_unit_tests:
   stage: build
   image: gitlab.oict.cz:4567/data-platform/node-mongo:latest
   services:
@@ -25,6 +25,14 @@ run_tests:
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
     - npm run code-coverage
+    
+run_dredd:
+  stage: build
+  image: node:8
+  script:
+    - npm install
+    - npm run build
+    - dredd
 
 build_image:
   stage: build

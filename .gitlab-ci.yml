@@ -32,8 +32,8 @@ run_dredd_tests:
   script:
     - npm install
     - npm run build
-	- npm start &
-	- dredd
+    - npm start &
+    - dredd
 
 build_image:
   stage: build

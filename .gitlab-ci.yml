@@ -15,7 +15,7 @@ run_tests:
   stage: build
   image: gitlab.oict.cz:4567/data-platform/node-mongo:latest
   services:
-    - postgres:10.5
+    - gitlab.oict.cz:4567/data-platform/docker-postgis:10.5
     - mongo:4.0.5
   script:
     - npm install

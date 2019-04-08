@@ -26,10 +26,11 @@ run_unit_tests:
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
     - npm run code-coverage
     
-run_dredd:
+run_dredd_tests:
   stage: build
   image: node:8
   script:
+    - npm install dredd
     - npm install
     - npm run build
     - dredd

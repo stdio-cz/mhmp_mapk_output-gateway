@@ -13,7 +13,7 @@ stages:
 
 run_tests:
   stage: build
-  image: gitlab.oict.cz:4567/data-platform/node-mongo:latest
+  image: gitlab.oict.cz:4567/data-platform/docker-node-env:latest
   services:
     - postgres:10.5
     - mongo:4.0.5
@@ -24,7 +24,7 @@ run_tests:
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
-    - npm run code-coverage
+    - NODE_ENV=production npm run code-coverage
     - npm start &
     - dredd
 

@@ -24,7 +24,7 @@ run_tests:
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
-    - npm run code-coverage
+    - NODE_ENV=production npm run code-coverage
 
 build_image:
   stage: build

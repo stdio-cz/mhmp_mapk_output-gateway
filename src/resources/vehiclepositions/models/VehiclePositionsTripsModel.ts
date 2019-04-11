@@ -49,10 +49,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                     },
                 });
 
-            return {
-                features: data.map((item: any) => this.ConvertItem(item)),
-                type: "FeatureCollection",
-            };
+            return buildGeojsonFeatureCollection(data.map((item: any) => this.ConvertItem(item)));
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }

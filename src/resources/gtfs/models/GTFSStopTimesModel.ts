@@ -16,6 +16,16 @@ export class GTFSStopTimesModel extends SequelizeModel {
         });
     }
 
+    /** Retrieves all gtfs stop times for specific stop id
+     * @param {object} options Options object with params
+     * @param {string} options.stopId Filter by specific stop id
+     * @param {number} [options.limit] Limit
+     * @param {number} [options.offset] Offset
+     * @param {string} [options.from] Filter records since specific time in the 'H:mm:ss' format
+     * @param {string} [options.to] Filter records until specific time in the 'H:mm:ss' format
+     * @param {string} [options.date] Filter by specific date in the 'YYYY-MM-DD' format
+     * @returns Array of the retrieved records
+     */
     public GetAll = async (options: {
         stopId: string,
         limit?: number,

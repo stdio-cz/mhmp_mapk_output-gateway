@@ -12,6 +12,16 @@ export class GTFSStopModel extends SequelizeModel {
             RopidGTFS.stops.outputSequelizeAttributes);
     }
 
+    /** Retrieves all gtfs stops
+     * @param {object} [options] Options object with params
+     * @param {number} [options.limit] Limit
+     * @param {number} [options.offset] Offset
+     * @param {number} [options.lat] Latitude to sort results by (by proximity)
+     * @param {number} [options.lng] Longitute to sort results by
+     * @param {number} [options.range] Maximum range from specified latLng. <br>
+     *     Only data within this range will be returned.
+     * @returns Array of the retrieved records
+     */
     public GetAll = async (options: {
         limit?: number,
         offset?: number,
@@ -21,7 +31,6 @@ export class GTFSStopModel extends SequelizeModel {
     } = {}): Promise<any> => {
         const {limit, offset, lat, lng, range} = options;
         try {
-
             const order: any = [];
             const attributes: any = Object.keys(RopidGTFS.stops.outputSequelizeAttributes);
             let where: any = {};
@@ -50,6 +59,10 @@ export class GTFSStopModel extends SequelizeModel {
         }
     }
 
+    /** Retrieves specific gtfs stop
+     * @param {string} id Id of the stop
+     * @returns Object of the retrieved record or null
+     */
     public GetOne = async (id: string): Promise<any> => this
         .sequelizeModel
         .findByPk(id)

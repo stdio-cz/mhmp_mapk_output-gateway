@@ -1,10 +1,9 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
+import {RopidGTFS} from "data-platform-schema-definitions";
 import moment = require("moment");
-import * as Sequelize from "sequelize";
-import { models as sequelizeModels } from ".";
-import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
-import { SequelizeModel } from "../../../core/models";
+import {models as sequelizeModels} from ".";
+import {sequelizeConnection} from "../../../core/database";
+import {CustomError} from "../../../core/errors";
+import {SequelizeModel} from "../../../core/models";
 
 export class GTFSCalendarModel extends SequelizeModel {
 
@@ -17,10 +16,6 @@ export class GTFSCalendarModel extends SequelizeModel {
         6: "saturday",
         7: "sunday",
     };
-    /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
-    /** Name of the model */
-    protected name: string;
 
     public constructor() {
         super(RopidGTFS.calendar.name, RopidGTFS.calendar.pgTableName, RopidGTFS.calendar.outputSequelizeAttributes, {
@@ -45,6 +40,13 @@ export class GTFSCalendarModel extends SequelizeModel {
         });
     }
 
+    /** Retrieves all gtfs services
+     * @param {object} [options] Options object with params
+     * @param {string} [options.date] Filter by specific date in the 'YYYY-MM-DD' format
+     * @param {number} [options.limit] Limit
+     * @param {number} [options.offset] Offset
+     * @returns Array of the retrieved records
+     */
     public GetAll = async (options: {
         date?: string,
         limit?: number,

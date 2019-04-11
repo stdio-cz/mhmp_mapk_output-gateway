@@ -1,4 +1,3 @@
-import { log } from "../../../core/Logger";
 import { GTFSCalendarModel } from "./GTFSCalendarModel";
 import { GTFSRoutesModel } from "./GTFSRoutesModel";
 import { GTFSShapesModel } from "./GTFSShapesModel";

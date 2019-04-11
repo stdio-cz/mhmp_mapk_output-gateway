@@ -1,7 +1,7 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
-import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature } from "../../../core/Geo";
-import { SequelizeModel } from "../../../core/models";
+import {RopidGTFS} from "data-platform-schema-definitions";
+import {CustomError} from "../../../core/errors";
+import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
+import {SequelizeModel} from "../../../core/models";
 
 export class GTFSShapesModel extends SequelizeModel {
 
@@ -31,10 +31,7 @@ export class GTFSShapesModel extends SequelizeModel {
                 offset,
                 order,
             });
-            return {
-                features: data.map((item) => buildGeojsonFeature(item, "shape_pt_lon", "shape_pt_lat")),
-                type: "FeatureCollection",
-            };
+            return buildGeojsonFeatureCollection(data, "shape_pt_lon", "shape_pt_lat");
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }

@@ -1,4 +1,4 @@
-import { VehiclePositions } from "data-platform-schema-definitions";
+import { VehiclePositions } from "golemio-schema-definitions";
 import { SequelizeModel } from "./../../../core/models/";
 
 export class VehiclePositionsPositionsViewModel extends SequelizeModel {

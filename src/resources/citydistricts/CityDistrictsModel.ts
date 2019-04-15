@@ -1,4 +1,4 @@
-import { CityDistricts } from "data-platform-schema-definitions";
+import { CityDistricts } from "golemio-schema-definitions";
 import { GeoJsonModel } from "../../core/models";
 
 export class CityDistrictsModel extends GeoJsonModel {

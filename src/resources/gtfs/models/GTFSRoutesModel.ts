@@ -1,4 +1,4 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
+import { RopidGTFS } from "golemio-schema-definitions";
 import { CustomError } from "../../../core/errors";
 import { SequelizeModel } from "../../../core/models";
 
@@ -26,6 +26,13 @@ export class GTFSRoutesModel extends SequelizeModel {
 
             order.push([["route_id", "asc"]]);
             const data = await this.sequelizeModel.findAll({
+                attributes: { exclude: ["created_by",
+                                        "updated_by",
+                                        "created_at",
+                                        "updated_at",
+                                        "create_batch_id",
+                                        "update_batch_id"],
+                            },
                 limit,
                 offset,
                 order,

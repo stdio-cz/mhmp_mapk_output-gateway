@@ -1,4 +1,4 @@
-import {RopidGTFS} from "data-platform-schema-definitions";
+import {RopidGTFS} from "golemio-schema-definitions";
 import moment = require("moment");
 import {models as sequelizeModels} from ".";
 import {sequelizeConnection} from "../../../core/database";
@@ -57,6 +57,13 @@ export class GTFSCalendarModel extends SequelizeModel {
             const data = await this.sequelizeModel
                 .scope({method: ["forDate", date]})
                 .findAll({
+                    attributes: { exclude: ["created_by",
+                                            "updated_by",
+                                            "created_at",
+                                            "updated_at",
+                                            "create_batch_id",
+                                            "update_batch_id"],
+                                },
                     limit,
                     offset,
                     order: [["service_id", "asc"]],

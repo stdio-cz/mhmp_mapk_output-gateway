@@ -1,4 +1,4 @@
-import {RopidGTFS} from "data-platform-schema-definitions";
+import {RopidGTFS} from "golemio-schema-definitions";
 import {sequelizeConnection} from "../../../core/database";
 import {CustomError} from "../../../core/errors";
 import {buildGeojsonFeature} from "../../../core/Geo";
@@ -90,6 +90,13 @@ export class GTFSTripsModel extends SequelizeModel {
             include = include.concat(this.GetInclusions(options));
 
             const data = await this.sequelizeModel.findAll({
+                attributes: { exclude: ["created_by",
+                                        "updated_by",
+                                        "created_at",
+                                        "updated_at",
+                                        "create_batch_id",
+                                        "update_batch_id"],
+                            },
                 include,
                 limit,
                 offset,
@@ -99,8 +106,8 @@ export class GTFSTripsModel extends SequelizeModel {
             if (stops || shapes) {
                 return data.map((trip) => this.ConvertItem(trip, {stops, shapes}));
             }
-
             return data;
+
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }

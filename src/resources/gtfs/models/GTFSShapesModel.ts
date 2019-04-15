@@ -1,4 +1,4 @@
-import {RopidGTFS} from "data-platform-schema-definitions";
+import {RopidGTFS} from "golemio-schema-definitions";
 import {CustomError} from "../../../core/errors";
 import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
 import {SequelizeModel} from "../../../core/models";
@@ -33,6 +33,13 @@ export class GTFSShapesModel extends SequelizeModel {
 
             order.push([["shape_id", "asc"]]);
             const data = await this.sequelizeModel.findAll({
+                attributes: { exclude: ["created_by",
+                                        "updated_by",
+                                        "created_at",
+                                        "updated_at",
+                                        "create_batch_id",
+                                        "update_batch_id"],
+                            },
                 limit,
                 offset,
                 order,

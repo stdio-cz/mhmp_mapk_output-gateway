@@ -1,19 +1,23 @@
 [
-  {
-    "model": "ropidgtfs_routes",
-    "data": {
-      "agency_id": "99",
-      "created_time": null,
-      "is_night": "0",
-      "last_modify": null,
-      "route_color": "00A562",
-      "route_desc": null,
-      "route_id": "L991",
-      "route_long_name": "Nemocnice Motol - Petřiny - Skalka - Depo Hostivař",
-      "route_short_name": "A",
-      "route_text_color": "FFFFFF",
-      "route_type": "1",
-      "route_url": "https://pid.cz/linka/A"
+    {
+      "model": "ropidgtfs_routes",
+      "data": {
+        "agency_id": "99",
+                "is_night": "0",
+                "route_color": "00A562",
+        "route_desc": null,
+        "route_id": "L991",
+        "route_long_name": "Nemocnice Motol - Petřiny - Skalka - Depo Hostivař",
+        "route_short_name": "A",
+        "route_text_color": "FFFFFF",
+        "route_type": "1",
+        "route_url": "https://pid.cz/linka/A",
+        "create_batch_id": null,
+        "created_at": "2019-04-12T03:30:33.278Z",
+        "created_by": null,
+        "update_batch_id": null,
+        "updated_at": "2019-04-12T03:30:33.278Z",
+        "updated_by": null
+      }
     }
-  }
-]
+  ]

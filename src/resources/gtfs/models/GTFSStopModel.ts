@@ -1,8 +1,9 @@
-import {RopidGTFS} from "data-platform-schema-definitions";
+import {RopidGTFS} from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
 import {sequelizeConnection} from "../../../core/database";
 import {CustomError} from "../../../core/errors";
 import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
+import { log } from "../../../core/Logger";
 import {SequelizeModel} from "../../../core/models";
 
 export class GTFSStopModel extends SequelizeModel {
@@ -46,8 +47,20 @@ export class GTFSStopModel extends SequelizeModel {
             }
 
             order.push([["stop_id", "asc"]]);
+
+            log.debug(attributes);
+            const attrWithExclude: {exclude: string[], include: string[]} = {
+                exclude: [  "created_by",
+                            "updated_by",
+                            "created_at",
+                            "updated_at",
+                            "create_batch_id",
+                            "update_batch_id"],
+                include: attributes,
+            };
+
             const data = await this.sequelizeModel.findAll({
-                attributes,
+                attributes: attrWithExclude,
                 limit,
                 offset,
                 order,

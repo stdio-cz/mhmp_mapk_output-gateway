@@ -48,6 +48,13 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             const include = this.ComposeIncludes(options);
             const data = await this.sequelizeModel
                 .findAll({
+                    attributes: { exclude: ["created_by",
+                                            "updated_by",
+                                            "created_at",
+                                            "updated_at",
+                                            "create_batch_id",
+                                            "update_batch_id"],
+                                },
                     include,
                     limit,
                     offset,
@@ -79,6 +86,13 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             const include = this.ComposeIncludes(options);
             const data = await this.sequelizeModel
                 .findOne({
+                    attributes: { exclude: ["created_by",
+                                            "updated_by",
+                                            "created_at",
+                                            "updated_at",
+                                            "create_batch_id",
+                                            "update_batch_id"],
+                                },
                     include,
                     where: {
                         gtfs_trip_id: id,

@@ -8,13 +8,13 @@ const express = require("express");
 const request = require("supertest");
 const chaiAsPromised = require("chai-as-promised");
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-const sequelize = require("../../src/helpers/PostgreDatabase").default;
+import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
 
-import log from "../../src/helpers/Logger";
+import { log } from "../../src/core/Logger";
 
 import * as path from "path";
-import handleError from "../../src/helpers/errors/ErrorHandler";
-import VehiclePositionsRouter from "../../src/routes/VehiclePositionsRouter";
+import { handleError } from "../../src/core/errors";
+import { vehiclepositionsRouter } from "../../src/resources/vehiclepositions/VehiclePositionsRouter";
 
 const expect = chai.expect;
 
@@ -43,7 +43,7 @@ describe("VehiclePositions Router", () => {
 
     before(() => {
         // Mount the tested router to the express instance
-        app.use("/vehiclepositions", VehiclePositionsRouter);
+        app.use("/vehiclepositions", vehiclepositionsRouter);
         app.use((err: any, req: any, res: any, next: any) => {
             handleError(err).then((error) => {
                 if (error) {

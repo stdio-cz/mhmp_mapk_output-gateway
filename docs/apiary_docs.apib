@@ -3310,15 +3310,15 @@ Parking type enum:
                     "error_status": 404,
             }
 
+# Group Vehicle positions
 
-## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,includeGTFS,routeId,routeShortName}]
+## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName}]
 
 + Parameters
 
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
-    + includeGTFS: true (optional, boolean) - Enrich result with GTFS data
     + routeId: 100381 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
 
@@ -3336,26 +3336,18 @@ Parking type enum:
         + (Vehicleposition Trip)
             + position (Feature)
                 + properties (Stop)
-            + all_positions (array)
-                + (Feature)
-                   + properties (Stop)
-            + gtfs_trip (Trip)
-                + stops (array)
+            + all_positions (object)
+                + type: FeatureCollection (string, required)
+                + features (array)
                     + (Feature)
                         + properties (Stop)
-                + stop_times (array[Stop time])
-                + shapes (array)
-                    + (Feature)
-                        + properties (Shape)
-                + route (Route)
 
-## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions,includeGTFS}]
+## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
 
 + Parameters
 
     + gtfs_trip_id: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
-    + includeGTFS: true (optional, boolean) - Enrich result with GTFS data
 
 ### GET Vehicle Position [GET]
 
@@ -3370,18 +3362,11 @@ Parking type enum:
     + Attributes (Vehicleposition Trip)
         + position (Feature)
             + properties (Stop)
-        + all_positions (array)
-            + (Feature)
-               + properties (Stop)
-        + gtfs_trip (Trip)
-            + stops (array)
-                + (Feature)
-                    + properties (Stop)
-            + stop_times (array[Stop time])
-            + shapes (array)
-                + (Feature)
-                    + properties (Shape)
-            + route (Route)
+            + all_positions (object)
+                + type: FeatureCollection (string, required)
+                + features (array)
+                    + (Feature)
+                        + properties (Stop)
 
 # Group Sensors
 

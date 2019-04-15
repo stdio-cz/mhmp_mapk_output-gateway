@@ -7,9 +7,9 @@ const express = require("express");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 const request = require("supertest");
-import log from "../../src/helpers/Logger";
+import { log } from "../../src/core/Logger";
 
-import ParkingZonesRouter from "../../src/routes/ParkingZonesRouter";
+import { parkingZonesRouter } from "../../src/resources/parkingzones/ParkingZonesRouter";
 
 const expect = chai.expect;
 chai.use(chaiAsPromised);
@@ -20,7 +20,7 @@ describe("ParkingZonesRouter", () => {
 
     before(() => {
         parkingZoneCode = "P1-0101";
-        app.use("/parkingzones", ParkingZonesRouter);
+        app.use("/parkingzones", parkingZonesRouter);
     });
 
     it("should respond with json to GET /parkingzones", (done) => {

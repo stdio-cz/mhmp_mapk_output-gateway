@@ -1,16 +1,16 @@
 "use strict";
 
 import "mocha";
-import { ParkingsModel } from "../../src/models/ParkingsModel";
+import { ParkingsModel } from "../../src/resources/parkings/ParkingsModel";
 const config = require("../../src/config/config");
-import handleError from "../../src/helpers/errors/ErrorHandler";
-import MongoDatabase from "../../src/helpers/MongoDatabase";
-const { mongoConnection } = require("../../src/helpers/MongoDatabase");
+import { mongooseConnection } from "../../src/core/database";
+import { MongoDatabase } from "../../src/core/database/MongoDatabase";
+import { handleError } from "../../src/core/errors";
 
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
+import { log } from "../../src/core/Logger";
 
 chai.use(chaiAsPromised);
 
@@ -22,7 +22,7 @@ describe("ParkingsModel", () => {
 
     before(async () => {
         const uri: string = config.mongo_connection || "";
-        await mongoConnection;
+        await mongooseConnection;
         model = new ParkingsModel();
         parkingId = 534017;
         coordinates = [50.032074, 14.492015];

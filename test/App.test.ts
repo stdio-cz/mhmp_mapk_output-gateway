@@ -10,7 +10,7 @@ const chaiAsPromised = require("chai-as-promised");
 const request = require("supertest")("localhost:" + config.port);
 const sinon = require("sinon");
 
-import log from "../src/helpers/Logger";
+import { log } from "../src/core/Logger";
 
 const express = require("express");
 

@@ -7,9 +7,9 @@ const chai = require("chai");
 const express = require("express");
 const chaiAsPromised = require("chai-as-promised");
 const request = require("supertest");
-import log from "../../src/helpers/Logger";
+import { log } from "../../src/core/Logger";
 
-import ParkingsRouter from "../../src/routes/ParkingsRouter";
+import { parkingsRouter } from "../../src/resources/parkings/ParkingsRouter";
 
 const expect = chai.expect;
 
@@ -22,7 +22,7 @@ describe("ParkingsRouter", () => {
 
     before(() => {
         // Mount the tested router to the express instance
-        app.use("/parkings", ParkingsRouter);
+        app.use("/parkings", parkingsRouter);
         parkingId = 534017;
     });
 

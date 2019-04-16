@@ -1,36 +1,44 @@
 [
-  {
-    "model": "ropidgtfs_calendar",
-    "data": {
-      "created_time": null,
-      "end_date": "20190311",
-      "friday": 1,
-      "last_modify": null,
-      "monday": 1,
-      "saturday": 0,
-      "service_id": "1111100-1",
-      "start_date": "20190226",
-      "sunday": 0,
-      "thursday": 1,
-      "tuesday": 1,
-      "wednesday": 1
+    {
+      "model": "ropidgtfs_calendar",
+      "data": {
+                "end_date": "20190311",
+        "friday": 1,
+                "monday": 1,
+        "saturday": 0,
+        "service_id": "1111100-1",
+        "start_date": "20190226",
+        "sunday": 0,
+        "thursday": 1,
+        "tuesday": 1,
+        "wednesday": 1,
+        "create_batch_id": null,
+        "created_at": "2019-04-12T03:30:33.278Z",
+        "created_by": null,
+        "update_batch_id": null,
+        "updated_at": "2019-04-12T03:30:33.278Z",
+        "updated_by": null
+      }
+    },
+    {
+      "model": "ropidgtfs_calendar",
+      "data": {
+                "end_date": "20190311",
+        "friday": 1,
+                "monday": 1,
+        "saturday": 1,
+        "service_id": "1111111-1",
+        "start_date": "20190226",
+        "sunday": 1,
+        "thursday": 1,
+        "tuesday": 1,
+        "wednesday": 1,
+        "create_batch_id": null,
+        "created_at": "2019-04-12T03:30:33.278Z",
+        "created_by": null,
+        "update_batch_id": null,
+        "updated_at": "2019-04-12T03:30:33.278Z",
+        "updated_by": null
+      }
     }
-  },
-  {
-    "model": "ropidgtfs_calendar",
-    "data": {
-      "created_time": null,
-      "end_date": "20190311",
-      "friday": 1,
-      "last_modify": null,
-      "monday": 1,
-      "saturday": 1,
-      "service_id": "1111111-1",
-      "start_date": "20190226",
-      "sunday": 1,
-      "thursday": 1,
-      "tuesday": 1,
-      "wednesday": 1
-    }
-  }
-]
+  ]

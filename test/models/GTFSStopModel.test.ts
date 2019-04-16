@@ -8,15 +8,15 @@ const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha
 
 import * as path from "path";
 
-const sequelize = require("../../src/helpers/PostgreDatabase").default;
+import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
 
 const sinon = require("sinon");
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
-import {models} from "../../src/models";
-import {GTFSStopModel} from "../../src/models/GTFSStopModel";
+import { log } from "../../src/core/Logger";
+import { models } from "../../src/resources/gtfs/models";
+import { GTFSStopModel } from "../../src/resources/gtfs/models/GTFSStopModel";
 
 chai.use(chaiAsPromised);
 
@@ -29,7 +29,7 @@ describe("GTFSStopModel", () => {
     const stopId: string = "U1072Z101P";
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {

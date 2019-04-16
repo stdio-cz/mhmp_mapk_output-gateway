@@ -1,31 +1,52 @@
 "use strict";
 
 import "mocha";
-const config = require("../../src/config/config");
-import handleError from "../../src/helpers/errors/ErrorHandler";
-import MongoDatabase from "../../src/helpers/MongoDatabase";
-const { sequelizeConnection } = require("../../src/helpers/PostgreDatabase");
-import { VehiclePositionsModel } from "../../src/models";
+import * as path from "path";
+import { models } from "../../src/resources/vehiclepositions/models";
+import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
+const config = require("../../src/config/config");
+
+const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+
+import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
+
+const sinon = require("sinon");
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
 
 chai.use(chaiAsPromised);
 
-// describe("VehiclePositionsModel", () => {
+describe("VehiclePositionsTripsModel", () => {
 
-//     let model: VehiclePositionsModel;
-//     let parkingZoneCode: String;
-//     let coordinates: Array<number>;
+    const vehiclepositionsModel: VehiclePositionsTripsModel = models.VehiclePositionsTripsModel;
 
-//     before(async () => {
-//         TODO
-//     });
+    // Basic configuration: create a sinon sandbox for testing
+    let sandbox: any = null;
 
-//     it("should instantiate", () => {
-//         expect(model).not.to.be.undefined;
-//     });
+    beforeEach(() => {
+        sandbox = sinon.createSandbox();
+    });
 
-// });
+    afterEach(() => {
+        sandbox && sandbox.restore();
+    });
+
+    // Load fake data for the users
+    sequelizeMockingMocha(
+        sequelize,
+        [],
+        {logging: false},
+    );
+
+    it("should instantiate", () => {
+        expect(vehiclepositionsModel).not.to.be.undefined;
+    });
+
+    // TODO - sqlite cannot process date functions correctly
+    // it("should return all items", async () => {
+    //     const result = await vehiclepositionsModel.GetAll();
+    //     expect(result).to.be.an.instanceOf(Array).and.lengthOf(0);
+    // });
+});

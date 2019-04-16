@@ -8,15 +8,15 @@ const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha
 
 import * as path from "path";
 
-const sequelize = require("../../src/helpers/PostgreDatabase").default;
+import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
 
 const sinon = require("sinon");
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
-import {models} from "../../src/models";
-import {GTFSTripsModel} from "../../src/models/GTFSTripsModel";
+import { log } from "../../src/core/Logger";
+import { models } from "../../src/resources/gtfs/models";
+import { GTFSTripsModel } from "../../src/resources/gtfs/models/GTFSTripsModel";
 
 chai.use(chaiAsPromised);
 
@@ -28,7 +28,7 @@ describe("GTFSTripsModel", () => {
     let sandbox: any = null;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {
@@ -71,9 +71,8 @@ describe("GTFSTripsModel", () => {
     });
 
     it("should return single item", async () => {
-        const result: any = await tripModel.GetOne(tripId);
-        expect(result).not.to.be.empty;
-        const trip = result.toJSON();
+        const trip: any = await tripModel.GetOne(tripId);
+        expect(trip).not.to.be.empty;
         expect(trip).to.have.property("trip_id", tripId);
     });
 
@@ -144,14 +143,13 @@ describe("GTFSTripsModel", () => {
     });
 
     it("should return single trip with included resources", async () => {
-        const result: any = await tripModel.GetOne(tripId, {
+        const trip: any = await tripModel.GetOne(tripId, {
             route: true,
             service: true,
             shapes: true,
             stopTimes: true,
             stops: true,
         });
-        const trip = result.toJSON();
         expect(trip).to.be.an.instanceOf(Object);
         expect(trip).to.have.property("route").and.be.instanceOf(Object);
         expect(trip).to.have.property("service").and.be.instanceOf(Object);

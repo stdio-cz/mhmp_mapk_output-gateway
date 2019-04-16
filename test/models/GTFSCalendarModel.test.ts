@@ -8,16 +8,14 @@ const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha
 
 import * as path from "path";
 
-const sequelize = require("../../src/helpers/PostgreDatabase").default;
+import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
 
 const sinon = require("sinon");
 const chai = require("chai");
 const expect = chai.expect;
 const chaiAsPromised = require("chai-as-promised");
-import log from "../../src/helpers/Logger";
-import {models} from "../../src/models";
-import {GTFSCalendarModel} from "../../src/models/GTFSCalendarModel";
-import {GTFSRoutesModel} from "../../src/models/GTFSRoutesModel";
+import { models } from "../../src/resources/gtfs/models";
+import { GTFSCalendarModel } from "../../src/resources/gtfs/models/GTFSCalendarModel";
 
 chai.use(chaiAsPromised);
 

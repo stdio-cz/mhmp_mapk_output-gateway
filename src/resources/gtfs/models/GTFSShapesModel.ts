@@ -33,13 +33,6 @@ export class GTFSShapesModel extends SequelizeModel {
 
             order.push([["shape_id", "asc"]]);
             const data = await this.sequelizeModel.findAll({
-                attributes: { exclude: ["created_by",
-                                        "updated_by",
-                                        "created_at",
-                                        "updated_at",
-                                        "create_batch_id",
-                                        "update_batch_id"],
-                            },
                 limit,
                 offset,
                 order,

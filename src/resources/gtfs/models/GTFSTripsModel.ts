@@ -90,13 +90,6 @@ export class GTFSTripsModel extends SequelizeModel {
             include = include.concat(this.GetInclusions(options));
 
             const data = await this.sequelizeModel.findAll({
-                attributes: { exclude: ["created_by",
-                                        "updated_by",
-                                        "created_at",
-                                        "updated_at",
-                                        "create_batch_id",
-                                        "update_batch_id"],
-                            },
                 include,
                 limit,
                 offset,

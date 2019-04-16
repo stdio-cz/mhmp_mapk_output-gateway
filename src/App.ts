@@ -34,6 +34,10 @@ import { sequelizeConnection } from "./core/database";
 
 import { mongooseConnection } from "./core/database";
 
+import {    IceGatewaySensors,
+            IceGatewayStreetLamps,
+            SharedCars } from "golemio-schema-definitions";
+
 import * as http from "http";
 
 /**
@@ -128,6 +132,25 @@ export default class App {
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
+        builder.LoadData(
+            [
+                {
+                    collectionName: IceGatewayStreetLamps.mongoCollectionName,
+                    name: IceGatewayStreetLamps.name,
+                    schema: IceGatewayStreetLamps.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: IceGatewaySensors.mongoCollectionName,
+                    name: IceGatewaySensors.name,
+                    schema: IceGatewaySensors.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: SharedCars.mongoCollectionName,
+                    name: SharedCars.name,
+                    schema: SharedCars.outputMongooseSchemaObject,
+                },
+            ],
+        );
         builder.BuildAllRoutes();
 
         // Not found error - no route was matched

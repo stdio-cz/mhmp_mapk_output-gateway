@@ -1,11 +1,7 @@
 import { Router } from "express";
-import { CityDistricts,
-    IceGatewaySensors,
-    IceGatewayStreetLamps,
-    Parkings,
-    SharedCars } from "golemio-schema-definitions";
 import { SchemaDefinition } from "mongoose";
 import { GeoJsonRouter } from ".";
+import { log } from "../Logger";
 import { GeoJsonModel } from "../models";
 
 /**
@@ -27,23 +23,6 @@ export class RouterBuilder {
 
     constructor(inRouter: Router) {
         this.router = inRouter;
-        this.routesData = [
-            {
-                collectionName: IceGatewayStreetLamps.mongoCollectionName,
-                name: IceGatewayStreetLamps.name,
-                schema: IceGatewayStreetLamps.outputMongooseSchemaObject,
-            },
-            {
-                collectionName: IceGatewaySensors.mongoCollectionName,
-                name: IceGatewaySensors.name,
-                schema: IceGatewaySensors.outputMongooseSchemaObject,
-            },
-            {
-                collectionName: SharedCars.mongoCollectionName,
-                name: SharedCars.name,
-                schema: SharedCars.outputMongooseSchemaObject,
-            },
-        ];
     }
 
     /**
@@ -76,9 +55,25 @@ export class RouterBuilder {
     }
 
     /**
+     * Loads the data for building the routes
+     */
+    public LoadData(data: Array<{name: string, schema: SchemaDefinition, collectionName: string}>) {
+        log.silly(`RouterBuilder: Loaded data to build ${data.length} sets of routes`);
+        if (this.routesData && this.routesData.length >= 0) {
+            log.warn("Routes data were not empty. Rewriting with new set of data. All previous will be lost.");
+        }
+        this.routesData = data;
+    }
+
+    /**
      * Builds all routes based on data in this.data and mouts them to this.router
      */
     public BuildAllRoutes() {
+        if (!this.routesData || this.routesData.length === 0) {
+            log.warn("Routes data for building routes seem to be empty."
+            + "Make sure to call .LoadData before you .BuildAllRoutes");
+            log.debug(this.routesData);
+        }
         this.CreateGeojsonRoutes(this.routesData);
     }
 }

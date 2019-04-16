@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { CityDistricts, IceGatewaySensors, IceGatewayStreetLamps, Parkings } from "golemio-schema-definitions";
+import { CityDistricts,
+    IceGatewaySensors,
+    IceGatewayStreetLamps,
+    Parkings,
+    SharedCars } from "golemio-schema-definitions";
 import { SchemaDefinition } from "mongoose";
 import { GeoJsonRouter } from ".";
 import { GeoJsonModel } from "../models";
@@ -33,6 +37,11 @@ export class RouterBuilder {
                 collectionName: IceGatewaySensors.mongoCollectionName,
                 name: IceGatewaySensors.name,
                 schema: IceGatewaySensors.outputMongooseSchemaObject,
+            },
+            {
+                collectionName: SharedCars.mongoCollectionName,
+                name: SharedCars.name,
+                schema: SharedCars.outputMongooseSchemaObject,
             },
         ];
     }

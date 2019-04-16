@@ -121,6 +121,11 @@ export default class App {
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
         this.express.use("/gtfs", gtfsRouter);
 
+        // Routes for backwards compatibility of the API
+        this.express.use("/shared-cars", (req, res) => {
+            res.redirect("/sharedcars");
+        });
+
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.BuildAllRoutes();

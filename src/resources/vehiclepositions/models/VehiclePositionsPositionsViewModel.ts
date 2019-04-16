@@ -13,7 +13,6 @@ export class VehiclePositionsPositionsViewModel {
         this.sequelizeModel = sequelizeConnection.define(
             VehiclePositions.lastPositions.pgTableName,
             VehiclePositions.lastPositions.outputSequelizeAttributes,
-            { timestamps: false },
         );
         // Remove audit fields attributes directly from model, because they're not at all present in the view in db,
         // but are present in the passed Schema (sql attributes) - because the same as for full table is used

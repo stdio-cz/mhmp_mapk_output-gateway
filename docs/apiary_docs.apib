@@ -2468,13 +2468,7 @@ General resources.
 
 
 + Response 404 (application/json; charset=utf-8)
-
-    + Body
-
-            {
-                    "error_message": "Not Found.",
-                    "error_status": 404,
-            }
+    + Attributes (Error)
 
 # Group Traffic
 Online traffic data from Prague.
@@ -2957,13 +2951,7 @@ Parking type enum:
             }
 
 + Response 404 (application/json; charset=utf-8)
-
-    + Body
-
-            {
-                    "error_message": "Not Found.",
-                    "error_status": 404,
-            }
+    + Attributes (Error)
 
 
 ## Parking Zones [/parkingzones/{?latlng,range,district,limit,offset,updatedSince}]
@@ -3302,13 +3290,7 @@ Parking type enum:
             }
 
 + Response 404 (application/json; charset=utf-8)
-
-    + Body
-
-            {
-                    "error_message": "Not Found.",
-                    "error_status": 404,
-            }
+    + Attributes (Error)
 
 # Group Vehicle positions
 
@@ -3332,15 +3314,16 @@ Parking type enum:
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (array)
-        + (Vehicleposition Trip)
-            + position (Feature)
-                + properties (Stop)
-            + all_positions (object)
-                + type: FeatureCollection (string, required)
-                + features (array)
-                    + (Feature)
-                        + properties (Stop)
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature)
+                + properties (Vehicleposition Trip)
+                + all_positions (object)
+                    + type: FeatureCollection (string, required)
+                    + features (array)
+                        + (Feature)
+                            + properties (Stop)
 
 ## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
 
@@ -3359,14 +3342,16 @@ Parking type enum:
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (Vehicleposition Trip)
-        + position (Feature)
-            + properties (Stop)
-            + all_positions (object)
-                + type: FeatureCollection (string, required)
-                + features (array)
-                    + (Feature)
-                        + properties (Stop)
+    + Attributes (Feature)
+        + properties (Vehicleposition Trip)
+        + all_positions (object)
+            + type: FeatureCollection (string, required)
+            + features (array)
+                + (Feature)
+                    + properties (Stop)
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
 
 # Group Sensors
 
@@ -3466,15 +3451,8 @@ Parking type enum:
                 "type": "Feature"
             }
 
-
 + Response 404 (application/json; charset=utf-8)
-
-    + Body
-
-            {
-                    "error_message": "Not Found.",
-                    "error_status": 404,
-            }
+    + Attributes (Error)
 
 
 ## IceGateway Sensors [/icegatewaysensors{?latlng,range,district,limit,offset,updatedSince}]
@@ -3598,13 +3576,7 @@ Parking type enum:
 
 
 + Response 404 (application/json; charset=utf-8)
-
-    + Body
-
-            {
-                    "error_message": "Not Found.",
-                    "error_status": 404,
-            }
+    + Attributes (Error)
 
 # Group GTFS
 
@@ -3912,3 +3884,7 @@ Parking type enum:
 + `origin_timestamp`: `2019-03-18T12:34:27.000Z` (string, required)
 + `tracking`: 2 (number, required)
 + `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
+
+## Error (object)
++ error_message: `Not Found` (required, string)
++ error_status: 404 (required, number)

@@ -16,8 +16,8 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
 
     public Associate = (m: any) => {
         this.sequelizeModel.hasMany(m.VehiclePositionsPositionsModel.sequelizeModel, {
-            as: "all_positions",
             foreignKey: "trips_id",
+            sourceKey: "id",
         });
 
         this.sequelizeModel.hasOne(m.VehiclePositionsPositionsViewModel.sequelizeModel, {
@@ -129,7 +129,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         }];
         if (options.includePositions) {
             include.push({
-                as: "all_positions",
                 model: sequelizeConnection.models[VehiclePositions.positions.pgTableName],
             });
         }

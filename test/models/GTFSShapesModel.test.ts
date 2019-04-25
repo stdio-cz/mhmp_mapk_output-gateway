@@ -29,7 +29,7 @@ describe("GTFSShapesModel", () => {
     const shapeId: string = "L991V1";
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {

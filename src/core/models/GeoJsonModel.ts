@@ -1,5 +1,6 @@
 import { SchemaDefinition } from "mongoose";
 import { CustomError } from "../errors";
+import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
 
@@ -120,10 +121,7 @@ export class GeoJsonModel extends MongoModel {
             this.selection = {};
             const data = await q.exec();
             // Create GeoJSON FeatureCollection output
-            return {
-                features: data,
-                type: "FeatureCollection",
-            };
+            return buildGeojsonFeatureCollection(data);
         } catch (err) {
             throw new CustomError("Database error", false, 500, err);
         }

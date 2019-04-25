@@ -1,4 +1,4 @@
-import { Parkings } from "data-platform-schema-definitions";
+import { Parkings } from "golemio-schema-definitions";
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
 import { CustomError } from "../../core/errors";
 import { GeoJsonModel } from "../../core/models";

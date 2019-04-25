@@ -29,7 +29,7 @@ describe("GTFSRoutesModel", () => {
     const routeId: string = "L991";
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {

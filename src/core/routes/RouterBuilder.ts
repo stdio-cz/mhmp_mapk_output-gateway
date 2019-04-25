@@ -1,5 +1,5 @@
-import { CityDistricts, IceGatewaySensors, IceGatewayStreetLamps, Parkings } from "data-platform-schema-definitions";
 import { Router } from "express";
+import { CityDistricts, IceGatewaySensors, IceGatewayStreetLamps, Parkings } from "golemio-schema-definitions";
 import { SchemaDefinition } from "mongoose";
 import { GeoJsonRouter } from ".";
 import { GeoJsonModel } from "../models";

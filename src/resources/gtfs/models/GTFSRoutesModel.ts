@@ -1,4 +1,4 @@
-import { RopidGTFS } from "data-platform-schema-definitions";
+import { RopidGTFS } from "golemio-schema-definitions";
 import { CustomError } from "../../../core/errors";
 import { SequelizeModel } from "../../../core/models";
 
@@ -9,6 +9,12 @@ export class GTFSRoutesModel extends SequelizeModel {
             RopidGTFS.routes.outputSequelizeAttributes);
     }
 
+    /** Retrieves all gtfs routes
+     * @param {object} [options] Options object with params
+     * @param {number} [options.limit] Limit
+     * @param {number} [options.offset] Offset
+     * @returns Array of the retrieved records
+     */
     public GetAll = async (options: {
         limit?: number,
         offset?: number,
@@ -30,6 +36,10 @@ export class GTFSRoutesModel extends SequelizeModel {
         }
     }
 
+    /** Retrieves specific gtfs routes
+     * @param {string} id Id of the route
+     * @returns Object of the retrieved record or null
+     */
     public GetOne = async (id: string): Promise<any> => this
         .sequelizeModel
         .findByPk(id)

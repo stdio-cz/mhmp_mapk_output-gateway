@@ -1,14 +1,29 @@
-import { VehiclePositions } from "data-platform-schema-definitions";
+import { VehiclePositions } from "golemio-schema-definitions";
+import * as Sequelize from "sequelize";
+import { sequelizeConnection } from "../../../core/database";
+import { log } from "../../../core/Logger";
 import { SequelizeModel } from "./../../../core/models/";
 
-export class VehiclePositionsPositionsViewModel extends SequelizeModel {
+export class VehiclePositionsPositionsViewModel {
+
+    /** The Sequelize Model */
+    protected sequelizeModel: Sequelize.Model<any, any>;
 
     public constructor() {
-        super(VehiclePositions.lastPositions.name, VehiclePositions.lastPositions.pgTableName,
-            VehiclePositions.lastPositions.outputSequelizeAttributes, {
-                timestamps: false,
-            });
+        this.sequelizeModel = sequelizeConnection.define(
+            VehiclePositions.lastPositions.pgTableName,
+            VehiclePositions.lastPositions.outputSequelizeAttributes,
+            { timestamps: false },
+        );
+        // Remove audit fields attributes directly from model, because they're not at all present in the view in db,
+        // but are present in the passed Schema (sql attributes) - because the same as for full table is used
         this.sequelizeModel.removeAttribute("id");
+        this.sequelizeModel.removeAttribute("created_by");
+        this.sequelizeModel.removeAttribute("update_batch_id");
+        this.sequelizeModel.removeAttribute("create_batch_id");
+        this.sequelizeModel.removeAttribute("updated_by");
+        this.sequelizeModel.removeAttribute("created_at");
+        this.sequelizeModel.removeAttribute("updated_at");
     }
 
     public GetAll = async (): Promise<any> => {

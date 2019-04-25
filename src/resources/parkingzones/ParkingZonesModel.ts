@@ -1,4 +1,4 @@
-import { ParkingZones } from "data-platform-schema-definitions";
+import { ParkingZones } from "golemio-schema-definitions";
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
 import { CustomError } from "../../core/errors";
 import { log } from "../../core/Logger";

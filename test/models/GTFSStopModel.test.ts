@@ -29,7 +29,7 @@ describe("GTFSStopModel", () => {
     const stopId: string = "U1072Z101P";
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {

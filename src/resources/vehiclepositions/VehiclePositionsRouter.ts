@@ -62,12 +62,10 @@ export class VehiclePositionsRouter {
             query("routeId").optional(),
             query("routeShortName").optional(),
             query("includePositions").optional().isBoolean(),
-            query("includeGTFS").optional().isBoolean(),
         ], pagination, checkErrors, this.GetAll);
         this.router.get("/:id", [
             param("id").exists(),
             query("includePositions").optional().isBoolean(),
-            query("includeGTFS").optional().isBoolean(),
         ], checkErrors, this.GetOne);
     }
 }

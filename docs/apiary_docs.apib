@@ -3580,18 +3580,18 @@ Parking type enum:
 
 # Group GTFS
 
-## GTFS Trips [/gtfs/trips{?limit,offset,stop_id,include_shapes,include_stops,include_stop_times,include_service,include_route,date}]
+## GTFS Trips [/gtfs/trips{?limit,offset,stop_id,includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
 
 + Parameters
 
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + stop_id: U953Z102P (optional, string) - Filter trips that include specific stop.
-    + include_shapes: true (optional, boolean) - Enrich trip response object with shapes.
-    + include_stops: true (optional, boolean) - Enrich trip response object with stops.
-    + include_stop_times: true (optional, boolean) - Enrich trip response object with stops times.
-    + include_service: true (optional, boolean) - Enrich trip response object with service.
-    + include_route: true (optional, boolean) - Enrich trip response object with routes.
+    + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
+    + includeStops: true (optional, boolean) - Enrich trip response object with stops.
+    + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
+    + includeService: true (optional, boolean) - Enrich trip response object with service.
+    + includeRoute: true (optional, boolean) - Enrich trip response object with routes.
     + date: `2018-01-01` (optional, string) - Filter trips by specific date.
 
 ### GET GTFS Trips [GET]
@@ -3616,16 +3616,16 @@ Parking type enum:
             + service (Service)
             + route (Route)
 
-## GTFS Trip [/gtfs/trips/{id}{?limit,offset,stop_id,include_shapes,include_stops,include_stop_times,include_service,include_route,date}]
+## GTFS Trip [/gtfs/trips/{id}{?limit,offset,stop_id,includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
 
 + Parameters
     + `id`: `991_30_190107` (string, required)
     + stop_id: U953Z102P (optional, string) - Filter trips that include specific stop.
-    + include_shapes: true (optional, boolean) - Enrich trip response object with shapes.
-    + include_stops: true (optional, boolean) - Enrich trip response object with stops.
-    + include_stop_times: true (optional, boolean) - Enrich trip response object with stops times.
-    + include_service: true (optional, boolean) - Enrich trip response object with service.
-    + include_route: true (optional, boolean) - Enrich trip response object with routes.
+    + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
+    + includeStops: true (optional, boolean) - Enrich trip response object with stops.
+    + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
+    + includeService: true (optional, boolean) - Enrich trip response object with service.
+    + includeRoute: true (optional, boolean) - Enrich trip response object with routes.
     + date: `2019-01-01` (optional, string) - Filter trips by specific date in format (YYYY-MM-DD).
 
 ### GET GTFS Trip [GET]
@@ -3738,7 +3738,7 @@ Parking type enum:
     + Attributes (Feature)
         + properties (Stop)
 
-## GTFS Stops times [/gtfs/stop_times/{stopId}{?limit,offset,from,to,date}]
+## GTFS Stops times [/gtfs/stoptimes/{stopId}{?limit,offset,from,to,date}]
 
 + Parameters
     + `stopId`: `U118Z101P` (string, required)

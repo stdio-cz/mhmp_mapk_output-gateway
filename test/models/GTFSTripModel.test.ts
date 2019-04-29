@@ -137,9 +137,9 @@ describe("GTFSTripsModel", () => {
         expect(result).to.be.an.instanceOf(Array).and.lengthOf(7);
         expect(result[0]).to.have.property("route").and.be.instanceOf(Object);
         expect(result[0]).to.have.property("service").and.be.instanceOf(Object);
-        expect(result[0]).to.have.property("stops").and.be.instanceOf(Array).and.lengthOf(17);
         expect(result[0]).to.have.property("shapes").and.be.instanceOf(Array).and.lengthOf(0);
         expect(result[0]).to.have.property("stop_times").and.be.instanceOf(Array).and.lengthOf(17);
+        expect(result[0].stop_times[0]).to.have.property("stop").and.be.instanceOf(Object);
     });
 
     it("should return single trip with included resources", async () => {

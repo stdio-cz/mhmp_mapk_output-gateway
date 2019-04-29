@@ -14,6 +14,12 @@ export class GTFSStopTimesModel extends SequelizeModel {
         this.sequelizeModel.belongsTo(models.GTFSTripsModel.sequelizeModel, {
             foreignKey: "trip_id",
         });
+
+        this.sequelizeModel.belongsTo(models.GTFSStopModel.sequelizeModel, {
+            as: "stop",
+            foreignKey: "stop_id",
+            targetKey: "stop_id",
+        });
     }
 
     /** Retrieves all gtfs stop times for specific stop id

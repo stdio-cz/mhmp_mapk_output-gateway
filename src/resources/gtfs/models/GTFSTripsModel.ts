@@ -186,16 +186,29 @@ export class GTFSTripsModel extends SequelizeModel {
         const {stops, stopTimes, shapes, service, route, date} = options;
         const include: any = [];
 
-        stops && include.push({
-            as: "stops",
-            model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
-            through: {attributes: []},
-        });
+        // stop_times and stops both selected to include, nest them together
+        if (stops && stopTimes) {
+            include.push({
+                as: "stop_times",
+                include: [{
+                    as: "stop",
+                    model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
+                }],
+                model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
+            });
+        // Only stops or only stop times selected to include
+        } else {
+            stops && include.push({
+                as: "stops",
+                model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
+                through: {attributes: []},
+            });
 
-        stopTimes && include.push({
-            as: "stop_times",
-            model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
-        });
+            stopTimes && include.push({
+                as: "stop_times",
+                model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
+            });
+        }
 
         shapes && include.push({
             as: "shapes",

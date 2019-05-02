@@ -54,8 +54,6 @@ api_documentation_deployment_master:
       - docs/apiary_docs.apib
     refs:
       - master
-    variables:
-      - $PUBLISH_APIARY == "true"
       
 api_documentation_deployment_dev:
   stage: deploy

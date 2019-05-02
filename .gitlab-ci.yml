@@ -56,6 +56,7 @@ api_documentation_deployment_master:
       - master
     variables:
       - $PUBLISH_APIARY == "true"
+      
 api_documentation_deployment_dev:
   stage: deploy
   image: ruby:2.6
@@ -68,8 +69,6 @@ api_documentation_deployment_dev:
       - docs/apiary_docs.apib
     refs:
       - development
-    variables:
-      - $PUBLISH_APIARY == "true"
 
 pages:
   stage: deploy

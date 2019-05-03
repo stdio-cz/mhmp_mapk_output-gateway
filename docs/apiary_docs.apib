@@ -3580,18 +3580,13 @@ Parking type enum:
 
 # Group GTFS
 
-## GTFS Trips [/gtfs/trips{?limit,offset,stop_id,includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
+## GTFS Trips [/gtfs/trips{?limit,offset,stopId,includeRoute,date}]
 
 + Parameters
 
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + stop_id: U953Z102P (optional, string) - Filter trips that include specific stop.
-    + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
-    + includeStops: true (optional, boolean) - Enrich trip response object with stops.
-    + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
-    + includeService: true (optional, boolean) - Enrich trip response object with service.
-    + includeRoute: true (optional, boolean) - Enrich trip response object with routes.
+    + stopId: U953Z102P (optional, string) - Filter trips that include specific stop.
     + date: `2018-01-01` (optional, string) - Filter trips by specific date.
 
 ### GET GTFS Trips [GET]
@@ -3606,21 +3601,11 @@ Parking type enum:
 
     + Attributes (array)
         + (Trip)
-            + stops (array)
-                + (Feature)
-                    + properties (Stop)
-            + stop_times (array[Stop time])
-            + shapes (array)
-                + (Feature)
-                    + properties (Shape)
-            + service (Service)
-            + route (Route)
 
-## GTFS Trip [/gtfs/trips/{id}{?limit,offset,stop_id,includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
+## GTFS Trip [/gtfs/trips/{id}{?limit,offset,includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
 
 + Parameters
     + `id`: `991_30_190107` (string, required)
-    + stop_id: U953Z102P (optional, string) - Filter trips that include specific stop.
     + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
     + includeStops: true (optional, boolean) - Enrich trip response object with stops.
     + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
@@ -3639,9 +3624,6 @@ Parking type enum:
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Trip)
-        + stops (array)
-            + (Feature)
-                + properties (Stop)
         + stop_times (array[Stop time])
         + shapes (array)
             + (Feature)
@@ -3791,10 +3773,10 @@ Parking type enum:
 ## Stop time (object)
 
 + `arrival_time`: `13:12:05` (string, required)
-+ `arrival_time_seconds`: ` ` (number, optional, nullable)
++ `arrival_time_seconds` (number, optional, nullable)
 + `created_time`: `2018-09-09 12:32:45` (string, required)
 + `departure_time`: `13:12:35` (string, required)
-+ `departure_time_seconds`: ` ` (number, optional, nullable)
++ `departure_time_seconds` (number, optional, nullable)
 + `drop_off_type`: 0 (number, required)
 + `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `pickup_type`: 0 (number, required)
@@ -3803,6 +3785,7 @@ Parking type enum:
 + `stop_id`: U921Z102P (string, required)
 + `stop_sequence`: 4 (number, required)
 + `trip_id`: `991_1156_180709` (string, required)
++ `stop` (Stop)
 
 ## Shape (object)
 

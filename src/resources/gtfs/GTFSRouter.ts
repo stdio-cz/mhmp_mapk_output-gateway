@@ -91,12 +91,7 @@ export class GTFSRouter {
                     date: req.query.date || false,
                     limit: req.query.limit,
                     offset: req.query.offset,
-                    route: req.query.icludeRoute || false,
-                    service: req.query.includeService || false,
-                    shapes: req.query.includeShapes || false,
                     stopId: req.query.stopId,
-                    stopTimes: req.query.includeStopTimes || false,
-                    stops: req.query.includeStops || false,
                 });
             res.status(200).send(data);
         } catch (err) {

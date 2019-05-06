@@ -105,7 +105,7 @@ export class GTFSRouter {
             const data = await    this.tripModel
                 .GetOne(id, {
                     date: req.query.date || false,
-                    route: req.query.icludeRoute || false,
+                    route: req.query.includeRoute || false,
                     service: req.query.includeService || false,
                     shapes: req.query.includeShapes || false,
                     stopTimes: req.query.includeStopTimes || false,

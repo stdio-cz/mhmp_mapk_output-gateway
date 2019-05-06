@@ -42,7 +42,7 @@ registry_deployment:
       - master
       - development
 
-api_documentation_deployment:
+api_documentation_deployment_master:
   stage: deploy
   image: ruby:2.6
   script:
@@ -54,8 +54,19 @@ api_documentation_deployment:
       - docs/apiary_docs.apib
     refs:
       - master
-    variables:
-      - $PUBLISH_APIARY == "true"
+      
+api_documentation_deployment_dev:
+  stage: deploy
+  image: ruby:2.6
+  script:
+    - gem install apiaryio
+    - P='<!-- __DATE__ -->';D='('`date '+%m\/%d\/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
+    - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgatewaydev"
+  only:
+    changes:
+      - docs/apiary_docs.apib
+    refs:
+      - development
 
 pages:
   stage: deploy

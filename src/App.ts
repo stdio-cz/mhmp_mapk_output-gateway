@@ -39,6 +39,7 @@ import {    AirQualityStations,
             IceGatewaySensors,
             IceGatewayStreetLamps,
             MedicalInstitutions,
+            Meteosensors,
             SharedCars,
          } from "golemio-schema-definitions";
 
@@ -162,6 +163,11 @@ export default class App {
                     collectionName: Gardens.mongoCollectionName,
                     name: Gardens.name,
                     schema: Gardens.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: Meteosensors.mongoCollectionName,
+                    name: Meteosensors.name,
+                    schema: Meteosensors.outputMongooseSchemaObject,
                 },
             ],
         );

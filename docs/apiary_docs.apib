@@ -311,7 +311,7 @@ Parking type enum:
 
 # Group Public Space
 
-## Gardens [/gardens/{?latlng,range,district,limit,offset}]
+## Gardens [/gardens/{?latlng,range,district,limit,offset,updatedSince}]
 
 + Parameters
 
@@ -359,8 +359,11 @@ Parking type enum:
         + properties (Garden)
 
 + Response 404
+    + Attributes (Error)
 
-## Air Quality Stations [/airqualitystations/{?latlng,range,district,limit,offset}]
+# Group Sensors
+
+## Air Quality Stations [/airqualitystations/{?latlng,range,district,limit,offset,updatedSince}]
 
 + Parameters
 
@@ -387,7 +390,55 @@ Parking type enum:
             + (Feature Point)
                 + properties (Air Quality Station)
 
-# Group Sensors
+## Meteosensors [/meteosensors/{?latlng,range,district,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Meteosensors [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Meteosensor)
+
+## Meteosensor [/meteosensors/{id}]
+
++ Parameters
+
+    + id: 531801 (number) - Identifier of the meteosensor.
+
+### GET Meteosensor [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Meteosensor)
+
++ Response 404 (application/json; charset=utf-8)
+
+    + Attributes (Error)
 
 ## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,district,limit,offset,updatedSince}]
 
@@ -417,7 +468,6 @@ Parking type enum:
             + (Feature Point)
                 + properties (IceGateway Street Lamp)
 
-+ Response 404
 
 ## IceGateway Street Lamp [/icegatewaystreetlamps/{icegeteway_code}]
 
@@ -440,6 +490,7 @@ Parking type enum:
         + properties (IceGateway Street Lamp)
 
 + Response 404 (application/json; charset=utf-8)
+
     + Attributes (Error)
 
 
@@ -765,6 +816,19 @@ Parking type enum:
 
 + description: `lost connection (connection status older than 1 hour)` (string)
 + id: `-1` (number, required)
+
+## Meteosensor (object)
+
++ air_temperature: 18.95 (number)
++ humidity: 31 (number)
++ id: 531802 (number, required)
++ last_updated: 1556806121000 (number, required)
++ name: `Bulhar` (string, required)
++ road_temperature: 34.55 (number)
++ timestamp: 1556806200192 (number, required)
++ wind_direction: 230 (number)
++ wind_speed: 2.08 (number)
++ district: `praha-2` (string)
 
 ## Parking Zone (object)
 

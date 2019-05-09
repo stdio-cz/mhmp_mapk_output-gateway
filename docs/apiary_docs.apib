@@ -129,14 +129,6 @@ General resources.
 # Group Traffic
 Online traffic data from Prague.
 
-Data providers:
-
-  - http://www.tsk-praha.cz/
-  - https://api.ceskycarsharing.cz/
-  - https://www.rekola.cz/
-  - https://www.hoppygo.com/
-  - http://www.geoportalpraha.cz/
-
 ## Parkings [/parkings/{?latlng,range,districts,limit,offset,updatedSince}]
 
 Parking type enum:
@@ -250,6 +242,8 @@ Parking type enum:
 
 # Group Vehicle positions
 
+Online positions of public transport vehicles.
+
 ## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName}]
 
 + Parameters
@@ -311,6 +305,8 @@ Parking type enum:
 
 # Group Public Space
 
+Data from the city public space.
+
 ## Gardens [/gardens/{?latlng,range,district,limit,offset,updatedSince}]
 
 + Parameters
@@ -362,6 +358,8 @@ Parking type enum:
     + Attributes (Error)
 
 # Group Sensors
+
+Sensoric data from the city's IoT network.
 
 ## Air Quality Stations [/airqualitystations/{?latlng,range,district,limit,offset,updatedSince}]
 
@@ -548,6 +546,8 @@ Parking type enum:
     + Attributes (Error)
 
 # Group GTFS
+
+GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules.
 
 ## GTFS Trips [/gtfs/trips{?limit,offset,stopId,includeRoute,date}]
 

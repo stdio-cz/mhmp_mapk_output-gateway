@@ -103,11 +103,11 @@ General resources.
                 + properties (City District)
 
 
-## Prague City District [/citydistricts/{district_id}]
+## Prague City District [/citydistricts/{id}]
 
 + Parameters
 
-    + district_id: `praha-1` (string) - Identifier or slug of the city district.
+    + id: `praha-1` (string) - Identifier or slug of the city district.
 
 ### GET District [GET]
 
@@ -169,11 +169,11 @@ Parking type enum:
                 + properties (Parking)
 
 
-## Parking [/parkings/{parking_id}]
+## Parking [/parkings/{id}]
 
 + Parameters
 
-    + parking_id: 534017 (number) - Identifier of the parking.
+    + id: 534017 (number) - Identifier of the parking.
 
 ### GET Parking [GET]
 
@@ -309,6 +309,84 @@ Parking type enum:
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
 
+# Group Public Space
+
+## Gardens [/gardens/{?latlng,range,district,limit,offset}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city district (slug). Not used if `latlng` and `range` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Gardens [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Garden)
+
+
+## Garden [/gardens/{id}]
+
++ Parameters
+
+    + id: `frantiskanska-zahrada` (string) - Identifier of the garden.
+
+### GET Garden [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Garden)
+
++ Response 404
+
+## Air Quality Stations [/airqualitystations/{?latlng,range,district,limit,offset}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Air Quality Stations [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Air Quality Station)
+
 # Group Sensors
 
 ## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,district,limit,offset,updatedSince}]
@@ -333,35 +411,11 @@ Parking type enum:
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-
-            {
-                "features": [
-                    {
-                        "geometry": {
-                            "coordinates": [
-                                14.44646894,
-                                50.10301092
-                            ],
-                            "type": "Point"
-                        },
-                        "properties": {
-                            "state": {
-                                "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
-                                "id": 2
-                            },
-                            "groups": [],
-                            "dim_value": 0,
-                            "id": "ICE-003-042-000-003",
-                            "lamppost_id": "Test003",
-                            "last_dim_override": 1547469775,
-                            "timestamp": 1547470802170
-                        },
-                        "type": "Feature"
-                    }
-                ],
-                "type": "FeatureCollection"
-            }
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (IceGateway Street Lamp)
 
 + Response 404
 
@@ -382,30 +436,8 @@ Parking type enum:
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-
-            {
-                "geometry": {
-                    "coordinates": [
-                        14.44646894,
-                        50.10301092
-                    ],
-                    "type": "Point"
-                },
-                "properties": {
-                    "state": {
-                        "description": "light off (has connection and last state is \"off\", and the previous state non \"off\" is \"on\")",
-                        "id": 2
-                    },
-                    "groups": [],
-                    "dim_value": 0,
-                    "id": "ICE-003-042-000-003",
-                    "lamppost_id": "Test003",
-                    "last_dim_override": 1547469775,
-                    "timestamp": 1547470802170
-                },
-                "type": "Feature"
-            }
+    + Attributes (Feature Point)
+        + properties (IceGateway Street Lamp)
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
@@ -433,38 +465,11 @@ Parking type enum:
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-
-            {
-                "features": [
-                    {
-                        "geometry": {
-                            "coordinates": [
-                                14.44646894,
-                                50.10301092
-                            ],
-                            "type": "Point"
-                        },
-                        "properties": {
-                            "id": "ICE-003-042-000-003",
-                            "sensors": [
-                                {
-                                    "_id": "5c3c8a2aa0eac90012f7983c",
-                                    "sensor_type": "weather.temperature",
-                                    "max": 24.85,
-                                    "created_at": 1547471115,
-                                    "avg": 24.81,
-                                    "validity": 0,
-                                    "min": 24.77
-                                }
-                            ],
-                            "timestamp": 1547471402659
-                        },
-                        "type": "Feature"
-                    }
-                ],
-                "type": "FeatureCollection"
-            }
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (IceGateway Sensor Group)
 
 
 ## IceGateway Sensor [/icegatewaysensors/{icegeteway_code}]
@@ -484,51 +489,8 @@ Parking type enum:
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Body
-
-            {
-                "geometry": {
-                    "coordinates": [
-                        14.45159055,
-                        50.09358343
-                    ],
-                    "type": "Point"
-                },
-                "properties": {
-                    "id": "ICE-003-042-000-030",
-                    "sensors": [
-                        {
-                            "_id": "5c3c8a2aa0eac90012f7983b",
-                            "sensor_type": "weather.gas.CO2",
-                            "max": 388.8165,
-                            "created_at": 1547470920,
-                            "avg": 378.8002,
-                            "validity": 0,
-                            "min": 370.8437
-                        },
-                        {
-                            "_id": "5c3c8a2aa0eac90012f7983a",
-                            "sensor_type": "weather.temperature",
-                            "max": 4.91,
-                            "created_at": 1547470920,
-                            "avg": 4.79,
-                            "validity": 0,
-                            "min": 4.6
-                        },
-                        {
-                            "_id": "5c3c8a2aa0eac90012f79839",
-                            "sensor_type": "noise",
-                            "max": 65.8,
-                            "created_at": 1547470823,
-                            "avg": 58.45,
-                            "validity": 0,
-                            "min": 53.4
-                        }
-                    ],
-                    "timestamp": 1547471402660
-                },
-                "type": "Feature"
-            }
+    + Attributes (Feature Point)
+        + properties (IceGateway Sensor Group)
 
 
 + Response 404 (application/json; charset=utf-8)
@@ -676,10 +638,10 @@ Parking type enum:
     + Attributes (Feature Point)
         + properties (Stop)
 
-## GTFS Stops times [/gtfs/stoptimes/{stopId}{?limit,offset,from,to,date}]
+## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date}]
 
 + Parameters
-    + `stopId`: `U118Z101P` (string, required)
+    + `id`: `U118Z101P` (string, required)
     + date: `2019-01-01` (optional, string) - Filter stop times by specific date in format (YYYY-MM-DD).
     + from: `07:12:33` (optional, string) - Filter stop times by time departure in format (H:mm:ss).
     + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
@@ -732,12 +694,77 @@ Parking type enum:
 + properties (object, required)
 + type: Feature (required, string)
 
+## Air Quality Station (object)
+
++ id: ACHOA (string, required)
++ district: `praha-11` (string)
++ measurement
+  + AQ_hourly_index: 3 (number)
+  + components (array[Air Quality Station Component])
++ name: `Praha 4-Chodov` (string, required)
++ timestamp: 1556792400188 (number, required)
+
+## Air Quality Station Component (object)
+
++ averaged_time
+  + averaged_hours: 1 (number)
+  + value: 10.7 (number),
++ type: NO2 (string)
+
 ## City District (object)
 
 + id: 538124 (number, required)
 + name: `Praha-Březiněves` (string, required)
 + slug: `praha-brezineves` (string, required)
 + timestamp: 1547467502239 (number, required)
+
+## Garden (object)
+
++ address: `Mozartova 844/14` (string)
++ description: `Mozartova busta v zahradě legendární usedlosti stojí na vyvýšeném, trochu zvláštním, místě, jakoby stranou pomyslné hlavní osy podlouhlého pozemku. Mistr, byť pouze v kamenné podobě, tak má dokonalý přehled o dění v zahradě, ale současně překrásný výhled na stráně vrchu Mrázovka.` (string)
++ district: `praha-5` (string)
++ id: `betramka` (string, required)
++ image: `http://www.praha.eu/public/5c/7c/31/96820_4_bertramka_08.jpg` (string)
++ name: `Betramka` (string, required)
++ properties (array[Garden Property])
++ timestamp: 1556238000632 (number, required)
++ url: `http://www.praha.eu/jnp/cz/co_delat_v_praze/parky/bertramka/bertramka_text.html` (string)
+
+## Garden Property (object)
+
++ key: `doba` (string, required)
++ value: `Celoročně duben až říjen 9-18 hod., listopad až březen 9:30-16 hod.` (string)
+
+## IceGateway Sensor Group (object)
+
++ id: `ICE-003-042-000-020` (string, required)
++ sensors (array[IceGateway Sensor])
++ timestamp: 1556798400827 (number, required)
+
+## IceGateway Sensor (object)
+
++ avg: 0 (number, required)
++ created_at: 1556802323 (number, required)
++ max: 0 (number, required)
++ min: 0 (number, required)
++ sensor_type: `weather.humidity` (string, required)
++ validity: 3 (number, required)
+
+
+## IceGateway Street Lamp (object)
+
++ state (IceGateway Street Lamp State)
++ groups (array[string])
++ dim_value: 0 (number, nullable)
++ id: `ICE-003-042-000-002` (string, required)
++ lamppost_id: `Test002` (string, required)
++ last_dim_override: 1543577117 (number, nullable)
++ timestamp: 1556799300356 (number, required)
+
+## IceGateway Street Lamp State (object)
+
++ description: `lost connection (connection status older than 1 hour)` (string)
++ id: `-1` (number, required)
 
 ## Parking Zone (object)
 

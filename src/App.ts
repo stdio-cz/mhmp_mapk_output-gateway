@@ -34,9 +34,13 @@ import { sequelizeConnection } from "./core/database";
 
 import { mongooseConnection } from "./core/database";
 
-import {    IceGatewaySensors,
+import {    AirQualityStations,
+            Gardens,
+            IceGatewaySensors,
             IceGatewayStreetLamps,
-            SharedCars } from "golemio-schema-definitions";
+            MedicalInstitutions,
+            SharedCars,
+         } from "golemio-schema-definitions";
 
 import * as http from "http";
 
@@ -148,6 +152,16 @@ export default class App {
                     collectionName: SharedCars.mongoCollectionName,
                     name: SharedCars.name,
                     schema: SharedCars.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: AirQualityStations.mongoCollectionName,
+                    name: AirQualityStations.name,
+                    schema: AirQualityStations.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: Gardens.mongoCollectionName,
+                    name: Gardens.name,
+                    schema: Gardens.outputMongooseSchemaObject,
                 },
             ],
         );

@@ -41,6 +41,7 @@ import {    AirQualityStations,
             MedicalInstitutions,
             Meteosensors,
             SharedCars,
+            TrafficCameras,
          } from "golemio-schema-definitions";
 
 import * as http from "http";
@@ -131,8 +132,23 @@ export default class App {
         this.express.use("/gtfs", gtfsRouter);
 
         // Routes for backwards compatibility of the API
-        this.express.use("/shared-cars", (req, res) => {
+        this.express.get("/shared-cars/:id", (req, res) => {
+            res.redirect("/sharedcars/" + req.params.id);
+        });
+        this.express.get("/shared-cars", (req, res) => {
             res.redirect("/sharedcars");
+        });
+        this.express.get("/traffic-cameras/:id", (req, res) => {
+            res.redirect("/trafficcameras/" + req.params.id);
+        });
+        this.express.get("/traffic-cameras", (req, res) => {
+            res.redirect("/trafficcameras");
+        });
+        this.express.get("/parking-zones/:id", (req, res) => {
+            res.redirect("/parkingzones/" + req.params.id);
+        });
+        this.express.get("/parking-zones", (req, res) => {
+            res.redirect("/parkingzones");
         });
 
         // Create general routes through builder
@@ -168,6 +184,11 @@ export default class App {
                     collectionName: Meteosensors.mongoCollectionName,
                     name: Meteosensors.name,
                     schema: Meteosensors.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: TrafficCameras.mongoCollectionName,
+                    name: TrafficCameras.name,
+                    schema: TrafficCameras.outputMongooseSchemaObject,
                 },
             ],
         );

@@ -240,6 +240,55 @@ Parking type enum:
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
 
+## Traffic Cameras [/trafficcameras/{?latlng,range,district,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Traffic Cameras [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+            
++ Response 200 (application/json; charset=utf-8)
+
+   + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Traffic Camera)
+
+## Traffic Camera [/trafficcameras/{id}]
+
++ Parameters
+
+    + id: 404032 (number) - Identifier of the camera.
+
+### GET Traffic Camera [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Traffic Camera)
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
+
 # Group Vehicle positions
 
 Online positions of public transport vehicles.
@@ -919,6 +968,23 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + description: `P+R parkoviště` (string)
 + id: 1 (number, required)
+
+## Traffic Camera (object)
+
++ image (Traffic Camera Image)
++ id: 606748 (number, required)
++ last_updated: 1557229128000 (number, required)
++ name: `DP - Kobylisy C - BUS MHD DP` (string, required)
++ timestamp: 1557229200188 (number, required)
++ district: `praha-8` (string)
++ address: `Klapkova, 18200 Praha-Kobylisy, Česko` (string)
+
+## Traffic Camera Image (object)
+
++ data: `data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQAB.........pgf//Z` (string)
++ file_size: 20072 (number, required)
++ type: `image/jpeg` (string)
++ url: `http://www.tsk-praha.cz/cams/cam606748.jpg?1557229128000` (string, required)
 
 ## Trip (object)
 

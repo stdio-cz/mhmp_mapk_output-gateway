@@ -406,6 +406,57 @@ Data from the city public space.
 + Response 404
     + Attributes (Error)
 
+
+## Playgrounds [/playgrounds/{?latlng,range,district,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city district (slug). Not used if `latlng` and `range` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Playgrounds [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Playground)
+
+
+## Playground [/playgrounds/{id}]
+
++ Parameters
+
+    + id: 72 (number) - Identifier of the playground.
+
+### GET Garden [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Playground)
+
++ Response 404
+    + Attributes (Error)
+
 # Group Sensors
 
 Sensoric data from the city's IoT network.
@@ -969,24 +1020,24 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + description: `P+R parkoviště` (string)
 + id: 1 (number, required)
 
-## Playgrounds (object)
+## Playground (object)
 
-+ image (Playgrounds image)
++ image (Playground image)
 + content: `Popis: Asi 300 m od prodejny Lidl v Hornoměcholupské ulici se na okraji louky rozkládá první hřiště (43.A). Tvoří ho...` (string, required)
 + id: 72 (number, required)
 + name: `Hostivařský lesopark (východní část) - hřiště 43.B` (string, required)
 + perex: `Trasa je vhodným polodenním rodinným výletem.` (string)
-+ properties (array[Playgrounds properties])
++ properties (array[Playground properties])
 + timestamp: 1556670601921 (number, required)
 + url: `http://www.hristepraha.cz/hriste/mapa/hostivarsky-lesopark-vychodni-cast-hriste-43-b` (string, required)
 + district: `praha-15` (string)
 + address: `Výstavní, 10900 Praha-Háje, Česko` (string)
 
-## Playgrounds image (object)
+## Playground image (object)
 
 + url: `http://www.hristepraha.cz/images/img/2d73f6832f5ce39fc5987d27d9f4541fo.jpg` (string)
 
-## Playgrounds properties (object)
+## Playground properties (object)
 
 + id: 6 (number, required)
 + description: `WC na hřišti nebo v bezprostřední blízkosti` (string)

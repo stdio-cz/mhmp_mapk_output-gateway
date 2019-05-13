@@ -585,6 +585,91 @@ For backwards compatibility, also works on `/public-toilets/`
 + Response 404
     + Attributes (Error)
 
+## Sorted Waste Stations [/sortedwastestations/{?latlng,range,district,accessibility,limit,offset,onlyMonitored}]
+
+Station accessibility enum:
+- 1 volně
+- 2 obyvatelům domu
+
+Trash types enum:
+- 1 Barevné sklo
+- 2 Elektrozařízení
+- 3 Kovy
+- 4 Nápojové kartóny
+- 5 Papír
+- 6 Plast
+- 7 Čiré sklo
+- 8 Textil
+
+Container types:
+- 1100 NPU Okřínek SV
+- 1100 mini H SV
+- 1100 normální HV
+- 120 normální HV
+- 1500 M 1,5 SV
+- 2000 NPU Okřínek SV
+- 2150 MEVA SV
+- 240 normální HV
+- 2500 Reflex SV
+- 3000 Podzemní SV
+- 3200 Reflex SV
+- 3200 Schaffer SV
+- 3300 GFA DUO SV
+- 3350 Atomium Reflex SV
+- 4000 Podzemní SV
+
+Cleaning Frequency:
+- četnost vývozu (1.hodnota = délka období, 2.hodnota = četnost vývozu, např.13 = 3x za 1 týden, 61 = 1x za 6 týdnů)
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
+    + accessibility: 1 (optional, string) - Filter by accessibility id.
+    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + onlyMonitored: true (optional, boolean) - Filter only stations with at least one "smart" container with sensor for measurements and pickups
+
+### GET All Sorted Waste Stations [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Sorted Waste Station)
+
+
+## Sorted Waste Station [/sortedwastestations/{id}]
+
++ Parameters
+
+    + id: 1521 (number) - Identifier of the station.
+
+### GET Sorted Waste Station [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Sorted Waste Station)
+
++ Response 404
+    + Attributes (Error)
+
 ## Waste Collection Yards [/wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
 
 For backwards compatibility, also works on `/waste-collection-yards/`
@@ -1327,6 +1412,42 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 ## Shared Car Fuel (object)
 
 + description: `benzín` (string)
++ id: 1 (number, required)
+
+## Sorted Waste Station (object)
+
++ accessibility (Sorted Waste Station Property)
++ containers (array[Sorted Waste Station Container])
++ district: `praha-13` (string)
++ id: 11 (string, required)
++ name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
++ station_number: `SDHMP` (string)
++ timestamp: `1556670300498` (number, required)
+
+## Sorted Waste Station Property (object)
+
++ description: `Příjem odpadu` (string, required)
++ id: 1 (number, required)
+
+## Sorted Waste Station Container (object)
+
++ cleaning_frequency: 4 (number)
++ company (Sorted Waste Station Company)
++ container_type (string)
++ description (string)
++ trash_type (Sorted Waste Station Trash Type)
++ sensor_id: 106970 (number)
+
+## Sorted Waste Station Company (object)
+
++ email (string)
++ name (string)
++ phone (string)
++ web (string)
+
+## Sorted Waste Station Trash Type (object)
+
++ description: `benzín` (string, required)
 + id: 1 (number, required)
 
 ## Traffic Camera (object)

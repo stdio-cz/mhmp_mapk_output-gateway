@@ -118,7 +118,12 @@ export class GeoJsonModel extends MongoModel {
                 q.skip(options.offset);
             }
             q.select(this.projection);
+
+            log.silly("Executing query with selection: ");
+            log.silly(this.selection);
+
             this.selection = {};
+
             const data = await q.exec();
             // Create GeoJSON FeatureCollection output
             return buildGeojsonFeatureCollection(data);

@@ -24,6 +24,8 @@ import { parkingsRouter } from "./resources/parkings/ParkingsRouter";
 
 import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
 
+import { sortedWasteRouter } from "./resources/sortedwastestations/SortedWasteRouter";
+
 import { cityDistrictsRouter } from "./resources/citydistricts/CityDistrictsRouter";
 
 import { vehiclepositionsRouter } from "./resources/vehiclepositions/VehiclePositionsRouter";
@@ -129,10 +131,11 @@ export default class App {
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
+        this.express.use("/gtfs", gtfsRouter);
         this.express.use("/parkings", parkingsRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
+        this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
-        this.express.use("/gtfs", gtfsRouter);
 
         // Routes for backwards compatibility of the API
         this.express.get("/shared-cars/:id", (req, res) => {

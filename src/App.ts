@@ -174,6 +174,12 @@ export default class App {
         this.express.get("/waste-collection-yards", (req, res) => {
             res.redirect("/wastecollectionyards");
         });
+        this.express.get("/sorted-waste-stations/:id", (req, res) => {
+            res.redirect("/sortedwastestations/" + req.params.id);
+        });
+        this.express.get("/sorted-waste-stations", (req, res) => {
+            res.redirect("/sortedwastestations");
+        });
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

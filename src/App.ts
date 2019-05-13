@@ -151,6 +151,12 @@ export default class App {
         this.express.get("/parking-zones", (req, res) => {
             res.redirect("/parkingzones");
         });
+        this.express.get("/public-toilets/:id", (req, res) => {
+            res.redirect("/public-toilets/" + req.params.id);
+        });
+        this.express.get("/public-toilets", (req, res) => {
+            res.redirect("/publictoilets");
+        });
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

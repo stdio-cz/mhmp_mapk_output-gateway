@@ -186,6 +186,8 @@ Parking type enum:
 
 ## Parking Zones [/parkingzones/{?latlng,range,district,limit,offset,updatedSince}]
 
+For backwards compatibility, also works on `/parking-zones/`
+
 "Category" definition:
 - RES - residential area (blue)
 - VIS - visitor area (orange)
@@ -196,7 +198,6 @@ Parking type enum:
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
@@ -220,6 +221,8 @@ Parking type enum:
 
 ## Parking Zone [/parkingzones/{parkingzone_code}]
 
+For backwards compatibility, also works on `/parking-zones/`
+
 + Parameters
 
     + parkingzone_code: `P1-0101` (string) - Identifier of the parking zone.
@@ -240,7 +243,76 @@ Parking type enum:
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
 
+## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
+
+For backwards compatibility, also works on `/shared-cars/`
+
+Fuel enum:
+- 1 benzin
+- 2 nafta
+- 3 LPG
+- 4 elektřina
+- 5 hybrid
+- 6 CNG
+- 7 jiný
+- 0 neznámý
+
+Availability enum:
+- 1 ihned
+- 2 dle domluvy s provozovatelem
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Shared Cars [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+   + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Shared Car)
+
+## Shared Car [/sharedcars/{id}]
+
+For backwards compatibility, also works on `/shared-cars/`
+
++ Parameters
+
+    + id: `1BF8210` (string) - Identifier of the car.
+
+### GET Shared Car [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Shared Car)
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
+
+
 ## Traffic Cameras [/trafficcameras/{?latlng,range,district,limit,offset,updatedSince}]
+
+For backwards compatibility, also works on `/traffic-cameras/`
 
 + Parameters
 
@@ -268,6 +340,8 @@ Parking type enum:
                 + properties (Traffic Camera)
 
 ## Traffic Camera [/trafficcameras/{id}]
+
+For backwards compatibility, also works on `/traffic-cameras/`
 
 + Parameters
 
@@ -453,6 +527,60 @@ Data from the city public space.
 
     + Attributes (Feature Point)
         + properties (Playground)
+
++ Response 404
+    + Attributes (Error)
+
+## Public Toilets [/publictoilets/{?latlng,range,district,limit,offset,updatedSince}]
+
+For backwards compatibility, also works on `/public-toilets/`
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city district (slug). Not used if `latlng` and `range` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Public Toilets [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Public Toilet)
+
+
+## Public Toilet [/publictoilets/{id}]
+
+For backwards compatibility, also works on `/public-toilets/`
+
++ Parameters
+
+    + id: 72 (number) - Identifier of the public toilet.
+
+### GET Public Toilet[GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Public Toilet)
 
 + Response 404
     + Attributes (Error)
@@ -1041,6 +1169,42 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + id: 6 (number, required)
 + description: `WC na hřišti nebo v bezprostřední blízkosti` (string)
+
+## Public Toilet (object)
+
+- id: 18 (number, required)
+- opened: `10:00 - 21:00` (string)
+- price: `zdarma` (string)
+- timestamp: 1556670600578 (number, required)
+- district: `praha-13` (string)
+- address: `Skandinávská 144/25, 15500 Praha-Třebonice, Česko` (string)
+
+## Shared Car (object)
+
++ availability (Shared Car Availability)
++ company (Shared Car Company)
++ fuel (Shared Car Fuel)
++ id: `9B99149` (string, required)
++ name: `Škoda Citigo` (string, required)
++ res_url: `https://autonapul.zemtu.com/app/#/?rz=9B99149` (string, required)
++ timestamp: 1557223259221 (number, required)
+
+## Shared Car Availability (object)
+
++ description: `ihned` (string)
++ id: 1 (number, required)
+
+## Shared Car Company (object)
+
++ email: `autonapul@autonapul.cz` (string)
++ name: `Autonapůl` (string, required)
++ phone: `+420 778 470 898` (string)
++ web: `https://www.autonapul.cz/` (string, required)
+
+## Shared Car Fuel (object)
+
++ description: `benzín` (string)
++ id: 1 (number, required)
 
 ## Traffic Camera (object)
 

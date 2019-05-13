@@ -396,7 +396,7 @@ Online positions of public transport vehicles.
                     + type: FeatureCollection (string, required)
                     + features (array)
                         + (Feature Point)
-                            + properties (Stop)
+                            + properties (GTFS Stop)
 
 ## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
 
@@ -421,7 +421,7 @@ Online positions of public transport vehicles.
             + type: FeatureCollection (string, required)
             + features (array)
                 + (Feature Point)
-                    + properties (Stop)
+                    + properties (GTFS Stop)
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
@@ -815,7 +815,8 @@ Sensoric data from the city's IoT network.
             + (Feature Point)
                 + properties (Air Quality Station)
 
-## Meteosensors [/meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
+
+## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
@@ -826,13 +827,14 @@ Sensoric data from the city's IoT network.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
-### GET All Meteosensors [GET]
+### GET Ice Gateway Sensors [GET]
 
 + Request (application/json; charset=utf-8)
 
     + Headers
 
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -840,15 +842,16 @@ Sensoric data from the city's IoT network.
         + type: FeatureCollection (string, required)
         + features (array)
             + (Feature Point)
-                + properties (Meteosensor)
+                + properties (IceGateway Sensor Group)
 
-## Meteosensor [/meteosensors/{id}]
+
+## IceGateway Sensor [/icegatewaysensors/{icegeteway_code}]
 
 + Parameters
 
-    + id: 531801 (number) - Identifier of the meteosensor.
+    + icegeteway_code: `ICE-003-042-000-010` (string) - Identifier of the sensor.
 
-### GET Meteosensor [GET]
+### GET Ice Gate Way Sensor [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -856,14 +859,16 @@ Sensoric data from the city's IoT network.
 
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
+
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Feature Point)
-        + properties (Meteosensor)
+        + properties (IceGateway Sensor Group)
+
 
 + Response 404 (application/json; charset=utf-8)
-
     + Attributes (Error)
+    
 
 ## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -919,7 +924,7 @@ Sensoric data from the city's IoT network.
     + Attributes (Error)
 
 
-## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
+## Meteosensors [/meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
@@ -930,14 +935,13 @@ Sensoric data from the city's IoT network.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
-### GET Ice Gateway Sensors [GET]
+### GET All Meteosensors [GET]
 
 + Request (application/json; charset=utf-8)
 
     + Headers
 
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
-
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -945,16 +949,15 @@ Sensoric data from the city's IoT network.
         + type: FeatureCollection (string, required)
         + features (array)
             + (Feature Point)
-                + properties (IceGateway Sensor Group)
+                + properties (Meteosensor)
 
-
-## IceGateway Sensor [/icegatewaysensors/{icegeteway_code}]
+## Meteosensor [/meteosensors/{id}]
 
 + Parameters
 
-    + icegeteway_code: `ICE-003-042-000-010` (string) - Identifier of the sensor.
+    + id: 531801 (number) - Identifier of the meteosensor.
 
-### GET Ice Gate Way Sensor [GET]
+### GET Meteosensor [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -962,15 +965,15 @@ Sensoric data from the city's IoT network.
 
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
-
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Feature Point)
-        + properties (IceGateway Sensor Group)
-
+        + properties (Meteosensor)
 
 + Response 404 (application/json; charset=utf-8)
+
     + Attributes (Error)
+
 
 # Group GTFS
 
@@ -996,7 +999,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (array)
-        + (Trip)
+        + (GTFS Trip)
 
 ## GTFS Trip [/gtfs/trips/{id}{?limit,offset,includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
 
@@ -1019,13 +1022,13 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (Trip)
-        + stop_times (array[Stop time])
+    + Attributes (GTFS Trip)
+        + stop_times (array[GTFS Stop time])
         + shapes (array)
             + (Feature Point)
-                + properties (Shape)
-        + service (Service)
-        + route (Route)
+                + properties (GTFS Shape)
+        + service (GTFS Service)
+        + route (GTFS Route)
 
 ## GTFS Services [/gtfs/services{?limit,offset,date}]
 
@@ -1060,7 +1063,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
         + type: FeatureCollection (string, required)
         + features (array)
             + (Feature Point)
-                + properties (Shape)
+                + properties (GTFS Shape)
 
 ## GTFS Shape [/gtfs/shapes/{id}]
 
@@ -1078,7 +1081,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Feature Point)
-        + properties (Shape)
+        + properties (GTFS Shape)
 
 ## GTFS Stops [/gtfs/stops{?limit,offset,latlng,range}]
 
@@ -1096,7 +1099,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
         + type: FeatureCollection (string, required)
         + features (array)
             + (Feature Point)
-                + properties (Stop)
+                + properties (GTFS Stop)
 
 ## GTFS Stop [/gtfs/stop/{id}]
 
@@ -1114,7 +1117,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Feature Point)
-        + properties (Stop)
+        + properties (GTFS Stop)
 
 ## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date}]
 
@@ -1155,6 +1158,10 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + (Polygon, required) - First list is an enclosing polygon
 + (Polygon, optional) - Next ones are cut out areas
+
+## Error (object)
++ error_message: `Not Found` (required, string)
++ error_status: 404 (required, number)
 
 ## Feature Point (object)
 
@@ -1214,6 +1221,87 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + description: `Otevírací doba` (string, optional)
 + value: `Celoročně duben až říjen 9-18 hod., listopad až březen 9:30-16 hod.` (string)
 
+## GTFS Trip (object)
+
++ `trip_id`: 991_1165_190107 (string, required)
++ bikes_allowed: 1 (number, required)
++ `block_id`: ` ` (string, optional)
++ created_time: `2018-09-09 12:32:45` (string, nullable)
++ direction_id: 0 (number, optional)
++ exceptional: 0 (number)
++ last_modify: `2018-09-09 12:32:45` (string, optional, nullable)
++ route_id: L991 (string, required)
++ service_id: `1111100-1` (string, required)
++ shape_id: L991V3 (string, required)
++ trip_headsign: `Nemocnice Motol` (string, required)
++ wheelchair_accessible: 1 (number, required)
+
+## GTFS Stop (object)
+
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
++ `location_type`: 0 (number, required)
++ `parent_station`: U118S1 (string, required)
++ `platform_code`: 1 (number, required)
++ `stop_id`: U118Z101P (string, required)
++ `stop_name`: Flora (string, required)
++ `stop_url`: ` ` (string, optional)
++ `wheelchair_boarding`: 2 (number, required)
++ `zone_id`: P (string, required)
+
+## GTFS Stop time (object)
+
++ `arrival_time`: `13:12:05` (string, required)
++ `arrival_time_seconds` (number, optional, nullable)
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `departure_time`: `13:12:35` (string, required)
++ `departure_time_seconds` (number, optional, nullable)
++ `drop_off_type`: 0 (number, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
++ `pickup_type`: 0 (number, required)
++ `shape_dist_traveled`: 3.73622 (number, required)
++ `stop_headsign`: ` ` (string, optional)
++ `stop_id`: U921Z102P (string, required)
++ `stop_sequence`: 4 (number, required)
++ `trip_id`: `991_1156_180709` (string, required)
++ `stop` (GTFS Stop)
+
+## GTFS Shape (object)
+
++ `shape_dist_traveled`: 16.46309 (number, required))
++ `shape_id`: L991V2 (string, required)
++ `shape_pt_sequence`: 123 (number, required)
+
+## GTFS Service (object)
+
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `end_date`: 20190311 (string, required)
++ `friday`: 1 (number, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
++ `monday`: 1 (number, required)
++ `saturday`: 1 (number, required)
++ `service_id`: `1111111-1` (string, required)
++ `start_date`: 20190226 (string, required)
++ `sunday`: 1 (number, required)
++ `thursday`: 1 (number, required)
++ `tuesday`: 1 (number, required)
++ `wednesday`: 1 (number, required)
+
+## GTFS Route (object)
+
++ `agency_id`: 99 (number, required)
++ `created_time`: `2018-09-09 12:32:45` (string, required)
++ `is_night`: 0 (number, required)
++ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
++ `route_color`: 00A562 (string, required)
++ `route_desc`: null (string, nullable)
++ `route_id`: L991 (string, required)
++ `route_long_name`: `Nemocnice Motol - Petřiny - Skalka - Depo Hostivař` (string, required)
++ `route_short_name`: A (string, required)
++ `route_text_color`: FFFFFF (string, required)
++ `route_type`: 1 (number, required)
++ `route_url`: https://pid.cz/linka/A (string, required)
+
 ## IceGateway Sensor Group (object)
 
 + id: `ICE-003-042-000-020` (string, required)
@@ -1267,42 +1355,6 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + district: `praha-1` (string)
 + address: `Lodecká, 1 Praha-Nové Město, Česko` (string)
 
-## Parking Zone (object)
-
-+ code: `P1-0111` (string, required)
-+ midpoint (array[number], required)
-+ name: `Rezidentní úsek - P1-0111` (string, required)
-+ northeast (array[number], required)
-+ number_of_places: 31 (number, required)
-+ payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=P1-0111` (string)
-+ southwest (array[number], required)
-+ tariffs (array[Parking Zone Tariff Schedule])
-+ timestamp: 1553130910437 (number)
-+ type (Parking Zone Type)
-+ zps_id (number)
-+ zps_ids (array[number])
-+ tariffs_text: `Po-Ne 08:00-19:59 80 Kč/hod. (max. 1 hod.); Po-Ne 20:00-05:59 80 Kč/hod. (max. 1 hod.); Po-Ne (ve svátek) 08:00-05:59 80 Kč/hod. (max. 1 hod.)` (string)
-
-## Parking Zone Tariff Schedule (object)
-
-+ days (array[string])
-+ tariff (array[Parking Zone Tariff])
-
-## Parking Zone Tariff (object)
-
-+ timeFrom: `PT8H` (string)
-+ payAtHoliday: `false` (boolean)
-+ maxParkingTime: `PT1H` (string)
-+ timeTo: `PT19H59M` (string)
-+ pricePerHour: 80 (number)
-+ maxPrice: 0 (number)
-+ divisibility: `PT15M` (string)
-
-## Parking Zone Type (object)
-
-+ description: `Rezidentní úsek` (string)
-+ id: 1 (number, required)
-
 ## Parking (object)
 
 + parking_type (Parkings type)
@@ -1355,6 +1407,42 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 ## Parkings type (object)
 
 + description: `P+R parkoviště` (string)
++ id: 1 (number, required)
+
+## Parking Zone (object)
+
++ code: `P1-0111` (string, required)
++ midpoint (array[number], required)
++ name: `Rezidentní úsek - P1-0111` (string, required)
++ northeast (array[number], required)
++ number_of_places: 31 (number, required)
++ payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=P1-0111` (string)
++ southwest (array[number], required)
++ tariffs (array[Parking Zone Tariff Schedule])
++ timestamp: 1553130910437 (number)
++ type (Parking Zone Type)
++ zps_id (number)
++ zps_ids (array[number])
++ tariffs_text: `Po-Ne 08:00-19:59 80 Kč/hod. (max. 1 hod.); Po-Ne 20:00-05:59 80 Kč/hod. (max. 1 hod.); Po-Ne (ve svátek) 08:00-05:59 80 Kč/hod. (max. 1 hod.)` (string)
+
+## Parking Zone Tariff Schedule (object)
+
++ days (array[string])
++ tariff (array[Parking Zone Tariff])
+
+## Parking Zone Tariff (object)
+
++ timeFrom: `PT8H` (string)
++ payAtHoliday: `false` (boolean)
++ maxParkingTime: `PT1H` (string)
++ timeTo: `PT19H59M` (string)
++ pricePerHour: 80 (number)
++ maxPrice: 0 (number)
++ divisibility: `PT15M` (string)
+
+## Parking Zone Type (object)
+
++ description: `Rezidentní úsek` (string)
 + id: 1 (number, required)
 
 ## Playground (object)
@@ -1468,87 +1556,6 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + type: `image/jpeg` (string)
 + url: `http://www.tsk-praha.cz/cams/cam606748.jpg?1557229128000` (string, required)
 
-## Trip (object)
-
-+ `trip_id`: 991_1165_190107 (string, required)
-+ bikes_allowed: 1 (number, required)
-+ `block_id`: ` ` (string, optional)
-+ created_time: `2018-09-09 12:32:45` (string, nullable)
-+ direction_id: 0 (number, optional)
-+ exceptional: 0 (number)
-+ last_modify: `2018-09-09 12:32:45` (string, optional, nullable)
-+ route_id: L991 (string, required)
-+ service_id: `1111100-1` (string, required)
-+ shape_id: L991V3 (string, required)
-+ trip_headsign: `Nemocnice Motol` (string, required)
-+ wheelchair_accessible: 1 (number, required)
-
-## Stop (object)
-
-+ `created_time`: `2018-09-09 12:32:45` (string, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
-+ `location_type`: 0 (number, required)
-+ `parent_station`: U118S1 (string, required)
-+ `platform_code`: 1 (number, required)
-+ `stop_id`: U118Z101P (string, required)
-+ `stop_name`: Flora (string, required)
-+ `stop_url`: ` ` (string, optional)
-+ `wheelchair_boarding`: 2 (number, required)
-+ `zone_id`: P (string, required)
-
-## Stop time (object)
-
-+ `arrival_time`: `13:12:05` (string, required)
-+ `arrival_time_seconds` (number, optional, nullable)
-+ `created_time`: `2018-09-09 12:32:45` (string, required)
-+ `departure_time`: `13:12:35` (string, required)
-+ `departure_time_seconds` (number, optional, nullable)
-+ `drop_off_type`: 0 (number, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
-+ `pickup_type`: 0 (number, required)
-+ `shape_dist_traveled`: 3.73622 (number, required)
-+ `stop_headsign`: ` ` (string, optional)
-+ `stop_id`: U921Z102P (string, required)
-+ `stop_sequence`: 4 (number, required)
-+ `trip_id`: `991_1156_180709` (string, required)
-+ `stop` (Stop)
-
-## Shape (object)
-
-+ `shape_dist_traveled`: 16.46309 (number, required))
-+ `shape_id`: L991V2 (string, required)
-+ `shape_pt_sequence`: 123 (number, required)
-
-## Service (object)
-
-+ `created_time`: `2018-09-09 12:32:45` (string, required)
-+ `end_date`: 20190311 (string, required)
-+ `friday`: 1 (number, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
-+ `monday`: 1 (number, required)
-+ `saturday`: 1 (number, required)
-+ `service_id`: `1111111-1` (string, required)
-+ `start_date`: 20190226 (string, required)
-+ `sunday`: 1 (number, required)
-+ `thursday`: 1 (number, required)
-+ `tuesday`: 1 (number, required)
-+ `wednesday`: 1 (number, required)
-
-## Route (object)
-
-+ `agency_id`: 99 (number, required)
-+ `created_time`: `2018-09-09 12:32:45` (string, required)
-+ `is_night`: 0 (number, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
-+ `route_color`: 00A562 (string, required)
-+ `route_desc`: null (string, nullable)
-+ `route_id`: L991 (string, required)
-+ `route_long_name`: `Nemocnice Motol - Petřiny - Skalka - Depo Hostivař` (string, required)
-+ `route_short_name`: A (string, required)
-+ `route_text_color`: FFFFFF (string, required)
-+ `route_type`: 1 (number, required)
-+ `route_url`: https://pid.cz/linka/A (string, required)
-
 ## Vehicleposition Trip (object)
 
 + `cis_id`: 100381 (number, required)
@@ -1601,8 +1608,3 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `description`: `Příjem odpadu` (string)
 + `id`: `ODPADPRIJEM` (string)
 + `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
-
-## Error (object)
-+ error_message: `Not Found` (required, string)
-+ error_status: 404 (required, number)
-

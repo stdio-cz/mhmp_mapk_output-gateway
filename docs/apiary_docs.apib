@@ -184,7 +184,7 @@ Parking type enum:
     + Attributes (Error)
 
 
-## Parking Zones [/parkingzones/{?latlng,range,district,limit,offset,updatedSince}]
+## Parking Zones [/parkingzones/{?latlng,range,districts,limit,offset,updatedSince}]
 
 For backwards compatibility, also works on `/parking-zones/`
 
@@ -310,7 +310,7 @@ For backwards compatibility, also works on `/shared-cars/`
     + Attributes (Error)
 
 
-## Traffic Cameras [/trafficcameras/{?latlng,range,district,limit,offset,updatedSince}]
+## Traffic Cameras [/trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
 
 For backwards compatibility, also works on `/traffic-cameras/`
 
@@ -318,7 +318,7 @@ For backwards compatibility, also works on `/traffic-cameras/`
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
@@ -430,15 +430,15 @@ Online positions of public transport vehicles.
 
 Data from the city public space.
 
-## Gardens [/gardens/{?latlng,range,district,limit,offset,updatedSince}]
+## Gardens [/gardens/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city district (slug). Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Gardens [GET]
@@ -481,15 +481,15 @@ Data from the city public space.
     + Attributes (Error)
 
 
-## Playgrounds [/playgrounds/{?latlng,range,district,limit,offset,updatedSince}]
+## Playgrounds [/playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city district (slug). Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Playgrounds [GET]
@@ -531,7 +531,7 @@ Data from the city public space.
 + Response 404
     + Attributes (Error)
 
-## Public Toilets [/publictoilets/{?latlng,range,district,limit,offset,updatedSince}]
+## Public Toilets [/publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
 
 For backwards compatibility, also works on `/public-toilets/`
 
@@ -539,9 +539,9 @@ For backwards compatibility, also works on `/public-toilets/`
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city district (slug). Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Public Toilets [GET]
@@ -585,19 +585,78 @@ For backwards compatibility, also works on `/public-toilets/`
 + Response 404
     + Attributes (Error)
 
-# Group Sensors
+# Group Municipal Authority
 
-Sensoric data from the city's IoT network.
+Data from municipal authorities.
 
-## Air Quality Stations [/airqualitystations/{?latlng,range,district,limit,offset,updatedSince}]
+## Municipal Police Stations [/municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
+
+For backwards compatibility, also works on `/municipal-police-stations/`
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Municipal Police Stations [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Municipal Police Station)
+
+
+## Municipal Police Station [/municipalpolicestations/{id}]
+
+For backwards compatibility, also works on `/municipal-police-stations/`
+
++ Parameters
+
+    + id: 72 (number) - Identifier of the police station.
+
+### GET Municipal Police Station [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Municipal Police Station)
+
++ Response 404
+    + Attributes (Error)
+
+
+# Group Sensors
+
+Sensoric data from the city's IoT network.
+
+## Air Quality Stations [/airqualitystations/{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Air Quality Stations [GET]
@@ -616,15 +675,15 @@ Sensoric data from the city's IoT network.
             + (Feature Point)
                 + properties (Air Quality Station)
 
-## Meteosensors [/meteosensors/{?latlng,range,district,limit,offset,updatedSince}]
+## Meteosensors [/meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
 
 ### GET All Meteosensors [GET]
@@ -666,13 +725,13 @@ Sensoric data from the city's IoT network.
 
     + Attributes (Error)
 
-## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,district,limit,offset,updatedSince}]
+## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
@@ -720,13 +779,13 @@ Sensoric data from the city's IoT network.
     + Attributes (Error)
 
 
-## IceGateway Sensors [/icegatewaysensors{?latlng,range,district,limit,offset,updatedSince}]
+## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. .
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
@@ -1057,6 +1116,15 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + wind_direction: 230 (number)
 + wind_speed: 2.08 (number)
 + district: `praha-2` (string)
+
+## Municipal Police Station (object)
+
++ cadastral_area: `Staré Město` (string, required)
++ id: `stare-mesto-lodecka-2` (string, required)
++ note: `Přestupky` (string)
++ timestamp: 1556670300192 (number)
++ district: `praha-1` (string)
++ address: `Lodecká, 1 Praha-Nové Město, Česko` (string)
 
 ## Parking Zone (object)
 

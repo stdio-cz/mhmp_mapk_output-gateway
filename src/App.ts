@@ -44,6 +44,7 @@ import {    AirQualityStations,
             Playgrounds,
             SharedCars,
             TrafficCameras,
+            WasteCollectionYards,
          } from "golemio-schema-definitions";
 
 import * as http from "http";
@@ -158,6 +159,18 @@ export default class App {
         this.express.get("/public-toilets", (req, res) => {
             res.redirect("/publictoilets");
         });
+        this.express.get("/municipal-police-stations/:id", (req, res) => {
+            res.redirect("/municipalpolicestations/" + req.params.id);
+        });
+        this.express.get("/municipal-police-stations", (req, res) => {
+            res.redirect("/municipalpolicestations");
+        });
+        this.express.get("/waste-collection-yards/:id", (req, res) => {
+            res.redirect("/wastecollectionyards/" + req.params.id);
+        });
+        this.express.get("/waste-collection-yards", (req, res) => {
+            res.redirect("/wastecollectionyards");
+        });
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
@@ -207,6 +220,11 @@ export default class App {
                     collectionName: MunicipalPoliceStations.mongoCollectionName,
                     name: MunicipalPoliceStations.name,
                     schema: MunicipalPoliceStations.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: WasteCollectionYards.mongoCollectionName,
+                    name: WasteCollectionYards.name,
+                    schema: WasteCollectionYards.outputMongooseSchemaObject,
                 },
             ],
         );

@@ -585,6 +585,61 @@ For backwards compatibility, also works on `/public-toilets/`
 + Response 404
     + Attributes (Error)
 
+## Waste Collection Yards [/wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
+
+For backwards compatibility, also works on `/waste-collection-yards/`
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+
+### GET All Waste Collection Yards [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Waste Collection Yard)
+
+
+## Waste Collection Yard [/wastecollectionyards/{id}]
+
+For backwards compatibility, also works on `/waste-collection-yards/`
+
++ Parameters
+
+    + id: 1 (number) - Identifier of the Waste Collection Yard.
+
+### GET Waste Collection Yard [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Waste Collection Yard)
+
++ Response 404
+    + Attributes (Error)
+
+
 # Group Municipal Authority
 
 Data from municipal authorities.
@@ -1406,6 +1461,26 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `tracking`: 2 (number, required)
 + `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
 
+## Waste Collection Yard (object)
+
++ properties (array[Waste Collection Yard Property])
++ address: `Bartůňkova 711, Praha 4 – Chodov` (string, required)
++ contact: `236 04 00 11, 236 04 00 00` (string, required)
++ id: `sberny-dvur-hlavniho-mesta-prahy-bartunkova` (string, required)
++ name: `Sběrný dvůr hlavního města Prahy Bartůňkova` (string, required)
++ operating_hours: `Po - Pá 8:30 - 18:00 hod., 8:30 - 17:00 hod. v zimním období, So 8:30 - 15:00 hod.` (string, required)
++ operator: `KOMWAG, a.s.` (string, required)
++ timestamp: 1556670300498 (number, required)
++ type: `SDHMP` (string, required)
++ district: `praha-8` (string)
+
+## Waste Collection Yard Property (object)
+
++ `description`: `Příjem odpadu` (string)
++ `key`: `ODPADPRIJEM` (string)
++ `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
+
 ## Error (object)
 + error_message: `Not Found` (required, string)
 + error_status: 404 (required, number)
+

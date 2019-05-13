@@ -40,6 +40,7 @@ import {    AirQualityStations,
             IceGatewayStreetLamps,
             MedicalInstitutions,
             Meteosensors,
+            Playgrounds,
             SharedCars,
             TrafficCameras,
          } from "golemio-schema-definitions";
@@ -189,6 +190,11 @@ export default class App {
                     collectionName: TrafficCameras.mongoCollectionName,
                     name: TrafficCameras.name,
                     schema: TrafficCameras.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: Playgrounds.mongoCollectionName,
+                    name: Playgrounds.name,
+                    schema: Playgrounds.outputMongooseSchemaObject,
                 },
             ],
         );

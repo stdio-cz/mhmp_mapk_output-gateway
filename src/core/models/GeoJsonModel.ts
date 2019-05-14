@@ -41,7 +41,7 @@ export class GeoJsonModel extends MongoModel {
      * @param options.range Maximum range from specified latLng. Only data within this range will be returned.
      * @param options.limit Limit
      * @param options.offset Offset
-     * @param options.updatedSince Filters all results with older last_updated timestamp than this parameter
+     * @param options.updatedSince Filters all results with older updated_at timestamp than this parameter
      * (filters not-updated data)
      * @param options.additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
@@ -57,7 +57,7 @@ export class GeoJsonModel extends MongoModel {
                             limit?: number,
                             /** Offset (can be used for pagination). Evaluated last, after all filters applied. */
                             offset?: number,
-                            /** Filters all results with older last_updated timestamp than this parameter
+                            /** Filters all results with older updated_at timestamp than this parameter
                              * (filters not-updated data)
                              */
                             updatedSince?: number,
@@ -92,7 +92,7 @@ export class GeoJsonModel extends MongoModel {
 
             // Specify a query filter conditions to search by last updated time
             if (options.updatedSince) {
-                this.AddSelection({ "properties.timestamp": { $gte: options.updatedSince } });
+                this.AddSelection({ "properties.updated_at": { $gte: options.updatedSince } });
             }
 
             // Specify a query filter conditions to search by districts

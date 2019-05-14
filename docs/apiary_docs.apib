@@ -39,7 +39,7 @@ About project Golemio on https://golemio.cz
    - pagination - mumber of the first items that are skipped
 
 - `updatedSince`
-   - filters all results with older "last updated" timestamp than this parameter
+   - filters all results with older "updated at" timestamp than this parameter (`updated_at` property)
 
 - `ids`
    - filters by individual entity IDs (in array format - eg. `ids[]=1&ids[]=3`)
@@ -84,7 +84,7 @@ General resources.
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Districts [GET]
 
@@ -142,7 +142,7 @@ Parking type enum:
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Parkings [GET]
 
@@ -200,7 +200,7 @@ For backwards compatibility, also works on `/parking-zones/`
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Parking Zones [GET]
 
@@ -267,7 +267,7 @@ Availability enum:
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Shared Cars [GET]
 
@@ -321,7 +321,7 @@ For backwards compatibility, also works on `/traffic-cameras/`
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Traffic Cameras [GET]
 
@@ -439,7 +439,7 @@ Data from the city public space.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Gardens [GET]
 
@@ -496,7 +496,7 @@ For backwards compatibility, also works on `/medical-institutions/`
             + `health_care`
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter.
 
 ### GET All Medical Institutions [GET]
 
@@ -595,7 +595,7 @@ For backwards compatibility, also works on `/medical-institutions/`
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Playgrounds [GET]
 
@@ -647,7 +647,7 @@ For backwards compatibility, also works on `/public-toilets/`
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Public Toilets [GET]
 
@@ -786,7 +786,7 @@ For backwards compatibility, also works on `/waste-collection-yards/`
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Waste Collection Yards [GET]
 
@@ -845,7 +845,7 @@ For backwards compatibility, also works on `/municipal-police-stations/`
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Municipal Police Stations [GET]
 
@@ -902,7 +902,7 @@ Sensoric data from the city's IoT network.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Air Quality Stations [GET]
 
@@ -930,7 +930,7 @@ Sensoric data from the city's IoT network.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET Ice Gateway Sensors [GET]
 
@@ -984,7 +984,7 @@ Sensoric data from the city's IoT network.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET Ice Gateway Street Lamps [GET]
 
@@ -1038,7 +1038,7 @@ Sensoric data from the city's IoT network.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Meteosensors [GET]
 
@@ -1292,7 +1292,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
   + AQ_hourly_index: 3 (number)
   + components (array[Air Quality Station Component])
 + name: `Praha 4-Chodov` (string, required)
-+ timestamp: 1556792400188 (number, required)
++ updated_at: 1556792400188 (number, required)
 
 ## Air Quality Station Component (object)
 
@@ -1306,7 +1306,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + id: 538124 (number, required)
 + name: `Praha-Březiněves` (string, required)
 + slug: `praha-brezineves` (string, required)
-+ timestamp: 1547467502239 (number, required)
++ updated_at: 1547467502239 (number, required)
 
 ## Garden (object)
 
@@ -1317,7 +1317,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + image: `http://www.praha.eu/public/5c/7c/31/96820_4_bertramka_08.jpg` (string)
 + name: `Betramka` (string, required)
 + properties (array[Garden Property])
-+ timestamp: 1556238000632 (number, required)
++ updated_at: 1556238000632 (number, required)
 + url: `http://www.praha.eu/jnp/cz/co_delat_v_praze/parky/bertramka/bertramka_text.html` (string)
 
 ## Garden Property (object)
@@ -1411,7 +1411,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + id: `ICE-003-042-000-020` (string, required)
 + sensors (array[IceGateway Sensor])
-+ timestamp: 1556798400827 (number, required)
++ updated_at: 1556798400827 (number, required)
 
 ## IceGateway Sensor (object)
 
@@ -1431,7 +1431,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + id: `ICE-003-042-000-002` (string, required)
 + lamppost_id: `Test002` (string, required)
 + last_dim_override: 1543577117 (number, nullable)
-+ timestamp: 1556799300356 (number, required)
++ updated_at: 1556799300356 (number, required)
 
 ## IceGateway Street Lamp State (object)
 
@@ -1449,7 +1449,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + opening_hours (array[Medical Institution Opening Hour])
 + pharmacy_code: `04996100` (string)
 + telephone (array[string])
-+ timestamp: 1553165952781 (number, required)
++ updated_at: 1553165952781 (number, required)
 + type (Medical Institution Type)
 + web (array[string])
 
@@ -1479,7 +1479,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + last_updated: 1556806121000 (number, required)
 + name: `Bulhar` (string, required)
 + road_temperature: 34.55 (number)
-+ timestamp: 1556806200192 (number, required)
++ updated_at: 1556806200192 (number, required)
 + wind_direction: 230 (number)
 + wind_speed: 2.08 (number)
 + district: `praha-2` (string)
@@ -1489,7 +1489,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + cadastral_area: `Staré Město` (string, required)
 + id: `stare-mesto-lodecka-2` (string, required)
 + note: `Přestupky` (string)
-+ timestamp: 1556670300192 (number)
++ updated_at: 1556670300192 (number)
 + district: `praha-1` (string)
 + address: `Lodecká, 1 Praha-Nové Město, Česko` (string)
 
@@ -1500,7 +1500,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + name: `Skalka 1` (string, required)
 + num_of_free_places: 0 (number, required)
 + num_of_taken_places: 63 (number, required)
-+ timestamp: 1556868900092 (number, required)
++ updated_at: 1556868900092 (number, required)
 + total_num_of_places: 63 (number, required)
 + average_occupancy (Parking Occupancy)
 + district: `praha-10` (string)
@@ -1557,7 +1557,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=P1-0111` (string)
 + southwest (array[number], required)
 + tariffs (array[Parking Zone Tariff Schedule])
-+ timestamp: 1553130910437 (number)
++ updated_at: 1553130910437 (number)
 + type (Parking Zone Type)
 + zps_id (number)
 + zps_ids (array[number])
@@ -1591,7 +1591,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + name: `Hostivařský lesopark (východní část) - hřiště 43.B` (string, required)
 + perex: `Trasa je vhodným polodenním rodinným výletem.` (string)
 + properties (array[Playground properties])
-+ timestamp: 1556670601921 (number, required)
++ updated_at: 1556670601921 (number, required)
 + url: `http://www.hristepraha.cz/hriste/mapa/hostivarsky-lesopark-vychodni-cast-hriste-43-b` (string, required)
 + district: `praha-15` (string)
 + address: `Výstavní, 10900 Praha-Háje, Česko` (string)
@@ -1610,7 +1610,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 - id: 18 (number, required)
 - opened: `10:00 - 21:00` (string)
 - price: `zdarma` (string)
-- timestamp: 1556670600578 (number, required)
+- updated_at: 1556670600578 (number, required)
 - district: `praha-13` (string)
 - address: `Skandinávská 144/25, 15500 Praha-Třebonice, Česko` (string)
 
@@ -1622,7 +1622,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + id: `9B99149` (string, required)
 + name: `Škoda Citigo` (string, required)
 + res_url: `https://autonapul.zemtu.com/app/#/?rz=9B99149` (string, required)
-+ timestamp: 1557223259221 (number, required)
++ updated_at: 1557223259221 (number, required)
 
 ## Shared Car Availability (object)
 
@@ -1649,7 +1649,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + id: 11 (string, required)
 + name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
 + station_number: `SDHMP` (string)
-+ timestamp: `1556670300498` (number, required)
++ updated_at: `1556670300498` (number, required)
 
 ## Sorted Waste Station Property (object)
 
@@ -1683,7 +1683,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + id: 606748 (number, required)
 + last_updated: 1557229128000 (number, required)
 + name: `DP - Kobylisy C - BUS MHD DP` (string, required)
-+ timestamp: 1557229200188 (number, required)
++ updated_at: 1557229200188 (number, required)
 + district: `praha-8` (string)
 + address: `Klapkova, 18200 Praha-Kobylisy, Česko` (string)
 
@@ -1737,7 +1737,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + name: `Sběrný dvůr hlavního města Prahy Bartůňkova` (string, required)
 + operating_hours: `Po - Pá 8:30 - 18:00 hod., 8:30 - 17:00 hod. v zimním období, So 8:30 - 15:00 hod.` (string, required)
 + operator: `KOMWAG, a.s.` (string, required)
-+ timestamp: 1556670300498 (number, required)
++ updated_at: 1556670300498 (number, required)
 + type: `SDHMP` (string, required)
 + district: `praha-8` (string)
 

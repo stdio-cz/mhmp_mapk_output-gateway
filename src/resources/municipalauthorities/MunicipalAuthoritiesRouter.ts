@@ -21,9 +21,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
         super(new MunicipalAuthoritiesModel());
         this.initRoutes();
         this.router.get("/", [
-            // TODO: filtr na type/group
-            query("accessibility").optional().isNumeric(),
-            query("onlyMonitored").optional().isBoolean(),
+            query("type").optional().isString(),
         ], this.GetAll);
     }
 
@@ -31,8 +29,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
         // Parsing parameters
         let ids: number[] = req.query.ids;
         let districts: string[] = req.query.districts;
-        const accessibilityFilter = req.query.accessibility;
-        const onlyMonitoredFilter = req.query.onlyMonitored;
+        const typeFilter = req.query.type;
         let additionalFilters = {};
 
         if (districts) {
@@ -43,16 +40,10 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
         }
         try {
             const coords = await parseCoordinates(req.query.latlng, req.query.range);
-            if (accessibilityFilter) {
+            if (typeFilter) {
                 additionalFilters = {
                     ...additionalFilters,
-                    ...{ "properties.accessibility.id": req.query.accessibility },
-                };
-            }
-            if (onlyMonitoredFilter === "true") {
-                additionalFilters = {
-                    ...additionalFilters,
-                    ...{ "properties.containers": { $elemMatch: { sensor_id: { $exists: true } } } },
+                    ...{ "properties.type.name": req.query.type },
                 };
             }
             const data = await this.model.GetAll({

@@ -834,6 +834,81 @@ For backwards compatibility, also works on `/waste-collection-yards/`
 
 Data from municipal authorities.
 
+## Municipal Authorities [/municipalauthorities/{?latlng,range,district,type,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
+    + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
+        + Members
+            + `municipality`
+            + `city-hall`
+    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
+    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Munipacilities [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Municipal Authority)
+
+
+## Municipal Authority [/municipalauthorities/{id}]
+
++ Parameters
+
+    + id: `urad-mestske-casti-praha-10` (string) - Identifier of the municipality.
+
+### GET Munipacility [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Municipal Authority)
+
++ Response 404
+    + Attributes (Error)
+
+
+
+## Municipal Authority Waiting Queues [/municipalauthorities/{id}/queues]
+
++ Parameters
+
+    + id: `skoduv-palac` (string) - Identifier of the municipality.
+
+### GET All Municipal Authority Waiting Queues [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Municipal Authority Queues)
+
+
 ## Municipal Police Stations [/municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
 
 For backwards compatibility, also works on `/municipal-police-stations/`
@@ -1484,6 +1559,59 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + wind_speed: 2.08 (number)
 + district: `praha-2` (string)
 
+## Municipal Authority (object)
+
++ image (Municipal Authority Image)
++ email (array[string])
++ telephone (array[string])
++ web (array[string])
++ address: `Mariánské náměstí 2/2, 110 01 Praha 1` (string)
++ agendas (array[Municipal Authority Agenda])
++ district: `praha-1` (string)
++ id: `magistrat-hlavniho-mesta-prahy` (string, required)
++ name: `Magistrát hlavního města Prahy` (string, required)
++ official_board: `http://www.praha.eu/jnp/cz/o_meste/magistrat/deska/index.html` (string)
++ opening_hours (array[Municipal Authority Opening Hour])
++ updated_at: 1556238001399 (number, required)
++ type (Municipal Authority Type)
+
+## Municipal Authority Type (object)
+
++ description: `Magistrát` (string)
++ name: `city-hall` (string)
++ id: 1 (number, required)
+
+## Municipal Authority Image (object)
+
++ mimetype: `image/png` (string)
++ size: 714603 (number)
++ url: https://www.mojepraha.eu/images/municipal-authorities/VJXPN4RVrTLnkih5.png (string)
+
+## Municipal Authority Agenda (object)
+
++ keywords (array[string])
++ description: `Pronájem bytových a nebytových prostor` (string)
++ long_description (string)
+
+## Municipal Authority Opening Hour (object)
+
++ day: `Pondělí` (string)
++ hours (array[string])
+
+## Municipal Authority Queues (object)
+
++ last_updated: `2019+04-30T09:56:00+02:00` (string, required)
++ municipal_authority_id: `skoduv-palac` (string, required)
++ served_activities (array[Municipal Authority Activities])
++ updated_at: 1557223259221 (number, required)
++ title: `Monitoring odbavování klientů ve Škodově paláci` (string, required)
+
+## Municipal Authority Activities (object)
+
++ activity: `OSV: CzechPoint` (string, required)
++ number_of_person_in_queue: 0 (number, required)
++ number_of_serving_counters: 5 (number, required)
+
 ## Municipal Police Station (object)
 
 + cadastral_area: `Staré Město` (string, required)
@@ -1746,4 +1874,3 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `description`: `Příjem odpadu` (string)
 + `id`: `ODPADPRIJEM` (string)
 + `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
-

@@ -481,6 +481,111 @@ Data from the city public space.
     + Attributes (Error)
 
 
+## Medical Institutions [/medicalinstitutions/{?latlng,range,district,type,limit,offset,updatedSince}]
+
+For backwards compatibility, also works on `/medical-institutions/`
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + type: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
+        + Members
+            + `pharmacies`
+            + `health_care`
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older last_updated timestamp than this parameter.
+
+### GET All Medical Institutions [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Medical Institution)
+                
+
+## Medical Institution [/medicalinstitutions/{id}]
+
+For backwards compatibility, also works on `/medical-institutions/`
+
++ Parameters
+
+    + id: `2526713200064203-fakultni-nemocnice-v-motole` (string) - Identifier of the medical institution.
+
+### GET Medical Institution [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Medical Institution)
+
++ Response 404
+    + Attributes (Error)
+
+
+## Medical Institutions Types [/medicalinstitutions/types]
+
+For backwards compatibility, also works on `/medical-institutions/`
+
+### GET All Medical Institution Types [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "pharmacies": [
+                    "Nemocniční lékárna s odbornými pracovišti",
+                    "Lékárna",
+                    "Lékárna s odbornými pracovišti",
+                    "Výdejna",
+                    "Vojenská lékárna",
+                    "Vojenská lékárna s OOVL",
+                    "Nemocniční lékárna",
+                    "Lékárna s odbornými pracovišti s OOVL",
+                    "Nemocniční lékárna s OOVL",
+                    "Nemocniční lékárna s odbor. pracovišti s OOVL",
+                    "Odloučené oddělení výdeje léčivých přípravků",
+                    "Lékárna s OOVL",
+                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení",
+                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení s OOVL",
+                    "Lékárna zásobujicí zařízení ústavní péče",
+                    "Lékárna zásobujicí zařízení ústavní péče s OOVL"
+                ],
+                "health_care": [
+                    "Fakultní nemocnice",
+                    "Nemocnice",
+                    "Ostatní ambulantní zařízení",
+                    "Ostatní zdravotnická zařízení",
+                    "Zdravotní záchranná služba",
+                    "Zdravotnické středisko"
+                ]
+            }
+
+
 ## Playgrounds [/playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
@@ -1333,6 +1438,39 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + description: `lost connection (connection status older than 1 hour)` (string)
 + id: `-1` (number, required)
 
+## Medical Institution (object)
+
++ address (Medical Institution Address)
++ district: `praha-4` (string)
++ email (array[string])
++ id: `04995142000-benu-lekarna` (string, required)
++ institution_code: `04995142000` (string, required)
++ name: `BENU Lékárna` (string, required)
++ opening_hours (array[Medical Institution Opening Hour])
++ pharmacy_code: `04996100` (string)
++ telephone (array[string])
++ timestamp: 1553165952781 (number, required)
++ type (Medical Institution Type)
++ web (array[string])
+
+## Medical Institution Address (object)
+
++ city: `Praha 4` (string, required)
++ formatted: `Olbrachtova 2006/9, 140 00 Praha 4` (string, required)
++ street: `Olbrachtova 2006/9` (string, required)
++ zip: `140 00` (string, required)
+
+## Medical Institution Opening Hour (object)
+
++ day: `Pondělí` (string)
++ hours (array[string])
+
+## Medical Institution Type (object)
+
++ description: `Lékárna` (string)
++ name: `pharmacies` (string)
++ id: 1 (number, required)
+
 ## Meteosensor (object)
 
 + air_temperature: 18.95 (number)
@@ -1608,3 +1746,4 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `description`: `Příjem odpadu` (string)
 + `id`: `ODPADPRIJEM` (string)
 + `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
+

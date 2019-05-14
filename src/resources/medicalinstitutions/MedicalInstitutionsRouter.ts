@@ -19,10 +19,10 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
 
     constructor() {
         super(new MedicalInstitutionsModel());
+        this.router.get("/types", this.GetTypes);
         this.initRoutes();
         this.router.get("/", [
-            query("accessibility").optional().isNumeric(),
-            query("onlyMonitored").optional().isBoolean(),
+            query("group").optional().isString(),
         ], this.GetAll);
     }
 
@@ -30,8 +30,7 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
         // Parsing parameters
         let ids: number[] = req.query.ids;
         let districts: string[] = req.query.districts;
-        const accessibilityFilter = req.query.accessibility;
-        const onlyMonitoredFilter = req.query.onlyMonitored;
+        const groupFilter = req.query.group;
         let additionalFilters = {};
 
         if (districts) {
@@ -42,16 +41,10 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
         }
         try {
             const coords = await parseCoordinates(req.query.latlng, req.query.range);
-            if (accessibilityFilter) {
+            if (groupFilter) {
                 additionalFilters = {
                     ...additionalFilters,
-                    ...{ "properties.accessibility.id": req.query.accessibility },
-                };
-            }
-            if (onlyMonitoredFilter === "true") {
-                additionalFilters = {
-                    ...additionalFilters,
-                    ...{ "properties.containers": { $elemMatch: { sensor_id: { $exists: true } } } },
+                    ...{ "properties.type.group": groupFilter },
                 };
             }
             const data = await this.model.GetAll({
@@ -65,6 +58,15 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
                 range: coords.range,
                 updatedSince: req.query.updatedSince,
             });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    public GetTypes = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.model.GetTypes();
             res.status(200).send(data);
         } catch (err) {
             next(err);

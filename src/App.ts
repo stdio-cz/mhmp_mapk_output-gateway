@@ -50,6 +50,7 @@ import {    AirQualityStations,
          } from "golemio-schema-definitions";
 
 import * as http from "http";
+import { medicalInstitutionsRouter } from "./resources/medicalinstitutions/MedicalInstitutionsRouter";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -132,6 +133,7 @@ export default class App {
         this.express.use("/", defaultRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
         this.express.use("/gtfs", gtfsRouter);
+        this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
         this.express.use("/parkings", parkingsRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);
@@ -179,6 +181,15 @@ export default class App {
         });
         this.express.get("/sorted-waste-stations", (req, res) => {
             res.redirect("/sortedwastestations");
+        });
+        this.express.get("/medical-institutions/types", (req, res) => {
+            res.redirect("/medicalinstitutions/types");
+        });
+        this.express.get("/medical-institutions/:id", (req, res) => {
+            res.redirect("/medicalinstitutions/" + req.params.id);
+        });
+        this.express.get("/medical-institutions", (req, res) => {
+            res.redirect("/medicalinstitutions");
         });
 
         // Create general routes through builder

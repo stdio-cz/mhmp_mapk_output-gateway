@@ -21,6 +21,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
         super(new MunicipalAuthoritiesModel());
         this.initRoutes();
         this.router.get("/", [
+            // TODO: filtr na type/group
             query("accessibility").optional().isNumeric(),
             query("onlyMonitored").optional().isBoolean(),
         ], this.GetAll);

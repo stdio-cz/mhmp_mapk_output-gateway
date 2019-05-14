@@ -13,8 +13,7 @@ export class ParkingsModel extends GeoJsonModel {
 
         // Set model-specific indexes
         this.schema.index(
-            { "properties.name": "text", "properties.address": "text" },
-            { weights: { "properties.name": 5, "properties.address": 1 } },
+            { "properties.name": "text" },
         );
     }
 }

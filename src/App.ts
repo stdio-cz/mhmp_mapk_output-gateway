@@ -51,6 +51,7 @@ import {    AirQualityStations,
 
 import * as http from "http";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions/MedicalInstitutionsRouter";
+import { municipalAuthoritiesRouter } from "./resources/municipalauthorities/MunicipalAuthoritiesRouter";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -134,6 +135,7 @@ export default class App {
         this.express.use("/citydistricts", cityDistrictsRouter);
         this.express.use("/gtfs", gtfsRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
+        this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
         this.express.use("/parkings", parkingsRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);

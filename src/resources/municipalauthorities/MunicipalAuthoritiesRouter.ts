@@ -12,14 +12,19 @@ import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { GeoJsonRouter } from "../../core/routes";
 import { MunicipalAuthoritiesModel } from "./MunicipalAuthoritiesModel";
+import { MunicipalAuthoritiesQueuesModel } from "./MunicipalAuthoritiesQueuesModel";
 
 export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
 
     protected model: MunicipalAuthoritiesModel = new MunicipalAuthoritiesModel();
+    protected queuesModel: MunicipalAuthoritiesQueuesModel = new MunicipalAuthoritiesQueuesModel();
 
     constructor() {
         super(new MunicipalAuthoritiesModel());
         this.initRoutes();
+        this.router.get("/:id/queues", [
+            param("id").exists().isString(),
+        ], this.GetQueues);
         this.router.get("/", [
             query("type").optional().isString(),
         ], this.GetAll);
@@ -58,6 +63,19 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
                 updatedSince: req.query.updatedSince,
             });
             res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    public GetQueues = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.queuesModel.GetQueues(req.params.id);
+            if (!data) {
+                return res.status(204).send();
+            } else {
+                return res.status(200).send(data);
+            }
         } catch (err) {
             next(err);
         }

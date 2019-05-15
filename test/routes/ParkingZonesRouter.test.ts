@@ -42,7 +42,7 @@ describe("ParkingZonesRouter", () => {
           });
     });
 
-    it("should respond with json to GET /parkingzones/:code ", (done) => {
+    it("should respond with json to GET /parkingzones/:id ", (done) => {
         request(app)
           .get("/parkingzones/" + parkingZoneCode)
           .set("Accept", "application/json")
@@ -50,18 +50,18 @@ describe("ParkingZonesRouter", () => {
           .expect(200, done);
     });
 
-    it("should respond with parking zone object to GET /parkingzones/:code ", (done) => {
+    it("should respond with parking zone object to GET /parkingzones/:id ", (done) => {
         request(app)
           .get("/parkingzones/" + parkingZoneCode).end((err: any, res: any) => {
               expect(res.statusCode).to.be.equal(200);
               expect(res.body).to.be.an("object");
-              expect(res.body.properties.code).to.be.equal(parkingZoneCode);
+              expect(res.body.properties.id).to.be.equal(parkingZoneCode);
               expect(res.body.properties.payment_link).to.be.a("string");
               done();
           });
     });
 
-    it("should respond with json to GET /parkingzones/:code/tariffs ", (done) => {
+    it("should respond with json to GET /parkingzones/:id/tariffs ", (done) => {
         request(app)
           .get("/parkingzones/" + parkingZoneCode + "/tariffs")
           .set("Accept", "application/json")

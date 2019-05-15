@@ -1359,6 +1359,15 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + properties (object, required)
 + type: Feature (required, string)
 
+## Address (object)
+
++ address_formatted: `Dělnická 213/10, 17000 Praha-Holešovice, Česko` (string)
++ street_address: `Dělnická 213/10` (string)
++ postal_code: `17000` (string)
++ address_locality: `Praha` (string)
++ address_region: `Holešovice` (string)
++ address_country: `Česko` (string)
+
 ## Air Quality Station (object)
 
 + id: ACHOA (string, required)
@@ -1385,15 +1394,19 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Garden (object)
 
-+ address: `Mozartova 844/14` (string)
++ address (Address)
 + description: `Mozartova busta v zahradě legendární usedlosti stojí na vyvýšeném, trochu zvláštním, místě, jakoby stranou pomyslné hlavní osy podlouhlého pozemku. Mistr, byť pouze v kamenné podobě, tak má dokonalý přehled o dění v zahradě, ale současně překrásný výhled na stráně vrchu Mrázovka.` (string)
 + district: `praha-5` (string)
 + id: `betramka` (string, required)
-+ image: `http://www.praha.eu/public/5c/7c/31/96820_4_bertramka_08.jpg` (string)
++ image (Garden Image)
 + name: `Betramka` (string, required)
 + properties (array[Garden Property])
 + updated_at: 1556238000632 (number, required)
 + url: `http://www.praha.eu/jnp/cz/co_delat_v_praze/parky/bertramka/bertramka_text.html` (string)
+
+## Garden Image (object)
+
++ url: `http://www.praha.eu/public/5c/7c/31/96820_4_bertramka_08.jpg` (string)
 
 ## Garden Property (object)
 
@@ -1515,13 +1528,13 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Medical Institution (object)
 
-+ address (Medical Institution Address)
++ address (Address)
 + district: `praha-4` (string)
 + email (array[string])
 + id: `04995142000-benu-lekarna` (string, required)
 + institution_code: `04995142000` (string, required)
 + name: `BENU Lékárna` (string, required)
-+ opening_hours (array[Medical Institution Opening Hour])
++ opening_hours (array[Opening Hours])
 + pharmacy_code: `04996100` (string)
 + telephone (array[string])
 + updated_at: 1553165952781 (number, required)
@@ -1534,11 +1547,6 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + formatted: `Olbrachtova 2006/9, 140 00 Praha 4` (string, required)
 + street: `Olbrachtova 2006/9` (string, required)
 + zip: `140 00` (string, required)
-
-## Medical Institution Opening Hour (object)
-
-+ day: `Pondělí` (string)
-+ hours (array[string])
 
 ## Medical Institution Type (object)
 
@@ -1565,21 +1573,20 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + email (array[string])
 + telephone (array[string])
 + web (array[string])
-+ address: `Mariánské náměstí 2/2, 110 01 Praha 1` (string)
++ address (Address)
 + agendas (array[Municipal Authority Agenda])
 + district: `praha-1` (string)
 + id: `magistrat-hlavniho-mesta-prahy` (string, required)
 + name: `Magistrát hlavního města Prahy` (string, required)
 + official_board: `http://www.praha.eu/jnp/cz/o_meste/magistrat/deska/index.html` (string)
-+ opening_hours (array[Municipal Authority Opening Hour])
++ opening_hours (array[Opening Hours])
 + updated_at: 1556238001399 (number, required)
 + type (Municipal Authority Type)
 
 ## Municipal Authority Type (object)
 
-+ description: `Magistrát` (string)
-+ name: `city-hall` (string)
-+ id: 1 (number, required)
++ description: `Obecní úřad` (string)
++ id: `municipality` (string, required)
 
 ## Municipal Authority Image (object)
 
@@ -1592,11 +1599,6 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + keywords (array[string])
 + description: `Pronájem bytových a nebytových prostor` (string)
 + long_description (string)
-
-## Municipal Authority Opening Hour (object)
-
-+ day: `Pondělí` (string)
-+ hours (array[string])
 
 ## Municipal Authority Queues (object)
 
@@ -1617,13 +1619,20 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + cadastral_area: `Staré Město` (string, required)
 + id: `stare-mesto-lodecka-2` (string, required)
 + note: `Přestupky` (string)
-+ updated_at: 1556670300192 (number)
++ updated_at: 1556670300192 (number, required)
 + district: `praha-1` (string)
-+ address: `Lodecká, 1 Praha-Nové Město, Česko` (string)
++ address (Address)
+
+## Opening Hours (object)
+
++ closes: `12:00` (string)
++ day_of_week: `Monday` (string)
++ description (string)
++ opens: `08:00` (string)
 
 ## Parking (object)
 
-+ parking_type (Parkings type)
++ parking_type (Parking Type)
 + id: 534012 (number, required)
 + name: `Skalka 1` (string, required)
 + num_of_free_places: 0 (number, required)
@@ -1632,7 +1641,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + total_num_of_places: 63 (number, required)
 + average_occupancy (Parking Occupancy)
 + district: `praha-10` (string)
-+ address: `Pod Strání, 10031 Praha-Strašnice, Česko` (string)
++ address (Address)
 + last_updated: 1556868553000 (number)
 
 ## Parking Occupancy (object)
@@ -1670,30 +1679,30 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + 22: 59 (number)
 + 23: 59 (number)
 
-## Parkings type (object)
+## Parking Type (object)
 
 + description: `P+R parkoviště` (string)
 + id: 1 (number, required)
 
 ## Parking Zone (object)
 
-+ code: `P1-0111` (string, required)
-+ midpoint (array[number], required)
++ id: `P1-0111` (string, required)
++ midpoint: 14.3933334097666, 50.0906432052142 (array[number], required)
 + name: `Rezidentní úsek - P1-0111` (string, required)
-+ northeast (array[number], required)
++ northeast: 14.3933334097666, 50.0906432052142 (array[number], required)
 + number_of_places: 31 (number, required)
 + payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=P1-0111` (string)
-+ southwest (array[number], required)
++ southwest: 14.3933334097666, 50.0906432052142 (array[number], required)
 + tariffs (array[Parking Zone Tariff Schedule])
-+ updated_at: 1553130910437 (number)
++ updated_at: 1553130910437 (number, required)
 + type (Parking Zone Type)
-+ zps_id (number)
++ zps_id: 3312 (number)
 + zps_ids (array[number])
 + tariffs_text: `Po-Ne 08:00-19:59 80 Kč/hod. (max. 1 hod.); Po-Ne 20:00-05:59 80 Kč/hod. (max. 1 hod.); Po-Ne (ve svátek) 08:00-05:59 80 Kč/hod. (max. 1 hod.)` (string)
 
 ## Parking Zone Tariff Schedule (object)
 
-+ days (array[string])
++ days: Saturday, Sunday (array[string])
 + tariff (array[Parking Zone Tariff])
 
 ## Parking Zone Tariff (object)
@@ -1713,22 +1722,22 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Playground (object)
 
-+ image (Playground image)
++ image (Playground Image)
 + content: `Popis: Asi 300 m od prodejny Lidl v Hornoměcholupské ulici se na okraji louky rozkládá první hřiště (43.A). Tvoří ho...` (string, required)
 + id: 72 (number, required)
 + name: `Hostivařský lesopark (východní část) - hřiště 43.B` (string, required)
 + perex: `Trasa je vhodným polodenním rodinným výletem.` (string)
-+ properties (array[Playground properties])
++ properties (array[Playground Properties])
 + updated_at: 1556670601921 (number, required)
 + url: `http://www.hristepraha.cz/hriste/mapa/hostivarsky-lesopark-vychodni-cast-hriste-43-b` (string, required)
 + district: `praha-15` (string)
-+ address: `Výstavní, 10900 Praha-Háje, Česko` (string)
++ address (Address)
 
-## Playground image (object)
+## Playground Image (object)
 
 + url: `http://www.hristepraha.cz/images/img/2d73f6832f5ce39fc5987d27d9f4541fo.jpg` (string)
 
-## Playground properties (object)
+## Playground Properties (object)
 
 + id: 6 (number, required)
 + description: `WC na hřišti nebo v bezprostřední blízkosti` (string)
@@ -1740,7 +1749,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 - price: `zdarma` (string)
 - updated_at: 1556670600578 (number, required)
 - district: `praha-13` (string)
-- address: `Skandinávská 144/25, 15500 Praha-Třebonice, Česko` (string)
+- address (Address)
 
 ## Shared Car (object)
 
@@ -1771,36 +1780,42 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Sorted Waste Station (object)
 
-+ accessibility (Sorted Waste Station Property)
++ accessibility (Sorted Waste Station Accessibility)
 + containers (array[Sorted Waste Station Container])
 + district: `praha-13` (string)
-+ id: 11 (string, required)
++ id: 11 (number, required)
 + name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
 + station_number: `SDHMP` (string)
 + updated_at: `1556670300498` (number, required)
 
-## Sorted Waste Station Property (object)
+## Sorted Waste Station Accessibility (object)
 
 + description: `Příjem odpadu` (string, required)
 + id: 1 (number, required)
 
 ## Sorted Waste Station Container (object)
 
-+ cleaning_frequency: 4 (number)
-+ company (Sorted Waste Station Company)
++ cleaning_frequency (Sorted Waste Station Container Cleaning Frequency)
++ company (Sorted Waste Station Container Company)
 + container_type (string)
 + description (string)
-+ trash_type (Sorted Waste Station Trash Type)
++ trash_type (Sorted Waste Station Container Trash Type)
 + sensor_id: 106970 (number)
 
-## Sorted Waste Station Company (object)
+## Sorted Waste Station Container Cleaning Frequency (object)
+
++ id: 61 (number)
++ duration: `P6W` (string)
++ frequency: 1 (number)
+
+## Sorted Waste Station Container Company (object)
 
 + email (string)
 + name (string)
 + phone (string)
 + web (string)
 
-## Sorted Waste Station Trash Type (object)
+## Sorted Waste Station Container Trash Type (object)
 
 + description: `benzín` (string, required)
 + id: 1 (number, required)
@@ -1813,7 +1828,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + name: `DP - Kobylisy C - BUS MHD DP` (string, required)
 + updated_at: 1557229200188 (number, required)
 + district: `praha-8` (string)
-+ address: `Klapkova, 18200 Praha-Kobylisy, Česko` (string)
++ address (Address)
 
 ## Traffic Camera Image (object)
 

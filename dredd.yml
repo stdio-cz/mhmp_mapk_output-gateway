@@ -3,7 +3,6 @@ custom:
   apiaryApiKey: 4ea8e3d9df573f63e950044861ec74e9
   apiaryApiName: golemiooutputgateway
 dry-run: null
-hookfiles: null
 language: nodejs
 sandbox: false
 server: npm start
@@ -19,10 +18,11 @@ inline-errors: false
 details: false
 method: []
 color: true
-level: info
+loglevel: debug
 timestamp: false
 silent: false
 path: []
+hookfiles: "test/dredd_hook.js"
 hooks-worker-timeout: 5000
 hooks-worker-connect-timeout: 1500
 hooks-worker-connect-retry: 500

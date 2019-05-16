@@ -23,10 +23,11 @@ export class GTFSShapesModel extends SequelizeModel {
      * @returns Array of the retrieved records
      */
     public GetAll = async (options: {
+        id?: string,
         limit?: number,
         offset?: number,
     } = {}): Promise<any> => {
-        const {limit, offset} = options;
+        const {limit, offset, id} = options;
         try {
 
             const order: any = [];
@@ -36,6 +37,7 @@ export class GTFSShapesModel extends SequelizeModel {
                 limit,
                 offset,
                 order,
+                where: {shape_id: id},
             });
             return buildGeojsonFeatureCollection(data, "shape_pt_lon", "shape_pt_lat");
         } catch (err) {
@@ -43,17 +45,7 @@ export class GTFSShapesModel extends SequelizeModel {
         }
     }
 
-    /** Retrieves specific gtfs shape
-     * @param {string} id Id of the shape
-     * @returns Object of the retrieved record or null
-     */
-    public GetOne = async (id: string): Promise<any> => this
-        .sequelizeModel
-        .findByPk(id)
-        .then((data) => {
-            if (data) {
-                return buildGeojsonFeature(data, "shape_pt_lon", "shape_pt_lat");
-            }
-            return null;
-        })
+    public GetOne = async (id: number): Promise<object | null> => {
+        return null;
+    }
 }

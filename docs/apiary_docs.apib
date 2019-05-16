@@ -198,6 +198,7 @@ For backwards compatibility, also works on `/parking-zones/`
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
@@ -731,10 +732,10 @@ Cleaning Frequency:
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
     + accessibility: 1 (optional, string) - Filter by accessibility id.
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
     + onlyMonitored: true (optional, boolean) - Filter only stations with at least one "smart" container with sensor for measurements and pickups
 
 ### GET All Sorted Waste Stations [GET]
@@ -841,13 +842,13 @@ Data from municipal authorities.
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. Not used if `latlng` and `range` are set.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
     + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
         + Members
             + `municipality`
             + `city-hall`
-    + limit: 10 (optional, number) - Limits number of retrieved items. Not used if `latlng` and `range` are set.
-    + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
 ### GET All Municipal Authorities [GET]
@@ -1160,7 +1161,7 @@ Sensoric data from the city's IoT network.
 
 GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules.
 
-## GTFS Trips [/gtfs/trips{?limit,offset,stopId,includeRoute,date}]
+## GTFS Trips [/gtfs/trips{?limit,offset,stopId,date}]
 
 + Parameters
 
@@ -1182,7 +1183,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + Attributes (array)
         + (GTFS Trip)
 
-## GTFS Trip [/gtfs/trips/{id}{?limit,offset,includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
+## GTFS Trip [/gtfs/trips/{id}{?includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
 
 + Parameters
     + `id`: `991_30_190107` (string, required)
@@ -1215,6 +1216,8 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Parameters
     + date: `2019-01-01` (optional, string) - Filter services by specific date in format (YYYY-MM-DD).
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
 
 ### GET GTFS Services [GET]
 
@@ -1228,9 +1231,12 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
     + Attributes (array[Service])
 
-## GTFS Shapes [/gtfs/shapes{?limit,offset}]
+## GTFS Shapes [/gtfs/shapes/{id}]
 
-### GET GTFS Shapes [GET]
++ Parameters
+    + `id`: `L991V2` (string, required) - GTFS shapes_id to filter shapes by GTFS trip
+
+### GET GTFS Shape [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1246,27 +1252,13 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
             + (Feature Point)
                 + properties (GTFS Shape)
 
-## GTFS Shape [/gtfs/shapes/{id}]
+## GTFS Stops [/gtfs/stops{?limit,offset}]
 
 + Parameters
-    + `id`: `L991V2` (string, required)
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
 
-### GET GTFS Shape [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (GTFS Shape)
-
-## GTFS Stops [/gtfs/stops{?limit,offset,latlng,range}]
-
-### GET GTFS Stops [GET]
+### GET All GTFS Stops [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1282,7 +1274,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
             + (Feature Point)
                 + properties (GTFS Stop)
 
-## GTFS Stop [/gtfs/stop/{id}]
+## GTFS Stop [/gtfs/stops/{id}]
 
 + Parameters
     + `id`: `U118Z101P` (string, required)
@@ -1307,6 +1299,8 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + date: `2019-01-01` (optional, string) - Filter stop times by specific date in format (YYYY-MM-DD).
     + from: `07:12:33` (optional, string) - Filter stop times by time departure in format (H:mm:ss).
     + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
 
 ### GET GTFS Stop times [GET]
 
@@ -1432,11 +1426,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## GTFS Stop (object)
 
-+ `created_time`: `2018-09-09 12:32:45` (string, required)
-+ `last_modify`: `2018-09-09 12:32:45` (string, optional, nullable)
 + `location_type`: 0 (number, required)
 + `parent_station`: U118S1 (string, required)
-+ `platform_code`: 1 (number, required)
++ `platform_code`: A (string, required)
 + `stop_id`: U118Z101P (string, required)
 + `stop_name`: Flora (string, required)
 + `stop_url`: ` ` (string, optional)
@@ -1840,16 +1832,14 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Vehicleposition Trip (object)
 
-+ `cis_id`: 100381 (number, required)
++ `cis_id`: "100381" (string, required) <!-- This is BIGINT in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
 + `cis_number`: 29 (number, required)
 + `cis_order`: 1 (number, required)
 + `cis_short_name`: 381 (string, required)
-+ `created`: `2019-03-18T10:30:05.992Z` (string, required)
 + `gtfs_route_id`: L381 (string, required)
 + `gtfs_route_short_name`: 381 (string, required)
 + `gtfs_trip_id`: `381_51_180728` (string, required)
 + `id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
-+ `modified`: `2019-03-18T12:34:41.000Z` (string, required)
 + `start_cis_stop_id`: 55083 (number, required)
 + `start_cis_stop_platform_code`: D (string, required)
 + `start_time`: `12:00:00` (string, required)

@@ -180,22 +180,10 @@ export class GTFSRouter {
         try {
             const data = await this.shapeModel
                 .GetAll({
+                    id: req.params.id,
                     limit: req.query.limit,
                     offset: req.query.offset,
                 });
-            res.status(200).send(data);
-        } catch (err) {
-            next(err);
-        }
-    }
-
-    public GetOneShape = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const id: string = req.params.id;
-            const data = await this.shapeModel.GetOne(id);
-            if (!data) {
-                throw new CustomError("not_found", true, 404, null);
-            }
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -233,12 +221,12 @@ export class GTFSRouter {
     }
 
     private initShapesEndpoints = (): void => {
-        this.router.get("/shapes",
+        this.router.get("/shapes/:id",
             pagination,
             checkErrors,
+            param("id").exists(),
             this.GetAllShapes,
         );
-        this.router.get("/shapes/:id", param("id").exists(), this.GetOneShape);
     }
 
     private initTripsEndpoints = (): void => {

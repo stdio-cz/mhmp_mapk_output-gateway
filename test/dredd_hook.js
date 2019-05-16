@@ -115,3 +115,12 @@ hooks.before('Municipal Authorities > Municipal Police Station > GET Municipal P
     transaction.request.uri = transaction.request.uri.replace('72', storage["id"]);
     transaction.fullPath = transaction.fullPath.replace('72', storage["id"]);
 });
+
+hooks.after('GTFS > GTFS Stops > GET All GTFS Stops', (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.stop_id;
+});
+
+hooks.before('GTFS > GTFS Stop > GET GTFS Stop', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('U118Z101P', storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace('U118Z101P', storage["id"]);
+});

@@ -363,7 +363,7 @@ For backwards compatibility, also works on `/traffic-cameras/`
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
 
-# Group Vehicle positions
+# Group Vehicle Positions
 
 Online positions of public transport vehicles.
 
@@ -377,7 +377,7 @@ Online positions of public transport vehicles.
     + routeId: 100381 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
 
-### GET Vehicle Positions [GET]
+### GET All Vehicle Positions [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -830,7 +830,7 @@ For backwards compatibility, also works on `/waste-collection-yards/`
     + Attributes (Error)
 
 
-# Group Municipal Authority
+# Group Municipal Authorities
 
 Data from municipal authorities.
 
@@ -849,7 +849,7 @@ Data from municipal authorities.
     + offset: 0 (optional, number) - Number of the first items that are skipped. Not used if `latlng` and `range` are set.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
-### GET All Munipacilities [GET]
+### GET All Municipal Authorities [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -872,7 +872,7 @@ Data from municipal authorities.
 
     + id: `urad-mestske-casti-praha-10` (string) - Identifier of the municipality.
 
-### GET Munipacility [GET]
+### GET Municipal Authority [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1874,7 +1874,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 ## Waste Collection Yard (object)
 
 + properties (array[Waste Collection Yard Property])
-+ address: `Bartůňkova 711, Praha 4 – Chodov` (string, required)
++ address (Address)
 + contact: `236 04 00 11, 236 04 00 00` (string, required)
 + id: `sberny-dvur-hlavniho-mesta-prahy-bartunkova` (string, required)
 + name: `Sběrný dvůr hlavního města Prahy Bartůňkova` (string, required)

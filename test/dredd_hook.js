@@ -5,7 +5,7 @@ var storage = {};
 hooks.beforeEach(function (transaction) {
     transaction.request.uri = transaction.request.uri.replace(/\?.*/g, ""); 
     transaction.fullPath = transaction.fullPath.replace(/\?.*/g, ""); 
-    hooks.log("Testing Request: " + JSON.stringify(transaction.request));
+    // hooks.log("Testing Request: " + JSON.stringify(transaction.request));
   });
 
 hooks.after('General > Prague City Districts > GET All Districts', (transaction) => {
@@ -67,6 +67,51 @@ hooks.after('Public Space > Public Toilets > GET All Public Toilets', (transacti
 });
 
 hooks.before('Public Space > Public Toilet > GET Public Toilet', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('72', storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace('72', storage["id"]);
+});
+
+hooks.after('Public Space > Sorted Waste Stations > GET All Sorted Waste Stations', (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
+});
+
+hooks.before('Public Space > Sorted Waste Station > GET Sorted Waste Station', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('1521', storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace('1521', storage["id"]);
+});
+
+hooks.after('Public Space > Waste Collection Yards > GET All Waste Collection Yards', (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
+});
+
+hooks.before('Public Space > Waste Collection Yard > GET Waste Collection Yard', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('1', storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace('1', storage["id"]);
+});
+
+hooks.after('Vehicle Positions > Vehicle Positions > GET All Vehicle Positions', (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.gtfs_trip_id;
+});
+
+hooks.before('Vehicle Positions > Vehicle Position > GET Vehicle Position', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('100381', storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace('100381', storage["id"]);
+});
+
+hooks.after('Municipal Authorities > Municipal Authorities > GET All Municipal Authorities', (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
+});
+
+hooks.before('Municipal Authorities > Municipal Authority > GET Municipal Authority', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('urad-mestske-casti-praha-10', storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace('urad-mestske-casti-praha-10', storage["id"]);
+});
+
+hooks.after('Municipal Authorities > Municipal Police Stations > GET All Municipal Police Stations', (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
+});
+
+hooks.before('Municipal Authorities > Municipal Police Station > GET Municipal Police Station', (transaction) => {
     transaction.request.uri = transaction.request.uri.replace('72', storage["id"]);
     transaction.fullPath = transaction.fullPath.replace('72', storage["id"]);
 });

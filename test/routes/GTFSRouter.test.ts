@@ -193,20 +193,9 @@ describe("GTFS Router", () => {
         });
     });
 
-    it("should respond with 200 to GET /gtfs/shapes ", (done) => {
-        request(app)
-            .get("/gtfs/shapes").end((err: any, res: any) => {
-            expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.features).to.be.an("array");
-            expect(res.body.type).to.be.equal("FeatureCollection");
-            done();
-        });
-    });
-
     it("should respond with 404 to GET /gtfs/shapes/:shapeId ", (done) => {
         request(app)
-            .get("/gtfs/shapes/L991V1").end((err: any, res: any) => {
+            .get("/gtfs/shapes/asdh").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(404);
             done();
         });

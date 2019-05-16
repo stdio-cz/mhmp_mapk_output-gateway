@@ -10,6 +10,7 @@ import { param, query } from "express-validator/check";
 import moment = require("moment");
 import { CustomError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
+import { log } from "../../core/Logger";
 import { checkErrors, pagination } from "../../core/Validation";
 import { models } from "./models";
 import { GTFSCalendarModel } from "./models/GTFSCalendarModel";
@@ -184,6 +185,9 @@ export class GTFSRouter {
                     limit: req.query.limit,
                     offset: req.query.offset,
                 });
+            if (!data) {
+                throw new CustomError("not_found", true, 404, null);
+            }
             res.status(200).send(data);
         } catch (err) {
             next(err);

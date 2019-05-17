@@ -16,11 +16,11 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
 
     public Associate = (m: any) => {
         this.sequelizeModel.hasMany(m.VehiclePositionsPositionsModel.sequelizeModel, {
+            as: "all_positions",
             foreignKey: "trips_id",
-            sourceKey: "id",
         });
 
-        this.sequelizeModel.hasOne(m.VehiclePositionsPositionsViewModel.sequelizeModel, {
+        this.sequelizeModel.hasOne(m.VehiclePositionsLastPositionModel.sequelizeModel, {
             foreignKey: "trips_id",
         });
     }
@@ -99,18 +99,25 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      * @return
      */
     private ConvertItem = (item: any) => {
-        const {v_vehiclepositions_last_position, ropidgtfs_trip, all_positions = [], ...trip} = item.toJSON();
-        return {
-            ...buildGeojsonFeature({...v_vehiclepositions_last_position, ...trip}, "lng", "lat"),
+        const { v_vehiclepositions_last_position,
+                ropidgtfs_trip,
+                all_positions = [],
+                ...trip } = item.toJSON ? item.toJSON() : item;
+        const tripObject = {
+            trip,
+            ...{last_position: v_vehiclepositions_last_position},
             ...(all_positions.length &&
                 {
-                    all_positions: buildGeojsonFeatureCollection(all_positions, "lng", "lat"),
+                    all_positions: buildGeojsonFeatureCollection(
+                            all_positions,
+                            "lng",
+                            "lat",
+                    ),
                 }
             ),
-            ...(ropidgtfs_trip &&
-                {gtfs_trip: models.GTFSTripsModel.ConvertItem(ropidgtfs_trip)}
-            ),
         };
+
+        return buildGeojsonFeature(tripObject, "last_position.lng", "last_position.lat");
     }
 
     /** Prepare orm query with selected params
@@ -129,6 +136,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         }];
         if (options.includePositions) {
             include.push({
+                as: "all_positions",
                 model: sequelizeConnection.models[VehiclePositions.positions.pgTableName],
             });
         }

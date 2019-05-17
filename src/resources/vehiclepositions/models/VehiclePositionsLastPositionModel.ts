@@ -4,7 +4,7 @@ import { sequelizeConnection } from "../../../core/database";
 import { log } from "../../../core/Logger";
 import { SequelizeModel } from "./../../../core/models/";
 
-export class VehiclePositionsPositionsViewModel {
+export class VehiclePositionsLastPositionModel {
 
     /** The Sequelize Model */
     protected sequelizeModel: Sequelize.Model<any, any>;

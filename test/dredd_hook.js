@@ -90,7 +90,7 @@ hooks.before('Public Space > Waste Collection Yard > GET Waste Collection Yard',
 });
 
 hooks.after('Vehicle Positions > Vehicle Positions > GET All Vehicle Positions', (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.gtfs_trip_id;
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.trip.gtfs_trip_id;
 });
 
 hooks.before('Vehicle Positions > Vehicle Position > GET Vehicle Position', (transaction) => {

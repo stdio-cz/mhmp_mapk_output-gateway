@@ -25,6 +25,13 @@ export class VehiclePositionsLastPositionModel {
         this.sequelizeModel.removeAttribute("updated_at");
     }
 
+    public Associate = (m: any) => {
+        this.sequelizeModel.belongsTo(m.VehiclePositionsTripsModel.sequelizeModel, {
+            as: "last_position",
+            foreignKey: "trips_id",
+        });
+    }
+
     public GetAll = async (): Promise<any> => {
         return null;
     }

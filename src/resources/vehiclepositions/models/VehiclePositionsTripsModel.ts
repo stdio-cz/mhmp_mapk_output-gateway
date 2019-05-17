@@ -21,6 +21,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         });
 
         this.sequelizeModel.hasOne(m.VehiclePositionsLastPositionModel.sequelizeModel, {
+            as: "last_position",
             foreignKey: "trips_id",
         });
     }
@@ -99,13 +100,13 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      * @return
      */
     private ConvertItem = (item: any) => {
-        const { v_vehiclepositions_last_position,
+        const { last_position,
                 ropidgtfs_trip,
                 all_positions = [],
                 ...trip } = item.toJSON ? item.toJSON() : item;
         const tripObject = {
             trip,
-            ...{last_position: v_vehiclepositions_last_position},
+            ...{last_position},
             ...(all_positions.length &&
                 {
                     all_positions: buildGeojsonFeatureCollection(
@@ -129,6 +130,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         includePositions?: boolean,
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
+            as: "last_position",
             model: sequelizeConnection.models.v_vehiclepositions_last_position,
             where: {
                 tracking: 2,

@@ -392,14 +392,8 @@ Online positions of public transport vehicles.
         + type: FeatureCollection (string, required)
         + features (array)
             + (Feature Point)
-                + properties
-                    + trip (Vehicleposition Trip)
-                    + last_position (Vehicleposition Position)
-                    + all_positions (object)
-                        + type: FeatureCollection (string, required)
-                        + features (array)
-                            + (Feature Point)
-                                + properties (Vehicleposition Position)
+                + properties (Vehicleposition Compound)
+
 
 ## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
 
@@ -419,14 +413,7 @@ Online positions of public transport vehicles.
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Feature Point)
-        + properties
-            + trip (Vehicleposition Trip)
-            + last_position (Vehicleposition Position)
-            + all_positions (object)
-                + type: FeatureCollection (string, required)
-                + features (array)
-                    + (Feature Point)
-                        + properties (Vehicleposition Position)
+        + properties (Vehicleposition Compound)
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
@@ -1834,9 +1821,18 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + type: `image/jpeg` (string)
 + url: `http://www.tsk-praha.cz/cams/cam606748.jpg?1557229128000` (string, required)
 
+## Vehicleposition Compound (object)
++ `trip` (Vehicleposition Trip)
++ `last_position` (Vehicleposition Position)
++ `all_positions` (object)
+    + type: FeatureCollection (string, required)
+    + features (array)
+        + (Feature Point)
+            + properties (Vehicleposition Position)
+
 ## Vehicleposition Trip (object)
 
-+ `cis_id`: `100381` (string, required) <!-- This is BIGINT in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
++ `cis_id`: "100381" (string, required) <!-- This is BIGINT in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
 + `cis_number`: 29 (number, required)
 + `cis_order`: 1 (number, required)
 + `cis_short_name`: 381 (string, required)
@@ -1864,6 +1860,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `tracking`: 2 (number, required)
 + `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
 
+                                
 ## Waste Collection Yard (object)
 
 + properties (array[Waste Collection Yard Property])

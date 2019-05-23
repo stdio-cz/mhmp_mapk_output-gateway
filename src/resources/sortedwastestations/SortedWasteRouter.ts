@@ -11,14 +11,17 @@ import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { GeoJsonRouter } from "../../core/routes";
-import { SortedWasteStationsModel } from "./SortedWasteModel";
+import { SortedWasteMeasurementsModel } from "./SortedWasteMeasurementsModel";
+import { SortedWasteStationsModel } from "./SortedWasteStationsModel";
 
 export class SortedWasteRouter extends GeoJsonRouter {
 
     protected model: SortedWasteStationsModel = new SortedWasteStationsModel();
+    protected measurementsModel: SortedWasteMeasurementsModel = new SortedWasteMeasurementsModel();
 
     constructor() {
         super(new SortedWasteStationsModel());
+        this.router.get("/measurements", this.GetMeasurements);
         this.initRoutes();
         this.router.get("/", [
             query("accessibility").optional().isNumeric(),
@@ -65,6 +68,15 @@ export class SortedWasteRouter extends GeoJsonRouter {
                 range: coords.range,
                 updatedSince: req.query.updatedSince,
             });
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    public GetMeasurements = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.measurementsModel.GetAll();
             res.status(200).send(data);
         } catch (err) {
             next(err);

@@ -25,6 +25,8 @@ run_tests:
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
     - NODE_ENV=production npm run code-coverage
+    - npm start &
+    - dredd
 
 build_image:
   stage: build

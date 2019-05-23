@@ -1,7 +1,7 @@
 image: docker:stable
 
 variables:
-  POSTGRES_HOST: docker-postgis
+  POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASS: test-pass
   POSTGRES_DB: testdb
@@ -15,7 +15,8 @@ run_tests:
   stage: build
   image: gitlab.oict.cz:4567/data-platform/docker-node-env:latest
   services:
-    - gitlab.oict.cz:4567/data-platform/docker-postgis:10.5
+    - name: gitlab.oict.cz:4567/data-platform/docker-postgis:10.5
+      alias: postgres
     - mongo:4.0.5
   script:
     - npm install

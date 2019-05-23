@@ -12,16 +12,19 @@ import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { GeoJsonRouter } from "../../core/routes";
 import { SortedWasteMeasurementsModel } from "./SortedWasteMeasurementsModel";
-import { SortedWasteStationsModel } from "./SortedWasteStationsModel";
+import { SortedWastePicksModel } from "./SortedWastePicksModel";
 
+import { SortedWasteStationsModel } from "./SortedWasteStationsModel";
 export class SortedWasteRouter extends GeoJsonRouter {
 
     protected model: SortedWasteStationsModel = new SortedWasteStationsModel();
     protected measurementsModel: SortedWasteMeasurementsModel = new SortedWasteMeasurementsModel();
+    protected picksModel: SortedWastePicksModel = new SortedWastePicksModel();
 
     constructor() {
         super(new SortedWasteStationsModel());
         this.router.get("/measurements", this.GetMeasurements);
+        this.router.get("/picks", this.GetPicks);
         this.initRoutes();
         this.router.get("/", [
             query("accessibility").optional().isNumeric(),
@@ -77,6 +80,15 @@ export class SortedWasteRouter extends GeoJsonRouter {
     public GetMeasurements = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const data = await this.measurementsModel.GetAll();
+            res.status(200).send(data);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    public GetPicks = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const data = await this.picksModel.GetAll();
             res.status(200).send(data);
         } catch (err) {
             next(err);

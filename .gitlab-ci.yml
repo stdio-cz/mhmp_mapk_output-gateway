@@ -1,7 +1,7 @@
 image: docker:stable
 
 variables:
-  POSTGRES_HOST: postgres
+  POSTGRES_HOST: docker-postgis
   POSTGRES_USER: postgres
   POSTGRES_PASS: test-pass
   POSTGRES_DB: testdb

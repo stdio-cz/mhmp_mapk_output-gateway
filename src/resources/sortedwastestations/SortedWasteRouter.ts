@@ -11,6 +11,7 @@ import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { GeoJsonRouter } from "../../core/routes";
+import { checkErrors, pagination } from "../../core/Validation";
 import { SortedWasteMeasurementsModel } from "./SortedWasteMeasurementsModel";
 import { SortedWastePicksModel } from "./SortedWastePicksModel";
 
@@ -23,13 +24,21 @@ export class SortedWasteRouter extends GeoJsonRouter {
 
     constructor() {
         super(new SortedWasteStationsModel());
-        this.router.get("/measurements", this.GetMeasurements);
-        this.router.get("/picks", this.GetPicks);
+        this.router.get("/measurements", [
+            query("containerId").optional().isNumeric(),
+            query("from").optional().isISO8601(),
+            query("to").optional().isISO8601(),
+        ], pagination, checkErrors, this.GetMeasurements);
+        this.router.get("/picks", [
+            query("containerId").optional().isNumeric(),
+            query("from").optional().isISO8601(),
+            query("to").optional().isISO8601(),
+        ], pagination, checkErrors, this.GetPicks);
         this.initRoutes();
         this.router.get("/", [
             query("accessibility").optional().isNumeric(),
             query("onlyMonitored").optional().isBoolean(),
-        ], this.GetAll);
+        ], pagination, checkErrors, this.GetAll);
     }
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -79,7 +88,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
 
     public GetMeasurements = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.measurementsModel.GetAll();
+            const data = await this.measurementsModel.GetAll(req.query.containerId, req.query.limit, req.query.offset);
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -88,7 +97,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
 
     public GetPicks = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.picksModel.GetAll();
+            const data = await this.picksModel.GetAll(req.query.containerId, req.query.limit, req.query.offset);
             res.status(200).send(data);
         } catch (err) {
             next(err);

@@ -14,8 +14,17 @@ export class SortedWasteMeasurementsModel extends MongoModel {
                 SortedWasteStations.sensorsMeasurements.mongoCollectionName );
     }
 
-    public GetAll = async () => {
+    public GetAll = async (sensorId?: number, limit?: number, offset?: number) => {
         const q = this.model.find();
+        if (limit) {
+            q.limit(limit);
+        }
+        if (offset) {
+            q.skip(offset);
+        }
+        if (sensorId) {
+            q.where({container_id: sensorId});
+        }
         q.select(this.projection);
         return await q.exec();
     }

@@ -14,16 +14,27 @@ export class SortedWastePicksModel extends MongoModel {
                 SortedWasteStations.sensorsPicks.mongoCollectionName );
     }
 
-    public GetAll = async (sensorId?: number, limit?: number, offset?: number) => {
+    public GetAll = async ( sensorId?: number,
+                            limit?: number,
+                            offset?: number,
+                            from?: string,
+                            to?: string,
+    ) => {
         const q = this.model.find();
-        if (sensorId) {
-            q.where({container_id: sensorId});
-        }
         if (limit) {
             q.limit(limit);
         }
         if (offset) {
             q.skip(offset);
+        }
+        if (sensorId) {
+            q.where({container_id: sensorId});
+        }
+        if (from) {
+            q.where({pick_at_utc: {$gt: from}});
+        }
+        if (to) {
+            q.where({pick_at_utc: {$lt: to}});
         }
         q.select(this.projection);
         return await q.exec();

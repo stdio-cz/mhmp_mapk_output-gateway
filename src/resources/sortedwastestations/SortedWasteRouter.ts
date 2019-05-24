@@ -88,7 +88,13 @@ export class SortedWasteRouter extends GeoJsonRouter {
 
     public GetMeasurements = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.measurementsModel.GetAll(req.query.containerId, req.query.limit, req.query.offset);
+            const data = await this.measurementsModel.GetAll(
+                req.query.containerId,
+                req.query.limit,
+                req.query.offset,
+                req.query.from,
+                req.query.to,
+            );
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -97,7 +103,13 @@ export class SortedWasteRouter extends GeoJsonRouter {
 
     public GetPicks = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.picksModel.GetAll(req.query.containerId, req.query.limit, req.query.offset);
+            const data = await this.picksModel.GetAll(
+                req.query.containerId,
+                req.query.limit,
+                req.query.offset,
+                req.query.from,
+                req.query.to,
+            );
             res.status(200).send(data);
         } catch (err) {
             next(err);

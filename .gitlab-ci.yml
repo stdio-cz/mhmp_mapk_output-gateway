@@ -25,6 +25,7 @@ run_tests:
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
+    - cd node_modules/golemio-schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f test/dump.sql
     - NODE_ENV=production npm run code-coverage
     - npm start &

@@ -1924,7 +1924,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `delay_stop_arrival`: 23 (number, optional, nullable)
 + `delay_stop_departure`: `-84` (number, optional, nullable)
 + `gtfs_next_stop_id`: 331 (string, optional, nullable)
-+ `gtfs_shape_dist_traveled`: "12.5" (string, optional, nullable)
++ `gtfs_shape_dist_traveled`: "12.5" (string, optional, nullable) <!-- This is DECIMAL in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
 + `is_canceled`: false (boolean, required)
 + `origin_time`: `13:34:27` (string, required)
 + `origin_timestamp`: `2019-03-18T12:34:27.000Z` (string, required)

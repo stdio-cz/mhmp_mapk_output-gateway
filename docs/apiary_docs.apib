@@ -768,6 +768,52 @@ Cleaning Frequency:
 + Response 404
     + Attributes (Error)
 
+## Sorted Waste Measurements [/sortedwastestations/measurements/{?containerId,limit,offset,from,to}]
+
++ Parameters
+
+    + containerId: 30162 (optional, number) - Lists only measurements from container with this sensor ID
+    + limit: 10 (optional, number) - Limits number of retrieved items. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+
+### GET All Sorted Waste Measurements [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Sorted Waste Measurement)
+
+## Sorted Waste Picks [/sortedwastestations/picks/{?containerId,limit,offset,from,to}]
+
++ Parameters
+
+    + containerId: 30162 (optional, number) - Lists only measurements from container with this sensor ID
+    + limit: 10 (optional, number) - Limits number of retrieved items. 
+    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+
+### GET All Sorted Waste Picks [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Sorted Waste Pick)
+
 ## Waste Collection Yards [/wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
 
 For backwards compatibility, also works on `/waste-collection-yards/`
@@ -1804,6 +1850,31 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + description: `benzín` (string, required)
 + id: 1 (number, required)
 
+## Sorted Waste Pick (object)
+
++ id: 12570452 (number, required)
++ container_id: 30162 (number, required)
++ pick_minfilllevel: 30 (number)
++ decrease: 20 (number)
++ code: `0005/ 025C00155` (string, required)
++ pick_at_utc: `2019-05-18T04:27:58.000Z` (string, required)
++ percent_before: 61 (number)
++ percent_now: 0 (number)
++ event_driven: false (boolean)
+
+## Sorted Waste Measurement (object)
+
++ id: 12561706 (number, required)
++ container_id: 29999 (number, required)
++ code: `0009/ 157C00353` (string, required)
++ percent_calculated: 67 (number, required)
++ upturned: 0 (number)
++ temperature: 15 (number)
++ battery_status: 3.76 (number)
++ measured_at_utc: `2019-05-17T15:11:27.000Z` (string, required)
++ prediction_utc: `2019-05-18T07:38:37.000Z` (string)
++ firealarm: 0 (number)
+
 ## Traffic Camera (object)
 
 + image (Traffic Camera Image)
@@ -1853,7 +1924,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `delay_stop_arrival`: 23 (number, optional, nullable)
 + `delay_stop_departure`: `-84` (number, optional, nullable)
 + `gtfs_next_stop_id`: 331 (string, optional, nullable)
-+ `gtfs_shape_dist_traveled`: 12 (number, optional, nullable)
++ `gtfs_shape_dist_traveled`: "12.5" (string, optional, nullable)
 + `is_canceled`: false (boolean, required)
 + `origin_time`: `13:34:27` (string, required)
 + `origin_timestamp`: `2019-03-18T12:34:27.000Z` (string, required)

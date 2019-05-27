@@ -14,6 +14,12 @@ export class GTFSStopTimesModel extends SequelizeModel {
         this.sequelizeModel.belongsTo(models.GTFSTripsModel.sequelizeModel, {
             foreignKey: "trip_id",
         });
+
+        this.sequelizeModel.belongsTo(models.GTFSStopModel.sequelizeModel, {
+            as: "stop",
+            foreignKey: "stop_id",
+            targetKey: "stop_id",
+        });
     }
 
     /** Retrieves all gtfs stop times for specific stop id
@@ -70,13 +76,6 @@ export class GTFSStopTimesModel extends SequelizeModel {
             }
 
             const data = await this.sequelizeModel.findAll({
-                attributes: { exclude: ["created_by",
-                                        "updated_by",
-                                        "created_at",
-                                        "updated_at",
-                                        "create_batch_id",
-                                        "update_batch_id"],
-                            },
                 include,
                 limit,
                 offset,

@@ -28,7 +28,7 @@ export class PostgresDatabase {
                     freezeTableName: true,
                     timestamps: false,
                 },
-                logging: require("debug")("sequelize"), // logging by debug
+                logging: log.silly, // logging by debug
                 operatorsAliases: false, // disable aliases
                 pool: {
                     acquire: 60000,

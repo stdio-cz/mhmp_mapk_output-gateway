@@ -1,5 +1,6 @@
-import {CustomError} from "./errors";
-import {log} from "./Logger";
+import { CustomError } from "./errors";
+import { log } from "./Logger";
+import { GetSubProperty } from "./Utils";
 
 /**
  * Interface for http://geojson.org/ Feature format
@@ -72,7 +73,9 @@ export const parseCoordinates = async (latlng: string,
  * @returns {IGeoJSONFeature} GeoJSON feature - object with geometry, properties, and type = "Feature"
  */
 export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty: string): IGeoJSONFeature => {
-    const {[lonProperty]: lon, [latProperty]: lat, ...properties} = item.toJSON ? item.toJSON() : item;
+    const properties = item.toJSON ? item.toJSON() : item;
+    const lon = GetSubProperty(lonProperty, item);
+    const lat = GetSubProperty(latProperty, item);
     return ({
         geometry: {
             coordinates: [
@@ -97,7 +100,8 @@ export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty:
 export const buildGeojsonFeatureCollection =
     (items: any, lonProperty?: string, latProperty?: string): IGeoJSONFeatureCollection => {
             if (!lonProperty || !latProperty) {
-                log.silly("Custom lat or lon property path not specified, assuming GeoJSONFeature format of data.");
+                log.silly("Custom lat or lon property path not specified when building GeoJSON FeatureCollection,"
+                + " assuming GeoJSONFeature format of data.");
                 if (    items.length > 0 &&
                         (!items[0].geometry ||
                         !items[0].geometry.coordinates ||

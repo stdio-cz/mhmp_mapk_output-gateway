@@ -15,7 +15,8 @@ run_tests:
   stage: build
   image: gitlab.oict.cz:4567/data-platform/docker-node-env:latest
   services:
-    - postgres:10.5
+    - name: gitlab.oict.cz:4567/data-platform/docker-postgis:10.5
+      alias: postgres
     - mongo:4.0.5
   script:
     - npm install
@@ -24,7 +25,11 @@ run_tests:
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
+    - cd node_modules/golemio-schema-definitions && npm run migrate-db && cd -
+    - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f test/dump.sql
     - NODE_ENV=production npm run code-coverage
+    - npm start &
+    - dredd
 
 build_image:
   stage: build
@@ -42,7 +47,7 @@ registry_deployment:
       - master
       - development
 
-api_documentation_deployment:
+api_documentation_deployment_master:
   stage: deploy
   image: ruby:2.6
   script:
@@ -54,8 +59,19 @@ api_documentation_deployment:
       - docs/apiary_docs.apib
     refs:
       - master
-    variables:
-      - $PUBLISH_APIARY == "true"
+      
+api_documentation_deployment_dev:
+  stage: deploy
+  image: ruby:2.6
+  script:
+    - gem install apiaryio
+    - P='<!-- __DATE__ -->';D='('`date '+%m\/%d\/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
+    - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgatewaydev"
+  only:
+    changes:
+      - docs/apiary_docs.apib
+    refs:
+      - development
 
 pages:
   stage: deploy

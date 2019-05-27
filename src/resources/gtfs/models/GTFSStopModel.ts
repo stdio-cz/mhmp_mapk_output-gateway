@@ -48,19 +48,8 @@ export class GTFSStopModel extends SequelizeModel {
 
             order.push([["stop_id", "asc"]]);
 
-            log.debug(attributes);
-            const attrWithExclude: {exclude: string[], include: string[]} = {
-                exclude: [  "created_by",
-                            "updated_by",
-                            "created_at",
-                            "updated_at",
-                            "create_batch_id",
-                            "update_batch_id"],
-                include: attributes,
-            };
-
             const data = await this.sequelizeModel.findAll({
-                attributes: attrWithExclude,
+                attributes,
                 limit,
                 offset,
                 order,

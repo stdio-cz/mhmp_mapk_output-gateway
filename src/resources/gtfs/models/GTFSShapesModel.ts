@@ -1,7 +1,8 @@
 import {RopidGTFS} from "golemio-schema-definitions";
 import {CustomError} from "../../../core/errors";
 import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
-import {SequelizeModel} from "../../../core/models";
+import { log } from "../../../core/Logger";
+import { SequelizeModel } from "../../../core/models";
 
 export class GTFSShapesModel extends SequelizeModel {
 
@@ -23,44 +24,32 @@ export class GTFSShapesModel extends SequelizeModel {
      * @returns Array of the retrieved records
      */
     public GetAll = async (options: {
+        id?: string,
         limit?: number,
         offset?: number,
     } = {}): Promise<any> => {
-        const {limit, offset} = options;
+        const {limit, offset, id} = options;
         try {
 
             const order: any = [];
 
             order.push([["shape_id", "asc"]]);
             const data = await this.sequelizeModel.findAll({
-                attributes: { exclude: ["created_by",
-                                        "updated_by",
-                                        "created_at",
-                                        "updated_at",
-                                        "create_batch_id",
-                                        "update_batch_id"],
-                            },
                 limit,
                 offset,
                 order,
+                where: {shape_id: id},
             });
+            if (data.length === 0) {
+                return;
+            }
             return buildGeojsonFeatureCollection(data, "shape_pt_lon", "shape_pt_lat");
         } catch (err) {
             throw new CustomError("Database error", true, 500, err);
         }
     }
 
-    /** Retrieves specific gtfs shape
-     * @param {string} id Id of the shape
-     * @returns Object of the retrieved record or null
-     */
-    public GetOne = async (id: string): Promise<any> => this
-        .sequelizeModel
-        .findByPk(id)
-        .then((data) => {
-            if (data) {
-                return buildGeojsonFeature(data, "shape_pt_lon", "shape_pt_lat");
-            }
-            return null;
-        })
+    public GetOne = async (id: number): Promise<object | null> => {
+        return null;
+    }
 }

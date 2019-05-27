@@ -57,13 +57,6 @@ export class GTFSCalendarModel extends SequelizeModel {
             const data = await this.sequelizeModel
                 .scope({method: ["forDate", date]})
                 .findAll({
-                    attributes: { exclude: ["created_by",
-                                            "updated_by",
-                                            "created_at",
-                                            "updated_at",
-                                            "create_batch_id",
-                                            "update_batch_id"],
-                                },
                     limit,
                     offset,
                     order: [["service_id", "asc"]],

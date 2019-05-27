@@ -53,10 +53,6 @@ export class GTFSTripsModel extends SequelizeModel {
      * @param {number} [options.offset] Offset
      * @param {boolean} [options.route] Enhance response with route data
      * @param {string} [options.stopId] Filter routes by specific stop
-     * @param {boolean} [options.shapes] Enhance response with shape data
-     * @param {boolean} [options.service] Enhance response with service data
-     * @param {boolean} [options.stops] Enhance response with stop data
-     * @param {boolean} [options.stopTimes] Enhance response with stop times data
      * @param {string} [options.date] Filter by specific date in the 'YYYY-MM-DD' format
      * @returns Array of the retrieved records
      */
@@ -64,18 +60,13 @@ export class GTFSTripsModel extends SequelizeModel {
                                {
                                    limit?: number,
                                    offset?: number,
-                                   route?: boolean,
                                    stopId?: string,
-                                   shapes?: boolean,
-                                   service?: boolean,
-                                   stops?: boolean,
-                                   stopTimes?: boolean,
                                    date?: string,
                                } = {},
     ): Promise<any> => {
-        const {limit, offset, stopId, stops, shapes} = options;
+        const { limit, offset, stopId } = options;
         try {
-            let include: any = [];
+            const include: any = [];
             if (stopId) {
                 include.push({
                     as: "has_stop_id",
@@ -87,25 +78,13 @@ export class GTFSTripsModel extends SequelizeModel {
                 });
             }
 
-            include = include.concat(this.GetInclusions(options));
-
             const data = await this.sequelizeModel.findAll({
-                attributes: { exclude: ["created_by",
-                                        "updated_by",
-                                        "created_at",
-                                        "updated_at",
-                                        "create_batch_id",
-                                        "update_batch_id"],
-                            },
                 include,
                 limit,
                 offset,
                 order: [["trip_id", "DESC"]],
             });
 
-            if (stops || shapes) {
-                return data.map((trip) => this.ConvertItem(trip, {stops, shapes}));
-            }
             return data;
 
         } catch (err) {
@@ -121,15 +100,31 @@ export class GTFSTripsModel extends SequelizeModel {
      * @param {boolean} [options.stops] If stops were included in filter then convert stops payload
      * @return
      */
-    public ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean }) => {
-        const {stops: stopItems = [], shapes: shapeItems = [], ...item} = trip.toJSON();
+    public ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean, stopTimes?: boolean }) => {
+        const { stop_times: stopTimesItems = [],
+                stops: stopItems = [],
+                shapes: shapeItems = [],
+                ...item } = trip.toJSON();
         return {
             ...item,
-            ...(options.stops &&
+            ...(options.stops && options.stopTimes &&
+                {
+                    stop_times: stopTimesItems
+                        .map((stopTime: any) => {
+                            const convertedStopTime = stopTime;
+                            convertedStopTime.stop = buildGeojsonFeature(stopTime.stop, "stop_lon", "stop_lat");
+                            return convertedStopTime;
+                        }),
+                }),
+            ...(options.stops && !options.stopTimes &&
                 {
                     stops: stopItems
                         .map((stop: any) => buildGeojsonFeature(stop, "stop_lon", "stop_lat")),
                 }),
+            ...(!options.stops && options.stopTimes &&
+                    {
+                        stop_times: stopTimesItems,
+                    }),
             ...(options.shapes
                 && {
                     shapes: shapeItems
@@ -160,7 +155,7 @@ export class GTFSTripsModel extends SequelizeModel {
             stopTimes?: boolean,
             date?: string,
         } = {}): Promise<object> => {
-        const {stops, shapes} = options;
+        const { stopTimes, stops, shapes } = options;
         return this.sequelizeModel
             .findByPk(id, {include: this.GetInclusions(options)})
             .then((trip) => {
@@ -168,7 +163,7 @@ export class GTFSTripsModel extends SequelizeModel {
                     return null;
                 }
 
-                return this.ConvertItem(trip, {stops, shapes});
+                return this.ConvertItem(trip, {stops, shapes, stopTimes});
             });
     }
 
@@ -193,16 +188,29 @@ export class GTFSTripsModel extends SequelizeModel {
         const {stops, stopTimes, shapes, service, route, date} = options;
         const include: any = [];
 
-        stops && include.push({
-            as: "stops",
-            model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
-            through: {attributes: []},
-        });
+        // stop_times and stops both selected to include, nest them together
+        if (stops && stopTimes) {
+            include.push({
+                as: "stop_times",
+                include: [{
+                    as: "stop",
+                    model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
+                }],
+                model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
+            });
+        // Only stops or only stop times selected to include
+        } else {
+            stops && include.push({
+                as: "stops",
+                model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
+                through: {attributes: []},
+            });
 
-        stopTimes && include.push({
-            as: "stop_times",
-            model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
-        });
+            stopTimes && include.push({
+                as: "stop_times",
+                model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
+            });
+        }
 
         shapes && include.push({
             as: "shapes",

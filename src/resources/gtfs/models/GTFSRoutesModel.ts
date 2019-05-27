@@ -26,13 +26,6 @@ export class GTFSRoutesModel extends SequelizeModel {
 
             order.push([["route_id", "asc"]]);
             const data = await this.sequelizeModel.findAll({
-                attributes: { exclude: ["created_by",
-                                        "updated_by",
-                                        "created_at",
-                                        "updated_at",
-                                        "create_batch_id",
-                                        "update_batch_id"],
-                            },
                 limit,
                 offset,
                 order,

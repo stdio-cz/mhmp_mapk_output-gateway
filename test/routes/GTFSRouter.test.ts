@@ -158,31 +158,23 @@ describe("GTFS Router", () => {
         });
     });
 
-    it("should respond with 200 to GET /gtfs/stop_times/:stop_id", (done) => {
+    it("should respond with 200 to GET /gtfs/stoptimes/:stop_id", (done) => {
         request(app)
-            .get("/gtfs/stop_times/U118Z102P").end((err: any, res: any) => {
+            .get("/gtfs/stoptimes/U118Z102P").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(200);
             expect(res.body).to.be.instanceOf(Array);
             done();
         });
     });
 
-    it("should respond with 400 to GET /gtfs/stop_times/:stop_id incorrect filters", (done) => {
+    it("should respond with 400 to GET /gtfs/stoptimes/:stop_id incorrect filters", (done) => {
         request(app)
-            .get("/gtfs/stop_times/U118Z102P?from=13:22:11&to=12:12:12").end((err: any, res: any) => {
+            .get("/gtfs/stoptimes/U118Z102P?from=13:22:11&to=12:12:12").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(400);
             expect(res.body.cause).to.have.property("from", "'to' cannot be later than 'from'");
             done();
         });
     });
-
-    // it("should respond with 400 to GET /gtfs/stop_times/:stop_id incorrect filters", (done) => {
-    //     request(app)
-    //         .get("/gtfs/stop_times/U118Z102P?from=13:22:11&to=13:22:12").end((err: any, res: any) => {
-    //         expect(res.statusCode).to.be.equal(200);
-    //         done();
-    //     });
-    // });
 
     it("should respond with 200 to GET /gtfs/routes ", (done) => {
         request(app)
@@ -201,20 +193,9 @@ describe("GTFS Router", () => {
         });
     });
 
-    it("should respond with 200 to GET /gtfs/shapes ", (done) => {
-        request(app)
-            .get("/gtfs/shapes").end((err: any, res: any) => {
-            expect(res.statusCode).to.be.equal(200);
-            expect(res.body).to.be.an("object");
-            expect(res.body.features).to.be.an("array");
-            expect(res.body.type).to.be.equal("FeatureCollection");
-            done();
-        });
-    });
-
     it("should respond with 404 to GET /gtfs/shapes/:shapeId ", (done) => {
         request(app)
-            .get("/gtfs/shapes/L991V1").end((err: any, res: any) => {
+            .get("/gtfs/shapes/asdh").end((err: any, res: any) => {
             expect(res.statusCode).to.be.equal(404);
             done();
         });

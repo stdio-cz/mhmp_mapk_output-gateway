@@ -20,14 +20,21 @@ export abstract class SequelizeModel extends BaseModel {
     protected constructor(name: string, tableName: string, attributes: DefineModelAttributes<any>,
                           options?: DefineOptions<any>) {
         super(name);
-        this.sequelizeModel = sequelizeConnection.define(tableName, attributes, options);
-        // Remove all audit fields from DB tables that are not needed in the output view
-        // this.sequelizeModel.removeAttribute("created_by");
-        // this.sequelizeModel.removeAttribute("update_batch_id");
-        // this.sequelizeModel.removeAttribute("create_batch_id");
-        // this.sequelizeModel.removeAttribute("updated_by");
-        // this.sequelizeModel.removeAttribute("created_at");
-        // this.sequelizeModel.removeAttribute("updated_at");
+        this.sequelizeModel = sequelizeConnection.define(tableName, attributes,
+            {
+                // Remove all audit fields in the default scope: they will be automatically excluded,
+                // as they're not needed in the output view, but are present in the table/data
+                    defaultScope: {
+                        attributes: { exclude: ["created_by",
+                                                "updated_by",
+                                                "created_at",
+                                                "updated_at",
+                                                "create_batch_id",
+                                                "update_batch_id"],
+                        },
+                    },
+                    ...options,
+            });
     }
 
     /**

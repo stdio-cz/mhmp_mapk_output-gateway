@@ -1,10 +1,10 @@
+import { VehiclePositionsLastPositionModel } from "./VehiclePositionsLastPositionModel";
 import { VehiclePositionsPositionsModel } from "./VehiclePositionsPositionsModel";
-import { VehiclePositionsPositionsViewModel } from "./VehiclePositionsPositionsViewModel";
 import { VehiclePositionsTripsModel } from "./VehiclePositionsTripsModel";
 
 const models: any = {
+    VehiclePositionsLastPositionModel: new VehiclePositionsLastPositionModel(),
     VehiclePositionsPositionsModel: new VehiclePositionsPositionsModel(),
-    VehiclePositionsPositionsViewModel: new VehiclePositionsPositionsViewModel(),
     VehiclePositionsTripsModel: new VehiclePositionsTripsModel(),
 };
 

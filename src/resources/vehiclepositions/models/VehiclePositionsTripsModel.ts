@@ -20,7 +20,8 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             foreignKey: "trips_id",
         });
 
-        this.sequelizeModel.hasOne(m.VehiclePositionsPositionsViewModel.sequelizeModel, {
+        this.sequelizeModel.hasOne(m.VehiclePositionsLastPositionModel.sequelizeModel, {
+            as: "last_position",
             foreignKey: "trips_id",
         });
     }
@@ -48,13 +49,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             const include = this.ComposeIncludes(options);
             const data = await this.sequelizeModel
                 .findAll({
-                    attributes: { exclude: ["created_by",
-                                            "updated_by",
-                                            "created_at",
-                                            "updated_at",
-                                            "create_batch_id",
-                                            "update_batch_id"],
-                                },
                     include,
                     limit,
                     offset,
@@ -81,18 +75,10 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     public GetOne = async (id: string, options: {
         includePositions?: boolean,
     } = {}): Promise<object | null> => {
-        log.debug("Getting one");
         try {
             const include = this.ComposeIncludes(options);
             const data = await this.sequelizeModel
                 .findOne({
-                    attributes: { exclude: ["created_by",
-                                            "updated_by",
-                                            "created_at",
-                                            "updated_at",
-                                            "create_batch_id",
-                                            "update_batch_id"],
-                                },
                     include,
                     where: {
                         gtfs_trip_id: id,
@@ -114,18 +100,25 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      * @return
      */
     private ConvertItem = (item: any) => {
-        const {v_vehiclepositions_last_position, ropidgtfs_trip, all_positions = [], ...trip} = item.toJSON();
-        return {
-            ...buildGeojsonFeature({...v_vehiclepositions_last_position, ...trip}, "lng", "lat"),
+        const { last_position,
+                ropidgtfs_trip,
+                all_positions = [],
+                ...trip } = item.toJSON ? item.toJSON() : item;
+        const tripObject = {
+            trip,
+            ...{last_position},
             ...(all_positions.length &&
                 {
-                    all_positions: buildGeojsonFeatureCollection(all_positions, "lng", "lat"),
+                    all_positions: buildGeojsonFeatureCollection(
+                            all_positions,
+                            "lng",
+                            "lat",
+                    ),
                 }
             ),
-            ...(ropidgtfs_trip &&
-                {gtfs_trip: models.GTFSTripsModel.ConvertItem(ropidgtfs_trip)}
-            ),
         };
+
+        return buildGeojsonFeature(tripObject, "last_position.lng", "last_position.lat");
     }
 
     /** Prepare orm query with selected params
@@ -137,6 +130,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         includePositions?: boolean,
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
+            as: "last_position",
             model: sequelizeConnection.models.v_vehiclepositions_last_position,
             where: {
                 tracking: 2,

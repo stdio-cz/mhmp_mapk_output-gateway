@@ -10,6 +10,7 @@ import { param, query } from "express-validator/check";
 import moment = require("moment");
 import { CustomError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
+import { log } from "../../core/Logger";
 import { checkErrors, pagination } from "../../core/Validation";
 import { models } from "./models";
 import { GTFSCalendarModel } from "./models/GTFSCalendarModel";
@@ -35,11 +36,11 @@ export class GTFSRouter {
     private timeRegex = /(([0-1][0-9])|(2[0-3])):[0-5][0-9]:[0-5][0-9]/;
 
     private tripInclusions = [
-        query("include_shapes").optional().isBoolean(),
-        query("include_stops").optional().isBoolean(),
-        query("include_stop_times").optional().isBoolean(),
-        query("include_service").optional().isBoolean(),
-        query("include_route").optional().isBoolean(),
+        query("includeShapes").optional().isBoolean(),
+        query("includeStops").optional().isBoolean(),
+        query("includeStopTimes").optional().isBoolean(),
+        query("includeService").optional().isBoolean(),
+        query("includeRoute").optional().isBoolean(),
         query("date").optional().isISO8601(),
     ];
 
@@ -91,12 +92,7 @@ export class GTFSRouter {
                     date: req.query.date || false,
                     limit: req.query.limit,
                     offset: req.query.offset,
-                    route: req.query.iclude_route || false,
-                    service: req.query.include_service || false,
-                    shapes: req.query.include_shapes || false,
-                    stopId: req.query.stop_id,
-                    stopTimes: req.query.include_stop_times || false,
-                    stops: req.query.include_stops || false,
+                    stopId: req.query.stopId,
                 });
             res.status(200).send(data);
         } catch (err) {
@@ -110,11 +106,11 @@ export class GTFSRouter {
             const data = await    this.tripModel
                 .GetOne(id, {
                     date: req.query.date || false,
-                    route: req.query.iclude_route || false,
-                    service: req.query.include_service || false,
-                    shapes: req.query.include_shapes || false,
-                    stopTimes: req.query.include_stop_times || false,
-                    stops: req.query.include_stops || false,
+                    route: req.query.includeRoute || false,
+                    service: req.query.includeService || false,
+                    shapes: req.query.includeShapes || false,
+                    stopTimes: req.query.includeStopTimes || false,
+                    stops: req.query.includeStops || false,
                 });
 
             if (!data) {
@@ -185,19 +181,10 @@ export class GTFSRouter {
         try {
             const data = await this.shapeModel
                 .GetAll({
+                    id: req.params.id,
                     limit: req.query.limit,
                     offset: req.query.offset,
                 });
-            res.status(200).send(data);
-        } catch (err) {
-            next(err);
-        }
-    }
-
-    public GetOneShape = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const id: string = req.params.id;
-            const data = await this.shapeModel.GetOne(id);
             if (!data) {
                 throw new CustomError("not_found", true, 404, null);
             }
@@ -238,17 +225,17 @@ export class GTFSRouter {
     }
 
     private initShapesEndpoints = (): void => {
-        this.router.get("/shapes",
+        this.router.get("/shapes/:id",
             pagination,
             checkErrors,
+            param("id").exists(),
             this.GetAllShapes,
         );
-        this.router.get("/shapes/:id", param("id").exists(), this.GetOneShape);
     }
 
     private initTripsEndpoints = (): void => {
         this.router.get("/trips",
-            query("stop_id").optional(),
+            query("stopId").optional(),
             this.tripInclusions,
             pagination,
             checkErrors,
@@ -267,7 +254,7 @@ export class GTFSRouter {
 
     private initStopTimesEndpoints = (): void => {
         this.router.get(
-            "/stop_times/:stopId",
+            "/stoptimes/:stopId",
             [
                 param("stopId").exists(),
                 query("from").optional().matches(this.timeRegex),

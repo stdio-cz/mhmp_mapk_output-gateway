@@ -24,6 +24,8 @@ import { parkingsRouter } from "./resources/parkings/ParkingsRouter";
 
 import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
 
+import { sortedWasteRouter } from "./resources/sortedwastestations/SortedWasteRouter";
+
 import { cityDistrictsRouter } from "./resources/citydistricts/CityDistrictsRouter";
 
 import { vehiclepositionsRouter } from "./resources/vehiclepositions/VehiclePositionsRouter";
@@ -34,7 +36,23 @@ import { sequelizeConnection } from "./core/database";
 
 import { mongooseConnection } from "./core/database";
 
+import {    AirQualityStations,
+            Gardens,
+            IceGatewaySensors,
+            IceGatewayStreetLamps,
+            MedicalInstitutions,
+            Meteosensors,
+            MunicipalPoliceStations,
+            Playgrounds,
+            PublicToilets,
+            SharedCars,
+            TrafficCameras,
+            WasteCollectionYards,
+         } from "golemio-schema-definitions";
+
 import * as http from "http";
+import { medicalInstitutionsRouter } from "./resources/medicalinstitutions/MedicalInstitutionsRouter";
+import { municipalAuthoritiesRouter } from "./resources/municipalauthorities/MunicipalAuthoritiesRouter";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -116,13 +134,128 @@ export default class App {
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
+        this.express.use("/gtfs", gtfsRouter);
+        this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
+        this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
         this.express.use("/parkings", parkingsRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
+        this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
-        this.express.use("/gtfs", gtfsRouter);
+
+        // Routes for backwards compatibility of the API
+        this.express.get("/shared-cars/:id", (req, res) => {
+            res.redirect("/sharedcars/" + req.params.id);
+        });
+        this.express.get("/shared-cars", (req, res) => {
+            res.redirect("/sharedcars");
+        });
+        this.express.get("/traffic-cameras/:id", (req, res) => {
+            res.redirect("/trafficcameras/" + req.params.id);
+        });
+        this.express.get("/traffic-cameras", (req, res) => {
+            res.redirect("/trafficcameras");
+        });
+        this.express.get("/parking-zones/:id", (req, res) => {
+            res.redirect("/parkingzones/" + req.params.id);
+        });
+        this.express.get("/parking-zones", (req, res) => {
+            res.redirect("/parkingzones");
+        });
+        this.express.get("/public-toilets/:id", (req, res) => {
+            res.redirect("/public-toilets/" + req.params.id);
+        });
+        this.express.get("/public-toilets", (req, res) => {
+            res.redirect("/publictoilets");
+        });
+        this.express.get("/municipal-police-stations/:id", (req, res) => {
+            res.redirect("/municipalpolicestations/" + req.params.id);
+        });
+        this.express.get("/municipal-police-stations", (req, res) => {
+            res.redirect("/municipalpolicestations");
+        });
+        this.express.get("/waste-collection-yards/:id", (req, res) => {
+            res.redirect("/wastecollectionyards/" + req.params.id);
+        });
+        this.express.get("/waste-collection-yards", (req, res) => {
+            res.redirect("/wastecollectionyards");
+        });
+        this.express.get("/sorted-waste-stations/:id", (req, res) => {
+            res.redirect("/sortedwastestations/" + req.params.id);
+        });
+        this.express.get("/sorted-waste-stations", (req, res) => {
+            res.redirect("/sortedwastestations");
+        });
+        this.express.get("/medical-institutions/types", (req, res) => {
+            res.redirect("/medicalinstitutions/types");
+        });
+        this.express.get("/medical-institutions/:id", (req, res) => {
+            res.redirect("/medicalinstitutions/" + req.params.id);
+        });
+        this.express.get("/medical-institutions", (req, res) => {
+            res.redirect("/medicalinstitutions");
+        });
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
+        builder.LoadData(
+            [
+                {
+                    collectionName: IceGatewayStreetLamps.mongoCollectionName,
+                    name: IceGatewayStreetLamps.name,
+                    schema: IceGatewayStreetLamps.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: IceGatewaySensors.mongoCollectionName,
+                    name: IceGatewaySensors.name,
+                    schema: IceGatewaySensors.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: SharedCars.mongoCollectionName,
+                    name: SharedCars.name,
+                    schema: SharedCars.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: AirQualityStations.mongoCollectionName,
+                    name: AirQualityStations.name,
+                    schema: AirQualityStations.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: Gardens.mongoCollectionName,
+                    name: Gardens.name,
+                    schema: Gardens.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: Meteosensors.mongoCollectionName,
+                    name: Meteosensors.name,
+                    schema: Meteosensors.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: TrafficCameras.mongoCollectionName,
+                    name: TrafficCameras.name,
+                    schema: TrafficCameras.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: Playgrounds.mongoCollectionName,
+                    name: Playgrounds.name,
+                    schema: Playgrounds.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: MunicipalPoliceStations.mongoCollectionName,
+                    name: MunicipalPoliceStations.name,
+                    schema: MunicipalPoliceStations.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: WasteCollectionYards.mongoCollectionName,
+                    name: WasteCollectionYards.name,
+                    schema: WasteCollectionYards.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: PublicToilets.mongoCollectionName,
+                    name: PublicToilets.name,
+                    schema: PublicToilets.outputMongooseSchemaObject,
+                },
+            ],
+        );
         builder.BuildAllRoutes();
 
         // Not found error - no route was matched

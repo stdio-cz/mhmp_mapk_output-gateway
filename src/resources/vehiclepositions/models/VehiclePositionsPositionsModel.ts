@@ -16,7 +16,6 @@ export class VehiclePositionsPositionsModel {
         );
         // Remove audit fields attributes directly from model, because they're not at all present in the view in db,
         // but are present in the passed Schema (sql attributes) - because the same as for full table is used
-        this.sequelizeModel.removeAttribute("id");
         this.sequelizeModel.removeAttribute("created_by");
         this.sequelizeModel.removeAttribute("update_batch_id");
         this.sequelizeModel.removeAttribute("create_batch_id");

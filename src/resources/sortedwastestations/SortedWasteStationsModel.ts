@@ -12,10 +12,5 @@ export class SortedWasteStationsModel extends GeoJsonModel {
         super(  SortedWasteStations.name,
                 SortedWasteStations.outputMongooseSchemaObject,
                 SortedWasteStations.mongoCollectionName );
-
-        // Set model-specific indexes
-        this.schema.index(
-            { "properties.name": "text" },
-        );
     }
 }

@@ -5,7 +5,7 @@ var storage = {};
 hooks.beforeEach(function (transaction) {
     transaction.request.uri = transaction.request.uri.replace(/\?.*/g, ""); 
     transaction.fullPath = transaction.fullPath.replace(/\?.*/g, ""); 
-    // hooks.log("Testing Request: " + JSON.stringify(transaction.request));
+    hooks.log("Testing Request: " + JSON.stringify(transaction.request));
   });
 
 hooks.after('General > Prague City Districts > GET All Districts', (transaction) => {
@@ -123,4 +123,19 @@ hooks.after('GTFS > GTFS Stops > GET All GTFS Stops', (transaction) => {
 hooks.before('GTFS > GTFS Stop > GET GTFS Stop', (transaction) => {
     transaction.request.uri = transaction.request.uri.replace('U118Z101P', storage["id"]);
     transaction.fullPath = transaction.fullPath.replace('U118Z101P', storage["id"]);
+});
+
+hooks.after('GTFS > GTFS Trips > GET All GTFS Trips', (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body)[0].trip_id;
+    storage["shape_id"] = JSON.parse(transaction.real.body)[0].shape_id;
+});
+
+hooks.before('GTFS > GTFS Trip > GET GTFS Trip', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('991_30_190107', storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace('991_30_190107', storage["id"]);
+});
+
+hooks.before('GTFS > GTFS Shape > GET GTFS Shape', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('L991V2', storage["shape_id"]);
+    transaction.fullPath = transaction.fullPath.replace('L991V2', storage["shape_id"]);
 });

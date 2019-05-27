@@ -5,7 +5,7 @@ var storage = {};
 hooks.beforeEach(function (transaction) {
     transaction.request.uri = transaction.request.uri.replace(/\?.*/g, ""); 
     transaction.fullPath = transaction.fullPath.replace(/\?.*/g, ""); 
-    hooks.log("Testing Request: " + JSON.stringify(transaction.request));
+    // hooks.log("Testing Request: " + JSON.stringify(transaction.request));
   });
 
 hooks.after('General > Prague City Districts > GET All Districts', (transaction) => {

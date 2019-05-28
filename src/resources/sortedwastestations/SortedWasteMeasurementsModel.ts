@@ -37,6 +37,7 @@ export class SortedWasteMeasurementsModel extends MongoModel {
             q.where({measured_at_utc: {$lt: to}});
         }
         q.select(this.projection);
+        q.sort({measured_at_utc: -1});
         return await q.exec();
     }
 

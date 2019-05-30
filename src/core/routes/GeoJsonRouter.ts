@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
+import { Schema } from "mongoose";
 import { CustomError } from "../errors";
 import { handleError } from "../errors";
 import { parseCoordinates } from "../Geo";
@@ -29,14 +30,29 @@ export class GeoJsonRouter {
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
     public initRoutes = (): void => {
-        this.router.get("/", [
-            query("updatedSince").optional().isNumeric(),
-            query("districts").optional(),
-            query("districts.*").isString(),
-        ], pagination, checkErrors, this.GetAll);
-        this.router.get("/:id", [
-            param("id").exists(),
-        ], checkErrors, this.GetOne);
+        let idParam;
+        this.model.GetSchema().then((schema) => {
+
+            if (schema.path("properties.id") instanceof Schema.Types.Number) {
+                log.silly("Created model " + this.model.GetName() + " has ID of type number.");
+                idParam = param("id").exists().isNumeric();
+            } else {
+                idParam = param("id").exists().isString();
+            }
+
+            this.router.get("/", [
+                query("updatedSince").optional().isNumeric(),
+                query("districts").optional(),
+                query("districts.*").isString(),
+                query("ids").optional(),
+                query("latlng").optional().isString(),
+                query("range").optional().isNumeric(),
+            ], pagination, checkErrors, this.GetAll);
+            this.router.get("/:id", [
+                idParam,
+            ], checkErrors, this.GetOne);
+        });
+
     }
 
     /**

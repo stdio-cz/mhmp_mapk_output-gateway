@@ -10,7 +10,7 @@ import { BaseModel } from "./";
 export abstract class MongoModel extends BaseModel {
     /** The Mongoose Model */
     public model: Model<any>;
-    /** The schema which contains schemaObject for creating the Mongoose Schema */
+    /** The Mongoose Schema object, defining structure of the data */
     protected schema: Schema;
     /** Name of the mongo collection where the model is stored in the database */
     protected collectionName: string | undefined;
@@ -43,6 +43,13 @@ export abstract class MongoModel extends BaseModel {
         }
         // Don't return default mongoose values and mongo internal ID
         this.AddProjection({_id: 0, __v: 0});
+    }
+
+    /**
+     * Returns current schema of the data
+     */
+    public GetSchema = async () => {
+        return this.schema;
     }
 
     /**

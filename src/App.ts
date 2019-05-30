@@ -20,8 +20,6 @@ import { log } from "./core/Logger";
 
 import { RouterBuilder } from "./core/routes/";
 
-import { parkingsRouter } from "./resources/parkings/ParkingsRouter";
-
 import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
 
 import { sortedWasteRouter } from "./resources/sortedwastestations/SortedWasteRouter";
@@ -43,6 +41,7 @@ import {    AirQualityStations,
             MedicalInstitutions,
             Meteosensors,
             MunicipalPoliceStations,
+            Parkings,
             Playgrounds,
             PublicToilets,
             SharedCars,
@@ -137,7 +136,6 @@ export default class App {
         this.express.use("/gtfs", gtfsRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
-        this.express.use("/parkings", parkingsRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
@@ -253,6 +251,11 @@ export default class App {
                     collectionName: PublicToilets.mongoCollectionName,
                     name: PublicToilets.name,
                     schema: PublicToilets.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: Parkings.mongoCollectionName,
+                    name: Parkings.name,
+                    schema: Parkings.outputMongooseSchemaObject,
                 },
             ],
         );

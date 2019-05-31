@@ -35,9 +35,4 @@ export class ParkingZonesModel extends GeoJsonModel {
             return found.properties.tariffs;
         }
     }
-
-    protected PrimaryIdentifierSelection = (inId: string) => {
-        return {"properties.id": inId};
-    }
-
 }

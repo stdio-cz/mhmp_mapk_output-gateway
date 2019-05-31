@@ -15,7 +15,7 @@ export class CityDistrictsModel extends GeoJsonModel {
         );
     }
 
-    protected PrimaryIdentifierSelection = (inId: string) => {
+    public PrimaryIdentifierSelection = (inId: string) => {
         return {"properties.slug": inId};
     }
 }

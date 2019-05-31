@@ -32,13 +32,17 @@ export class GeoJsonRouter {
     public initRoutes = (): void => {
         let idParam;
         this.model.GetSchema().then((schema) => {
-
-            if (schema.path("properties.id") instanceof Schema.Types.Number) {
-                log.silly("Created model " + this.model.GetName() + " has ID of type number.");
+            const idKey = Object.keys(this.model.PrimaryIdentifierSelection("0"))[0];
+            let message: string = "Created model " + this.model.GetName() + " has ID `"
+            + idKey + "` of type ";
+            if (schema.path(idKey) instanceof Schema.Types.Number) {
+                message += "number.";
                 idParam = param("id").exists().isNumeric();
             } else {
+                message += "string.";
                 idParam = param("id").exists().isString();
             }
+            log.silly(message);
 
             this.router.get("/", [
                 query("updatedSince").optional().isNumeric(),

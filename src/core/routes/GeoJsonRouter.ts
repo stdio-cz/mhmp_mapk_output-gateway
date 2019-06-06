@@ -32,14 +32,17 @@ export class GeoJsonRouter {
     public initRoutes = (): void => {
         let idParam;
         this.model.GetSchema().then((schema) => {
+            // Get the primary ID of the schema (the attribute name)
             const idKey = Object.keys(this.model.PrimaryIdentifierSelection("0"))[0];
             let message: string = "Created model " + this.model.GetName() + " has ID `"
             + idKey + "` of type ";
             if (schema.path(idKey) instanceof Schema.Types.Number) {
                 message += "number.";
+                // Create a url parameter for detail route with type number
                 idParam = param("id").exists().isNumeric();
             } else {
                 message += "string.";
+                // Create a url parameter for detail route with type string
                 idParam = param("id").exists().isString();
             }
             log.silly(message);
@@ -53,6 +56,7 @@ export class GeoJsonRouter {
                 query("range").optional().isNumeric(),
             ], pagination, checkErrors, this.GetAll);
             this.router.get("/:id", [
+                // Previously set parameter of type according to the data's primary ID type
                 idParam,
             ], checkErrors, this.GetOne);
         });

@@ -18,7 +18,7 @@ import { handleError } from "./core/errors";
 
 import { log } from "./core/Logger";
 
-import { RouterBuilder } from "./core/routes/";
+import { IDatasetDefinition, RouterBuilder } from "./core/routes/";
 
 import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
 
@@ -204,6 +204,12 @@ export default class App {
                 },
                 {
                     collectionName: IceGatewaySensors.mongoCollectionName,
+                    history:
+                    {
+                        collectionName: IceGatewaySensors.history.mongoCollectionName,
+                        name: IceGatewaySensors.history.name,
+                        schema: IceGatewaySensors.history.outputMongooseSchemaObject,
+                    },
                     name: IceGatewaySensors.name,
                     schema: IceGatewaySensors.outputMongooseSchemaObject,
                 },
@@ -214,6 +220,11 @@ export default class App {
                 },
                 {
                     collectionName: AirQualityStations.mongoCollectionName,
+                    history: {
+                        collectionName: AirQualityStations.history.mongoCollectionName,
+                        name: AirQualityStations.history.name,
+                        schema: AirQualityStations.history.outputMongooseSchemaObject,
+                    },
                     name: AirQualityStations.name,
                     schema: AirQualityStations.outputMongooseSchemaObject,
                 },
@@ -254,6 +265,11 @@ export default class App {
                 },
                 {
                     collectionName: Parkings.mongoCollectionName,
+                    history: {
+                        collectionName: Parkings.history.mongoCollectionName,
+                        name: Parkings.history.name,
+                        schema: Parkings.history.outputMongooseSchemaObject,
+                    },
                     name: Parkings.name,
                     schema: Parkings.outputMongooseSchemaObject,
                 },

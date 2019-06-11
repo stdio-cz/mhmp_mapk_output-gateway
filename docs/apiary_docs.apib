@@ -160,6 +160,28 @@ Parking type enum:
             + (Feature Point)
                 + properties (Parking)
 
+## Parkings History [/parkings/history/{?from,to,limit,offset}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+
+
+### GET Parkings History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Parkings History)
 
 ## Parking [/parkings/{id}]
 
@@ -795,7 +817,7 @@ Cleaning Frequency:
 
 + Parameters
 
-    + containerId: 30162 (optional, number) - Lists only measurements from container with this sensor ID
+    + containerId: 30162 (optional, number) - Lists only picks from container with this sensor ID
     + limit: 10 (optional, number) - Limits number of retrieved items. 
     + offset: 0 (optional, number) - Number of the first items that are skipped. 
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
@@ -1672,6 +1694,15 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + average_occupancy (Parking Occupancy)
 + district: `praha-10` (string)
 + address (Address)
++ last_updated: 1556868553000 (number)
+
+## Parkings History (object)
+
++ id: 534012 (number, required)
++ num_of_free_places: 0 (number, required)
++ num_of_taken_places: 63 (number, required)
++ updated_at: 1556868900092 (number, required)
++ total_num_of_places: 63 (number, required)
 + last_updated: 1556868553000 (number)
 
 ## Parking Occupancy (object)

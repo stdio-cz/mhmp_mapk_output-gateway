@@ -55,8 +55,8 @@ export abstract class MongoModel extends BaseModel {
     // TODO: Careful, Router takes this keys()[0] as a decision, if ID parameter can be string or number,
     // that's weird dependency - selection with $or on two attributes for example will fail!
     /**
-     * Specify (selection object) where to search for single entity by primary ID
-     * The entity is uniquely identified by this property
+     * Specifies where is the primary ID of the entity.
+     * Searches by this selection in FindOne()
      */
     public PrimaryIdentifierSelection = (inId: any): object => {
         return {"properties.id": inId};

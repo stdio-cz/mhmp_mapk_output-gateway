@@ -204,6 +204,12 @@ export default class App {
                 },
                 {
                     collectionName: IceGatewaySensors.mongoCollectionName,
+                    history:
+                    {
+                        collectionName: IceGatewaySensors.history.mongoCollectionName,
+                        name: IceGatewaySensors.history.name,
+                        schema: IceGatewaySensors.history.outputMongooseSchemaObject,
+                    },
                     name: IceGatewaySensors.name,
                     schema: IceGatewaySensors.outputMongooseSchemaObject,
                 },
@@ -214,6 +220,11 @@ export default class App {
                 },
                 {
                     collectionName: AirQualityStations.mongoCollectionName,
+                    history: {
+                        collectionName: AirQualityStations.history.mongoCollectionName,
+                        name: AirQualityStations.history.name,
+                        schema: AirQualityStations.history.outputMongooseSchemaObject,
+                    },
                     name: AirQualityStations.name,
                     schema: AirQualityStations.outputMongooseSchemaObject,
                 },

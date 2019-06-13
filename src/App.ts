@@ -194,6 +194,12 @@ export default class App {
         this.express.get("/medical-institutions", (req, res) => {
             res.redirect("/medicalinstitutions");
         });
+        this.express.get("/shared-bikes/:id", (req, res) => {
+            res.redirect("/sharedbikes/" + req.params.id);
+        });
+        this.express.get("/shared-bikes", (req, res) => {
+            res.redirect("/sharedbikes");
+        });
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

@@ -35,6 +35,7 @@ import { sequelizeConnection } from "./core/database";
 import { mongooseConnection } from "./core/database";
 
 import {    AirQualityStations,
+            BicycleParkings,
             Gardens,
             IceGatewaySensors,
             IceGatewayStreetLamps,
@@ -44,6 +45,7 @@ import {    AirQualityStations,
             Parkings,
             Playgrounds,
             PublicToilets,
+            SharedBikes,
             SharedCars,
             TrafficCameras,
             WasteCollectionYards,
@@ -192,6 +194,12 @@ export default class App {
         this.express.get("/medical-institutions", (req, res) => {
             res.redirect("/medicalinstitutions");
         });
+        this.express.get("/shared-bikes/:id", (req, res) => {
+            res.redirect("/sharedbikes/" + req.params.id);
+        });
+        this.express.get("/shared-bikes", (req, res) => {
+            res.redirect("/sharedbikes");
+        });
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
@@ -272,6 +280,16 @@ export default class App {
                     },
                     name: Parkings.name,
                     schema: Parkings.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: SharedBikes.mongoCollectionName,
+                    name: SharedBikes.name,
+                    schema: SharedBikes.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: BicycleParkings.mongoCollectionName,
+                    name: BicycleParkings.name,
+                    schema: BicycleParkings.outputMongooseSchemaObject,
                 },
             ],
         );

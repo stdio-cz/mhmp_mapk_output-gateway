@@ -2,7 +2,7 @@ FORMAT: 1A
 
 # Golemio Output Gateway
 
-Documentation URL: 
+Documentation URL:
 - https://outputgateway.docs.apiary.io/ (master)
 - https://outputgatewaydev.docs.apiary.io/ (development)
 
@@ -333,6 +333,113 @@ For backwards compatibility, also works on `/shared-cars/`
     + Attributes (Error)
 
 
+## Shared Bikes [/sharedbikes/{?latlng,range,limit,offset,updatedSince}]
+
+For backwards compatibility, also works on `/shared-bikes/`
+
+Types enum:
+- 1 bike
+- 2 ebike
+- 3 scooter
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Shared Bikes [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+   + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Shared Bike)
+
+## Shared Bike [/sharedbikes/{id}]
+
+For backwards compatibility, also works on `/shared-bikes/`
+
++ Parameters
+
+    + id: `homeport-0076` (string) - Identifier of the bike.
+
+### GET Shared Bike [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Shared Bike)
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
+
+
+## Bicycle Parkings [/bicycleparkings/{?latlng,range,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Bicycle Parkings [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+   + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Bicycle Parking)
+
+## Bicycle Parking [/bicycleparkings/{id}]
+
++ Parameters
+
+    + id: `282743091` (number) - Identifier of the bicycle parking.
+
+### GET Bicycle Parking [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Bicycle Parking)
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
+
+
 ## Traffic Cameras [/trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
 
 For backwards compatibility, also works on `/traffic-cameras/`
@@ -353,7 +460,7 @@ For backwards compatibility, also works on `/traffic-cameras/`
     + Headers
 
             x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
-            
+
 + Response 200 (application/json; charset=utf-8)
 
    + Attributes (object)
@@ -527,7 +634,7 @@ For backwards compatibility, also works on `/medical-institutions/`
         + features (array)
             + (Feature Point)
                 + properties (Medical Institution)
-                
+
 
 ## Medical Institution [/medicalinstitutions/{id}]
 
@@ -745,10 +852,10 @@ Cleaning Frequency:
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + accessibility: 1 (optional, string) - Filter by accessibility id.
-    + limit: 10 (optional, number) - Limits number of retrieved items. 
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + onlyMonitored: true (optional, boolean) - Filter only stations with at least one "smart" container with sensor for measurements and pickups
 
 ### GET All Sorted Waste Stations [GET]
@@ -795,8 +902,8 @@ Cleaning Frequency:
 + Parameters
 
     + containerId: 30162 (optional, number) - Lists only measurements from container with this sensor ID
-    + limit: 10 (optional, number) - Limits number of retrieved items. 
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
 
@@ -818,8 +925,8 @@ Cleaning Frequency:
 + Parameters
 
     + containerId: 30162 (optional, number) - Lists only picks from container with this sensor ID
-    + limit: 10 (optional, number) - Limits number of retrieved items. 
-    + offset: 0 (optional, number) - Number of the first items that are skipped. 
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
 
@@ -901,7 +1008,7 @@ Data from municipal authorities.
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma. 
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
         + Members
             + `municipality`
@@ -1109,7 +1216,7 @@ Sensoric data from the city's IoT network.
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
-    
+
 
 ## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -1438,6 +1545,18 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
   + averaged_hours: 1 (number)
   + value: 10.7 (number),
 + type: NO2 (string)
+
+## Bicycle Parking (object)
+
++ district: `praha-4` (string)
++ id: 6239570526 (number, required)
++ tags (array[Bicycle Parking Tag])
++ updated_at: 1556792400188 (number, required)
+
+## Bicycle Parking Tag (object)
+
++ id: `capacity` (string, required)
++ value: `2` (string)
 
 ## City District (object)
 
@@ -1812,6 +1931,31 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 - district: `praha-13` (string)
 - address (Address)
 
+## Shared Bike (object)
+
++ company (Shared Bike Company)
++ estimated_trip_length_in_km: 41 (number)
++ id: `homeport-0223` (string, required)
++ in_rack: true (boolean)
++ label (string, required)
++ location_note (string, nullable)
++ name: `0223` (string)
++ res_url: `https://freebike.app.link?bikeId=0223&system=praha` (string, required)
++ type (Shared Bike Type)
++ updated_at: 1557223259221 (number, required)
+
+## Shared Bike Company (object)
+
++ email (string, nullable)
++ name: `HOMEPORT` (string, required)
++ phone (string, nullable)
++ web: `prague.freebike.com` (string, required)
+
+## Shared Bike Type (object)
+
++ description: `ebike` (string)
++ id: 2 (number, required)
+
 ## Shared Car (object)
 
 + availability (Shared Car Availability)
@@ -1962,7 +2106,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `tracking`: 2 (number, required)
 + `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
 
-                                
+
 ## Waste Collection Yard (object)
 
 + properties (array[Waste Collection Yard Property])

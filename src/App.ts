@@ -35,6 +35,7 @@ import { sequelizeConnection } from "./core/database";
 import { mongooseConnection } from "./core/database";
 
 import {    AirQualityStations,
+            BicycleParkings,
             Gardens,
             IceGatewaySensors,
             IceGatewayStreetLamps,
@@ -44,6 +45,7 @@ import {    AirQualityStations,
             Parkings,
             Playgrounds,
             PublicToilets,
+            SharedBikes,
             SharedCars,
             TrafficCameras,
             WasteCollectionYards,
@@ -272,6 +274,16 @@ export default class App {
                     },
                     name: Parkings.name,
                     schema: Parkings.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: SharedBikes.mongoCollectionName,
+                    name: SharedBikes.name,
+                    schema: SharedBikes.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: BicycleParkings.mongoCollectionName,
+                    name: BicycleParkings.name,
+                    schema: BicycleParkings.outputMongooseSchemaObject,
                 },
             ],
         );

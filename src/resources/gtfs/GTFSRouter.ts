@@ -84,8 +84,8 @@ export class GTFSRouter {
                     from: req.query.from || null,
                     limit: req.query.limit,
                     offset: req.query.offset,
+                    stop: req.query.includeStop || false,
                     stopId: req.params.stopId,
-                    stops: req.query.includeStop || false,
                     to: req.query.to || null,
                 });
             res.status(200).send(data);

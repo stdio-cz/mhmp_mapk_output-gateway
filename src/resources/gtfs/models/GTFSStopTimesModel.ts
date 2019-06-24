@@ -39,9 +39,9 @@ export class GTFSStopTimesModel extends SequelizeModel {
         from?: string,
         to?: string,
         date?: string,
-        stops?: boolean,
+        stop?: boolean,
     }): Promise<any> => {
-        const { limit, offset, to, from, date, stopId, stops } = options;
+        const { limit, offset, to, from, date, stopId, stop } = options;
         const include: any = [];
         try {
             const where: any = {
@@ -76,7 +76,7 @@ export class GTFSStopTimesModel extends SequelizeModel {
                 });
             }
 
-            if (stops) {
+            if (stop) {
                 include.push({
                     as: "stop",
                     model: sequelizeConnection.models[RopidGTFS.stops.pgTableName]

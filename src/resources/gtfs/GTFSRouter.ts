@@ -44,6 +44,14 @@ export class GTFSRouter {
         query("date").optional().isISO8601(),
     ];
 
+    private stopTimesHandlers = [
+        param("stopId").exists(),
+        query("from").optional().matches(this.timeRegex),
+        query("to").optional().matches(this.timeRegex),
+        query("date").optional().isISO8601(),
+        query("includeStop").optional().isBoolean()
+    ];
+
     public constructor() {
         this.tripModel = models.GTFSTripsModel;
         this.stopModel = models.GTFSStopModel;
@@ -76,6 +84,7 @@ export class GTFSRouter {
                     from: req.query.from || null,
                     limit: req.query.limit,
                     offset: req.query.offset,
+                    stop: req.query.includeStop || false,
                     stopId: req.params.stopId,
                     to: req.query.to || null,
                 });
@@ -103,7 +112,7 @@ export class GTFSRouter {
     public GetOneTrip = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const id: string = req.params.id;
-            const data = await    this.tripModel
+            const data = await this.tripModel
                 .GetOne(id, {
                     date: req.query.date || false,
                     route: req.query.includeRoute || false,
@@ -255,12 +264,7 @@ export class GTFSRouter {
     private initStopTimesEndpoints = (): void => {
         this.router.get(
             "/stoptimes/:stopId",
-            [
-                param("stopId").exists(),
-                query("from").optional().matches(this.timeRegex),
-                query("to").optional().matches(this.timeRegex),
-                query("date").optional().isISO8601(),
-            ],
+            this.stopTimesHandlers,
             pagination,
             checkErrors,
             (req: any, res: any, next: any) => {
@@ -268,7 +272,7 @@ export class GTFSRouter {
                     req.query.to &&
                     moment(req.query.from, "H:mm:ss").isAfter(moment(req.query.to, "H:mm:ss"))
                 ) {
-                    throw new CustomError("Validation error", true, 400, {from: "'to' cannot be later than 'from'"});
+                    throw new CustomError("Validation error", true, 400, { from: "'to' cannot be later than 'from'" });
                 }
                 return next();
             },

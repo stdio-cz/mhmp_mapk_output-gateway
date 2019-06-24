@@ -42,8 +42,8 @@ export class VehiclePositionsRouter {
         const id: string = req.params.id;
         try {
             const data = await this.model.GetOne(id, {
-                    includePositions: req.query.includePositions || false,
-                },
+                includePositions: req.query.includePositions || false,
+            },
             );
             if (!data) {
                 throw new CustomError("not_found", true, 404, null);

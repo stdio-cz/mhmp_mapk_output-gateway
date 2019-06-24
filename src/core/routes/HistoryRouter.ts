@@ -28,8 +28,10 @@ export class HistoryRouter {
         try {
             const data = await this.model.GetAll({
                 from: timestampFrom,
+                id: req.query.id,
                 limit: req.query.limit,
                 offset: req.query.offset,
+                sensor_type: req.query.sensor_type,
                 to: timestampTo,
             });
             res.status(200).send(data);

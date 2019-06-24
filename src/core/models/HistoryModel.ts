@@ -1,4 +1,5 @@
-import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
+import { IceGatewaySensors } from "golemio-schema-definitions";
+import { SchemaDefinition } from "mongoose";
 import { CustomError } from "../../core/errors";
 import { MongoModel } from "../../core/models";
 import { log } from "../Logger";
@@ -13,10 +14,11 @@ export class HistoryModel extends MongoModel {
     /**
      * Instantiates the model according to the given schema.
      */
-    public constructor( inName: string,
-                        inSchema: SchemaDefinition,
-                        inCollectionName?: string,
-                        timePropertyLocation?: string,
+    public constructor(
+        inName: string,
+        inSchema: SchemaDefinition,
+        inCollectionName?: string,
+        timePropertyLocation?: string,
     ) {
         super(inName, inSchema, inCollectionName);
         if (timePropertyLocation) {
@@ -24,12 +26,14 @@ export class HistoryModel extends MongoModel {
         }
     }
 
-    public GetAll = async ( options: {
-                            limit?: number,
-                            offset?: number,
-                            from?: number,
-                            to?: number,
-    } ) => {
+    public GetAll = async (options: {
+        limit?: number,
+        offset?: number,
+        from?: number,
+        to?: number,
+        id?: string | number,
+        sensor_type: string,
+    }) => {
         const q = this.model.find();
         if (options.limit) {
             q.limit(options.limit);
@@ -38,18 +42,24 @@ export class HistoryModel extends MongoModel {
             q.skip(options.offset);
         }
         if (options.from) {
-            q.where({[this.primaryTimePropertyLocation]: {$gt: options.from}});
+            q.where({ [this.primaryTimePropertyLocation]: { $gt: options.from } });
         }
         if (options.to) {
-            q.where({[this.primaryTimePropertyLocation]: {$lt: options.to}});
+            q.where({ [this.primaryTimePropertyLocation]: { $lt: options.to } });
+        }
+        if (options.id != null) {
+            q.where("id", options.id);
+        }
+        if (options.sensor_type && this.name === IceGatewaySensors.history.name) {
+            q.where("sensor_type", options.sensor_type);
         }
         q.select(this.projection);
-        q.sort({[this.primaryTimePropertyLocation]: -1});
+        q.sort({ [this.primaryTimePropertyLocation]: -1 });
         return await q.exec();
     }
 
     public PrimaryIdentifierSelection = (inId: any): object => {
-        return {id: inId};
+        return { id: inId };
     }
 
     /**

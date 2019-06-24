@@ -39,8 +39,9 @@ export class GTFSStopTimesModel extends SequelizeModel {
         from?: string,
         to?: string,
         date?: string,
+        stops?: boolean,
     }): Promise<any> => {
-        const {limit, offset, to, from, date, stopId} = options;
+        const { limit, offset, to, from, date, stopId, stops } = options;
         const include: any = [];
         try {
             const where: any = {
@@ -68,10 +69,17 @@ export class GTFSStopTimesModel extends SequelizeModel {
                         as: "service",
                         attributes: [],
                         model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName]
-                            .scope({method: ["forDate", date]}),
+                            .scope({ method: ["forDate", date] }),
                     }],
                     model: sequelizeConnection.models[RopidGTFS.trips.pgTableName],
                     required: true,
+                });
+            }
+
+            if (stops) {
+                include.push({
+                    as: "stop",
+                    model: sequelizeConnection.models[RopidGTFS.stops.pgTableName]
                 });
             }
 
@@ -85,7 +93,7 @@ export class GTFSStopTimesModel extends SequelizeModel {
 
             return data;
         } catch
-            (err) {
+        (err) {
             throw new CustomError("Database error", true, 500, err);
         }
     }

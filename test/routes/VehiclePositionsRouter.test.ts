@@ -8,7 +8,7 @@ const express = require("express");
 const request = require("supertest");
 const chaiAsPromised = require("chai-as-promised");
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
+import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
 import { log } from "../../src/core/Logger";
 
@@ -27,7 +27,7 @@ describe("VehiclePositions Router", () => {
     let sandbox: any = null;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {
@@ -38,7 +38,7 @@ describe("VehiclePositions Router", () => {
     sequelizeMockingMocha(
         sequelize,
         [],
-        {logging: false},
+        { logging: false },
     );
 
     before(() => {

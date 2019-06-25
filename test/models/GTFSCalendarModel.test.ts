@@ -27,7 +27,7 @@ describe("GTFSCalendarModel", () => {
     let sandbox: any = null;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {

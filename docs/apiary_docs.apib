@@ -160,7 +160,7 @@ Parking type enum:
             + (Feature Point)
                 + properties (Parking)
 
-## Parkings History [/parkings/history/{?from,to,limit,offset}]
+## Parkings History [/parkings/history/{?from,to,limit,offset,sensorId}]
 
 + Parameters
 
@@ -168,6 +168,7 @@ Parking type enum:
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
 
 
 ### GET Parkings History [GET]

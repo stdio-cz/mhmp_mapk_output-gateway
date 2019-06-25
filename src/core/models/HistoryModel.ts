@@ -12,6 +12,11 @@ export class HistoryModel extends MongoModel {
     protected primaryTimePropertyLocation: string = "updated_at";
 
     /**
+     * Location of the property by which to filter the data according to sensor id
+     */
+    protected primarySensorIdPropertyLocation: string = "id";
+
+    /**
      * Instantiates the model according to the given schema.
      */
     public constructor(
@@ -19,10 +24,14 @@ export class HistoryModel extends MongoModel {
         inSchema: SchemaDefinition,
         inCollectionName?: string,
         timePropertyLocation?: string,
+        sensorIdPropertyLocation?: string,
     ) {
         super(inName, inSchema, inCollectionName);
         if (timePropertyLocation) {
             this.primaryTimePropertyLocation = timePropertyLocation;
+        }
+        if (sensorIdPropertyLocation) {
+            this.primarySensorIdPropertyLocation = sensorIdPropertyLocation;
         }
     }
 
@@ -31,8 +40,7 @@ export class HistoryModel extends MongoModel {
         offset?: number,
         from?: number,
         to?: number,
-        id?: string | number,
-        sensor_type: string,
+        sensorId?: string | number,
     }) => {
         const q = this.model.find();
         if (options.limit) {
@@ -47,11 +55,8 @@ export class HistoryModel extends MongoModel {
         if (options.to) {
             q.where({ [this.primaryTimePropertyLocation]: { $lt: options.to } });
         }
-        if (options.id != null) {
-            q.where("id", options.id);
-        }
-        if (options.sensor_type && this.name === IceGatewaySensors.history.name) {
-            q.where("sensor_type", options.sensor_type);
+        if (options.sensorId != null) {
+            q.where([this.primarySensorIdPropertyLocation], options.sensorId);
         }
         q.select(this.projection);
         q.sort({ [this.primaryTimePropertyLocation]: -1 });

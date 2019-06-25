@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config dist/Index.js",
+    "debug": "node --inspect-brk=9230 -r dotenv/config dist/Index.js",
     "build": "tsc",
     "build-watch": "tsc --watch --preserveWatchOutput",
     "test": "mocha -b --check-leaks --timeout 60000 -r ts-node/register -r dotenv/config --recursive test/helpers/*.test.ts test/**/*.test.ts test/*.test.ts --exit",
@@ -18,7 +19,7 @@
     "url": "https://gitlab.oict.cz/data-platform/output-gateway"
   },
   "dependencies": {
-    "golemio-schema-definitions": "0.1.8",
+    "golemio-schema-definitions": "^0.1.9-dev.1945",
     "debug": "^4.1.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",

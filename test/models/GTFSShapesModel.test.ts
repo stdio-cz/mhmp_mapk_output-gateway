@@ -2,18 +2,14 @@
 
 import "mocha";
 
-const config = require("../../src/config/config");
-
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
 
-import * as path from "path";
+import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
-import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
-
-const sinon = require("sinon");
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
+import * as sinon from "sinon";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import { log } from "../../src/core/Logger";
 import { models } from "../../src/resources/gtfs/models";
 import { GTFSShapesModel } from "../../src/resources/gtfs/models/GTFSShapesModel";
@@ -40,7 +36,7 @@ describe("GTFSShapesModel", () => {
     sequelizeMockingMocha(
         sequelize,
         [],
-        {logging: false},
+        { logging: false },
     );
 
     it("should instantiate", () => {

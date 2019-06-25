@@ -2,19 +2,16 @@
 
 import "mocha";
 
-const config = require("../../src/config/config");
-
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
 
 import * as path from "path";
 
-import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
+import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
-const sinon = require("sinon");
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-import { log } from "../../src/core/Logger";
+import * as sinon from "sinon";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import { models } from "../../src/resources/gtfs/models";
 import { GTFSTripsModel } from "../../src/resources/gtfs/models/GTFSTripsModel";
 
@@ -45,7 +42,7 @@ describe("GTFSTripsModel", () => {
             path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stops.json")),
             path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stop_times.json")),
         ],
-        {logging: false},
+        { logging: false },
     );
 
     it("should instantiate", () => {
@@ -59,14 +56,14 @@ describe("GTFSTripsModel", () => {
 
     let tripId: string;
     it("should return few items", async () => {
-        const result = await tripModel.GetAll({limit: 10, offset: 10});
+        const result = await tripModel.GetAll({ limit: 10, offset: 10 });
         expect(result).to.be.an.instanceOf(Array).and.lengthOf(10);
         expect(result[0]).to.have.property("trip_id");
         tripId = result[0].trip_id;
     });
 
     it("should return 10 items", async () => {
-        const result = await tripModel.GetAll({limit: 10, offset: 10});
+        const result = await tripModel.GetAll({ limit: 10, offset: 10 });
         expect(result).to.be.an.instanceOf(Array).and.lengthOf(10);
     });
 
@@ -77,19 +74,19 @@ describe("GTFSTripsModel", () => {
     });
 
     it("should return all items going through stop id U953Z102P", async () => {
-        const result = await tripModel.GetAll({stopId: "U953Z102P"});
+        const result = await tripModel.GetAll({ stopId: "U953Z102P" });
         expect(result).to.be.an.instanceOf(Array).and.lengthOf(7);
         expect(result.map((item: any) => item.trip_id))
             .to.be.an("array").to.include.members(
-            [
-                "991_1156_180709",
-                "991_1155_180709",
-                "991_1154_180709",
-                "991_1153_190107",
-                "991_1152_190107",
-                "991_1151_190107",
-                "991_10_180709",
-            ]);
+                [
+                    "991_1156_180709",
+                    "991_1155_180709",
+                    "991_1154_180709",
+                    "991_1153_190107",
+                    "991_1152_190107",
+                    "991_1151_190107",
+                    "991_10_180709",
+                ]);
     });
 
     // TODO: Check for format of included data

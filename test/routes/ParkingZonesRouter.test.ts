@@ -1,17 +1,14 @@
 "use strict";
 
+import * as express from "express";
 import "mocha";
-const config = require("../../src/config/config");
-
-const express = require("express");
-const chai = require("chai");
-const chaiAsPromised = require("chai-as-promised");
-const request = require("supertest");
-import { log } from "../../src/core/Logger";
+import * as request from "supertest";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 
 import { parkingZonesRouter } from "../../src/resources/parkingzones/ParkingZonesRouter";
 
-const expect = chai.expect;
 chai.use(chaiAsPromised);
 
 describe("ParkingZonesRouter", () => {
@@ -42,13 +39,13 @@ describe("ParkingZonesRouter", () => {
             });
     });
 
-    /* it("should respond with json to GET /parkingzones/:id ", (done) => {
-         request(app)
-             .get("/parkingzones/" + parkingZoneCode)
-             .set("Accept", "application/json")
-             .expect("Content-Type", /json/)
-             .expect(200, done);
-     });
+    it("should respond with json to GET /parkingzones/:id ", (done) => {
+        request(app)
+            .get("/parkingzones/" + parkingZoneCode)
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(200, done);
+    });
 
     it("should respond with parking zone object to GET /parkingzones/:id ", (done) => {
         request(app)
@@ -59,13 +56,13 @@ describe("ParkingZonesRouter", () => {
                 expect(res.body.properties.payment_link).to.be.a("string");
                 done();
             });
-    });*/
+    });
 
-    /*it("should respond with json to GET /parkingzones/:id/tariffs ", (done) => {
+    it("should respond with json to GET /parkingzones/:id/tariffs ", (done) => {
         request(app)
             .get("/parkingzones/" + parkingZoneCode + "/tariffs")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200, done);
-    });*/
+    });
 });

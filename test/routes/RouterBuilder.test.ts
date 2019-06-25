@@ -1,29 +1,20 @@
 "use strict";
 
-import "mocha";
-const config = require("../../src/config/config");
-const sinon = require("sinon");
 import * as express from "express";
-const request = require("supertest");
-import { RouterBuilder, IDatasetDefinition } from "../../src/core/routes/RouterBuilder";
-import { IceGatewayStreetLamps } from "golemio-schema-definitions";
+import "mocha";
+import * as sinon from "sinon";
+import { generalRoutes } from "../../src/App";
 
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as request from "supertest";
 import { log } from "../../src/core/Logger";
+import { RouterBuilder, IDatasetDefinition } from "../../src/core/routes/RouterBuilder";
 
 chai.use(chaiAsPromised);
 
 describe("RouterBuilder", () => {
-
-    const testLoadData: IDatasetDefinition[] = [
-        {
-            collectionName: IceGatewayStreetLamps.mongoCollectionName,
-            name: IceGatewayStreetLamps.name,
-            schema: IceGatewayStreetLamps.outputMongooseSchemaObject,
-        }
-    ];
 
     const app: express.Application = express();
     const defaultRouter = express.Router();
@@ -37,7 +28,7 @@ describe("RouterBuilder", () => {
 
         app.use("/", defaultRouter);
         routerBuilder = new RouterBuilder(defaultRouter);
-        routerBuilder.LoadData(testLoadData);
+        routerBuilder.LoadData(generalRoutes);
         routerBuilder.BuildAllRoutes();
     });
 
@@ -74,12 +65,14 @@ describe("RouterBuilder", () => {
     });
 
     it("should respond with json to GET for all generic routes", (done) => {
-        testLoadData.forEach((x: IDatasetDefinition) => {
+        generalRoutes.forEach((x: IDatasetDefinition) => {
+            const endpoint = "/" + x.name.toLowerCase();
+            log.info(endpoint);
             request(app)
-                .get("/" + x.name.toLowerCase())
+                .get(endpoint)
                 .set("Accept", "application/json")
                 .expect("Content-Type", /json/)
-                .expect(200, done)
+                .expect(200, done);
         });
     });
 });

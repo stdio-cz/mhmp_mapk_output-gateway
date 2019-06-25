@@ -19,7 +19,7 @@ export class GTFSRoutesModel extends SequelizeModel {
         limit?: number,
         offset?: number,
     } = {}): Promise<any> => {
-        const {limit, offset} = options;
+        const { limit, offset } = options;
         try {
 
             const order: any = [];

@@ -1,11 +1,11 @@
-import {VehiclePositions} from "golemio-schema-definitions";
-import {IncludeOptions, Model} from "sequelize";
-import {models} from ".";
-import {sequelizeConnection} from "../../../core/database";
-import {CustomError} from "../../../core/errors";
-import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
-import {log} from "../../../core/Logger";
-import {SequelizeModel} from "./../../../core/models/";
+import { VehiclePositions } from "golemio-schema-definitions";
+import { IncludeOptions, Model } from "sequelize";
+import { models } from ".";
+import { sequelizeConnection } from "../../../core/database";
+import { CustomError } from "../../../core/errors";
+import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../../../core/Geo";
+import { log } from "../../../core/Logger";
+import { SequelizeModel } from "./../../../core/models/";
 
 export class VehiclePositionsTripsModel extends SequelizeModel {
 
@@ -43,9 +43,9 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         includePositions?: boolean,
         limit?: number,
         offset?: number,
-    }): Promise<any> => {
+    } = {}): Promise<any> => {
         try {
-            const {limit, offset} = options;
+            const { limit, offset } = options;
             const include = this.ComposeIncludes(options);
             const data = await this.sequelizeModel
                 .findAll({
@@ -53,10 +53,10 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                     limit,
                     offset,
                     where: {
-                        gtfs_trip_id: {[sequelizeConnection.Sequelize.Op.ne]: null},
-                        ...(options.routeId && {gtfs_route_id: options.routeId}),
-                        ...(options.routeShortName && {gtfs_route_short_name: options.routeShortName}),
-                        ...(options.tripId && {gtfs_trip_id: options.tripId}),
+                        gtfs_trip_id: { [sequelizeConnection.Sequelize.Op.ne]: null },
+                        ...(options.routeId && { gtfs_route_id: options.routeId }),
+                        ...(options.routeShortName && { gtfs_route_short_name: options.routeShortName }),
+                        ...(options.tripId && { gtfs_trip_id: options.tripId }),
                     },
                 });
 
@@ -101,18 +101,18 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      */
     private ConvertItem = (item: any) => {
         const { last_position,
-                ropidgtfs_trip,
-                all_positions = [],
-                ...trip } = item.toJSON ? item.toJSON() : item;
+            ropidgtfs_trip,
+            all_positions = [],
+            ...trip } = item.toJSON ? item.toJSON() : item;
         const tripObject = {
             trip,
-            ...{last_position},
+            ...{ last_position },
             ...(all_positions.length &&
                 {
                     all_positions: buildGeojsonFeatureCollection(
-                            all_positions,
-                            "lng",
-                            "lat",
+                        all_positions,
+                        "lng",
+                        "lat",
                     ),
                 }
             ),

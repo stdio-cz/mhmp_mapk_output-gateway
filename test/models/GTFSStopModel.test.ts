@@ -2,19 +2,16 @@
 
 import "mocha";
 
-const config = require("../../src/config/config");
-
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
 
 import * as path from "path";
 
-import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
+import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
-const sinon = require("sinon");
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-import { log } from "../../src/core/Logger";
+import * as sinon from "sinon";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import { models } from "../../src/resources/gtfs/models";
 import { GTFSStopModel } from "../../src/resources/gtfs/models/GTFSStopModel";
 
@@ -42,7 +39,7 @@ describe("GTFSStopModel", () => {
         [
             path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stops.json")),
         ],
-        {logging: false},
+        { logging: false },
     );
 
     it("should instantiate", () => {
@@ -57,7 +54,7 @@ describe("GTFSStopModel", () => {
 
     // let tripId: number;
     it("should return few items", async () => {
-        const result = await stopModel.GetAll({limit: 10, offset: 10});
+        const result = await stopModel.GetAll({ limit: 10, offset: 10 });
         expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);
         expect(result.type).to.be.equal("FeatureCollection");
         expect(result.features[0]).to.have.property("geometry");

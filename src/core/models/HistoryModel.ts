@@ -1,4 +1,3 @@
-import { IceGatewaySensors } from "golemio-schema-definitions";
 import { SchemaDefinition } from "mongoose";
 import { CustomError } from "../../core/errors";
 import { MongoModel } from "../../core/models";

@@ -1,10 +1,10 @@
 "use strict";
 
 import "mocha";
-import { models } from "../../src/resources/vehiclepositions/models";
-import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+
+import * as path from "path";
 
 import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
@@ -12,21 +12,24 @@ import * as sinon from "sinon";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import { SortedWastePicksModel } from "../../src/resources/sortedwastestations/SortedWastePicksModel";
 
 chai.use(chaiAsPromised);
 
-describe("VehiclePositionsTripsModel", () => {
+describe("SortedWastePicksModel", () => {
 
-    const vehiclepositionsModel: VehiclePositionsTripsModel = models.VehiclePositionsTripsModel;
+    let sortedWastePicksModel: SortedWastePicksModel;
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
+    const id = 2;
 
-    beforeEach(() => {
+    before(() => {
         sandbox = sinon.createSandbox();
+        sortedWastePicksModel = new SortedWastePicksModel();
     });
 
-    afterEach(() => {
+    after(() => {
         sandbox && sandbox.restore();
     });
 
@@ -38,13 +41,11 @@ describe("VehiclePositionsTripsModel", () => {
     );
 
     it("should instantiate", () => {
-        expect(vehiclepositionsModel).not.to.be.undefined;
+        expect(sortedWastePicksModel).not.to.be.undefined;
     });
 
     it("should return all items", async () => {
-        const result = await vehiclepositionsModel.GetAll();
-        expect(result).to.be.an.instanceOf(Object);
-        expect(result.features).to.be.an.instanceOf(Array);
-        expect(result.type).to.be.equal("FeatureCollection");
+        const result = await sortedWastePicksModel.GetAll();
+        expect(result).to.be.an.instanceOf(Array);
     });
 });

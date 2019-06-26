@@ -64,15 +64,15 @@ describe("RouterBuilder", () => {
         expect(routerBuilder.BuildAllRoutes).not.to.be.undefined;
     });
 
-    it("should respond with json to GET for all generic routes", (done) => {
-        generalRoutes.forEach((x: IDatasetDefinition) => {
+    it("should respond with json to GET for all generic routes", async () => {
+        const promises: request.Test[] = generalRoutes.map(x => {
             const endpoint = "/" + x.name.toLowerCase();
-            log.info(endpoint);
-            request(app)
+            return request(app)
                 .get(endpoint)
                 .set("Accept", "application/json")
                 .expect("Content-Type", /json/)
-                .expect(200, done);
+                .expect(200);
         });
+        await Promise.all(promises);
     });
 });

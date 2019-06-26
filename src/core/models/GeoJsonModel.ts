@@ -31,7 +31,7 @@ export class GeoJsonModel extends MongoModel {
         super(inName, inSchema, inCollectionName);
 
         // create $geonear index
-        this.schema.index({geometry: "2dsphere"});
+        this.schema.index({ geometry: "2dsphere" });
     }
 
     /** Retrieves all the records from database
@@ -46,28 +46,28 @@ export class GeoJsonModel extends MongoModel {
      * @param options.additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
-    public GetAll = async ( options: {
-                            /** Latitude to sort results by (by proximity) */
-                            lat?: number,
-                            /** Longitute to sort results by */
-                            lng?: number,
-                            /** Maximum range from specified latLng. Only data within this range will be returned. */
-                            range?: number,
-                            /** Limit (can be used for pagination). Evaluated last, after all filters applied. */
-                            limit?: number,
-                            /** Offset (can be used for pagination). Evaluated last, after all filters applied. */
-                            offset?: number,
-                            /** Filters all results with older updated_at timestamp than this parameter
-                             * (filters not-updated data)
-                             */
-                            updatedSince?: number,
-                            /** Filters the data to include only these with one of the specified "district" value */
-                            districts?: string[],
-                            /** Filters the data to include only specified IDs */
-                            ids?: number[],
-                            /** Object with additional filter conditions to be added to the selection */
-                            additionalFilters?: object,
-    } = {} ) => {
+    public GetAll = async (options: {
+        /** Latitude to sort results by (by proximity) */
+        lat?: number,
+        /** Longitute to sort results by */
+        lng?: number,
+        /** Maximum range from specified latLng. Only data within this range will be returned. */
+        range?: number,
+        /** Limit (can be used for pagination). Evaluated last, after all filters applied. */
+        limit?: number,
+        /** Offset (can be used for pagination). Evaluated last, after all filters applied. */
+        offset?: number,
+        /** Filters all results with older updated_at timestamp than this parameter
+         * (filters not-updated data)
+         */
+        updatedSince?: number,
+        /** Filters the data to include only these with one of the specified "district" value */
+        districts?: string[],
+        /** Filters the data to include only specified IDs */
+        ids?: number[],
+        /** Object with additional filter conditions to be added to the selection */
+        additionalFilters?: object,
+    } = {}) => {
         try {
             const q = this.model.find({});
 
@@ -77,7 +77,7 @@ export class GeoJsonModel extends MongoModel {
                     geometry: {
                         $near: {
                             $geometry: {
-                                coordinates: [ options.lng, options.lat ],
+                                coordinates: [options.lng, options.lat],
                                 type: "Point",
                             },
                         },
@@ -102,7 +102,7 @@ export class GeoJsonModel extends MongoModel {
 
             // Specify a query filter conditions to search by IDs
             if (options.ids) {
-                this.AddSelection(this.PrimaryIdentifierSelection({$in: options.ids}));
+                this.AddSelection(this.PrimaryIdentifierSelection({ $in: options.ids }));
             }
 
             // Specify a query filter conditions to search by additional filter parameters

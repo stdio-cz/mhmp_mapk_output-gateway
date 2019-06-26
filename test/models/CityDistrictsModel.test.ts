@@ -1,10 +1,10 @@
 "use strict";
 
 import "mocha";
-import { models } from "../../src/resources/vehiclepositions/models";
-import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+
+import * as path from "path";
 
 import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
@@ -12,21 +12,24 @@ import * as sinon from "sinon";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import { CityDistrictsModel } from "../../src/resources/citydistricts/CityDistrictsModel";
 
 chai.use(chaiAsPromised);
 
-describe("VehiclePositionsTripsModel", () => {
+describe("CityDistrictsModel", () => {
 
-    const vehiclepositionsModel: VehiclePositionsTripsModel = models.VehiclePositionsTripsModel;
+    let cityDistrictsModel: CityDistrictsModel;
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
+    const id: string = "praha-petrovice";
 
-    beforeEach(() => {
+    before(() => {
         sandbox = sinon.createSandbox();
+        cityDistrictsModel = new CityDistrictsModel();
     });
 
-    afterEach(() => {
+    after(() => {
         sandbox && sandbox.restore();
     });
 
@@ -38,13 +41,18 @@ describe("VehiclePositionsTripsModel", () => {
     );
 
     it("should instantiate", () => {
-        expect(vehiclepositionsModel).not.to.be.undefined;
+        expect(cityDistrictsModel).not.to.be.undefined;
     });
 
     it("should return all items", async () => {
-        const result = await vehiclepositionsModel.GetAll();
+        const result = await cityDistrictsModel.GetAll();
         expect(result).to.be.an.instanceOf(Object);
         expect(result.features).to.be.an.instanceOf(Array);
-        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return single item", async () => {
+        const route: any = await cityDistrictsModel.GetOne(id);
+        expect(route).not.to.be.empty;
+        expect(route.properties).to.have.property("slug", id);
     });
 });

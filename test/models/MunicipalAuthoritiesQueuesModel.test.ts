@@ -1,10 +1,10 @@
 "use strict";
 
 import "mocha";
-import { models } from "../../src/resources/vehiclepositions/models";
-import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+
+import * as path from "path";
 
 import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
@@ -12,21 +12,24 @@ import * as sinon from "sinon";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import { MunicipalAuthoritiesQueuesModel } from "../../src/resources/municipalauthorities/MunicipalAuthoritiesQueuesModel";
 
 chai.use(chaiAsPromised);
 
-describe("VehiclePositionsTripsModel", () => {
+describe("MunicipalAuthoritiesQueuesModel", () => {
 
-    const vehiclepositionsModel: VehiclePositionsTripsModel = models.VehiclePositionsTripsModel;
+    let municipalAuthoritiesQueuesModel: MunicipalAuthoritiesQueuesModel;
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
+    const authorityId: string = "skoduv-palac";
 
-    beforeEach(() => {
+    before(() => {
         sandbox = sinon.createSandbox();
+        municipalAuthoritiesQueuesModel = new MunicipalAuthoritiesQueuesModel();
     });
 
-    afterEach(() => {
+    after(() => {
         sandbox && sandbox.restore();
     });
 
@@ -38,13 +41,17 @@ describe("VehiclePositionsTripsModel", () => {
     );
 
     it("should instantiate", () => {
-        expect(vehiclepositionsModel).not.to.be.undefined;
+        expect(municipalAuthoritiesQueuesModel).not.to.be.undefined;
     });
 
     it("should return all items", async () => {
-        const result = await vehiclepositionsModel.GetAll();
+        const result = await municipalAuthoritiesQueuesModel.GetAll();
         expect(result).to.be.an.instanceOf(Object);
         expect(result.features).to.be.an.instanceOf(Array);
-        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return all queues", async () => {
+        const result = await municipalAuthoritiesQueuesModel.GetQueues(authorityId);
+        expect(result).to.be.an.instanceOf(Object);
     });
 });

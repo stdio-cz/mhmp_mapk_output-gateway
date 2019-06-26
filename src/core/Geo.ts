@@ -38,7 +38,7 @@ export interface IGeoJSONFeatureCollection {
  * @returns {object} Object with lat, lng, and range numerical values
  */
 export const parseCoordinates = async (latlng: string,
-                                       range: string,
+    range: string,
 ): Promise<{
     lat: number | undefined,
     lng: number | undefined,
@@ -62,7 +62,7 @@ export const parseCoordinates = async (latlng: string,
             return Promise.reject(new CustomError("Bad request - wrong input parameters", true, 400));
         }
     }
-    return {lat, lng, range: ran};
+    return { lat, lng, range: ran };
 };
 
 /**
@@ -99,26 +99,26 @@ export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty:
  */
 export const buildGeojsonFeatureCollection =
     (items: any, lonProperty?: string, latProperty?: string): IGeoJSONFeatureCollection => {
-            if (!lonProperty || !latProperty) {
-                log.silly("Custom lat or lon property path not specified when building GeoJSON FeatureCollection,"
+        if (!lonProperty || !latProperty) {
+            log.silly("Custom lat or lon property path not specified when building GeoJSON FeatureCollection,"
                 + " assuming GeoJSONFeature format of data.");
-                if (    items.length > 0 &&
-                        (!items[0].geometry ||
-                        !items[0].geometry.coordinates ||
-                        !items[0].geometry.type ||
-                        items[0].type !== "Feature" ||
-                        !items[0].properties)) {
-                    log.warn("The data are not in GeoJSONFeature format and lat lon " +
+            if (items.length > 0 &&
+                (!items[0].geometry ||
+                    !items[0].geometry.coordinates ||
+                    !items[0].geometry.type ||
+                    items[0].type !== "Feature" ||
+                    !items[0].properties)) {
+                log.warn("The data are not in GeoJSONFeature format and lat lon " +
                     "property locations were not specified. Possible malformed GeoJSON on output");
-                }
-                return {
-                    features: items,
-                    type: "FeatureCollection",
-                };
-            } else {
-                return {
-                    features: items.map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty)),
-                    type: "FeatureCollection",
-                };
             }
-        };
+            return {
+                features: items,
+                type: "FeatureCollection",
+            };
+        } else {
+            return {
+                features: items.map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty)),
+                type: "FeatureCollection",
+            };
+        }
+    };

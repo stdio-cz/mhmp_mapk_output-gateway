@@ -1,10 +1,10 @@
 "use strict";
 
 import "mocha";
-import { models } from "../../src/resources/vehiclepositions/models";
-import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+
+import * as path from "path";
 
 import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
@@ -12,21 +12,24 @@ import * as sinon from "sinon";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import { MedicalInstitutionsModel } from "../../src/resources/medicalinstitutions/MedicalInstitutionsModel";
 
 chai.use(chaiAsPromised);
 
-describe("VehiclePositionsTripsModel", () => {
+describe("MedicalInstitutionsModel", () => {
 
-    const vehiclepositionsModel: VehiclePositionsTripsModel = models.VehiclePositionsTripsModel;
+    let medicalInstitutionsModel: MedicalInstitutionsModel;
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
+    const id: string = "01995093000-adamova-lekarna";
 
-    beforeEach(() => {
+    before(() => {
         sandbox = sinon.createSandbox();
+        medicalInstitutionsModel = new MedicalInstitutionsModel();
     });
 
-    afterEach(() => {
+    after(() => {
         sandbox && sandbox.restore();
     });
 
@@ -38,13 +41,18 @@ describe("VehiclePositionsTripsModel", () => {
     );
 
     it("should instantiate", () => {
-        expect(vehiclepositionsModel).not.to.be.undefined;
+        expect(medicalInstitutionsModel).not.to.be.undefined;
     });
 
     it("should return all items", async () => {
-        const result = await vehiclepositionsModel.GetAll();
+        const result = await medicalInstitutionsModel.GetAll();
         expect(result).to.be.an.instanceOf(Object);
         expect(result.features).to.be.an.instanceOf(Array);
-        expect(result.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return single item", async () => {
+        const route: any = await medicalInstitutionsModel.GetOne(id);
+        expect(route).not.to.be.empty;
+        expect(route.properties).to.have.property("id", id);
     });
 });

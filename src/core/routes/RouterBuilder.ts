@@ -3,13 +3,13 @@ import { SchemaDefinition } from "mongoose";
 import { GeoJsonRouter, HistoryRouter } from ".";
 import { log } from "../Logger";
 import { GeoJsonModel, HistoryModel } from "../models";
-import { IceGatewaySensors } from 'golemio-schema-definitions';
 
 export interface IDatasetDefinition {
     name: string;
     schema: SchemaDefinition;
     collectionName: string;
     history?: IDatasetDefinition;
+    historyTimePropertyLocation?: string;
 }
 
 /**
@@ -86,12 +86,10 @@ export class RouterBuilder {
     public CreateHistoryRoutes(inData: IDatasetDefinition[]) {
         inData.forEach((data) => {
             if (data.history) {
-                const timePropertyLocation: string | undefined =
-                    data.history.name === IceGatewaySensors.history.name ? "created_at" : undefined;
                 this.CreateHistoryRoute(
                     "/" + data.name.toLowerCase() + "/history",
                     new HistoryModel(data.history.name, data.history.schema, data.history.collectionName,
-                        timePropertyLocation),
+                        data.history.historyTimePropertyLocation),
                 );
             }
         });

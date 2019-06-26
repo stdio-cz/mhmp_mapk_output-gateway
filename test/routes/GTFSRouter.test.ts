@@ -198,14 +198,12 @@ describe("GTFS Router", () => {
     });
 
     // TODO sqlite cannot process date functions correctly
-    /*it("should respond with 200 to GET /gtfs/services?date=2019-02-28 ", (done) => {
-        request(app)
-            .get("/gtfs/services?date=20190228").end((err: any, res: any) => {
-                console.log('haaaa');
-                console.log(err);
-                expect(res.statusCode).to.be.equal(200);
-                expect(res.body).to.be.instanceOf(Array);
-                done();
-            });
-    });*/
+    /*  it("should respond with 200 to GET /gtfs/services?date=2019-02-28 ", (done) => {
+          request(app)
+              .get("/gtfs/services?date=2019-02-28").end((err: any, res: any) => {
+                  expect(res.statusCode).to.be.equal(200);
+                  expect(res.body).to.be.instanceOf(Array);
+                  done();
+              });
+      });*/
 });

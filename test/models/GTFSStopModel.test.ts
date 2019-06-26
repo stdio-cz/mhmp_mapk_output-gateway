@@ -52,7 +52,6 @@ describe("GTFSStopModel", () => {
         expect(result.type).to.be.equal("FeatureCollection");
     });
 
-    // let tripId: number;
     it("should return few items", async () => {
         const result = await stopModel.GetAll({ limit: 10, offset: 10 });
         expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);
@@ -60,8 +59,6 @@ describe("GTFSStopModel", () => {
         expect(result.features[0]).to.have.property("geometry");
         expect(result.features[0]).to.have.property("properties");
         expect(result.features[0]).to.have.property("type", "Feature");
-        // expect(result.features[0]).to.have.property("trip_id");
-        // tripId = result.features[0].trip_id;
     });
 
     it("should return single item", async () => {

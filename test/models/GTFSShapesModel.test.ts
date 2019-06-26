@@ -3,6 +3,7 @@
 import "mocha";
 
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
+import * as path from "path";
 
 import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
@@ -22,7 +23,6 @@ describe("GTFSShapesModel", () => {
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
-    const shapeId: string = "L991V1";
 
     beforeEach(() => {
         sandbox = sinon.createSandbox();
@@ -35,25 +35,18 @@ describe("GTFSShapesModel", () => {
     // Load fake data for the users
     sequelizeMockingMocha(
         sequelize,
-        [],
+        [
+            //    path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_shapes.json")),
+        ],
         { logging: false },
     );
-
-    it("should instantiate", () => {
-        expect(shapeModel).not.to.be.undefined;
-    });
-
-    // it("should return all items", async () => {
-    //     const result = await shapeModel.GetAll();
-    //     expect(result).to.be.an.instanceOf(Array).and.lengthOf(0);
-    // });
-    //
-    // it("should return single item", async () => {
-    //     const shape: any = await shapeModel.GetOne(shapeId);
-    //     expect(shape).to.be.null;
-    //     // expect(shape.properties).to.have.property("shape_id", shapeId);
-    //     // expect(shape).to.have.property("geometry");
-    //     // expect(shape).to.have.property("properties");
-    //     // expect(shape).to.have.property("type", "Feature");
-    // });
+    /*
+        it("should instantiate", () => {
+            expect(shapeModel).not.to.be.undefined;
+        });
+    
+        it("should return all items", async () => {
+            const result = await shapeModel.GetAll();
+            expect(result).to.be.an.instanceOf(Array).and.lengthOf(0);
+        });*/
 });

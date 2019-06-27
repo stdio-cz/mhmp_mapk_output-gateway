@@ -28,7 +28,6 @@ run_tests:
     - cd node_modules/golemio-schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f test/dump.sql
     - NODE_ENV=production npm run code-coverage
-    - npm start &
     - dredd
 
 build_image:

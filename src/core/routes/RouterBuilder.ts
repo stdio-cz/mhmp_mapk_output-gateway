@@ -1,8 +1,15 @@
 import { Router } from "express";
 import { SchemaDefinition } from "mongoose";
-import { GeoJsonRouter } from ".";
+import { GeoJsonRouter, HistoryRouter } from ".";
 import { log } from "../Logger";
-import { GeoJsonModel } from "../models";
+import { GeoJsonModel, HistoryModel } from "../models";
+
+export interface IDatasetDefinition {
+    name: string;
+    schema: SchemaDefinition;
+    collectionName: string;
+    history?: IDatasetDefinition;
+}
 
 /**
  * General router builder. Creates routes on top of passed Express router
@@ -30,7 +37,7 @@ export class RouterBuilder {
      * @param inName Name of the route, serves as base url for the route's requests {base router}/{inName}/
      * @param inModel Model whose methods are to be mounted on the routes
      *
-     * Creates a router with the model's methods mounted on {inName}/ and {inName}/:id
+     * Creates a router with the model's methods mounted on {inName}/...
      */
     public CreateGeojsonRoute(inName: string, inModel: GeoJsonModel) {
         const generalRouter = new GeoJsonRouter(inModel);
@@ -40,33 +47,65 @@ export class RouterBuilder {
 
     /**
      *
+     * @param inName Name of the route, serves as base url for the route's requests {base router}/{inName}/
+     * @param inModel Model whose methods are to be mounted on the routes
+     *
+     * Creates a router with the model's methods mounted on {inName}/...
+     */
+    public CreateHistoryRoute(inName: string, inModel: HistoryModel) {
+        const historyRouter = new HistoryRouter(inModel);
+        historyRouter.initRoutes();
+        this.router.use(inName, historyRouter.router);
+    }
+
+    /**
+     *
      * @param inData Array with data about the new created routes, contains object with name
      * (specifies where the routes will be available)
      * and schema (format of the data to be returned at the routes).
      *
-     * Binds routes to /{name}
+     * Binds all routes passed as parameter to /{their name}
      */
-    public CreateGeojsonRoutes(inData: Array<{name: string, schema: SchemaDefinition, collectionName: string}>) {
+    public CreateGeojsonRoutes(inData: IDatasetDefinition[]) {
         inData.forEach((data) => {
-            this.CreateGeojsonRoute("/" + data.name.toLowerCase(),
-                                    new GeoJsonModel(data.name, data.schema, data.collectionName),
-                                );
+            this.CreateGeojsonRoute(
+                "/" + data.name.toLowerCase(),
+                new GeoJsonModel(data.name, data.schema, data.collectionName),
+            );
+        });
+    }
+
+    /**
+     *
+     * @param inData Array with data about the new created routes
+     * if it contains a "history" sub-object, this creates a route for that
+     *
+     * Binds history route passed as parameter to /{their name}/history
+     */
+    public CreateHistoryRoutes(inData: IDatasetDefinition[]) {
+        inData.forEach((data) => {
+            if (data.history) {
+                this.CreateHistoryRoute(
+                    "/" + data.name.toLowerCase() + "/history",
+                    new HistoryModel(data.history.name, data.history.schema, data.history.collectionName),
+                );
+            }
         });
     }
 
     /**
      * Loads the data for building the routes
      */
-    public LoadData(data: Array<{name: string, schema: SchemaDefinition, collectionName: string}>) {
-        log.silly(`RouterBuilder: Loaded data to build ${data.length} sets of routes`);
+    public LoadData(inData: IDatasetDefinition[]) {
+        log.silly(`RouterBuilder: Loaded data to build ${inData.length} sets of routes`);
         if (this.routesData && this.routesData.length >= 0) {
             log.warn("Routes data were not empty. Rewriting with new set of data. All previous will be lost.");
         }
-        this.routesData = data;
+        this.routesData = inData;
     }
 
     /**
-     * Builds all routes based on data in this.data and mouts them to this.router
+     * Builds all routes based on data in this.data and mounts them to this.router
      */
     public BuildAllRoutes() {
         if (!this.routesData || this.routesData.length === 0) {
@@ -74,6 +113,7 @@ export class RouterBuilder {
             + "Make sure to call .LoadData before you .BuildAllRoutes");
             log.debug(this.routesData);
         }
+        this.CreateHistoryRoutes(this.routesData);
         this.CreateGeojsonRoutes(this.routesData);
     }
 }

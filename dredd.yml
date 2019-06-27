@@ -1,7 +1,7 @@
 reporter: apiary
 custom:
-  apiaryApiKey: 4ea8e3d9df573f63e950044861ec74e9
-  apiaryApiName: golemiooutputgateway
+  apiaryApiKey: 9cb313693c5c83c60684d53422f45868
+  apiaryApiName: outputgatewaydev
 dry-run: null
 language: nodejs
 server: npm start

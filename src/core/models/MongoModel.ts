@@ -10,7 +10,7 @@ import { BaseModel } from "./";
 export abstract class MongoModel extends BaseModel {
     /** The Mongoose Model */
     public model: Model<any>;
-    /** The schema which contains schemaObject for creating the Mongoose Schema */
+    /** The Mongoose Schema object, defining structure of the data */
     protected schema: Schema;
     /** Name of the mongo collection where the model is stored in the database */
     protected collectionName: string | undefined;
@@ -46,6 +46,23 @@ export abstract class MongoModel extends BaseModel {
     }
 
     /**
+     * Returns current schema of the data
+     */
+    public GetSchema = async () => {
+        return this.schema;
+    }
+
+    // TODO: Careful, Router takes this keys()[0] as a decision, if ID parameter can be string or number,
+    // that's weird dependency - selection with $or on two attributes for example will fail!
+    /**
+     * Specifies where is the primary ID of the entity.
+     * Searches by this selection in FindOne()
+     */
+    public PrimaryIdentifierSelection = (inId: any): object => {
+        return {"properties.id": inId};
+    }
+
+    /**
      * Adds a new selection condition to filter the retrieved results by
      * @param newCondition New condition/filter object to be added to the "where" clause
      */
@@ -59,13 +76,5 @@ export abstract class MongoModel extends BaseModel {
      */
     protected AddProjection = (newFilter: object) => {
         this.projection = {...this.projection, ...newFilter};
-    }
-
-    /**
-     * Specify (location within the object structure stored in DB) where to search by primary ID
-     * The entity is uniquely identified by this property
-     */
-    protected PrimaryIdentifierSelection = (inId: any): object => {
-        return {"properties.id": inId};
     }
 }

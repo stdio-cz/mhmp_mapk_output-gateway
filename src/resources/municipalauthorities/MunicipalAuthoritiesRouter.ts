@@ -48,7 +48,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
             if (typeFilter) {
                 additionalFilters = {
                     ...additionalFilters,
-                    ...{ "properties.type.name": req.query.type },
+                    ...{ "properties.type.id": req.query.type },
                 };
             }
             const data = await this.model.GetAll({

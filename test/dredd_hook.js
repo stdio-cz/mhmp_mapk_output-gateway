@@ -3,9 +3,9 @@ const hooks = require('hooks');
 var storage = {};
 
 hooks.beforeEach(function (transaction) {
-    transaction.request.uri = transaction.request.uri.replace(/\?.*/g, ""); 
-    transaction.fullPath = transaction.fullPath.replace(/\?.*/g, ""); 
-    hooks.log("Testing Request: " + JSON.stringify(transaction.request));
+    transaction.request.uri = transaction.request.uri.replace(/\?.*/g, "");
+    transaction.fullPath = transaction.fullPath.replace(/\?.*/g, "");
+    // hooks.log("Testing Request: " + JSON.stringify(transaction.request));
   });
 
 hooks.after('General > Prague City Districts > GET All Districts', (transaction) => {
@@ -24,6 +24,24 @@ hooks.after('Traffic > Shared Cars > GET All Shared Cars', (transaction) => {
 hooks.before('Traffic > Shared Car > GET Shared Car', (transaction) => {
     transaction.request.uri = transaction.request.uri.replace('1BF8210', storage["carId"]);
     transaction.fullPath = transaction.fullPath.replace('1BF8210', storage["carId"]);
+});
+
+hooks.after('Traffic > Shared Bikes > GET All Shared Bikes', (transaction) => {
+    storage["bikeId"] = JSON.parse(transaction.real.body).features[0].properties.id;
+});
+
+hooks.before('Traffic > Shared Bikes > GET Shared Bike', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('homeport-0076', storage["bikeId"]);
+    transaction.fullPath = transaction.fullPath.replace('homeport-0076', storage["bikeId"]);
+});
+
+hooks.after('Traffic > Bicycle Parkings > GET All Bicycle Parkings', (transaction) => {
+    storage["bicycleParkingId"] = JSON.parse(transaction.real.body).features[0].properties.id;
+});
+
+hooks.before('Traffic > Bicycle Parking > GET Bicycle Parking', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('282743091', storage["bicycleParkingId"]);
+    transaction.fullPath = transaction.fullPath.replace('282743091', storage["bicycleParkingId"]);
 });
 
 hooks.after('Traffic > Traffic Cameras > GET All Traffic Cameras', (transaction) => {

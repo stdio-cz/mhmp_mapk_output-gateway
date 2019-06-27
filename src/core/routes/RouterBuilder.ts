@@ -9,6 +9,7 @@ export interface IDatasetDefinition {
     schema: SchemaDefinition;
     collectionName: string;
     history?: IDatasetDefinition;
+    historyTimePropertyLocation?: string;
 }
 
 /**
@@ -26,7 +27,7 @@ export class RouterBuilder {
     /**
      * Routes data - name (base url) of the routes, data schemas and (optional) collection name
      */
-    private routesData: Array<{name: string, schema: SchemaDefinition, collectionName: string}>;
+    private routesData: Array<{ name: string, schema: SchemaDefinition, collectionName: string }>;
 
     constructor(inRouter: Router) {
         this.router = inRouter;
@@ -87,7 +88,8 @@ export class RouterBuilder {
             if (data.history) {
                 this.CreateHistoryRoute(
                     "/" + data.name.toLowerCase() + "/history",
-                    new HistoryModel(data.history.name, data.history.schema, data.history.collectionName),
+                    new HistoryModel(data.history.name, data.history.schema, data.history.collectionName,
+                        data.history.historyTimePropertyLocation),
                 );
             }
         });
@@ -110,7 +112,7 @@ export class RouterBuilder {
     public BuildAllRoutes() {
         if (!this.routesData || this.routesData.length === 0) {
             log.warn("Routes data for building routes seem to be empty."
-            + "Make sure to call .LoadData before you .BuildAllRoutes");
+                + "Make sure to call .LoadData before you .BuildAllRoutes");
             log.debug(this.routesData);
         }
         this.CreateHistoryRoutes(this.routesData);

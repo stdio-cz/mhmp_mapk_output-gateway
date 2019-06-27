@@ -34,22 +34,23 @@ import { sequelizeConnection } from "./core/database";
 
 import { mongooseConnection } from "./core/database";
 
-import {    AirQualityStations,
-            BicycleParkings,
-            Gardens,
-            IceGatewaySensors,
-            IceGatewayStreetLamps,
-            MedicalInstitutions,
-            Meteosensors,
-            MunicipalPoliceStations,
-            Parkings,
-            Playgrounds,
-            PublicToilets,
-            SharedBikes,
-            SharedCars,
-            TrafficCameras,
-            WasteCollectionYards,
-         } from "golemio-schema-definitions";
+import {
+    AirQualityStations,
+    BicycleParkings,
+    Gardens,
+    IceGatewaySensors,
+    IceGatewayStreetLamps,
+    MedicalInstitutions,
+    Meteosensors,
+    MunicipalPoliceStations,
+    Parkings,
+    Playgrounds,
+    PublicToilets,
+    SharedBikes,
+    SharedCars,
+    TrafficCameras,
+    WasteCollectionYards,
+} from "golemio-schema-definitions";
 
 import * as http from "http";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions/MedicalInstitutionsRouter";
@@ -215,6 +216,7 @@ export default class App {
                     history:
                     {
                         collectionName: IceGatewaySensors.history.mongoCollectionName,
+                        historyTimePropertyLocation: "created_at",
                         name: IceGatewaySensors.history.name,
                         schema: IceGatewaySensors.history.outputMongooseSchemaObject,
                     },

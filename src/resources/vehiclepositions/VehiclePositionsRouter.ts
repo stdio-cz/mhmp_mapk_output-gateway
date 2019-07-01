@@ -51,7 +51,7 @@ export class VehiclePositionsRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next();
+            next(err);
         }
     }
 

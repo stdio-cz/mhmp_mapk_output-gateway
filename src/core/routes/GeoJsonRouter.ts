@@ -117,7 +117,7 @@ export class GeoJsonRouter {
             res.status(200)
                 .send(data);
         }).catch((err) => {
-            next();
+            next(err);
         });
     }
 }

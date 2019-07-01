@@ -193,7 +193,7 @@ export default class App {
             res.redirect("/medicalinstitutions/" + req.params.id);
         });
         this.express.get("/medical-institutions", (req, res) => {
-            res.send("/medicalinstitutions");
+            res.redirect("/medicalinstitutions");
         });
         this.express.get("/shared-bikes/:id", (req, res) => {
             res.redirect("/sharedbikes/" + req.params.id);

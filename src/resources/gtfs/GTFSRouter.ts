@@ -128,7 +128,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next();
+            next(err);
         }
     }
 
@@ -157,7 +157,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next();
+            next(err);
         }
     }
 
@@ -183,7 +183,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next();
+            next(err);
         }
     }
 
@@ -200,7 +200,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next();
+            next(err);
         }
     }
 

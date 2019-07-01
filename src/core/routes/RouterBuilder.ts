@@ -10,6 +10,7 @@ export interface IDatasetDefinition {
     collectionName: string;
     history?: IDatasetDefinition;
     historyTimePropertyLocation?: string;
+    expire?: number | string;
 }
 
 /**
@@ -40,9 +41,9 @@ export class RouterBuilder {
      *
      * Creates a router with the model's methods mounted on {inName}/...
      */
-    public CreateGeojsonRoute(inName: string, inModel: GeoJsonModel) {
+    public CreateGeojsonRoute(inName: string, inModel: GeoJsonModel, expire?: number | string) {
         const generalRouter = new GeoJsonRouter(inModel);
-        generalRouter.initRoutes();
+        generalRouter.initRoutes(expire);
         this.router.use(inName, generalRouter.router);
     }
 
@@ -53,9 +54,9 @@ export class RouterBuilder {
      *
      * Creates a router with the model's methods mounted on {inName}/...
      */
-    public CreateHistoryRoute(inName: string, inModel: HistoryModel) {
+    public CreateHistoryRoute(inName: string, inModel: HistoryModel, expire?: number | string) {
         const historyRouter = new HistoryRouter(inModel);
-        historyRouter.initRoutes();
+        historyRouter.initRoutes(expire);
         this.router.use(inName, historyRouter.router);
     }
 

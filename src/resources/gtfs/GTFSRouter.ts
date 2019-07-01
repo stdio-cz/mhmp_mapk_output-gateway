@@ -12,6 +12,7 @@ import { CustomError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { log } from "../../core/Logger";
 import { checkErrors, pagination } from "../../core/Validation";
+import { useCacheMiddleware } from "../../modules/redis";
 import { models } from "./models";
 import { GTFSCalendarModel } from "./models/GTFSCalendarModel";
 import { GTFSRoutesModel } from "./models/GTFSRoutesModel";
@@ -49,7 +50,7 @@ export class GTFSRouter {
         query("from").optional().matches(this.timeRegex),
         query("to").optional().matches(this.timeRegex),
         query("date").optional().isISO8601(),
-        query("includeStop").optional().isBoolean()
+        query("includeStop").optional().isBoolean(),
     ];
 
     public constructor() {
@@ -127,7 +128,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next(err);
+            next();
         }
     }
 
@@ -156,7 +157,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next(err);
+            next();
         }
     }
 
@@ -182,7 +183,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next(err);
+            next();
         }
     }
 
@@ -199,7 +200,7 @@ export class GTFSRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next(err);
+            next();
         }
     }
 
@@ -215,53 +216,76 @@ export class GTFSRouter {
         this.initServicesEndpoints();
     }
 
-    private initRoutesEndpoints = (): void => {
+    private initRoutesEndpoints = (expire?: number | string): void => {
         this.router.get("/routes",
             pagination,
             checkErrors,
+            useCacheMiddleware(expire),
             this.GetAllRoutes,
         );
-        this.router.get("/routes/:id", param("id").exists(), this.GetOneRoute);
+        this.router.get("/routes/:id",
+            param("id").exists(),
+            useCacheMiddleware(expire),
+            this.GetOneRoute,
+        );
     }
 
-    private initServicesEndpoints = (): void => {
+    private initServicesEndpoints = (expire?: number | string): void => {
         this.router.get("/services",
             query("date").optional().isISO8601(),
             pagination,
             checkErrors,
+            useCacheMiddleware(expire),
             this.GetAllServices,
         );
     }
 
-    private initShapesEndpoints = (): void => {
+    private initShapesEndpoints = (expire?: number | string): void => {
         this.router.get("/shapes/:id",
             pagination,
             checkErrors,
             param("id").exists(),
+            useCacheMiddleware(expire),
             this.GetAllShapes,
         );
     }
 
-    private initTripsEndpoints = (): void => {
+    private initTripsEndpoints = (expire?: number | string): void => {
         this.router.get("/trips",
             query("stopId").optional(),
             this.tripInclusions,
             pagination,
             checkErrors,
+            useCacheMiddleware(expire),
             this.GetAllTrips,
         );
-        this.router.get("/trips/:id", param("id").exists(), this.tripInclusions, checkErrors, this.GetOneTrip);
+        this.router.get("/trips/:id",
+            param("id").exists(),
+            this.tripInclusions,
+            checkErrors,
+            useCacheMiddleware(expire),
+            this.GetOneTrip,
+        );
     }
 
-    private initStopsEndpoints = (): void => {
-        this.router.get("/stops", [
-            query("latlng").optional().isLatLong(),
-            query("range").optional().isNumeric(),
-        ], pagination, checkErrors, this.GetAllStops);
-        this.router.get("/stops/:id", [param("id").exists()], checkErrors, this.GetOneStop);
+    private initStopsEndpoints = (expire?: number | string): void => {
+        this.router.get("/stops",
+            [
+                query("latlng").optional().isLatLong(),
+                query("range").optional().isNumeric(),
+            ],
+            pagination,
+            checkErrors,
+            useCacheMiddleware(expire),
+            this.GetAllStops);
+        this.router.get("/stops/:id",
+            [param("id").exists()],
+            checkErrors,
+            useCacheMiddleware(expire),
+            this.GetOneStop);
     }
 
-    private initStopTimesEndpoints = (): void => {
+    private initStopTimesEndpoints = (expire?: number | string): void => {
         this.router.get(
             "/stoptimes/:stopId",
             this.stopTimesHandlers,
@@ -276,6 +300,7 @@ export class GTFSRouter {
                 }
                 return next();
             },
+            useCacheMiddleware(expire),
             this.GetAllStopTimes,
         );
     }

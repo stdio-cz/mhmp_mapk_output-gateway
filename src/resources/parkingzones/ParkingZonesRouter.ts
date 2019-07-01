@@ -9,6 +9,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
 import { GeoJsonRouter } from "../../core/routes";
+import { useCacheMiddleware } from "../../modules/redis";
 import { ParkingZonesModel } from "./ParkingZonesModel";
 
 export class ParkingZonesRouter extends GeoJsonRouter {
@@ -18,7 +19,11 @@ export class ParkingZonesRouter extends GeoJsonRouter {
     constructor() {
         super(new ParkingZonesModel());
         this.initRoutes();
-        this.router.get("/:id/tariffs", this.GetTariffs);
+        this.router.get(
+            "/:id/tariffs",
+            useCacheMiddleware(),
+            this.GetTariffs,
+        );
     }
 
     public GetTariffs = (req: Request, res: Response, next: NextFunction) => {

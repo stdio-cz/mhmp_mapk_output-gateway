@@ -8,6 +8,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
 import { CustomError } from "../../core/errors";
 import { checkErrors, pagination } from "../../core/Validation";
+import { useCacheMiddleware } from "../../modules/redis";
 import { models } from "./models";
 import { VehiclePositionsTripsModel } from "./models/VehiclePositionsTripsModel";
 
@@ -20,7 +21,7 @@ export class VehiclePositionsRouter {
 
     public constructor() {
         this.model = models.VehiclePositionsTripsModel;
-        this.initRoutes();
+        this.initRoutes(10000);
     }
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -50,23 +51,34 @@ export class VehiclePositionsRouter {
             }
             res.status(200).send(data);
         } catch (err) {
-            next(err);
+            next();
         }
     }
 
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
-    private initRoutes = (): void => {
-        this.router.get("/", [
-            query("routeId").optional(),
-            query("routeShortName").optional(),
-            query("includePositions").optional().isBoolean(),
-        ], pagination, checkErrors, this.GetAll);
-        this.router.get("/:id", [
-            param("id").exists(),
-            query("includePositions").optional().isBoolean(),
-        ], checkErrors, this.GetOne);
+    private initRoutes = (expire?: number | string): void => {
+        this.router.get("/",
+            [
+                query("routeId").optional(),
+                query("routeShortName").optional(),
+                query("includePositions").optional().isBoolean(),
+            ],
+            pagination,
+            checkErrors,
+            useCacheMiddleware(expire),
+            this.GetAll,
+        );
+        this.router.get("/:id",
+            [
+                param("id").exists(),
+                query("includePositions").optional().isBoolean(),
+            ],
+            checkErrors,
+            useCacheMiddleware(expire),
+            this.GetOne,
+        );
     }
 }
 

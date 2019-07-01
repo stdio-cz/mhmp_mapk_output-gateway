@@ -193,7 +193,7 @@ export default class App {
             res.redirect("/medicalinstitutions/" + req.params.id);
         });
         this.express.get("/medical-institutions", (req, res) => {
-            res.redirect("/medicalinstitutions");
+            res.send("/medicalinstitutions");
         });
         this.express.get("/shared-bikes/:id", (req, res) => {
             res.redirect("/sharedbikes/" + req.params.id);
@@ -225,6 +225,7 @@ export default class App {
                 },
                 {
                     collectionName: SharedCars.mongoCollectionName,
+                    expire: 30000,
                     name: SharedCars.name,
                     schema: SharedCars.outputMongooseSchemaObject,
                 },
@@ -285,6 +286,7 @@ export default class App {
                 },
                 {
                     collectionName: SharedBikes.mongoCollectionName,
+                    expire: 30000,
                     name: SharedBikes.name,
                     schema: SharedBikes.outputMongooseSchemaObject,
                 },

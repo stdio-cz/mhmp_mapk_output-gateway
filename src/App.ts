@@ -143,65 +143,6 @@ export default class App {
         this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
 
-        // Routes for backwards compatibility of the API
-        this.express.get("/shared-cars/:id", (req, res) => {
-            res.redirect("/sharedcars/" + req.params.id);
-        });
-        this.express.get("/shared-cars", (req, res) => {
-            res.redirect("/sharedcars");
-        });
-        this.express.get("/traffic-cameras/:id", (req, res) => {
-            res.redirect("/trafficcameras/" + req.params.id);
-        });
-        this.express.get("/traffic-cameras", (req, res) => {
-            res.redirect("/trafficcameras");
-        });
-        this.express.get("/parking-zones/:id", (req, res) => {
-            res.redirect("/parkingzones/" + req.params.id);
-        });
-        this.express.get("/parking-zones", (req, res) => {
-            res.redirect("/parkingzones");
-        });
-        this.express.get("/public-toilets/:id", (req, res) => {
-            res.redirect("/public-toilets/" + req.params.id);
-        });
-        this.express.get("/public-toilets", (req, res) => {
-            res.redirect("/publictoilets");
-        });
-        this.express.get("/municipal-police-stations/:id", (req, res) => {
-            res.redirect("/municipalpolicestations/" + req.params.id);
-        });
-        this.express.get("/municipal-police-stations", (req, res) => {
-            res.redirect("/municipalpolicestations");
-        });
-        this.express.get("/waste-collection-yards/:id", (req, res) => {
-            res.redirect("/wastecollectionyards/" + req.params.id);
-        });
-        this.express.get("/waste-collection-yards", (req, res) => {
-            res.redirect("/wastecollectionyards");
-        });
-        this.express.get("/sorted-waste-stations/:id", (req, res) => {
-            res.redirect("/sortedwastestations/" + req.params.id);
-        });
-        this.express.get("/sorted-waste-stations", (req, res) => {
-            res.redirect("/sortedwastestations");
-        });
-        this.express.get("/medical-institutions/types", (req, res) => {
-            res.redirect("/medicalinstitutions/types");
-        });
-        this.express.get("/medical-institutions/:id", (req, res) => {
-            res.redirect("/medicalinstitutions/" + req.params.id);
-        });
-        this.express.get("/medical-institutions", (req, res) => {
-            res.redirect("/medicalinstitutions");
-        });
-        this.express.get("/shared-bikes/:id", (req, res) => {
-            res.redirect("/sharedbikes/" + req.params.id);
-        });
-        this.express.get("/shared-bikes", (req, res) => {
-            res.redirect("/sharedbikes");
-        });
-
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(

@@ -10,7 +10,7 @@ import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as request from "supertest";
 import { log } from "../../src/core/Logger";
-import { RouterBuilder, IDatasetDefinition } from "../../src/core/routes/RouterBuilder";
+import { RouterBuilder } from "../../src/core/routes/RouterBuilder";
 
 chai.use(chaiAsPromised);
 

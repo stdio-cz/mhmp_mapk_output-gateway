@@ -128,7 +128,7 @@ export class GeoJsonModel extends MongoModel {
             // Create GeoJSON FeatureCollection output
             return buildGeojsonFeatureCollection(data);
         } catch (err) {
-            throw new CustomError("Database error", false, 500, err);
+            throw new CustomError("Database error", true, 500, err);
         }
     }
 

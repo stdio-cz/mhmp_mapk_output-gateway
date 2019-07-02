@@ -2,16 +2,10 @@
 
 import "mocha";
 
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-
-import * as path from "path";
-
-import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
-
-import * as sinon from "sinon";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
 import { MedicalInstitutionsModel } from "../../src/resources/medicalinstitutions/MedicalInstitutionsModel";
 
 chai.use(chaiAsPromised);
@@ -32,13 +26,6 @@ describe("MedicalInstitutionsModel", () => {
     after(() => {
         sandbox && sandbox.restore();
     });
-
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [],
-        { logging: false },
-    );
 
     it("should instantiate", () => {
         expect(medicalInstitutionsModel).not.to.be.undefined;

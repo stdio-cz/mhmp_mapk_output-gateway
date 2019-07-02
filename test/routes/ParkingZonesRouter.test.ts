@@ -1,11 +1,11 @@
 "use strict";
 
+import { expect } from "chai";
+import * as chai from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import * as express from "express";
 import "mocha";
 import * as request from "supertest";
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
 
 import { parkingZonesRouter } from "../../src/resources/parkingzones/ParkingZonesRouter";
 

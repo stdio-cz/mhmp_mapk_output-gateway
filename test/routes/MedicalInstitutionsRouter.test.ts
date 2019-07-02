@@ -6,11 +6,9 @@ import "mocha";
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as request from "supertest";
-import * as sinon from "sinon";
 import { log } from "../../src/core/Logger";
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
+import * as sinon from "sinon";
 import { handleError } from "../../src/core/errors";
 import { medicalInstitutionsRouter } from "../../src/resources/medicalinstitutions/MedicalInstitutionsRouter";
 
@@ -29,13 +27,6 @@ describe("MedicalInstitutions Router", () => {
     afterEach(() => {
         sandbox && sandbox.restore();
     });
-
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [],
-        { logging: false },
-    );
 
     before(() => {
         // Mount the tested router to the express instance

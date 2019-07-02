@@ -13,7 +13,7 @@ stages:
 
 run_tests:
   stage: build
-  image: gitlab.oict.cz:4567/data-platform/docker-node-env:latest
+  image: gitlab.oict.cz:4567/data-platform/devops/docker-node-env:latest
   services:
     - name: gitlab.oict.cz:4567/data-platform/devops/docker-postgis:10.5
       alias: postgres
@@ -28,7 +28,6 @@ run_tests:
     - cd node_modules/golemio-schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f test/dump.sql
     - NODE_ENV=production npm run code-coverage
-    - npm start &
     - dredd
 
 build_image:

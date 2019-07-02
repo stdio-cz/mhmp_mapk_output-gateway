@@ -2,17 +2,13 @@
 
 import "mocha";
 
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-
-import * as path from "path";
-
-import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
-
-import * as sinon from "sinon";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import { MunicipalAuthoritiesQueuesModel } from "../../src/resources/municipalauthorities/MunicipalAuthoritiesQueuesModel";
+import * as sinon from "sinon";
+import {
+    MunicipalAuthoritiesQueuesModel
+} from "../../src/resources/municipalauthorities/MunicipalAuthoritiesQueuesModel";
 
 chai.use(chaiAsPromised);
 
@@ -32,13 +28,6 @@ describe("MunicipalAuthoritiesQueuesModel", () => {
     after(() => {
         sandbox && sandbox.restore();
     });
-
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [],
-        { logging: false },
-    );
 
     it("should instantiate", () => {
         expect(municipalAuthoritiesQueuesModel).not.to.be.undefined;

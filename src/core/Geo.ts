@@ -37,7 +37,8 @@ export interface IGeoJSONFeatureCollection {
  * @param {range} range Range string
  * @returns {object} Object with lat, lng, and range numerical values
  */
-export const parseCoordinates = async (latlng: string,
+export const parseCoordinates = async (
+    latlng: string,
     range: string,
 ): Promise<{
     lat: number | undefined,

@@ -4,14 +4,10 @@ import "mocha";
 import { models } from "../../src/resources/vehiclepositions/models";
 import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-
-import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
-
-import * as sinon from "sinon";
-import * as chai from "chai";
 import { expect } from "chai";
+import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
 
 chai.use(chaiAsPromised);
 
@@ -29,13 +25,6 @@ describe("VehiclePositionsTripsModel", () => {
     afterEach(() => {
         sandbox && sandbox.restore();
     });
-
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [],
-        { logging: false },
-    );
 
     it("should instantiate", () => {
         expect(vehiclepositionsModel).not.to.be.undefined;

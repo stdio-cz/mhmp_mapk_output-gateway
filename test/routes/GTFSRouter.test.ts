@@ -2,20 +2,18 @@
 
 import "mocha";
 
-import * as express from "express";
-import * as config from "../../src/config/config";
-
-import * as sinon from "sinon";
-import * as chai from "chai";
 import { expect } from "chai";
-import * as request from "supertest";
-import * as chaiAsPromised from "chai-as-promised";
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
+import * as express from "express";
 
-import { log } from "../../src/core/Logger";
+import * as chai from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
+import * as request from "supertest";
+
 import { handleError } from "../../src/core/errors";
+import { log } from "../../src/core/Logger";
 import { gtfsRouter } from "../../src/resources/gtfs/GTFSRouter";
+
 
 chai.use(chaiAsPromised);
 
@@ -32,13 +30,6 @@ describe("GTFS Router", () => {
     afterEach(() => {
         sandbox && sandbox.restore();
     });
-
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [],
-        { logging: false },
-    );
 
     before(() => {
         // Mount the tested router to the express instance

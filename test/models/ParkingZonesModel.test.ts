@@ -1,16 +1,13 @@
 "use strict";
 
 import "mocha";
-import { ParkingZonesModel } from "../../src/resources/parkingzones/ParkingZonesModel";
-import * as config from "../../src/config/config";
 import { mongooseConnection } from "../../src/core/database";
-import { MongoDatabase } from "../../src/core/database/MongoDatabase";
-import { handleError } from "../../src/core/errors";
+import { ParkingZonesModel } from "../../src/resources/parkingzones/ParkingZonesModel";
 
-import * as sinon from "sinon";
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
 import { log } from "../../src/core/Logger";
 
 chai.use(chaiAsPromised);

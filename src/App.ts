@@ -8,6 +8,10 @@ import { NextFunction, Request, Response, Router } from "express";
 
 import * as httpLogger from "morgan";
 
+import * as fs from "fs";
+
+import * as path from "path";
+
 import * as mongoose from "mongoose";
 
 import config from "./config/config";
@@ -66,6 +70,8 @@ export default class App {
     // The port the express app will listen on
     public port: number = parseInt(config.port || "3004", 10);
 
+    private commitSHA: string;
+
     /**
      * Runs configuration methods on the Express instance
      * and start other necessary services (crons, database, middlewares).
@@ -77,6 +83,8 @@ export default class App {
     // Starts the application and runs the server
     public start = async (): Promise<void> => {
         try {
+            this.commitSHA = await this.loadCommitSHA();
+            log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
             this.express = express();
             this.middleware();
@@ -128,6 +136,7 @@ export default class App {
 
             res.json({
                 app_name: "Data Platform Output Gateway",
+                commit_sha: this.commitSHA,
                 status: "Up",
                 version: config.app_version,
             });
@@ -310,6 +319,20 @@ export default class App {
                     res.setHeader("Content-Type", "application/json; charset=utf-8");
                     res.status(error.error_status || 500).send(error);
                 }
+            });
+        });
+    }
+
+    /**
+     * Loading the Commit SHA of the current build
+     */
+    private loadCommitSHA = async (): Promise<string> => {
+        return new Promise<string>((resolve, reject) => {
+            fs.readFile(path.join(__dirname, "..", "commitsha"), (err, data) => {
+                if (err) {
+                    return resolve(undefined);
+                }
+                return resolve(data.toString());
             });
         });
     }

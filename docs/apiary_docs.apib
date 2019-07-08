@@ -1164,6 +1164,28 @@ Sensoric data from the city's IoT network.
             + (Feature Point)
                 + properties (Air Quality Station)
 
+## Air Quality Stations History [/airqualitystations/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
+
+### GET Air Quality Stations History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Air Quality Station History)
 
 ## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -1193,6 +1215,28 @@ Sensoric data from the city's IoT network.
             + (Feature Point)
                 + properties (IceGateway Sensor Group)
 
+## IceGateway Sensors History [/icegatewaysensors/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
+
+### GET IceGateway Sensors History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (IceGateway Sensors History)
 
 ## IceGateway Sensor [/icegatewaysensors/{icegeteway_code}]
 
@@ -1547,6 +1591,14 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
   + value: 10.7 (number),
 + type: NO2 (string)
 
+## Air Quality Station History (object)
+
++ id: ACHOA (string, required)
++ measurement
+  + AQ_hourly_index: 3 (number)
+  + components (array[Air Quality Station Component])
++ updated_at: 1556792400188 (number, required)
+
 ## Bicycle Parking (object)
 
 + district: `praha-4` (string)
@@ -1677,6 +1729,16 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + avg: 0 (number, required)
 + created_at: 1556802323 (number, required)
++ max: 0 (number, required)
++ min: 0 (number, required)
++ sensor_type: `weather.humidity` (string, required)
++ validity: 3 (number, required)
+
+## IceGateway Sensors History (object)
+
++ avg: 0 (number, required)
++ created_at: 1556802323 (number, required)
++ id: `ICE-003-042-000-020` (string, required)
 + max: 0 (number, required)
 + min: 0 (number, required)
 + sensor_type: `weather.humidity` (string, required)

@@ -7,11 +7,13 @@ import { log } from "../../core/Logger";
 class Client {
 
     private defaultCacheTtl: any = parseInt(config.redis_ttl || "60000", 0);
+
     private redisClient = redis.createClient({
         host: config.redis_host,
         port: parseInt(config.redis_port as string, 0),
     }).on("message", (message: string) => log.info(message))
         .on("error", (error) => log.warn(error));
+
     private cacheWithRedisMiddleware = apicache
         .options({
             defaultDuration: this.defaultCacheTtl,
@@ -28,8 +30,8 @@ class Client {
     }
 
     public isNoCacheHeader = (req: Request, res: Response): boolean => {
-        const noCache = req.headers["cache-control"];
-        return noCache === "no-cache";
+        const cacheHeader: string | undefined = req.headers["cache-control"];
+        return cacheHeader === "no-cache";
     }
 
     public getMiddleware(expire?: number | string) {

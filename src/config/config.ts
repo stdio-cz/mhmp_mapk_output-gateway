@@ -10,5 +10,5 @@ export default {
     redis_enable: process.env.REDIS_ENABLE,
     redis_host: process.env.REDIS_HOST,
     redis_port: process.env.REDIS_PORT,
-    redis_ttl: process.env.REDIS_TTL,
+    redis_ttl: process.env.REDIS_DEFAULT_TTL,
 };

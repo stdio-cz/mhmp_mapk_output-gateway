@@ -79,7 +79,7 @@ export class GTFSStopTimesModel extends SequelizeModel {
             if (stop) {
                 include.push({
                     as: "stop",
-                    model: sequelizeConnection.models[RopidGTFS.stops.pgTableName]
+                    model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
                 });
             }
 

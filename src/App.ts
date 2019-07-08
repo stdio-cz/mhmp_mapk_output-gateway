@@ -54,6 +54,7 @@ import {
     SharedCars,
     TrafficCameras,
     WasteCollectionYards,
+    ZtpParkings,
 } from "golemio-schema-definitions";
 
 import * as http from "http";
@@ -160,6 +161,18 @@ export default class App {
                     collectionName: IceGatewayStreetLamps.mongoCollectionName,
                     name: IceGatewayStreetLamps.name,
                     schema: IceGatewayStreetLamps.outputMongooseSchemaObject,
+                },
+                {
+                    collectionName: ZtpParkings.mongoCollectionName,
+                    history:
+                    {
+                        collectionName: ZtpParkings.history.mongoCollectionName,
+                        historyTimePropertyLocation: "updated_at",
+                        name: ZtpParkings.history.name,
+                        schema: ZtpParkings.history.outputMongooseSchemaObject,
+                    },
+                    name: ZtpParkings.name,
+                    schema: ZtpParkings.outputMongooseSchemaObject,
                 },
                 {
                     collectionName: IceGatewaySensors.mongoCollectionName,

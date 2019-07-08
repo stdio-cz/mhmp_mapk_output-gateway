@@ -1187,6 +1187,58 @@ Sensoric data from the city's IoT network.
     + Attributes (array)
         + (Air Quality Station History)
 
+
+## ZtpParkings [/ztpparkings{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET ZtpParkings [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (ZtpParking)
+
+## ZtpParkings History [/ztpparkings/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
+
+### GET ZtpParkings History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (ZtpParking History)
+
 ## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
@@ -1564,6 +1616,42 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + coordinates (array[Polygon], required)
 + properties (object, required)
 + type: Feature (required, string)
+
+## ZtpParking (object)
+
++ active: `false` (boolean, required)
++ address (Address)
++ device_id: `205A4A` (string)
++ district: `praha-11` (string)
++ failure: `false` (boolean, required)
++ group: `ztpparking` (string)
++ id: 5 (number, required)
++ id_group: `Test002` (string, required)
++ id_park: 0 (number)
++ id_space: 0 (number)
++ image_name: `Pařížská 1.jpeg` (string, required)
++ image_src: `http://tsk.3nicom.cloud/data/spaces/5/Pařížská 1.jpeg` (string, required)
++ last_updated_at: 1556802323 (number, required)
++ location: `Pařížská 1` (string, required)
++ master: `Starom. Nám` (string)
++ note: `Max 4 h.` (string, required)
++ occupied: `false` (boolean)
++ signal_rssi0: 47 (number)
++ signal_rssi1: 40 (number)
++ size: `2,30\tx 4,60` (string, required)
++ source: `CITIQ` (string, required)
++ surface: `asfalt` (string, required)
++ temperature: 859 (number)
++ type: `kolmé` (string, required)
++ updated_at: 1556802323 (number, required)
+
+## ZtpParking History (object)
+
++ failure: `false` (boolean, required)
++ id: 5 (number, required)
++ last_updated_at: 1556802323 (number, required)
++ occupied: `false` (boolean)
++ updated_at: 1556802323 (number, required)
 
 ## Address (object)
 

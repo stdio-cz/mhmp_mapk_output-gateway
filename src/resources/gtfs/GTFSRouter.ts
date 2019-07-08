@@ -49,7 +49,7 @@ export class GTFSRouter {
         query("from").optional().matches(this.timeRegex),
         query("to").optional().matches(this.timeRegex),
         query("date").optional().isISO8601(),
-        query("includeStop").optional().isBoolean()
+        query("includeStop").optional().isBoolean(),
     ];
 
     public constructor() {

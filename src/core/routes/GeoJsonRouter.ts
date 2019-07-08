@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
 import { Schema } from "mongoose";
-import { useCacheMiddleware } from "../../modules/redis";
 import { CustomError } from "../errors";
 import { handleError } from "../errors";
 import { parseCoordinates } from "../Geo";
 import { log } from "../Logger";
 import { GeoJsonModel } from "../models/GeoJsonModel";
+import { useCacheMiddleware } from "../redis";
 import { checkErrors, pagination } from "../Validation";
 
 /**

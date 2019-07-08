@@ -10,8 +10,8 @@ import { param, query } from "express-validator/check";
 import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
+import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { useCacheMiddleware } from "../../modules/redis";
 import { MunicipalAuthoritiesModel } from "./MunicipalAuthoritiesModel";
 import { MunicipalAuthoritiesQueuesModel } from "./MunicipalAuthoritiesQueuesModel";
 

@@ -7,8 +7,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
 import { CustomError } from "../../core/errors";
+import { useCacheMiddleware } from "../../core/redis";
 import { checkErrors, pagination } from "../../core/Validation";
-import { useCacheMiddleware } from "../../modules/redis";
 import { models } from "./models";
 import { VehiclePositionsTripsModel } from "./models/VehiclePositionsTripsModel";
 

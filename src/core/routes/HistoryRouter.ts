@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
 import { Schema } from "mongoose";
-import { useCacheMiddleware } from "../../modules/redis";
 import { log } from "../Logger";
 import { HistoryModel } from "../models";
+import { useCacheMiddleware } from "../redis";
 import { checkErrors, pagination } from "../Validation";
 
 export class HistoryRouter {

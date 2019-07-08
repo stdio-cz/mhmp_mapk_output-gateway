@@ -8,8 +8,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
+import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { useCacheMiddleware } from "../../modules/redis";
 import { ParkingZonesModel } from "./ParkingZonesModel";
 
 export class ParkingZonesRouter extends GeoJsonRouter {

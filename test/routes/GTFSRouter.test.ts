@@ -165,7 +165,7 @@ describe("GTFS Router", () => {
 
     it("should respond with 404 to GET /gtfs/routes/:routeId ", (done) => {
         request(app)
-            .get("/gtfs/routes/L991").end((err: any, res: any) => {
+            .get("/gtfs/routes/L991aaaaaaaaaa").end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(404);
                 done();
             });
@@ -188,13 +188,12 @@ describe("GTFS Router", () => {
             });
     });
 
-    // TODO sqlite cannot process date functions correctly
-    /*  it("should respond with 200 to GET /gtfs/services?date=2019-02-28 ", (done) => {
-          request(app)
-              .get("/gtfs/services?date=2019-02-28").end((err: any, res: any) => {
-                  expect(res.statusCode).to.be.equal(200);
-                  expect(res.body).to.be.instanceOf(Array);
-                  done();
-              });
-      });*/
+    it("should respond with 200 to GET /gtfs/services?date=2019-02-28 ", (done) => {
+        request(app)
+            .get("/gtfs/services?date=2019-02-28").end((err: any, res: any) => {
+                expect(res.statusCode).to.be.equal(200);
+                expect(res.body).to.be.instanceOf(Array);
+                done();
+            });
+    });
 });

@@ -17,7 +17,7 @@ describe("GTFSStopModel", () => {
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
-    const stopId: string = "U1072Z101P";
+    const stopId: string = "U476Z103P";
 
     beforeEach(() => {
         sandbox = sinon.createSandbox();
@@ -38,33 +38,31 @@ describe("GTFSStopModel", () => {
     });
 
     it("should return few items", async () => {
-        const result = await stopModel.GetAll({ limit: 10, offset: 10 });
-        // TODO ADD DATA TO DB
-        //  expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);
+        const result = await stopModel.GetAll({ limit: 10, offset: 0 });
+        expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);
         expect(result.type).to.be.equal("FeatureCollection");
-        //  expect(result.features[0]).to.have.property("geometry");
-        //  expect(result.features[0]).to.have.property("properties");
-        //  expect(result.features[0]).to.have.property("type", "Feature");
+        expect(result.features[0]).to.have.property("geometry");
+        expect(result.features[0]).to.have.property("properties");
+        expect(result.features[0]).to.have.property("type", "Feature");
     });
 
     it("should return single item", async () => {
         const stop: any = await stopModel.GetOne(stopId);
-        // TODO ADD DATA TO DB
-        /*  expect(stop).not.to.be.empty;
-          expect(stop.properties).to.have.property("stop_id", stopId);
-          expect(stop).to.have.property("geometry");
-          expect(stop).to.have.property("properties");
-          expect(stop).to.have.property("type", "Feature");*/
+        expect(stop).not.to.be.empty;
+        expect(stop.properties).to.have.property("stop_id", stopId);
+        expect(stop).to.have.property("geometry");
+        expect(stop).to.have.property("properties");
+        expect(stop).to.have.property("type", "Feature");
     });
 
     it("should return all stops close to the point", async () => {
-        // TODO ADD DATA TO DB
-        /*const result: any = await stopModel.GetAll({
+        const result: any = await stopModel.GetAll({
             lat: 50.11548,
             lng: 14.43732,
             range: 1000,
         });
-           expect(result.features).to.be.an.instanceOf(Array).and.lengthOf(10);
-           expect(result.type).to.be.equal("FeatureCollection");*/
+        console.log(result);
+        expect(result.features).to.be.an.instanceOf(Array);
+        expect(result.type).to.be.equal("FeatureCollection");
     });
 });

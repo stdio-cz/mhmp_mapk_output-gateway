@@ -8,6 +8,10 @@ import { NextFunction, Request, Response, Router } from "express";
 
 import * as httpLogger from "morgan";
 
+import * as fs from "fs";
+
+import * as path from "path";
+
 import * as mongoose from "mongoose";
 
 import config from "./config/config";
@@ -155,6 +159,8 @@ export default class App {
     // The port the express app will listen on
     public port: number = parseInt(config.port || "3004", 10);
 
+    private commitSHA: string;
+
     /**
      * Runs configuration methods on the Express instance
      * and start other necessary services (crons, database, middlewares).
@@ -166,6 +172,8 @@ export default class App {
     // Starts the application and runs the server
     public start = async (): Promise<void> => {
         try {
+            this.commitSHA = await this.loadCommitSHA();
+            log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
             this.express = express();
             this.middleware();
@@ -217,6 +225,7 @@ export default class App {
 
             res.json({
                 app_name: "Data Platform Output Gateway",
+                commit_sha: this.commitSHA,
                 status: "Up",
                 version: config.app_version,
             });
@@ -231,65 +240,6 @@ export default class App {
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
-
-        // Routes for backwards compatibility of the API
-        this.express.get("/shared-cars/:id", (req, res) => {
-            res.redirect("/sharedcars/" + req.params.id);
-        });
-        this.express.get("/shared-cars", (req, res) => {
-            res.redirect("/sharedcars");
-        });
-        this.express.get("/traffic-cameras/:id", (req, res) => {
-            res.redirect("/trafficcameras/" + req.params.id);
-        });
-        this.express.get("/traffic-cameras", (req, res) => {
-            res.redirect("/trafficcameras");
-        });
-        this.express.get("/parking-zones/:id", (req, res) => {
-            res.redirect("/parkingzones/" + req.params.id);
-        });
-        this.express.get("/parking-zones", (req, res) => {
-            res.redirect("/parkingzones");
-        });
-        this.express.get("/public-toilets/:id", (req, res) => {
-            res.redirect("/public-toilets/" + req.params.id);
-        });
-        this.express.get("/public-toilets", (req, res) => {
-            res.redirect("/publictoilets");
-        });
-        this.express.get("/municipal-police-stations/:id", (req, res) => {
-            res.redirect("/municipalpolicestations/" + req.params.id);
-        });
-        this.express.get("/municipal-police-stations", (req, res) => {
-            res.redirect("/municipalpolicestations");
-        });
-        this.express.get("/waste-collection-yards/:id", (req, res) => {
-            res.redirect("/wastecollectionyards/" + req.params.id);
-        });
-        this.express.get("/waste-collection-yards", (req, res) => {
-            res.redirect("/wastecollectionyards");
-        });
-        this.express.get("/sorted-waste-stations/:id", (req, res) => {
-            res.redirect("/sortedwastestations/" + req.params.id);
-        });
-        this.express.get("/sorted-waste-stations", (req, res) => {
-            res.redirect("/sortedwastestations");
-        });
-        this.express.get("/medical-institutions/types", (req, res) => {
-            res.redirect("/medicalinstitutions/types");
-        });
-        this.express.get("/medical-institutions/:id", (req, res) => {
-            res.redirect("/medicalinstitutions/" + req.params.id);
-        });
-        this.express.get("/medical-institutions", (req, res) => {
-            res.redirect("/medicalinstitutions");
-        });
-        this.express.get("/shared-bikes/:id", (req, res) => {
-            res.redirect("/sharedbikes/" + req.params.id);
-        });
-        this.express.get("/shared-bikes", (req, res) => {
-            res.redirect("/sharedbikes");
-        });
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
@@ -399,6 +349,20 @@ export default class App {
                     res.setHeader("Content-Type", "application/json; charset=utf-8");
                     res.status(error.error_status || 500).send(error);
                 }
+            });
+        });
+    }
+
+    /**
+     * Loading the Commit SHA of the current build
+     */
+    private loadCommitSHA = async (): Promise<string> => {
+        return new Promise<string>((resolve, reject) => {
+            fs.readFile(path.join(__dirname, "..", "commitsha"), (err, data) => {
+                if (err) {
+                    return resolve(undefined);
+                }
+                return resolve(data.toString());
             });
         });
     }

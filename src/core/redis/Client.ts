@@ -4,15 +4,20 @@ import * as redis from "redis";
 import config from "../../config/config";
 import { log } from "../../core/Logger";
 
+/**
+ * Wrapper for redis cache
+ * Provides middleware for cache used in routes
+ * Usage: this.router.get("/routes", useCacheMiddleware(10000), getTrips);
+ */
 class Client {
 
-    private defaultCacheTtl: any = parseInt(config.redis_ttl || "60000", 0);
+    private defaultCacheTtl: any = parseInt(config.redis_ttl || "60000", 10);
 
     private redisClient = redis.createClient({
         host: config.redis_host,
-        port: parseInt(config.redis_port as string, 0),
+        port: parseInt(config.redis_port as string, 10),
     }).on("message", (message: string) => log.info(message))
-        .on("error", (error) => log.warn(error));
+        .on("error", (error: any) => log.warn(error));
 
     private cacheWithRedisMiddleware = apicache
         .options({

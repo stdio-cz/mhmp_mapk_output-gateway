@@ -10,6 +10,7 @@ import { param, query } from "express-validator/check";
 import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
+import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
 import { MedicalInstitutionsModel } from "./MedicalInstitutionsModel";
 
@@ -23,7 +24,10 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
         this.initRoutes();
         this.router.get("/", [
             query("group").optional().isString(),
-        ], this.GetAll);
+        ],
+            useCacheMiddleware(),
+            this.GetAll,
+        );
     }
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {

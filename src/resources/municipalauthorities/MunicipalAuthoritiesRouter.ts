@@ -10,6 +10,7 @@ import { param, query } from "express-validator/check";
 import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
+import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
 import { MunicipalAuthoritiesModel } from "./MunicipalAuthoritiesModel";
 import { MunicipalAuthoritiesQueuesModel } from "./MunicipalAuthoritiesQueuesModel";
@@ -24,10 +25,16 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
         this.initRoutes();
         this.router.get("/:id/queues", [
             param("id").exists().isString(),
-        ], this.GetQueues);
+        ],
+            useCacheMiddleware(),
+            this.GetQueues,
+        );
         this.router.get("/", [
             query("type").optional().isString(),
-        ], this.GetAll);
+        ],
+            useCacheMiddleware(),
+            this.GetAll,
+        );
     }
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {

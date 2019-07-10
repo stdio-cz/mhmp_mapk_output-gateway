@@ -3,6 +3,7 @@ import { param, query } from "express-validator/check";
 import { Schema } from "mongoose";
 import { log } from "../Logger";
 import { HistoryModel } from "../models";
+import { useCacheMiddleware } from "../redis";
 import { checkErrors, pagination } from "../Validation";
 
 export class HistoryRouter {
@@ -16,19 +17,19 @@ export class HistoryRouter {
         this.model = inModel;
     }
 
-    public initRoutes = async () => {
+    public initRoutes = async (expire?: number | string) => {
         let sensorIdParam;
         this.model.GetSchema().then((schema) => {
             // Get the location of the ID of the sensor (the attribute name)
             const idKey = this.model.primarySensorIdPropertyLocation;
             let message: string = "Created history model " + this.model.GetName() + " has ID of sensor `"
-            + idKey + "` of type ";
+                + idKey + "` of type ";
             // ID of the sensor has type "Number" in the schema
             if (schema.path(idKey) instanceof Schema.Types.Number) {
                 message += "number.";
                 // Create a query parameter (which validates by express-validator) for detail route with type number
                 sensorIdParam = query("sensorId").optional().isNumeric();
-            // ID of the sensor has type "String" in the schema
+                // ID of the sensor has type "String" in the schema
             } else {
                 message += "string.";
                 // Create a query parameter (which validates by express-validator) for detail route with type string
@@ -36,11 +37,13 @@ export class HistoryRouter {
             }
             log.silly(message);
 
-            this.router.get("/", [
-                query("from").optional().isISO8601(),
-                query("to").optional().isISO8601(),
-                sensorIdParam,
-            ], pagination, checkErrors, this.GetAll);
+            this.router.get("/",
+                useCacheMiddleware(expire),
+                [
+                    query("from").optional().isISO8601(),
+                    query("to").optional().isISO8601(),
+                    sensorIdParam,
+                ], pagination, checkErrors, this.GetAll);
         });
     }
 

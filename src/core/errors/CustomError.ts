@@ -47,7 +47,7 @@ export class CustomError extends Error {
     /**
      * Returns complete error description as object.
      */
-    public toObject = (): {error_code: number, error_message: string, error_info: any} => {
+    public toObject = (): { error_code: number, error_message: string, error_info: any } => {
         const toReturn: any = {
             error_message: this.message,
         };

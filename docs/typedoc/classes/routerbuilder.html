@@ -107,6 +107,9 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="routerbuilder.html#buildallroutes" class="tsd-kind-icon">Build<wbr>All<wbr>Routes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="routerbuilder.html#creategeojsonroute" class="tsd-kind-icon">Create<wbr>Geojson<wbr>Route</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="routerbuilder.html#creategeojsonroutes" class="tsd-kind-icon">Create<wbr>Geojson<wbr>Routes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="routerbuilder.html#createhistoryroute" class="tsd-kind-icon">Create<wbr>History<wbr>Route</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="routerbuilder.html#createhistoryroutes" class="tsd-kind-icon">Create<wbr>History<wbr>Routes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="routerbuilder.html#loaddata" class="tsd-kind-icon">Load<wbr>Data</a></li>
 							</ul>
 						</section>
 					</div>
@@ -124,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/routes/RouterBuilder.ts:22</li>
+									<li>Defined in core/routes/RouterBuilder.ts:31</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -146,7 +149,7 @@
 					<div class="tsd-signature tsd-kind-icon">router<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Router</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/routes/RouterBuilder.ts:18</li>
+							<li>Defined in core/routes/RouterBuilder.ts:27</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -161,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">routes<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/routes/RouterBuilder.ts:22</li>
+							<li>Defined in core/routes/RouterBuilder.ts:31</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -183,12 +186,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/routes/RouterBuilder.ts:72</li>
+									<li>Defined in core/routes/RouterBuilder.ts:113</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Builds all routes based on data in this.data and mouts them to this.router</p>
+									<p>Builds all routes based on data in this.data and mounts them to this.router</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -199,13 +202,13 @@
 					<a name="creategeojsonroute" class="tsd-anchor"></a>
 					<h3>Create<wbr>Geojson<wbr>Route</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Create<wbr>Geojson<wbr>Route<span class="tsd-signature-symbol">(</span>inName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, inModel<span class="tsd-signature-symbol">: </span><a href="geojsonmodel.html" class="tsd-signature-type">GeoJsonModel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Create<wbr>Geojson<wbr>Route<span class="tsd-signature-symbol">(</span>inName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, inModel<span class="tsd-signature-symbol">: </span><a href="geojsonmodel.html" class="tsd-signature-type">GeoJsonModel</a>, expire<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/routes/RouterBuilder.ts:47</li>
+									<li>Defined in core/routes/RouterBuilder.ts:44</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -222,8 +225,11 @@
 									<h5>inModel: <a href="geojsonmodel.html" class="tsd-signature-type">GeoJsonModel</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Model whose methods are to be mounted on the routes</p>
-										<p>Creates a router with the model&#39;s methods mounted on {inName}/ and {inName}/:id</p>
+										<p>Creates a router with the model&#39;s methods mounted on {inName}/...</p>
 									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> expire: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -234,13 +240,13 @@
 					<a name="creategeojsonroutes" class="tsd-anchor"></a>
 					<h3>Create<wbr>Geojson<wbr>Routes</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Create<wbr>Geojson<wbr>Routes<span class="tsd-signature-symbol">(</span>inData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">Create<wbr>Geojson<wbr>Routes<span class="tsd-signature-symbol">(</span>inData<span class="tsd-signature-symbol">: </span><a href="../interfaces/idatasetdefinition.html" class="tsd-signature-type">IDatasetDefinition</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/routes/RouterBuilder.ts:61</li>
+									<li>Defined in core/routes/RouterBuilder.ts:71</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -248,13 +254,109 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>inData: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>inData: <a href="../interfaces/idatasetdefinition.html" class="tsd-signature-type">IDatasetDefinition</a><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Array with data about the new created routes, contains object with name
 											(specifies where the routes will be available)
 										and schema (format of the data to be returned at the routes).</p>
-										<p>Binds routes to /{name}</p>
+										<p>Binds all routes passed as parameter to /{their name}</p>
 									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createhistoryroute" class="tsd-anchor"></a>
+					<h3>Create<wbr>History<wbr>Route</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">Create<wbr>History<wbr>Route<span class="tsd-signature-symbol">(</span>inName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, inModel<span class="tsd-signature-symbol">: </span><a href="historymodel.html" class="tsd-signature-type">HistoryModel</a>, expire<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/routes/RouterBuilder.ts:57</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the route, serves as base url for the route&#39;s requests {base router}/{inName}/</p>
+									</div>
+								</li>
+								<li>
+									<h5>inModel: <a href="historymodel.html" class="tsd-signature-type">HistoryModel</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Model whose methods are to be mounted on the routes</p>
+										<p>Creates a router with the model&#39;s methods mounted on {inName}/...</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> expire: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createhistoryroutes" class="tsd-anchor"></a>
+					<h3>Create<wbr>History<wbr>Routes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">Create<wbr>History<wbr>Routes<span class="tsd-signature-symbol">(</span>inData<span class="tsd-signature-symbol">: </span><a href="../interfaces/idatasetdefinition.html" class="tsd-signature-type">IDatasetDefinition</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/routes/RouterBuilder.ts:87</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inData: <a href="../interfaces/idatasetdefinition.html" class="tsd-signature-type">IDatasetDefinition</a><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array with data about the new created routes
+										if it contains a &quot;history&quot; sub-object, this creates a route for that</p>
+										<p>Binds history route passed as parameter to /{their name}/history</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="loaddata" class="tsd-anchor"></a>
+					<h3>Load<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">Load<wbr>Data<span class="tsd-signature-symbol">(</span>inData<span class="tsd-signature-symbol">: </span><a href="../interfaces/idatasetdefinition.html" class="tsd-signature-type">IDatasetDefinition</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/routes/RouterBuilder.ts:102</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads the data for building the routes</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inData: <a href="../interfaces/idatasetdefinition.html" class="tsd-signature-type">IDatasetDefinition</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -295,6 +397,15 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="routerbuilder.html#creategeojsonroutes" class="tsd-kind-icon">Create<wbr>Geojson<wbr>Routes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="routerbuilder.html#createhistoryroute" class="tsd-kind-icon">Create<wbr>History<wbr>Route</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="routerbuilder.html#createhistoryroutes" class="tsd-kind-icon">Create<wbr>History<wbr>Routes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="routerbuilder.html#loaddata" class="tsd-kind-icon">Load<wbr>Data</a>
 							</li>
 						</ul>
 					</li>

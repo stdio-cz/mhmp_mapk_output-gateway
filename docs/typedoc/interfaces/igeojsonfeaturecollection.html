@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IGeoJSONFeature | Golemio Output Gateway</title>
+	<title>IGeoJSONFeatureCollection | Golemio Output Gateway</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="igeojsonfeature.html">IGeoJSONFeature</a>
+					<a href="igeojsonfeaturecollection.html">IGeoJSONFeatureCollection</a>
 				</li>
 			</ul>
-			<h1>Interface IGeoJSONFeature</h1>
+			<h1>Interface IGeoJSONFeatureCollection</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface for <a href="http://geojson.org/">http://geojson.org/</a> Feature format</p>
+						<p>Interface for <a href="http://geojson.org/">http://geojson.org/</a> Feature collection format</p>
 					</div>
 				</div>
 			</section>
@@ -77,7 +77,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IGeoJSONFeature</span>
+						<span class="target">IGeoJSONFeatureCollection</span>
 					</li>
 				</ul>
 			</section>
@@ -88,9 +88,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeature.html#geometry" class="tsd-kind-icon">geometry</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeature.html#properties" class="tsd-kind-icon">properties</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeature.html#type-1" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeaturecollection.html#features" class="tsd-kind-icon">features</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeaturecollection.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,58 +98,27 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="geometry" class="tsd-anchor"></a>
-					<h3>geometry</h3>
-					<div class="tsd-signature tsd-kind-icon">geometry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<a name="features" class="tsd-anchor"></a>
+					<h3>features</h3>
+					<div class="tsd-signature tsd-kind-icon">features<span class="tsd-signature-symbol">:</span> <a href="igeojsonfeature.html" class="tsd-signature-type">IGeoJSONFeature</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Geo.ts:12</li>
+							<li>Defined in core/Geo.ts:27</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Geometry property. Coordinates can be one or two-dimensional array of coordinates or single coordinate</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>coordinates<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="properties" class="tsd-anchor"></a>
-					<h3>properties</h3>
-					<div class="tsd-signature tsd-kind-icon">properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in core/Geo.ts:16</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p> Object with properties</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type-1" class="tsd-anchor"></a>
+					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Feature"</span></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"FeatureCollection"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Geo.ts:20</li>
+							<li>Defined in core/Geo.ts:31</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p> GeoJSON type - always &quot;Feature&quot; in GeoJSONFeature</p>
+							<p> GeoJSON type - always &quot;FeatureCollection&quot; in GeoJSONFeatureCollection</p>
 						</div>
 					</div>
 				</section>
@@ -169,16 +137,13 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="igeojsonfeature.html" class="tsd-kind-icon">IGeoJSONFeature</a>
+						<a href="igeojsonfeaturecollection.html" class="tsd-kind-icon">IGeoJSONFeature<wbr>Collection</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="igeojsonfeature.html#geometry" class="tsd-kind-icon">geometry</a>
+								<a href="igeojsonfeaturecollection.html#features" class="tsd-kind-icon">features</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="igeojsonfeature.html#properties" class="tsd-kind-icon">properties</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="igeojsonfeature.html#type-1" class="tsd-kind-icon">type</a>
+								<a href="igeojsonfeaturecollection.html#type" class="tsd-kind-icon">type</a>
 							</li>
 						</ul>
 					</li>

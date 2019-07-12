@@ -70,36 +70,58 @@
 				<p>Output Gateway for the Data Platform System. Provides REST API for the data stored in Golemio data platform. </p>
 				<p>More in Apiary documentation at <a href="https://outputgateway.docs.apiary.io">https://outputgateway.docs.apiary.io</a></p>
 				<p>Developed by <a href="http://operatorict.cz">http://operatorict.cz</a></p>
+				<h2 id="docker-instalation">Docker instalation</h2>
+				<h3 id="prerequisites">Prerequisites</h3>
+				<ul>
+					<li>Docker Engine</li>
+					<li>Mongo</li>
+					<li>Postgres</li>
+				</ul>
+				<h3 id="instalation">Instalation</h3>
+				<ol>
+					<li>Build docker image by <code>docker build -t output-gateway .</code></li>
+					<li>Setup ENV variables by <code>.env</code> file or add <code>-e VAR=VALUE</code> to docker run</li>
+					<li>Run container by</li>
+				</ol>
+				<pre><code>docker run --rm <span class="hljs-string">\</span>
+    -p <span class="hljs-number">3004</span>:<span class="hljs-number">3004</span> <span class="hljs-string">\</span> <span class="hljs-comment"># expose port 3004</span>
+    -e PORT=<span class="hljs-number">3004</span> <span class="hljs-string">\</span>
+    -e MONGO_CONN: mongodb:<span class="hljs-regexp">//user:pass@mongo.dp_database:27017/dataplatform?authSource=admin \
+    -e POSTGRES_CONN: postgres://</span>user:pass@postgres.dp_database/dataplatform <span class="hljs-string">\</span>
+    output-gateway <span class="hljs-comment"># docker image label (defined by step 1)</span></code></pre><h2 id="local-installation">Local Installation</h2>
 				<h2 id="prerequisites">Prerequisites</h2>
 				<ul>
 					<li>node.js</li>
 					<li>mongoDB</li>
-					<li>npm</li>
+					<li>Postgres</li>
+					<li>yarn</li>
 					<li>typescript</li>
 				</ul>
 				<h2 id="installation">Installation</h2>
-				<p>Install Node</p>
-				<p>Install all npm modules using command:</p>
-				<pre><code>npm <span class="hljs-keyword">install</span></code></pre><p>from the application&#39;s root directory.</p>
+				<p>Install all prerequisites</p>
+				<p>Install all dependencies using command:</p>
+				<pre><code>yarn <span class="hljs-keyword">install</span></code></pre><p>from the application&#39;s root directory.</p>
 				<h2 id="compilation-of-typescript-code">Compilation of typescript code</h2>
 				<p>To compile typescript code into js one-time</p>
-				<pre><code>npm <span class="hljs-keyword">run</span><span class="bash"> build</span></code></pre><p>or run this, to watch all changes</p>
+				<pre><code>npm <span class="hljs-keyword">run</span><span class="bash"> build</span></code></pre><p>or run this to watch all changes and automatically re-build on save:</p>
 				<pre><code>npm <span class="hljs-keyword">run</span><span class="bash"> build-watch</span></code></pre><p>from the application&#39;s root directory.</p>
 				<h2 id="run">Run</h2>
 				<pre><code><span class="hljs-built_in">npm</span> start</code></pre><p>This will load all config variables from environment variables or the .env file. To run, set all environment variables from the <code>.env.template</code> file, or copy the <code>.env.template</code> file into new <code>.env</code> file in root directory and set variables there.</p>
 				<p>Project uses <code>dotenv</code> package: <a href="https://www.npmjs.com/package/dotenv">https://www.npmjs.com/package/dotenv</a></p>
-				<p>Application is now running locally on port 3000 or on port specified in the environment variable.</p>
+				<p>Application is now running locally on port 3004 or on port specified in the environment variable.</p>
 				<h2 id="tests">Tests</h2>
 				<p>To run all test defined in /test directory simply run this command:</p>
 				<pre><code>npm <span class="hljs-built_in">test</span></code></pre><p>from the application&#39;s root directory. All tests should pass with the correct data. Test data are in the <code>test/data</code> directory. You can import them using the <code>mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform</code> command. More: <a href="https://docs.mongodb.com/manual/reference/program/mongorestore/">https://docs.mongodb.com/manual/reference/program/mongorestore/</a></p>
-				<p>You can also test the API against the Apiary documentation using <code>dredd</code> (<a href="https://dredd.org)">https://dredd.org)</a>. To run the tests, make sure the app will be run on port 3000 (setting ENV variable or leaving the default) and run</p>
+				<p>You can also test the API against the Apiary documentation using <code>dredd</code> (<a href="https://dredd.org)">https://dredd.org)</a>. To run the tests, make sure the app will be run on port 3004 (setting ENV variable or leaving the default) and run</p>
 				<pre><code><span class="hljs-attribute">dredd</span></code></pre><p>from the application&#39;s root directory.</p>
 				<h2 id="logging">Logging</h2>
-				<p>Logging uses <code>Winston</code> for standard logging with levels, <code>morgan</code> for http access logs and <code>debug</code> for debugging.</p>
+				<p>Logging uses <code>Winston</code> for standard logging with levels, <code>morgan</code> for http access logs and <code>debug</code> (<a href="https://www.npmjs.com/package/debug">https://www.npmjs.com/package/debug</a>) for debugging.</p>
 				<p>All logs with <code>silly</code> and <code>debug</code> level are printed as standard log (if appropriate log level is set) using Winston as well as using <code>debug</code> module with <code>&quot;data-platform:output-gateway&quot;</code> settings.</p>
 				<p>You can set both <code>LOG_LEVEL</code> and <code>DEBUG</code> settings in ENV variables.</p>
 				<h2 id="documentation">Documentation</h2>
 				<p>For generating documentation run <code>npm run generate-docs</code>. Typedoc source code documentation is located in <code>docs/typedoc</code>.</p>
+				<h2 id="api-documentation">API documentation</h2>
+				<p>Rest API documentation is placed in <code>docs/apiary_docs.apib</code> which is also up-to-date on <a href="https://outputgateway.docs.apiary.io/#">outputgateway.docs.apiary.io</a> (master), <a href="https://outputgatewaydev.docs.apiary.io/#">outputgatewaydev.docs.apiary.io</a> (development).</p>
 				<h2 id="problems-">Problems?</h2>
 				<p>Contact <a href="mailto:benak@operatorict.cz">benak@operatorict.cz</a> or <a href="mailto:vycpalek@operatorict.cz">vycpalek@operatorict.cz</a></p>
 			</div>
@@ -125,6 +147,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/citydistrictsrouter.html" class="tsd-kind-icon">City<wbr>Districts<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/client.html" class="tsd-kind-icon">Client</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/customerror.html" class="tsd-kind-icon">Custom<wbr>Error</a>
@@ -160,22 +185,37 @@
 						<a href="classes/geojsonrouter.html" class="tsd-kind-icon">Geo<wbr>Json<wbr>Router</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/historymodel.html" class="tsd-kind-icon">History<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/historyrouter.html" class="tsd-kind-icon">History<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/medicalinstitutionsmodel.html" class="tsd-kind-icon">Medical<wbr>Institutions<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/medicalinstitutionsrouter.html" class="tsd-kind-icon">Medical<wbr>Institutions<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/mongodatabase.html" class="tsd-kind-icon">Mongo<wbr>Database</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/mongomodel.html" class="tsd-kind-icon">Mongo<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/municipalauthoritiesmodel.html" class="tsd-kind-icon">Municipal<wbr>Authorities<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/municipalauthoritiesqueuesmodel.html" class="tsd-kind-icon">Municipal<wbr>Authorities<wbr>Queues<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/municipalauthoritiesrouter.html" class="tsd-kind-icon">Municipal<wbr>Authorities<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/parkingzonesmodel.html" class="tsd-kind-icon">Parking<wbr>Zones<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/parkingzonesrouter.html" class="tsd-kind-icon">Parking<wbr>Zones<wbr>Router</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/parkingsmodel.html" class="tsd-kind-icon">Parkings<wbr>Model</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/parkingsrouter.html" class="tsd-kind-icon">Parkings<wbr>Router</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/postgresdatabase.html" class="tsd-kind-icon">Postgres<wbr>Database</a>
@@ -187,10 +227,22 @@
 						<a href="classes/sequelizemodel.html" class="tsd-kind-icon">Sequelize<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/vehiclepositionspositionsmodel.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Positions<wbr>Model</a>
+						<a href="classes/sortedwastemeasurementsmodel.html" class="tsd-kind-icon">Sorted<wbr>Waste<wbr>Measurements<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/vehiclepositionspositionsviewmodel.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Positions<wbr>View<wbr>Model</a>
+						<a href="classes/sortedwastepicksmodel.html" class="tsd-kind-icon">Sorted<wbr>Waste<wbr>Picks<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/sortedwasterouter.html" class="tsd-kind-icon">Sorted<wbr>Waste<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/sortedwastestationsmodel.html" class="tsd-kind-icon">Sorted<wbr>Waste<wbr>Stations<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/vehiclepositionslastpositionmodel.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Last<wbr>Position<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/vehiclepositionspositionsmodel.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Positions<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/vehiclepositionsrouter.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Router</a>
@@ -199,13 +251,22 @@
 						<a href="classes/vehiclepositionstripsmodel.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Trips<wbr>Model</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/idatasetdefinition.html" class="tsd-kind-icon">IDataset<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/igeojsonfeature.html" class="tsd-kind-icon">IGeoJSONFeature</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/igeojsonfeaturecollection.html" class="tsd-kind-icon">IGeoJSONFeature<wbr>Collection</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#align" class="tsd-kind-icon">align</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#citydistrictsrouter" class="tsd-kind-icon">city<wbr>Districts<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#client" class="tsd-kind-icon">client</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#colorize" class="tsd-kind-icon">colorize</a>
@@ -232,16 +293,19 @@
 						<a href="globals.html#logger" class="tsd-kind-icon">logger</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#medicalinstitutionsrouter" class="tsd-kind-icon">medical<wbr>Institutions<wbr>Router</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#mongooseconnection" class="tsd-kind-icon">mongoose<wbr>Connection</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#municipalauthoritiesrouter" class="tsd-kind-icon">municipal<wbr>Authorities<wbr>Router</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#pagination" class="tsd-kind-icon">pagination</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#parkingzonesrouter" class="tsd-kind-icon">parking<wbr>Zones<wbr>Router</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#parkingsrouter" class="tsd-kind-icon">parkings<wbr>Router</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#prettyprint" class="tsd-kind-icon">pretty<wbr>Print</a>
@@ -254,6 +318,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#setformat" class="tsd-kind-icon">set<wbr>Format</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#sortedwasterouter" class="tsd-kind-icon">sorted<wbr>Waste<wbr>Router</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#timestamp" class="tsd-kind-icon">timestamp</a>
@@ -271,7 +338,13 @@
 						<a href="globals.html#winstonsillylog" class="tsd-kind-icon">winston<wbr>Silly<wbr>Log</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#getsubproperty" class="tsd-kind-icon">Get<wbr>Sub<wbr>Property</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#buildgeojsonfeature" class="tsd-kind-icon">build<wbr>Geojson<wbr>Feature</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#buildgeojsonfeaturecollection" class="tsd-kind-icon">build<wbr>Geojson<wbr>Feature<wbr>Collection</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#checkerrors" class="tsd-kind-icon">check<wbr>Errors</a>
@@ -281,6 +354,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#parsecoordinates" class="tsd-kind-icon">parse<wbr>Coordinates</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#usecachemiddleware" class="tsd-kind-icon">use<wbr>Cache<wbr>Middleware</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
 						<a href="globals.html#models" class="tsd-kind-icon">models</a>

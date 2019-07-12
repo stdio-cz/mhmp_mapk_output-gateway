@@ -32,6 +32,10 @@ docker run --rm \
 ```
 
 
+
+
+## Local Installation
+
 ## Prerequisites
 
 - node.js
@@ -42,8 +46,7 @@ docker run --rm \
 
 ## Installation
 
-
-Install Node
+Install all prerequisites
 
 Install all dependencies using command:
 ```
@@ -59,7 +62,7 @@ To compile typescript code into js one-time
 ```
 npm run build
 ```
-or run this, to watch all changes
+or run this to watch all changes and automatically re-build on save:
 ```
 npm run build-watch
 ```
@@ -84,7 +87,7 @@ npm test
 ```
 from the application's root directory. All tests should pass with the correct data. Test data are in the `test/data` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
 
-You can also test the API against the Apiary documentation using `dredd` (https://dredd.org). To run the tests, make sure the app will be run on port 3000 (setting ENV variable or leaving the default) and run
+You can also test the API against the Apiary documentation using `dredd` (https://dredd.org). To run the tests, make sure the app will be run on port 3004 (setting ENV variable or leaving the default) and run
 ```
 dredd
 ```
@@ -104,7 +107,7 @@ For generating documentation run `npm run generate-docs`. Typedoc source code do
 
 ## API documentation
 
-Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) (master), [outputgatewaydev.docs.apiary.io](https://outputgatewaydev.docs.apiary.io/#) (development) service.
+Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) (master), [outputgatewaydev.docs.apiary.io](https://outputgatewaydev.docs.apiary.io/#) (development).
 
 ## Problems?
 

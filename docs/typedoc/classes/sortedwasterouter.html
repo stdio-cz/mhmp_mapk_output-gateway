@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VehiclePositionsRouter | Golemio Output Gateway</title>
+	<title>SortedWasteRouter | Golemio Output Gateway</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="vehiclepositionsrouter.html">VehiclePositionsRouter</a>
+					<a href="sortedwasterouter.html">SortedWasteRouter</a>
 				</li>
 			</ul>
-			<h1>Class VehiclePositionsRouter</h1>
+			<h1>Class SortedWasteRouter</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">VehiclePositionsRouter</span>
+						<a href="geojsonrouter.html" class="tsd-signature-type">GeoJsonRouter</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">SortedWasteRouter</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -81,22 +86,27 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="sortedwasterouter.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="vehiclepositionsrouter.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#router" class="tsd-kind-icon">router</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="sortedwasterouter.html#measurementsmodel" class="tsd-kind-icon">measurements<wbr>Model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="sortedwasterouter.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="sortedwasterouter.html#picksmodel" class="tsd-kind-icon">picks<wbr>Model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="sortedwasterouter.html#router" class="tsd-kind-icon">router</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sortedwasterouter.html#converttoarray" class="tsd-kind-icon">Convert<wbr>ToArray</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="sortedwasterouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="sortedwasterouter.html#getmeasurements" class="tsd-kind-icon">Get<wbr>Measurements</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sortedwasterouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="sortedwasterouter.html#getpicks" class="tsd-kind-icon">Get<wbr>Picks</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sortedwasterouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,20 +114,21 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Vehicle<wbr>Positions<wbr>Router<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vehiclepositionsrouter.html" class="tsd-signature-type">VehiclePositionsRouter</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Sorted<wbr>Waste<wbr>Router<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sortedwasterouter.html" class="tsd-signature-type">SortedWasteRouter</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="geojsonrouter.html">GeoJsonRouter</a>.<a href="geojsonrouter.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:20</li>
+									<li>Defined in resources/sortedwastestations/SortedWasteRouter.ts:24</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="vehiclepositionsrouter.html" class="tsd-signature-type">VehiclePositionsRouter</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="sortedwasterouter.html" class="tsd-signature-type">SortedWasteRouter</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -125,39 +136,91 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="model" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> model</h3>
-					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="vehiclepositionstripsmodel.html" class="tsd-signature-type">VehiclePositionsTripsModel</a></div>
+					<a name="measurementsmodel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> measurements<wbr>Model</h3>
+					<div class="tsd-signature tsd-kind-icon">measurements<wbr>Model<span class="tsd-signature-symbol">:</span> <a href="sortedwastemeasurementsmodel.html" class="tsd-signature-type">SortedWasteMeasurementsModel</a><span class="tsd-signature-symbol"> =&nbsp;new SortedWasteMeasurementsModel()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:20</li>
+							<li>Defined in resources/sortedwastestations/SortedWasteRouter.ts:23</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+					<a name="model" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> model</h3>
+					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="sortedwastestationsmodel.html" class="tsd-signature-type">SortedWasteStationsModel</a><span class="tsd-signature-symbol"> =&nbsp;new SortedWasteStationsModel()</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides <a href="geojsonrouter.html">GeoJsonRouter</a>.<a href="geojsonrouter.html#model">model</a></p>
+						<ul>
+							<li>Defined in resources/sortedwastestations/SortedWasteRouter.ts:22</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="picksmodel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> picks<wbr>Model</h3>
+					<div class="tsd-signature tsd-kind-icon">picks<wbr>Model<span class="tsd-signature-symbol">:</span> <a href="sortedwastepicksmodel.html" class="tsd-signature-type">SortedWastePicksModel</a><span class="tsd-signature-symbol"> =&nbsp;new SortedWastePicksModel()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in resources/sortedwastestations/SortedWasteRouter.ts:24</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="router" class="tsd-anchor"></a>
 					<h3>router</h3>
 					<div class="tsd-signature tsd-kind-icon">router<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Router</span><span class="tsd-signature-symbol"> =&nbsp;Router()</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="geojsonrouter.html">GeoJsonRouter</a>.<a href="geojsonrouter.html#router">router</a></p>
 						<ul>
-							<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:18</li>
+							<li>Defined in core/routes/GeoJsonRouter.ts:22</li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="converttoarray" class="tsd-anchor"></a>
+					<h3>Convert<wbr>ToArray</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">Convert<wbr>ToArray<span class="tsd-signature-symbol">(</span>toBeArray<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geojsonrouter.html">GeoJsonRouter</a>.<a href="geojsonrouter.html#converttoarray">ConvertToArray</a></p>
+								<ul>
+									<li>Defined in core/routes/GeoJsonRouter.ts:74</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts a single value of <code>any</code> type to an array containing this element</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>toBeArray: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="getall" class="tsd-anchor"></a>
 					<h3>Get<wbr>All</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">Get<wbr>All<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides <a href="geojsonrouter.html">GeoJsonRouter</a>.<a href="geojsonrouter.html#getall">GetAll</a></p>
 								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:27</li>
+									<li>Defined in resources/sortedwastestations/SortedWasteRouter.ts:62</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -177,16 +240,16 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getone" class="tsd-anchor"></a>
-					<h3>Get<wbr>One</h3>
+					<a name="getmeasurements" class="tsd-anchor"></a>
+					<h3>Get<wbr>Measurements</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Get<wbr>One<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Measurements<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:42</li>
+									<li>Defined in resources/sortedwastestations/SortedWasteRouter.ts:107</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -205,17 +268,77 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="initroutes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> init<wbr>Routes</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">init<wbr>Routes<span class="tsd-signature-symbol">(</span>expire<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getone" class="tsd-anchor"></a>
+					<h3>Get<wbr>One</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>One<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geojsonrouter.html">GeoJsonRouter</a>.<a href="geojsonrouter.html#getone">GetOne</a></p>
+								<ul>
+									<li>Defined in core/routes/GeoJsonRouter.ts:113</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>req: <span class="tsd-signature-type">Request</span></h5>
+								</li>
+								<li>
+									<h5>res: <span class="tsd-signature-type">Response</span></h5>
+								</li>
+								<li>
+									<h5>next: <span class="tsd-signature-type">NextFunction</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getpicks" class="tsd-anchor"></a>
+					<h3>Get<wbr>Picks</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Picks<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:61</li>
+									<li>Defined in resources/sortedwastestations/SortedWasteRouter.ts:122</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>req: <span class="tsd-signature-type">Request</span></h5>
+								</li>
+								<li>
+									<h5>res: <span class="tsd-signature-type">Response</span></h5>
+								</li>
+								<li>
+									<h5>next: <span class="tsd-signature-type">NextFunction</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="initroutes" class="tsd-anchor"></a>
+					<h3>init<wbr>Routes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">init<wbr>Routes<span class="tsd-signature-symbol">(</span>expire<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geojsonrouter.html">GeoJsonRouter</a>.<a href="geojsonrouter.html#initroutes">initRoutes</a></p>
+								<ul>
+									<li>Defined in core/routes/GeoJsonRouter.ts:33</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -248,25 +371,40 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="vehiclepositionsrouter.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Router</a>
+						<a href="sortedwasterouter.html" class="tsd-kind-icon">Sorted<wbr>Waste<wbr>Router</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="sortedwasterouter.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="vehiclepositionsrouter.html#model" class="tsd-kind-icon">model</a>
+								<a href="sortedwasterouter.html#measurementsmodel" class="tsd-kind-icon">measurements<wbr>Model</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#router" class="tsd-kind-icon">router</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+								<a href="sortedwasterouter.html#model" class="tsd-kind-icon">model</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="sortedwasterouter.html#picksmodel" class="tsd-kind-icon">picks<wbr>Model</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="sortedwasterouter.html#router" class="tsd-kind-icon">router</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="sortedwasterouter.html#converttoarray" class="tsd-kind-icon">Convert<wbr>ToArray</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="sortedwasterouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a>
+								<a href="sortedwasterouter.html#getmeasurements" class="tsd-kind-icon">Get<wbr>Measurements</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="sortedwasterouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a>
+								<a href="sortedwasterouter.html#getpicks" class="tsd-kind-icon">Get<wbr>Picks</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="vehiclepositionsrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="sortedwasterouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a>
 							</li>
 						</ul>
 					</li>

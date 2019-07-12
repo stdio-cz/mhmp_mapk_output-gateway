@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IGeoJSONFeature | Golemio Output Gateway</title>
+	<title>IDatasetDefinition | Golemio Output Gateway</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,28 +56,21 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="igeojsonfeature.html">IGeoJSONFeature</a>
+					<a href="idatasetdefinition.html">IDatasetDefinition</a>
 				</li>
 			</ul>
-			<h1>Interface IGeoJSONFeature</h1>
+			<h1>Interface IDatasetDefinition</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Interface for <a href="http://geojson.org/">http://geojson.org/</a> Feature format</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IGeoJSONFeature</span>
+						<span class="target">IDatasetDefinition</span>
 					</li>
 				</ul>
 			</section>
@@ -88,9 +81,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeature.html#geometry" class="tsd-kind-icon">geometry</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeature.html#properties" class="tsd-kind-icon">properties</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="igeojsonfeature.html#type-1" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatasetdefinition.html#collectionname" class="tsd-kind-icon">collection<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatasetdefinition.html#expire" class="tsd-kind-icon">expire</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatasetdefinition.html#history" class="tsd-kind-icon">history</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatasetdefinition.html#historytimepropertylocation" class="tsd-kind-icon">history<wbr>Time<wbr>Property<wbr>Location</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatasetdefinition.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="idatasetdefinition.html#schema" class="tsd-kind-icon">schema</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,60 +95,64 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="geometry" class="tsd-anchor"></a>
-					<h3>geometry</h3>
-					<div class="tsd-signature tsd-kind-icon">geometry<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<a name="collectionname" class="tsd-anchor"></a>
+					<h3>collection<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">collection<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Geo.ts:12</li>
+							<li>Defined in core/routes/RouterBuilder.ts:10</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Geometry property. Coordinates can be one or two-dimensional array of coordinates or single coordinate</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>coordinates<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="properties" class="tsd-anchor"></a>
-					<h3>properties</h3>
-					<div class="tsd-signature tsd-kind-icon">properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<a name="expire" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> expire</h3>
+					<div class="tsd-signature tsd-kind-icon">expire<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Geo.ts:16</li>
+							<li>Defined in core/routes/RouterBuilder.ts:13</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p> Object with properties</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type-1" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Feature"</span></div>
+					<a name="history" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> history</h3>
+					<div class="tsd-signature tsd-kind-icon">history<span class="tsd-signature-symbol">:</span> <a href="idatasetdefinition.html" class="tsd-signature-type">IDatasetDefinition</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/Geo.ts:20</li>
+							<li>Defined in core/routes/RouterBuilder.ts:11</li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p> GeoJSON type - always &quot;Feature&quot; in GeoJSONFeature</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="historytimepropertylocation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> history<wbr>Time<wbr>Property<wbr>Location</h3>
+					<div class="tsd-signature tsd-kind-icon">history<wbr>Time<wbr>Property<wbr>Location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in core/routes/RouterBuilder.ts:12</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in core/routes/RouterBuilder.ts:8</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="schema" class="tsd-anchor"></a>
+					<h3>schema</h3>
+					<div class="tsd-signature tsd-kind-icon">schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SchemaDefinition</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in core/routes/RouterBuilder.ts:9</li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -169,16 +169,25 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="igeojsonfeature.html" class="tsd-kind-icon">IGeoJSONFeature</a>
+						<a href="idatasetdefinition.html" class="tsd-kind-icon">IDataset<wbr>Definition</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="igeojsonfeature.html#geometry" class="tsd-kind-icon">geometry</a>
+								<a href="idatasetdefinition.html#collectionname" class="tsd-kind-icon">collection<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="igeojsonfeature.html#properties" class="tsd-kind-icon">properties</a>
+								<a href="idatasetdefinition.html#expire" class="tsd-kind-icon">expire</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="igeojsonfeature.html#type-1" class="tsd-kind-icon">type</a>
+								<a href="idatasetdefinition.html#history" class="tsd-kind-icon">history</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="idatasetdefinition.html#historytimepropertylocation" class="tsd-kind-icon">history<wbr>Time<wbr>Property<wbr>Location</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="idatasetdefinition.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="idatasetdefinition.html#schema" class="tsd-kind-icon">schema</a>
 							</li>
 						</ul>
 					</li>

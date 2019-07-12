@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VehiclePositionsRouter | Golemio Output Gateway</title>
+	<title>HistoryRouter | Golemio Output Gateway</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="vehiclepositionsrouter.html">VehiclePositionsRouter</a>
+					<a href="historyrouter.html">HistoryRouter</a>
 				</li>
 			</ul>
-			<h1>Class VehiclePositionsRouter</h1>
+			<h1>Class HistoryRouter</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">VehiclePositionsRouter</span>
+						<span class="target">HistoryRouter</span>
 					</li>
 				</ul>
 			</section>
@@ -81,22 +81,21 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="historyrouter.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="vehiclepositionsrouter.html#model" class="tsd-kind-icon">model</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#router" class="tsd-kind-icon">router</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="historyrouter.html#model" class="tsd-kind-icon">model</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="historyrouter.html#router" class="tsd-kind-icon">router</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="vehiclepositionsrouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="vehiclepositionsrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="historyrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="historyrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,16 +107,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Vehicle<wbr>Positions<wbr>Router<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="vehiclepositionsrouter.html" class="tsd-signature-type">VehiclePositionsRouter</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>History<wbr>Router<span class="tsd-signature-symbol">(</span>inModel<span class="tsd-signature-symbol">: </span><a href="historymodel.html" class="tsd-signature-type">HistoryModel</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="historyrouter.html" class="tsd-signature-type">HistoryRouter</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:20</li>
+									<li>Defined in core/routes/HistoryRouter.ts:14</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="vehiclepositionsrouter.html" class="tsd-signature-type">VehiclePositionsRouter</a></h4>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inModel: <a href="historymodel.html" class="tsd-signature-type">HistoryModel</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="historyrouter.html" class="tsd-signature-type">HistoryRouter</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -127,10 +132,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="model" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> model</h3>
-					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="vehiclepositionstripsmodel.html" class="tsd-signature-type">VehiclePositionsTripsModel</a></div>
+					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="historymodel.html" class="tsd-signature-type">HistoryModel</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:20</li>
+							<li>Defined in core/routes/HistoryRouter.ts:14</li>
 						</ul>
 					</aside>
 				</section>
@@ -140,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">router<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Router</span><span class="tsd-signature-symbol"> =&nbsp;Router()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:18</li>
+							<li>Defined in core/routes/HistoryRouter.ts:12</li>
 						</ul>
 					</aside>
 				</section>
@@ -157,7 +162,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:27</li>
+									<li>Defined in core/routes/HistoryRouter.ts:50</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -177,59 +182,25 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getone" class="tsd-anchor"></a>
-					<h3>Get<wbr>One</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Get<wbr>One<span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:42</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>req: <span class="tsd-signature-type">Request</span></h5>
-								</li>
-								<li>
-									<h5>res: <span class="tsd-signature-type">Response</span></h5>
-								</li>
-								<li>
-									<h5>next: <span class="tsd-signature-type">NextFunction</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="initroutes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> init<wbr>Routes</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">init<wbr>Routes<span class="tsd-signature-symbol">(</span>expire<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<h3>init<wbr>Routes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">init<wbr>Routes<span class="tsd-signature-symbol">(</span>expire<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in resources/vehiclepositions/VehiclePositionsRouter.ts:61</li>
+									<li>Defined in core/routes/HistoryRouter.ts:20</li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Initiates all routes. Should respond with correct data to a HTTP requests to all routes.</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> expire: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -248,25 +219,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="vehiclepositionsrouter.html" class="tsd-kind-icon">Vehicle<wbr>Positions<wbr>Router</a>
+						<a href="historyrouter.html" class="tsd-kind-icon">History<wbr>Router</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="historyrouter.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="vehiclepositionsrouter.html#model" class="tsd-kind-icon">model</a>
+								<a href="historyrouter.html#model" class="tsd-kind-icon">model</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#router" class="tsd-kind-icon">router</a>
+								<a href="historyrouter.html#router" class="tsd-kind-icon">router</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a>
+								<a href="historyrouter.html#getall" class="tsd-kind-icon">Get<wbr>All</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="vehiclepositionsrouter.html#getone" class="tsd-kind-icon">Get<wbr>One</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="vehiclepositionsrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a>
+								<a href="historyrouter.html#initroutes" class="tsd-kind-icon">init<wbr>Routes</a>
 							</li>
 						</ul>
 					</li>

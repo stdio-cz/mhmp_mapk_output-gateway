@@ -106,9 +106,11 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="parkingzonesmodel.html#addprojection" class="tsd-kind-icon">Add<wbr>Projection</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="parkingzonesmodel.html#addselection" class="tsd-kind-icon">Add<wbr>Selection</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="parkingzonesmodel.html#getall" class="tsd-kind-icon">Get<wbr>All</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="parkingzonesmodel.html#getname" class="tsd-kind-icon">Get<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="parkingzonesmodel.html#getone" class="tsd-kind-icon">Get<wbr>One</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="parkingzonesmodel.html#getschema" class="tsd-kind-icon">Get<wbr>Schema</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="parkingzonesmodel.html#gettariffs" class="tsd-kind-icon">Get<wbr>Tariffs</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="parkingzonesmodel.html#primaryidentifierselection" class="tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="parkingzonesmodel.html#primaryidentifierselection" class="tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection</a></li>
 							</ul>
 						</section>
 					</div>
@@ -218,7 +220,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The schema which contains schemaObject for creating the Mongoose Schema</p>
+							<p>The Mongoose Schema object, defining structure of the data</p>
 						</div>
 					</div>
 				</section>
@@ -252,7 +254,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="mongomodel.html">MongoModel</a>.<a href="mongomodel.html#addprojection">AddProjection</a></p>
 								<ul>
-									<li>Defined in core/models/MongoModel.ts:60</li>
+									<li>Defined in core/models/MongoModel.ts:77</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -286,7 +288,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="mongomodel.html">MongoModel</a>.<a href="mongomodel.html#addselection">AddSelection</a></p>
 								<ul>
-									<li>Defined in core/models/MongoModel.ts:52</li>
+									<li>Defined in core/models/MongoModel.ts:69</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -313,7 +315,7 @@
 					<a name="getall" class="tsd-anchor"></a>
 					<h3>Get<wbr>All</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">Get<wbr>All<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>All<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/igeojsonfeaturecollection.html" class="tsd-signature-type">IGeoJSONFeatureCollection</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -321,7 +323,7 @@
 								<p>Inherited from <a href="geojsonmodel.html">GeoJsonModel</a>.<a href="geojsonmodel.html#getall">GetAll</a></p>
 								<p>Overrides <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getall">GetAll</a></p>
 								<ul>
-									<li>Defined in core/models/GeoJsonModel.ts:48</li>
+									<li>Defined in core/models/GeoJsonModel.ts:49</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -407,7 +409,7 @@
 											<h5><span class="tsd-flag ts-flagOptional">Optional</span> updated<wbr>Since<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 											<div class="tsd-comment tsd-typography">
 												<div class="lead">
-													<p>Filters all results with older last_updated timestamp than this parameter
+													<p>Filters all results with older updated_at timestamp than this parameter
 													(filters not-updated data)</p>
 												</div>
 											</div>
@@ -415,8 +417,26 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/igeojsonfeaturecollection.html" class="tsd-signature-type">IGeoJSONFeatureCollection</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>GeoJSON FeatureCollection with all retrieved objects in &quot;features&quot;</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getname" class="tsd-anchor"></a>
+					<h3>Get<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getname">GetName</a></p>
+								<ul>
+									<li>Defined in core/models/BaseModel.ts:19</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -432,7 +452,7 @@
 								<p>Inherited from <a href="geojsonmodel.html">GeoJsonModel</a>.<a href="geojsonmodel.html#getone">GetOne</a></p>
 								<p>Overrides <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getone">GetOne</a></p>
 								<ul>
-									<li>Defined in core/models/GeoJsonModel.ts:136</li>
+									<li>Defined in core/models/GeoJsonModel.ts:139</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -453,6 +473,29 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Object of the retrieved record or null</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getschema" class="tsd-anchor"></a>
+					<h3>Get<wbr>Schema</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Schema<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="mongomodel.html">MongoModel</a>.<a href="mongomodel.html#getschema">GetSchema</a></p>
+								<ul>
+									<li>Defined in core/models/MongoModel.ts:51</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns current schema of the data</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -490,32 +533,33 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="primaryidentifierselection" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> Primary<wbr>Identifier<wbr>Selection</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection<span class="tsd-signature-symbol">(</span>inId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+					<h3>Primary<wbr>Identifier<wbr>Selection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection<span class="tsd-signature-symbol">(</span>inId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="mongomodel.html">MongoModel</a>.<a href="mongomodel.html#primaryidentifierselection">PrimaryIdentifierSelection</a></p>
+								<p>Inherited from <a href="mongomodel.html">MongoModel</a>.<a href="mongomodel.html#primaryidentifierselection">PrimaryIdentifierSelection</a></p>
 								<ul>
-									<li>Defined in resources/parkingzones/ParkingZonesModel.ts:39</li>
+									<li>Defined in core/models/MongoModel.ts:61</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Specifies where is the primary ID of the entity.
+									Searches by this selection in FindOne()</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>inId: <span class="tsd-signature-type">string</span></h5>
+									<h5>inId: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter">
-									<h5>properties.code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
 						</li>
 					</ul>
 				</section>
@@ -566,13 +610,19 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="parkingzonesmodel.html#getall" class="tsd-kind-icon">Get<wbr>All</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="parkingzonesmodel.html#getname" class="tsd-kind-icon">Get<wbr>Name</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="parkingzonesmodel.html#getone" class="tsd-kind-icon">Get<wbr>One</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="parkingzonesmodel.html#getschema" class="tsd-kind-icon">Get<wbr>Schema</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="parkingzonesmodel.html#gettariffs" class="tsd-kind-icon">Get<wbr>Tariffs</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="parkingzonesmodel.html#primaryidentifierselection" class="tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection</a>
 							</li>
 						</ul>

@@ -85,7 +85,16 @@
 								<span class="target">MongoModel</span>
 								<ul class="tsd-hierarchy">
 									<li>
+										<a href="historymodel.html" class="tsd-signature-type">HistoryModel</a>
+									</li>
+									<li>
 										<a href="geojsonmodel.html" class="tsd-signature-type">GeoJsonModel</a>
+									</li>
+									<li>
+										<a href="sortedwastemeasurementsmodel.html" class="tsd-signature-type">SortedWasteMeasurementsModel</a>
+									</li>
+									<li>
+										<a href="sortedwastepicksmodel.html" class="tsd-signature-type">SortedWastePicksModel</a>
 									</li>
 								</ul>
 							</li>
@@ -116,12 +125,14 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="mongomodel.html#selection" class="tsd-kind-icon">selection</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-private-protected">
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="mongomodel.html#addprojection" class="tsd-kind-icon">Add<wbr>Projection</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="mongomodel.html#addselection" class="tsd-kind-icon">Add<wbr>Selection</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="mongomodel.html#primaryidentifierselection" class="tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="mongomodel.html#getname" class="tsd-kind-icon">Get<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mongomodel.html#getschema" class="tsd-kind-icon">Get<wbr>Schema</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mongomodel.html#primaryidentifierselection" class="tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection</a></li>
 							</ul>
 						</section>
 					</div>
@@ -319,7 +330,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The schema which contains schemaObject for creating the Mongoose Schema</p>
+							<p>The Mongoose Schema object, defining structure of the data</p>
 						</div>
 					</div>
 				</section>
@@ -339,7 +350,7 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="addprojection" class="tsd-anchor"></a>
@@ -351,7 +362,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/models/MongoModel.ts:60</li>
+									<li>Defined in core/models/MongoModel.ts:77</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -384,7 +395,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/models/MongoModel.ts:52</li>
+									<li>Defined in core/models/MongoModel.ts:69</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -407,23 +418,63 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getname" class="tsd-anchor"></a>
+					<h3>Get<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="basemodel.html">BaseModel</a>.<a href="basemodel.html#getname">GetName</a></p>
+								<ul>
+									<li>Defined in core/models/BaseModel.ts:19</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getschema" class="tsd-anchor"></a>
+					<h3>Get<wbr>Schema</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Schema<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in core/models/MongoModel.ts:51</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns current schema of the data</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Schema</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="primaryidentifierselection" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> Primary<wbr>Identifier<wbr>Selection</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+					<h3>Primary<wbr>Identifier<wbr>Selection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection<span class="tsd-signature-symbol">(</span>inId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/models/MongoModel.ts:68</li>
+									<li>Defined in core/models/MongoModel.ts:61</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Specify (location within the object structure stored in DB) where to search by primary ID
-									The entity is uniquely identified by this property</p>
+									<p>Specifies where is the primary ID of the entity.
+									Searches by this selection in FindOne()</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -486,7 +537,13 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="mongomodel.html#addselection" class="tsd-kind-icon">Add<wbr>Selection</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="mongomodel.html#getname" class="tsd-kind-icon">Get<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="mongomodel.html#getschema" class="tsd-kind-icon">Get<wbr>Schema</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="mongomodel.html#primaryidentifierselection" class="tsd-kind-icon">Primary<wbr>Identifier<wbr>Selection</a>
 							</li>
 						</ul>

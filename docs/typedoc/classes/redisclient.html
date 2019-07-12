@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Client | Golemio Output Gateway</title>
+	<title>RedisClient | Golemio Output Gateway</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="client.html">Client</a>
+					<a href="redisclient.html">RedisClient</a>
 				</li>
 			</ul>
-			<h1>Class Client</h1>
+			<h1>Class RedisClient</h1>
 		</div>
 	</div>
 </header>
@@ -69,17 +69,17 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Wrapper for redis cache
-							Provides middleware for cache used in routes
-						Usage: this.router.get(&quot;/routes&quot;, useCacheMiddleware(10000), getTrips);</p>
+						<p>Wrapper for redis cache</p>
 					</div>
+					<p>Provides middleware for cache used in routes</p>
+					<p>Usage: this.router.get(&quot;/routes&quot;, useCacheMiddleware(10000), getData);</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Client</span>
+						<span class="target">RedisClient</span>
 					</li>
 				</ul>
 			</section>
@@ -90,24 +90,24 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported"><a href="client.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported"><a href="redisclient.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="client.html#cachewithredismiddleware" class="tsd-kind-icon">cache<wbr>With<wbr>Redis<wbr>Middleware</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="client.html#defaultcachettl" class="tsd-kind-icon">default<wbr>Cache<wbr>Ttl</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="client.html#redisclient" class="tsd-kind-icon">redis<wbr>Client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="redisclient.html#cachewithredismiddleware" class="tsd-kind-icon">cache<wbr>With<wbr>Redis<wbr>Middleware</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="redisclient.html#defaultcachettl" class="tsd-kind-icon">default<wbr>Cache<wbr>Ttl</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="redisclient.html#redisclient-1" class="tsd-kind-icon">redis<wbr>Client</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="client.html#getdefaultcachettl" class="tsd-kind-icon">get<wbr>Default<wbr>Cache<wbr>Ttl</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="client.html#getmiddleware" class="tsd-kind-icon">get<wbr>Middleware</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="client.html#isnocacheheader" class="tsd-kind-icon">is<wbr>NoCache<wbr>Header</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="client.html#middleware" class="tsd-kind-icon">middleware</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="redisclient.html#getdefaultcachettl" class="tsd-kind-icon">get<wbr>Default<wbr>Cache<wbr>Ttl</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="redisclient.html#getmiddleware" class="tsd-kind-icon">get<wbr>Middleware</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="redisclient.html#isnocacheheader" class="tsd-kind-icon">is<wbr>NoCache<wbr>Header</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="redisclient.html#middleware" class="tsd-kind-icon">middleware</a></li>
 							</ul>
 						</section>
 					</div>
@@ -119,16 +119,16 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Client<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="client.html" class="tsd-signature-type">Client</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Redis<wbr>Client<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="redisclient.html" class="tsd-signature-type">RedisClient</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/redis/Client.ts:27</li>
+									<li>Defined in core/redis/Client.ts:29</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="client.html" class="tsd-signature-type">Client</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="redisclient.html" class="tsd-signature-type">RedisClient</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -141,7 +141,7 @@
 					<div class="tsd-signature tsd-kind-icon">cache<wbr>With<wbr>Redis<wbr>Middleware<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;apicache.options({defaultDuration: this.defaultCacheTtl,redisClient: this.redisClient,}).middleware</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/redis/Client.ts:22</li>
+							<li>Defined in core/redis/Client.ts:24</li>
 						</ul>
 					</aside>
 				</section>
@@ -151,17 +151,17 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Cache<wbr>Ttl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;parseInt(config.redis_ttl || &quot;60000&quot;, 10)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/redis/Client.ts:14</li>
+							<li>Defined in core/redis/Client.ts:16</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
-					<a name="redisclient" class="tsd-anchor"></a>
+					<a name="redisclient-1" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> redis<wbr>Client</h3>
 					<div class="tsd-signature tsd-kind-icon">redis<wbr>Client<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RedisClient</span><span class="tsd-signature-symbol"> =&nbsp;redis.createClient({host: config.redis_host,port: parseInt(config.redis_port as string, 10),}).on(&quot;message&quot;, (message: string) &#x3D;&gt; log.info(message)).on(&quot;error&quot;, (error: any) &#x3D;&gt; log.warn(error))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in core/redis/Client.ts:16</li>
+							<li>Defined in core/redis/Client.ts:18</li>
 						</ul>
 					</aside>
 				</section>
@@ -178,7 +178,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/redis/Client.ts:33</li>
+									<li>Defined in core/redis/Client.ts:35</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -195,7 +195,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/redis/Client.ts:42</li>
+									<li>Defined in core/redis/Client.ts:44</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -218,7 +218,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/redis/Client.ts:37</li>
+									<li>Defined in core/redis/Client.ts:39</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -244,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in core/redis/Client.ts:46</li>
+									<li>Defined in core/redis/Client.ts:48</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -272,31 +272,31 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-is-not-exported">
-						<a href="client.html" class="tsd-kind-icon">Client</a>
+						<a href="redisclient.html" class="tsd-kind-icon">Redis<wbr>Client</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-								<a href="client.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="redisclient.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
-								<a href="client.html#cachewithredismiddleware" class="tsd-kind-icon">cache<wbr>With<wbr>Redis<wbr>Middleware</a>
+								<a href="redisclient.html#cachewithredismiddleware" class="tsd-kind-icon">cache<wbr>With<wbr>Redis<wbr>Middleware</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
-								<a href="client.html#defaultcachettl" class="tsd-kind-icon">default<wbr>Cache<wbr>Ttl</a>
+								<a href="redisclient.html#defaultcachettl" class="tsd-kind-icon">default<wbr>Cache<wbr>Ttl</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
-								<a href="client.html#redisclient" class="tsd-kind-icon">redis<wbr>Client</a>
+								<a href="redisclient.html#redisclient-1" class="tsd-kind-icon">redis<wbr>Client</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-								<a href="client.html#getdefaultcachettl" class="tsd-kind-icon">get<wbr>Default<wbr>Cache<wbr>Ttl</a>
+								<a href="redisclient.html#getdefaultcachettl" class="tsd-kind-icon">get<wbr>Default<wbr>Cache<wbr>Ttl</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-								<a href="client.html#getmiddleware" class="tsd-kind-icon">get<wbr>Middleware</a>
+								<a href="redisclient.html#getmiddleware" class="tsd-kind-icon">get<wbr>Middleware</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-								<a href="client.html#isnocacheheader" class="tsd-kind-icon">is<wbr>NoCache<wbr>Header</a>
+								<a href="redisclient.html#isnocacheheader" class="tsd-kind-icon">is<wbr>NoCache<wbr>Header</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
-								<a href="client.html#middleware" class="tsd-kind-icon">middleware</a>
+								<a href="redisclient.html#middleware" class="tsd-kind-icon">middleware</a>
 							</li>
 						</ul>
 					</li>

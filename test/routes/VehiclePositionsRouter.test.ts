@@ -2,13 +2,15 @@
 
 import "mocha";
 
+import { NextFunction, Request, Response } from "express";
+
 const chai = require("chai");
 const sinon = require("sinon");
 const express = require("express");
 const request = require("supertest");
 const chaiAsPromised = require("chai-as-promised");
 const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
+import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
 
 import { log } from "../../src/core/Logger";
 
@@ -38,13 +40,13 @@ describe("VehiclePositions Router", () => {
     sequelizeMockingMocha(
         sequelize,
         [],
-        {logging: false},
+        { logging: false },
     );
 
     before(() => {
         // Mount the tested router to the express instance
         app.use("/vehiclepositions", vehiclepositionsRouter);
-        app.use((err: any, req: any, res: any, next: any) => {
+        app.use((err: any, req: Request, res: Response, next: NextFunction) => {
             handleError(err).then((error) => {
                 if (error) {
                     log.silly("Error caught by the router error handler.");

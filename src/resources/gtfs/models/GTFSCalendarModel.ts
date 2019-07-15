@@ -1,13 +1,13 @@
-import {RopidGTFS} from "golemio-schema-definitions";
+import { RopidGTFS } from "golemio-schema-definitions";
 import moment = require("moment");
-import {models as sequelizeModels} from ".";
-import {sequelizeConnection} from "../../../core/database";
-import {CustomError} from "../../../core/errors";
-import {SequelizeModel} from "../../../core/models";
+import { models as sequelizeModels } from ".";
+import { sequelizeConnection } from "../../../core/database";
+import { CustomError } from "../../../core/errors";
+import { SequelizeModel } from "../../../core/models";
 
 export class GTFSCalendarModel extends SequelizeModel {
 
-    public weekDayMap = {
+    public weekDayMap: { [key: number]: string; } = {
         1: "monday",
         2: "tuesday",
         3: "wednesday",
@@ -31,10 +31,10 @@ export class GTFSCalendarModel extends SequelizeModel {
                                 `DATE('${date}') ` +
                                 `BETWEEN to_date(start_date, 'YYYYMMDD') AND to_date(end_date, 'YYYYMMDD')`,
                             ),
-                            {[sequelizeModels.GTFSCalendarModel.weekDayMap[day]]: 1},
+                            { [sequelizeModels.GTFSCalendarModel.weekDayMap[day]]: 1 },
                         ],
                     };
-                    return {where};
+                    return { where };
                 },
             },
         });
@@ -52,10 +52,10 @@ export class GTFSCalendarModel extends SequelizeModel {
         limit?: number,
         offset?: number,
     } = {}): Promise<any> => {
-        const {limit, offset, date} = options;
+        const { limit, offset, date } = options;
         try {
             const data = await this.sequelizeModel
-                .scope({method: ["forDate", date]})
+                .scope({ method: ["forDate", date] })
                 .findAll({
                     limit,
                     offset,

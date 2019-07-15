@@ -2,6 +2,23 @@ import { CustomError } from "./errors";
 import { log } from "./Logger";
 import { GetSubProperty } from "./Utils";
 
+export enum GeoCoordinatesType {
+    Point = "Point",
+    Polygon = "Polygon",
+}
+
+export interface IGeoCoordinatesPoint {
+    coordinates: number[];
+    type: GeoCoordinatesType.Point;
+}
+
+export interface IGeoCoordinatesPolygon {
+    coordinates: number[][];
+    type: GeoCoordinatesType.Polygon;
+}
+
+export type TGeoCoordinates = IGeoCoordinatesPoint | IGeoCoordinatesPolygon;
+
 /**
  * Interface for http://geojson.org/ Feature format
  */
@@ -9,7 +26,7 @@ export interface IGeoJSONFeature {
     /**
      * Geometry property. Coordinates can be one or two-dimensional array of coordinates or single coordinate
      */
-    geometry: { coordinates: any, type: string };
+    geometry: TGeoCoordinates;
     /**
      *  Object with properties
      */
@@ -37,8 +54,9 @@ export interface IGeoJSONFeatureCollection {
  * @param {range} range Range string
  * @returns {object} Object with lat, lng, and range numerical values
  */
-export const parseCoordinates = async (latlng: string,
-                                       range: string,
+export const parseCoordinates = async (
+    latlng: string,
+    range: string,
 ): Promise<{
     lat: number | undefined,
     lng: number | undefined,
@@ -62,7 +80,7 @@ export const parseCoordinates = async (latlng: string,
             return Promise.reject(new CustomError("Bad request - wrong input parameters", true, 400));
         }
     }
-    return {lat, lng, range: ran};
+    return { lat, lng, range: ran };
 };
 
 /**
@@ -74,15 +92,15 @@ export const parseCoordinates = async (latlng: string,
  */
 export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty: string): IGeoJSONFeature => {
     const properties = item.toJSON ? item.toJSON() : item;
-    const lon = GetSubProperty(lonProperty, item);
-    const lat = GetSubProperty(latProperty, item);
+    const lon = GetSubProperty<number>(lonProperty, item);
+    const lat = GetSubProperty<number>(latProperty, item);
     return ({
         geometry: {
             coordinates: [
                 +lon,
                 +lat,
             ],
-            type: "Point",
+            type: GeoCoordinatesType.Point,
         },
         properties,
         type: "Feature",
@@ -99,26 +117,26 @@ export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty:
  */
 export const buildGeojsonFeatureCollection =
     (items: any, lonProperty?: string, latProperty?: string): IGeoJSONFeatureCollection => {
-            if (!lonProperty || !latProperty) {
-                log.silly("Custom lat or lon property path not specified when building GeoJSON FeatureCollection,"
+        if (!lonProperty || !latProperty) {
+            log.silly("Custom lat or lon property path not specified when building GeoJSON FeatureCollection,"
                 + " assuming GeoJSONFeature format of data.");
-                if (    items.length > 0 &&
-                        (!items[0].geometry ||
-                        !items[0].geometry.coordinates ||
-                        !items[0].geometry.type ||
-                        items[0].type !== "Feature" ||
-                        !items[0].properties)) {
-                    log.warn("The data are not in GeoJSONFeature format and lat lon " +
+            if (items.length > 0 &&
+                (!items[0].geometry ||
+                    !items[0].geometry.coordinates ||
+                    !items[0].geometry.type ||
+                    items[0].type !== "Feature" ||
+                    !items[0].properties)) {
+                log.warn("The data are not in GeoJSONFeature format and lat lon " +
                     "property locations were not specified. Possible malformed GeoJSON on output");
-                }
-                return {
-                    features: items,
-                    type: "FeatureCollection",
-                };
-            } else {
-                return {
-                    features: items.map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty)),
-                    type: "FeatureCollection",
-                };
             }
-        };
+            return {
+                features: items,
+                type: "FeatureCollection",
+            };
+        } else {
+            return {
+                features: items.map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty)),
+                type: "FeatureCollection",
+            };
+        }
+    };

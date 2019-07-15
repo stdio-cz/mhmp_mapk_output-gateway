@@ -5,7 +5,16 @@ import { GTFSStopModel } from "./GTFSStopModel";
 import { GTFSStopTimesModel } from "./GTFSStopTimesModel";
 import { GTFSTripsModel } from "./GTFSTripsModel";
 
-const models: any = {
+export interface IGTFSModels {
+    GTFSCalendarModel: GTFSCalendarModel;
+    GTFSRoutesModel: GTFSRoutesModel;
+    GTFSShapesModel: GTFSShapesModel;
+    GTFSStopModel: GTFSStopModel;
+    GTFSStopTimesModel: GTFSStopTimesModel;
+    GTFSTripsModel: GTFSTripsModel;
+}
+
+const models: IGTFSModels = {
     GTFSCalendarModel: new GTFSCalendarModel(),
     GTFSRoutesModel: new GTFSRoutesModel(),
     GTFSShapesModel: new GTFSShapesModel(),
@@ -14,9 +23,10 @@ const models: any = {
     GTFSTripsModel: new GTFSTripsModel(),
 };
 
-for (const type in models) {
-    if ({}.hasOwnProperty.call(models[type], "Associate")) {
-        models[type].Associate(models);
+for (const type of Object.keys(models)) {
+    const model = (models as any)[type];
+    if (model.hasOwnProperty("Associate")) {
+        model.Associate(models);
     }
 }
 

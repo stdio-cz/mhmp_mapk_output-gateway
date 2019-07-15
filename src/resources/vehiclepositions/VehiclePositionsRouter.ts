@@ -82,6 +82,6 @@ export class VehiclePositionsRouter {
     }
 }
 
-const vehiclepositionsRouter = new VehiclePositionsRouter().router;
+const vehiclepositionsRouter: Router = new VehiclePositionsRouter().router;
 
 export { vehiclepositionsRouter };

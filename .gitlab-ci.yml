@@ -19,7 +19,7 @@ run_tests:
       alias: postgres
     - mongo:4.0.5
   script:
-    - npm install
+    - yarn install
     - npm run build
     - mongorestore --uri=$MONGO_CONN -d dataplatform ./test/data/dataplatform
     - export LOG_LEVEL=INFO

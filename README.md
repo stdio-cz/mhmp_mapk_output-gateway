@@ -6,6 +6,8 @@
 
 Output Gateway for the Data Platform System. Provides REST API for the data stored in Golemio data platform. 
 
+Uses express server, caching using Redis.
+
 More in Apiary documentation at https://outputgateway.docs.apiary.io
 
 Developed by http://operatorict.cz
@@ -17,9 +19,9 @@ Developed by http://operatorict.cz
 - Mongo
 - Postgres
 
-### Instalation
+### Instalation & run
 1. Build docker image by `docker build -t output-gateway .`
-2. Setup ENV variables by `.env` file or add `-e VAR=VALUE` to docker run
+2. Setup ENV variables by `.env` file or add `-e VAR=VALUE` to docker run. Env variables are described in `.env.template`.
 3. Run container by
 
 ```
@@ -31,12 +33,9 @@ docker run --rm \
     output-gateway # docker image label (defined by step 1)
 ```
 
-
-
-
 ## Local Installation
 
-## Prerequisites
+### Prerequisites
 
 - node.js
 - mongoDB
@@ -44,7 +43,7 @@ docker run --rm \
 - yarn
 - typescript
 
-## Installation
+### Installation
 
 Install all prerequisites
 
@@ -55,7 +54,7 @@ yarn install
 
 from the application's root directory.
 
-## Compilation of typescript code
+### Compilation of typescript code
 
 To compile typescript code into js one-time
 
@@ -68,12 +67,12 @@ npm run build-watch
 ```
 from the application's root directory.
 
-## Run
+### Run
 
 ```
 npm start
 ```
-This will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there.
+This will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there. Env variables are described in `.env.template`.
 
 Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 
@@ -105,10 +104,16 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
-## API documentation
+More documentation in `docs/`. Mainly `new_dataset_integration.md` for description on how to add a new dataset and create new API routes.
+
+### API documentation
 
 Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) (master), [outputgatewaydev.docs.apiary.io](https://outputgatewaydev.docs.apiary.io/#) (development).
 
-## Problems?
+## Contribution guidelines
+
+Please read `CONTRIBUTING.md`.
+
+## Troubleshooting
 
 Contact benak@operatorict.cz or vycpalek@operatorict.cz

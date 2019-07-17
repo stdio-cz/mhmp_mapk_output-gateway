@@ -6,6 +6,7 @@ import { handleError } from "../errors";
 import { parseCoordinates } from "../Geo";
 import { log } from "../Logger";
 import { GeoJsonModel } from "../models/GeoJsonModel";
+import { useCacheMiddleware } from "../redis";
 import { checkErrors, pagination } from "../Validation";
 
 /**
@@ -29,13 +30,13 @@ export class GeoJsonRouter {
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
-    public initRoutes = (): void => {
+    public initRoutes = (expire?: number | string): void => {
         let idParam;
         this.model.GetSchema().then((schema) => {
             // Get the primary ID of the schema (the attribute name)
             const idKey = Object.keys(this.model.PrimaryIdentifierSelection("0"))[0];
             let message: string = "Created model " + this.model.GetName() + " has ID `"
-            + idKey + "` of type ";
+                + idKey + "` of type ";
             if (schema.path(idKey) instanceof Schema.Types.Number) {
                 message += "number.";
                 // Create a url parameter for detail route with type number
@@ -47,18 +48,22 @@ export class GeoJsonRouter {
             }
             log.silly(message);
 
-            this.router.get("/", [
-                query("updatedSince").optional().isNumeric(),
-                query("districts").optional(),
-                query("districts.*").isString(),
-                query("ids").optional(),
-                query("latlng").optional().isString(),
-                query("range").optional().isNumeric(),
-            ], pagination, checkErrors, this.GetAll);
-            this.router.get("/:id", [
-                // Previously set parameter of type according to the data's primary ID type
-                idParam,
-            ], checkErrors, this.GetOne);
+            this.router.get("/",
+                useCacheMiddleware(expire),
+                [
+                    query("updatedSince").optional().isNumeric(),
+                    query("districts").optional(),
+                    query("districts.*").isString(),
+                    query("ids").optional(),
+                    query("latlng").optional().isString(),
+                    query("range").optional().isNumeric(),
+                ], pagination, checkErrors, this.GetAll);
+            this.router.get("/:id",
+                useCacheMiddleware(expire),
+                [
+                    // Previously set parameter of type according to the data's primary ID type
+                    idParam,
+                ], checkErrors, this.GetOne);
         });
 
     }

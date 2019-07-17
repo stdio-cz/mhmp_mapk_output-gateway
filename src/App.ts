@@ -264,6 +264,7 @@ export default class App {
                 },
                 {
                     collectionName: SharedCars.mongoCollectionName,
+                    expire: 30000,
                     name: SharedCars.name,
                     schema: SharedCars.outputMongooseSchemaObject,
                 },
@@ -324,6 +325,7 @@ export default class App {
                 },
                 {
                     collectionName: SharedBikes.mongoCollectionName,
+                    expire: 30000,
                     name: SharedBikes.name,
                     schema: SharedBikes.outputMongooseSchemaObject,
                 },

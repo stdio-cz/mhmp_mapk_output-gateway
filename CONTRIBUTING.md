@@ -32,6 +32,8 @@ Example of commit messages we will not approve:
 
 Feel free to use GitMojis (https://gitmoji.carloscuesta.me/)
 
+Name your single issue branches aimed for MR as `<issue-number>-issue-description` so the issue will get linked to that branch. Same as mentioning issue number (with `#`) in commit message (example `$ git commit -m "A brief summary of the commit related to #34`).
+
 ## Code style guide and design decisions
 
 - `core` is a base part of our appliation, similar to `libs` in other projects, server for the core data platform functionality, should be usable by another project (different city, different datasets, different use-cases) and SHOULD NOT depend on anything project-specific (anything outside `core`)

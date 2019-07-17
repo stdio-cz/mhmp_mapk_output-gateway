@@ -89,6 +89,6 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
     }
 }
 
-const municipalAuthoritiesRouter = new MunicipalAuthoritiesRouter().router;
+const municipalAuthoritiesRouter: Router = new MunicipalAuthoritiesRouter().router;
 
 export { municipalAuthoritiesRouter };

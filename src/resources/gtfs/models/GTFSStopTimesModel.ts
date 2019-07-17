@@ -1,4 +1,5 @@
 import { RopidGTFS } from "golemio-schema-definitions";
+import { IGTFSModels } from ".";
 import { sequelizeConnection } from "../../../core/database";
 import { CustomError } from "../../../core/errors";
 import { SequelizeModel } from "../../../core/models";
@@ -10,7 +11,7 @@ export class GTFSStopTimesModel extends SequelizeModel {
             RopidGTFS.stop_times.outputSequelizeAttributes);
     }
 
-    public Associate = (models: any) => {
+    public Associate = (models: IGTFSModels) => {
         this.sequelizeModel.belongsTo(models.GTFSTripsModel.sequelizeModel, {
             foreignKey: "trip_id",
         });

@@ -37,7 +37,7 @@ docker run --rm \
 - node.js
 - mongoDB
 - Postgres
-- npm
+- yarn
 - typescript
 
 ## Installation
@@ -45,9 +45,9 @@ docker run --rm \
 
 Install Node
 
-Install all npm modules using command:
+Install all dependencies using command:
 ```
-npm install
+yarn install
 ```
 
 from the application's root directory.

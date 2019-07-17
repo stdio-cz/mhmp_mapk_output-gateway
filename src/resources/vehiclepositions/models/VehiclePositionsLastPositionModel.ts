@@ -1,13 +1,12 @@
 import { VehiclePositions } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
+import { IVehiclePositionsModels } from ".";
 import { sequelizeConnection } from "../../../core/database";
-import { log } from "../../../core/Logger";
-import { SequelizeModel } from "./../../../core/models/";
 
 export class VehiclePositionsLastPositionModel {
 
     /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
+    public sequelizeModel: Sequelize.Model<any, any>;
 
     public constructor() {
         this.sequelizeModel = sequelizeConnection.define(
@@ -25,7 +24,7 @@ export class VehiclePositionsLastPositionModel {
         this.sequelizeModel.removeAttribute("updated_at");
     }
 
-    public Associate = (m: any) => {
+    public Associate = (m: IVehiclePositionsModels) => {
         this.sequelizeModel.belongsTo(m.VehiclePositionsTripsModel.sequelizeModel, {
             as: "last_position",
             foreignKey: "trips_id",

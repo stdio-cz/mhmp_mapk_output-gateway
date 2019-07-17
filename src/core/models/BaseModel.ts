@@ -16,7 +16,7 @@ export abstract class BaseModel {
         this.name = name;
     }
 
-    public GetName = () => {
+    public GetName = (): string => {
         return this.name;
     }
 }

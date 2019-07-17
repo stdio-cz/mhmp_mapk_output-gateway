@@ -1,7 +1,7 @@
-import {RopidGTFS} from "golemio-schema-definitions";
-import {CustomError} from "../../../core/errors";
-import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
-import { log } from "../../../core/Logger";
+import { RopidGTFS } from "golemio-schema-definitions";
+import { IGTFSModels } from ".";
+import { CustomError } from "../../../core/errors";
+import { buildGeojsonFeatureCollection } from "../../../core/Geo";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSShapesModel extends SequelizeModel {
@@ -11,7 +11,7 @@ export class GTFSShapesModel extends SequelizeModel {
             RopidGTFS.shapes.outputSequelizeAttributes);
     }
 
-    public Associate = (models: any) => {
+    public Associate = (models: IGTFSModels) => {
         this.sequelizeModel.hasMany(models.GTFSTripsModel.sequelizeModel, {
             foreignKey: "trip_id",
         });
@@ -28,7 +28,7 @@ export class GTFSShapesModel extends SequelizeModel {
         limit?: number,
         offset?: number,
     } = {}): Promise<any> => {
-        const {limit, offset, id} = options;
+        const { limit, offset, id } = options;
         try {
 
             const order: any = [];
@@ -38,7 +38,7 @@ export class GTFSShapesModel extends SequelizeModel {
                 limit,
                 offset,
                 order,
-                where: {shape_id: id},
+                where: { shape_id: id },
             });
             if (data.length === 0) {
                 return;

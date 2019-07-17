@@ -1,15 +1,16 @@
 /// Setup for logger - uses Winston logger for standard logging output and debug module for debugging logs
 import config from "../config/config";
 
-const debugLog = require("debug")("data-platform:output-gateway");
+import * as debug from "debug";
+import * as logform from "logform";
+import * as winston from "winston";
 
-const winston = require("winston");
-const { combine, timestamp, label, printf, prettyPrint, colorize, align } = winston.format;
+const debugLog: debug.Debugger = debug("data-platform:output-gateway");
 
 /**
  * Sets up a Winston logger format - https://www.npmjs.com/package/winston#formats
  */
-const logFormat = (info: any) => {
+const logFormat = (info: logform.TransformableInfo): string => {
     return `[${info.timestamp}] [${info.level}]: ${info.message}`;
 };
 
@@ -18,33 +19,44 @@ const logLevelToSet = config.log_level ? config.log_level.toLowerCase() : "info"
 /**
  * Winston logger setup
  */
-const setFormat = combine(
-        timestamp(),
-        colorize(),
-        align(),
-        printf(logFormat),
-    );
+const setFormat: logform.Format = winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.colorize(),
+    winston.format.align(),
+    winston.format.printf(logFormat),
+);
 
-const logger = winston.createLogger({
+const winstonLogger: winston.Logger = winston.createLogger({
     format: setFormat,
     transports: [
-      new winston.transports.Console({ level: logLevelToSet }),
+        new winston.transports.Console({ level: logLevelToSet }),
     ],
 });
+
+interface ILogger {
+    error: winston.LeveledLogMethod;
+    warn: winston.LeveledLogMethod;
+    info: winston.LeveledLogMethod;
+
+    debug: (formatter: any, ...args: any[]) => void;
+    silly: (formatter: any, ...args: any[]) => void;
+}
+
+const logger: ILogger = winstonLogger;
 
 const winstonDebugLog = logger.debug;
 const winstonSillyLog = logger.silly;
 
 // Log all "SILLY" logs also to debug module
-logger.silly = (logText: any) => {
-    debugLog(logText);
-    winstonSillyLog(logText);
+logger.silly = (formatter: any, ...args: any[]): void => {
+    debugLog(formatter, args);
+    winstonSillyLog(formatter);
 };
 
 // Log all "DEBUG" logs also to debug module
-logger.debug = (logText: any) => {
-    debugLog(logText);
-    winstonDebugLog(logText);
+logger.debug = (formatter: any, ...args: any[]): void => {
+    debugLog(formatter, args);
+    winstonDebugLog(formatter);
 };
 
 export { logger as log };

@@ -10,12 +10,13 @@ import { param, query } from "express-validator/check";
 import { CustomError } from "../../core/errors";
 import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
+import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
 import { checkErrors, pagination } from "../../core/Validation";
 import { SortedWasteMeasurementsModel } from "./SortedWasteMeasurementsModel";
 import { SortedWastePicksModel } from "./SortedWastePicksModel";
-
 import { SortedWasteStationsModel } from "./SortedWasteStationsModel";
+
 export class SortedWasteRouter extends GeoJsonRouter {
 
     protected model: SortedWasteStationsModel = new SortedWasteStationsModel();
@@ -24,21 +25,38 @@ export class SortedWasteRouter extends GeoJsonRouter {
 
     constructor() {
         super(new SortedWasteStationsModel());
+        this.initRoutes();
         this.router.get("/measurements", [
             query("containerId").optional().isNumeric(),
             query("from").optional().isISO8601(),
             query("to").optional().isISO8601(),
-        ], pagination, checkErrors, this.GetMeasurements);
-        this.router.get("/picks", [
-            query("containerId").optional().isNumeric(),
-            query("from").optional().isISO8601(),
-            query("to").optional().isISO8601(),
-        ], pagination, checkErrors, this.GetPicks);
-        this.initRoutes();
-        this.router.get("/", [
-            query("accessibility").optional().isNumeric(),
-            query("onlyMonitored").optional().isBoolean(),
-        ], pagination, checkErrors, this.GetAll);
+        ],
+            pagination,
+            checkErrors,
+            useCacheMiddleware(),
+            this.GetMeasurements,
+        );
+        this.router.get("/picks",
+            [
+                query("containerId").optional().isNumeric(),
+                query("from").optional().isISO8601(),
+                query("to").optional().isISO8601(),
+            ],
+            pagination,
+            checkErrors,
+            useCacheMiddleware(),
+            this.GetPicks,
+        );
+        this.router.get("/",
+            [
+                query("accessibility").optional().isNumeric(),
+                query("onlyMonitored").optional().isBoolean(),
+            ],
+            pagination,
+            checkErrors,
+            useCacheMiddleware(),
+            this.GetAll,
+        );
     }
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {

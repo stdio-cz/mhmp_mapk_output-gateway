@@ -13,13 +13,13 @@ stages:
 
 run_tests:
   stage: build
-  image: gitlab.oict.cz:4567/data-platform/docker-node-env:latest
+  image: gitlab.oict.cz:4567/data-platform/devops/docker-node-env:latest
   services:
-    - name: gitlab.oict.cz:4567/data-platform/docker-postgis:10.5
+    - name: gitlab.oict.cz:4567/data-platform/devops/docker-postgis:10.5
       alias: postgres
     - mongo:4.0.5
   script:
-    - npm install
+    - yarn install
     - npm run build
     - mongorestore --uri=$MONGO_CONN -d dataplatform ./test/data/dataplatform
     - export LOG_LEVEL=INFO
@@ -28,20 +28,21 @@ run_tests:
     - cd node_modules/golemio-schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f test/dump.sql
     - NODE_ENV=production npm run code-coverage
-    - npm start &
     - dredd
 
-build_image:
+build_image_v1:
   stage: build
   script:
+    - SANITIZED_BRANCH=${CI_COMMIT_REF_NAME//[^a-zA-Z0-9_]/}
     - echo $CI_COMMIT_SHA > commitsha
-    - docker build -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest .
+    - docker build -t $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:latest .
 
-registry_deployment:
+registry_deployment_v1:
   stage: deploy
   script:
+    - SANITIZED_BRANCH=${CI_COMMIT_REF_NAME//[^a-zA-Z0-9_]/}
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+    - docker push $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:latest
   only:
     refs:
       - master

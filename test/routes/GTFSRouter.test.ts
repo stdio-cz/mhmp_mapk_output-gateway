@@ -4,6 +4,9 @@ import "mocha";
 
 import { expect } from "chai";
 import * as express from "express";
+import { NextFunction, Request, Response } from "express";
+
+const config = require("../../src/config/config");
 
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
@@ -33,7 +36,7 @@ describe("GTFS Router", () => {
     before(() => {
         // Mount the tested router to the express instance
         app.use("/gtfs", gtfsRouter);
-        app.use((err: any, req: any, res: any, next: any) => {
+        app.use((err: any, req: Request, res: Response, next: NextFunction) => {
             handleError(err).then((error) => {
                 if (error) {
                     log.silly("Error caught by the router error handler.");

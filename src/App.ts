@@ -3,48 +3,14 @@
 
 // Import everything from express and assign it to the express variable
 import * as express from "express";
-
-import { NextFunction, Request, Response, Router } from "express";
-
-import * as httpLogger from "morgan";
-
+import { NextFunction, Request, Response } from "express";
 import * as fs from "fs";
-
-import * as path from "path";
-
-import * as mongoose from "mongoose";
-
-import config from "./config/config";
-
-import { CustomError } from "./core/errors";
-
-import { handleError } from "./core/errors";
-
-import { log } from "./core/Logger";
-
-import { IDatasetDefinition, RouterBuilder } from "./core/routes/";
-
-import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
-
-import { sortedWasteRouter } from "./resources/sortedwastestations/SortedWasteRouter";
-
-import { cityDistrictsRouter } from "./resources/citydistricts/CityDistrictsRouter";
-
-import { vehiclepositionsRouter } from "./resources/vehiclepositions/VehiclePositionsRouter";
-
-import { gtfsRouter } from "./resources/gtfs/GTFSRouter";
-
-import { sequelizeConnection } from "./core/database";
-
-import { mongooseConnection } from "./core/database";
-
 import {
     AirQualityStations,
     BicycleParkings,
     Gardens,
     IceGatewaySensors,
     IceGatewayStreetLamps,
-    MedicalInstitutions,
     Meteosensors,
     MunicipalPoliceStations,
     Parkings,
@@ -55,10 +21,21 @@ import {
     TrafficCameras,
     WasteCollectionYards,
 } from "golemio-schema-definitions";
-
 import * as http from "http";
+import * as httpLogger from "morgan";
+import * as path from "path";
+import config from "./config/config";
+import { mongooseConnection, sequelizeConnection } from "./core/database";
+import { CustomError, handleError, ICustomErrorObject } from "./core/errors";
+import { log } from "./core/Logger";
+import { RouterBuilder } from "./core/routes/";
+import { cityDistrictsRouter } from "./resources/citydistricts/CityDistrictsRouter";
+import { gtfsRouter } from "./resources/gtfs/GTFSRouter";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions/MedicalInstitutionsRouter";
 import { municipalAuthoritiesRouter } from "./resources/municipalauthorities/MunicipalAuthoritiesRouter";
+import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
+import { sortedWasteRouter } from "./resources/sortedwastestations/SortedWasteRouter";
+import { vehiclepositionsRouter } from "./resources/vehiclepositions/VehiclePositionsRouter";
 
 export const generalRoutes = [
     {
@@ -178,9 +155,9 @@ export default class App {
             this.express = express();
             this.middleware();
             this.routes();
-            const server = http.createServer(this.express);
+            const server: http.Server = http.createServer(this.express);
             // Setup error handler hook on server error
-            server.on("error", (err: any) => {
+            server.on("error", (err: Error) => {
                 handleError(new CustomError("Could not start a server", false, 1, err));
             });
             // Serve the application at the given port
@@ -193,7 +170,7 @@ export default class App {
         }
     }
 
-    private setHeaders = (req: Request, res: Response, next: NextFunction) => {
+    private setHeaders = (req: Request, res: Response, next: NextFunction): void => {
         res.setHeader("x-powered-by", "shem");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
@@ -216,7 +193,7 @@ export default class App {
     }
 
     private routes = (): void => {
-        const defaultRouter = express.Router();
+        const defaultRouter: express.Router = express.Router();
 
         // Create base url route handler
         defaultRouter.get(["/", "/health-check", "/status"], (req, res, next) => {
@@ -344,8 +321,8 @@ export default class App {
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
-        this.express.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-            handleError(err).then((error) => {
+        this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
+            handleError(err).then((error: ICustomErrorObject) => {
                 if (error) {
                     log.silly("Error caught by the router error handler.");
                     res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -360,7 +337,7 @@ export default class App {
      */
     private loadCommitSHA = async (): Promise<string> => {
         return new Promise<string>((resolve, reject) => {
-            fs.readFile(path.join(__dirname, "..", "commitsha"), (err, data) => {
+            fs.readFile(path.join(__dirname, "..", "commitsha"), (err: NodeJS.ErrnoException | null, data: Buffer) => {
                 if (err) {
                     return resolve(undefined);
                 }

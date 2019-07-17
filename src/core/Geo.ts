@@ -2,6 +2,23 @@ import { CustomError } from "./errors";
 import { log } from "./Logger";
 import { GetSubProperty } from "./Utils";
 
+export enum GeoCoordinatesType {
+    Point = "Point",
+    Polygon = "Polygon",
+}
+
+export interface IGeoCoordinatesPoint {
+    coordinates: number[];
+    type: GeoCoordinatesType.Point;
+}
+
+export interface IGeoCoordinatesPolygon {
+    coordinates: number[][];
+    type: GeoCoordinatesType.Polygon;
+}
+
+export type TGeoCoordinates = IGeoCoordinatesPoint | IGeoCoordinatesPolygon;
+
 /**
  * Interface for http://geojson.org/ Feature format
  */
@@ -9,7 +26,7 @@ export interface IGeoJSONFeature {
     /**
      * Geometry property. Coordinates can be one or two-dimensional array of coordinates or single coordinate
      */
-    geometry: { coordinates: any, type: string };
+    geometry: TGeoCoordinates;
     /**
      *  Object with properties
      */
@@ -75,15 +92,15 @@ export const parseCoordinates = async (
  */
 export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty: string): IGeoJSONFeature => {
     const properties = item.toJSON ? item.toJSON() : item;
-    const lon = GetSubProperty(lonProperty, item);
-    const lat = GetSubProperty(latProperty, item);
+    const lon = GetSubProperty<number>(lonProperty, item);
+    const lat = GetSubProperty<number>(latProperty, item);
     return ({
         geometry: {
             coordinates: [
                 +lon,
                 +lat,
             ],
-            type: "Point",
+            type: GeoCoordinatesType.Point,
         },
         properties,
         type: "Feature",

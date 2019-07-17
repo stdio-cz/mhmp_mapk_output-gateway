@@ -1,6 +1,7 @@
 "use strict";
 
 import * as express from "express";
+import { NextFunction, Request, Response } from "express";
 import "mocha";
 
 import * as chai from "chai";
@@ -31,7 +32,7 @@ describe("VehiclePositions Router", () => {
     before(() => {
         // Mount the tested router to the express instance
         app.use("/vehiclepositions", vehiclepositionsRouter);
-        app.use((err: any, req: any, res: any, next: any) => {
+        app.use((err: any, req: Request, res: Response, next: NextFunction) => {
             handleError(err).then((error) => {
                 if (error) {
                     log.silly("Error caught by the router error handler.");

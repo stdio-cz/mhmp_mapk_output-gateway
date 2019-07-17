@@ -2,15 +2,22 @@ import { VehiclePositionsLastPositionModel } from "./VehiclePositionsLastPositio
 import { VehiclePositionsPositionsModel } from "./VehiclePositionsPositionsModel";
 import { VehiclePositionsTripsModel } from "./VehiclePositionsTripsModel";
 
-const models: any = {
+export interface IVehiclePositionsModels {
+    VehiclePositionsLastPositionModel: VehiclePositionsLastPositionModel;
+    VehiclePositionsPositionsModel: VehiclePositionsPositionsModel;
+    VehiclePositionsTripsModel: VehiclePositionsTripsModel;
+}
+
+const models: IVehiclePositionsModels = {
     VehiclePositionsLastPositionModel: new VehiclePositionsLastPositionModel(),
     VehiclePositionsPositionsModel: new VehiclePositionsPositionsModel(),
     VehiclePositionsTripsModel: new VehiclePositionsTripsModel(),
 };
 
-for (const type in models) {
-    if ({}.hasOwnProperty.call(models[type], "Associate")) {
-        models[type].Associate(models);
+for (const type of Object.keys(models)) {
+    const model = (models as any)[type];
+    if (model.hasOwnProperty("Associate")) {
+        model.Associate(models);
     }
 }
 

@@ -1,6 +1,6 @@
 import { SchemaDefinition } from "mongoose";
 import { CustomError } from "../errors";
-import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../Geo";
+import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType } from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
 
@@ -78,7 +78,7 @@ export class GeoJsonModel extends MongoModel {
                         $near: {
                             $geometry: {
                                 coordinates: [options.lng, options.lat],
-                                type: "Point",
+                                type: GeoCoordinatesType.Point,
                             },
                         },
                     },

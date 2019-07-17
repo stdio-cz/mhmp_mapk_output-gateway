@@ -1,7 +1,7 @@
 import { RopidGTFS } from "golemio-schema-definitions";
+import { IGTFSModels } from ".";
 import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../../../core/Geo";
-import { log } from "../../../core/Logger";
+import { buildGeojsonFeatureCollection } from "../../../core/Geo";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSShapesModel extends SequelizeModel {
@@ -11,7 +11,7 @@ export class GTFSShapesModel extends SequelizeModel {
             RopidGTFS.shapes.outputSequelizeAttributes);
     }
 
-    public Associate = (models: any) => {
+    public Associate = (models: IGTFSModels) => {
         this.sequelizeModel.hasMany(models.GTFSTripsModel.sequelizeModel, {
             foreignKey: "trip_id",
         });

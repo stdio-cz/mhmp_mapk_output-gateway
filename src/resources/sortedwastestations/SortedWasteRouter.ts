@@ -135,6 +135,6 @@ export class SortedWasteRouter extends GeoJsonRouter {
     }
 }
 
-const sortedWasteRouter = new SortedWasteRouter().router;
+const sortedWasteRouter: Router = new SortedWasteRouter().router;
 
 export { sortedWasteRouter };

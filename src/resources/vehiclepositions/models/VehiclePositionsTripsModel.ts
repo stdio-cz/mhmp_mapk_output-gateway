@@ -1,10 +1,9 @@
 import { VehiclePositions } from "golemio-schema-definitions";
 import { IncludeOptions, Model } from "sequelize";
-import { models } from ".";
+import { IVehiclePositionsModels } from ".";
 import { sequelizeConnection } from "../../../core/database";
 import { CustomError } from "../../../core/errors";
-import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../../../core/Geo";
-import { log } from "../../../core/Logger";
+import { buildGeojsonFeature, buildGeojsonFeatureCollection, IGeoJSONFeature } from "../../../core/Geo";
 import { SequelizeModel } from "./../../../core/models/";
 
 export class VehiclePositionsTripsModel extends SequelizeModel {
@@ -14,7 +13,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             VehiclePositions.trips.outputSequelizeAttributes);
     }
 
-    public Associate = (m: any) => {
+    public Associate = (m: IVehiclePositionsModels) => {
         this.sequelizeModel.hasMany(m.VehiclePositionsPositionsModel.sequelizeModel, {
             as: "all_positions",
             foreignKey: "trips_id",
@@ -99,7 +98,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      * @param {object} item Trip object
      * @return
      */
-    private ConvertItem = (item: any) => {
+    private ConvertItem = (item: any): IGeoJSONFeature => {
         const { last_position,
             ropidgtfs_trip,
             all_positions = [],

@@ -14,7 +14,6 @@ import { handleError } from "../../src/core/errors";
 import { log } from "../../src/core/Logger";
 import { gtfsRouter } from "../../src/resources/gtfs/GTFSRouter";
 
-
 chai.use(chaiAsPromised);
 
 describe("GTFS Router", () => {
@@ -126,7 +125,6 @@ describe("GTFS Router", () => {
                 done();
             });
     });
-
 
     it("should respond with 400 to GET /gtfs/stops?latlng (wrong query param)", (done) => {
         request(app)

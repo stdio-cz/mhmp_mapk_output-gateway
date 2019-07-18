@@ -6,10 +6,12 @@ import { log } from "../../core/Logger";
 
 /**
  * Wrapper for redis cache
+ *
  * Provides middleware for cache used in routes
- * Usage: this.router.get("/routes", useCacheMiddleware(10000), getTrips);
+ *
+ * Usage: this.router.get("/routes", useCacheMiddleware(10000), getData);
  */
-class Client {
+class RedisClient {
 
     private defaultCacheTtl: number = parseInt(config.redis_ttl || "60000", 10);
 
@@ -55,7 +57,7 @@ class Client {
     }
 }
 
-const client = new Client();
+const client = new RedisClient();
 const useCacheMiddleware = (expire?: number | string) => client.getMiddleware(expire);
 
 export { useCacheMiddleware };

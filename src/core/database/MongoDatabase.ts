@@ -8,16 +8,19 @@ import { log } from "../Logger";
  * Class for connection to MongoDB database. Using mongoose https://www.npmjs.com/package/mongoose
  */
 export class MongoDatabase {
-    private connectionString: string;
+    private connectionString: string | undefined;
 
     /** Set up connection string */
     constructor() {
-        this.connectionString = config.mongo_connection || "mongodb://localhost:27017";
+        this.connectionString = config.mongo_connection;
     }
 
     /** Connects to db */
     public connect = async () => {
         try {
+            if (!this.connectionString || this.connectionString === "YOUR CONNECTION STRING GOES HERE") {
+                throw new Error("Undefined connection string.");
+            }
             await mongoose.connect(this.connectionString, {
                 autoReconnect: true,
                 useCreateIndex: true,

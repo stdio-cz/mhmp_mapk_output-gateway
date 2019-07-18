@@ -78,6 +78,6 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
     }
 }
 
-const medicalInstitutionsRouter = new MedicalInstitutionsRouter().router;
+const medicalInstitutionsRouter: Router = new MedicalInstitutionsRouter().router;
 
 export { medicalInstitutionsRouter };

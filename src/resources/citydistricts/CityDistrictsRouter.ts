@@ -21,6 +21,6 @@ export class CityDistrictsRouter extends GeoJsonRouter {
 
 }
 
-const cityDistrictsRouter = new CityDistrictsRouter().router;
+const cityDistrictsRouter: Router = new CityDistrictsRouter().router;
 
 export { cityDistrictsRouter };

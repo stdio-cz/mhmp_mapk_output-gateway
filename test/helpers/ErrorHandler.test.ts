@@ -17,7 +17,7 @@ describe("ErrorHandler", () => {
     let exitStub: any;
 
     beforeEach(() => {
-        sandbox = sinon.createSandbox({ useFakeTimers : true });
+        sandbox = sinon.createSandbox({ useFakeTimers: true });
         exitStub = sandbox.stub(process, "exit");
     });
 

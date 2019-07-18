@@ -165,6 +165,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/debug@^4.1.0":
+  version "4.1.4"
+  resolved "http://10.200.0.50:4873/@types%2fdebug/-/debug-4.1.4.tgz#56eec47706f0fd0b7c694eae2f3172e6b0b769da"
+  integrity sha512-D9MyoQFI7iP5VdpEyPZyjjqIJ8Y8EDNQFIFVLOmeg1rI1xiHOChyUPMPRUVfqFCerxfE+yS3vMyj37F6IdtOoQ==
+
 "@types/events@*":
   version "3.0.0"
   resolved "http://10.200.0.50:4873/@types%2fevents/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -1692,10 +1697,10 @@ globals@^11.1.0:
   resolved "http://10.200.0.50:4873/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-golemio-schema-definitions@0.1.9:
-  version "0.1.9"
-  resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.9.tgz#dc7b2b254ed062df376c4e32d70c7f654c6ce083"
-  integrity sha512-AEPevdMrZ04Y+h6avuiiRzb5V3wgio97j1rIGLYn6DARAoHo2UhfKbL3ZZvDb2wtfYhAP7LAyd/V72AypMlWzg==
+golemio-schema-definitions@0.1.10-dev.2233:
+  version "0.1.10-dev.2233"
+  resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.10-dev.2233.tgz#f1c60cf45520ddd7c33131762d57b006bc8ea309"
+  integrity sha512-GDP9eDxhk2oIOfQvqjniGncUcB7XgBJlEn60F8PcLVBRiikr37vaYohZD/rZWeN8vHG09pupngUWsYmWb7Uc1g==
   dependencies:
     db-migrate "0.11.5"
     db-migrate-mongodb "1.5.0"
@@ -2217,9 +2222,9 @@ lines-and-columns@^1.1.6:
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
 linkify-it@^2.0.0:
-  version "2.1.0"
-  resolved "http://10.200.0.50:4873/linkify-it/-/linkify-it-2.1.0.tgz#c4caf38a6cd7ac2212ef3c7d2bde30a91561f9db"
-  integrity sha512-4REs8/062kV2DSHxNfq5183zrqXMl7WP0WzABH9IeJI+NLm429FgE1PDecltYfnOoFDFlZGh2T8PfZn0r+GTRg==
+  version "2.2.0"
+  resolved "http://10.200.0.50:4873/linkify-it/-/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
+  integrity sha512-GnAl/knGn+i1U/wjBz3akz2stz+HrHLsxMwHQGofCDfPvlf+gDKN58UtfmUquTY4/MXeE2x7k19KQmeoZi94Iw==
   dependencies:
     uc.micro "^1.0.1"
 

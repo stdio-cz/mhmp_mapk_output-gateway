@@ -13,7 +13,7 @@ import { log } from "../../core/Logger";
  */
 class RedisClient {
 
-    private defaultCacheTtl: any = parseInt(config.redis_ttl || "60000", 10);
+    private defaultCacheTtl: number = parseInt(config.redis_ttl || "60000", 10);
 
     private redisClient = redis.createClient({
         host: config.redis_host,
@@ -23,7 +23,7 @@ class RedisClient {
 
     private cacheWithRedisMiddleware = apicache
         .options({
-            defaultDuration: this.defaultCacheTtl,
+            defaultDuration: this.defaultCacheTtl.toString(),
             redisClient: this.redisClient,
         })
         .middleware;

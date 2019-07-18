@@ -40,11 +40,11 @@ describe("GTFSStopTimesModel", () => {
     sequelizeMockingMocha(
         sequelize,
         [
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_routes.json")),
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_services.json")),
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_trips.json")),
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stops.json")),
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_stop_times.json")),
+            path.resolve(path.join(__dirname, "../../db/example/mongo_data/dataplatform/ropidgtfs_routes.json")),
+            path.resolve(path.join(__dirname, "../../db/example/mongo_data/dataplatform/ropidgtfs_services.json")),
+            path.resolve(path.join(__dirname, "../../db/example/mongo_data/dataplatform/ropidgtfs_trips.json")),
+            path.resolve(path.join(__dirname, "../../db/example/mongo_data/dataplatform/ropidgtfs_stops.json")),
+            path.resolve(path.join(__dirname, "../../db/example/mongo_data/dataplatform/ropidgtfs_stop_times.json")),
         ],
         {logging: false},
     );

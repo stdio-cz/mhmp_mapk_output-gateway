@@ -40,7 +40,7 @@ describe("GTFSRoutesModel", () => {
     sequelizeMockingMocha(
         sequelize,
         [
-            path.resolve(path.join(__dirname, "../data/dataplatform/ropidgtfs_routes.json")),
+            path.resolve(path.join(__dirname, "../../db/example/mongo_data/dataplatform/ropidgtfs_routes.json")),
         ],
         {logging: false},
     );

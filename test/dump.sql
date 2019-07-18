@@ -47,6 +47,17 @@ INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code
 INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
 ('0',	'U476S1',	'2',	'U476Z102P',	50.0754,	14.43908,	'Náměstí Míru',	'',	2,	'P',	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	NULL,	NULL,	NULL);
 
+INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
+('0',	'U376S1',	'2',	'U276Z106P',	50.0754,	14.43908,	'I.P. Pavlova',	'',	2,	'P',	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	NULL,	NULL,	NULL);
+
+INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
+('0',	'U576S1',	'2',	'U376Z105P',	50.0754,	14.43908,	'Muzeum',	'',	2,	'P',	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	NULL,	NULL,	NULL);
+
+INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
+('0',	'U776S1',	'2',	'U476Z104P',	50.0754,	14.43908,	'Dejvická',	'',	2,	'P',	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	NULL,	NULL,	NULL);
+
+INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
+('0',	'U876S1',	'2',	'U476Z103P',	50.0754,	14.43908,	'Nádraží Holešovice',	'',	2,	'P',	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	'2019-05-27 03:20:17.945+00',	NULL,	NULL,	NULL,	NULL,	NULL);
 
 INSERT INTO "ropidgtfs_shapes" ("shape_dist_traveled", "shape_id", "shape_pt_lat", "shape_pt_lon", "shape_pt_sequence", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by") VALUES
 (0,	'L991V1',	50.06841,	14.50717,	1,	NULL,	'2019-05-27 03:21:35.159+00',	NULL,	NULL,	'2019-05-27 03:21:35.159+00',	NULL),

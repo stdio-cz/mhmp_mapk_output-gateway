@@ -2,25 +2,20 @@
 
 import "mocha";
 
+import { expect } from "chai";
+import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 
 const config = require("../../src/config/config");
 
-const chai = require("chai");
-const sinon = require("sinon");
-const express = require("express");
-const request = require("supertest");
-const chaiAsPromised = require("chai-as-promised");
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-import { sequelizeConnection as sequelize } from "../../src/core/database/PostgreDatabase";
+import * as chai from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
+import * as request from "supertest";
 
-import { log } from "../../src/core/Logger";
-
-import * as path from "path";
 import { handleError } from "../../src/core/errors";
+import { log } from "../../src/core/Logger";
 import { gtfsRouter } from "../../src/resources/gtfs/GTFSRouter";
-
-const expect = chai.expect;
 
 chai.use(chaiAsPromised);
 
@@ -31,19 +26,12 @@ describe("GTFS Router", () => {
     let sandbox: any = null;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
     });
 
     afterEach(() => {
         sandbox && sandbox.restore();
     });
-
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [],
-        { logging: false },
-    );
 
     before(() => {
         // Mount the tested router to the express instance
@@ -141,17 +129,6 @@ describe("GTFS Router", () => {
             });
     });
 
-    // it("should respond with FeatureCollection to GET /gtfs/stops?latlng ", (done) => {
-    //     request(app)
-    //         .get("/gtfs/stops?latlng=50.11548,14.43732").end((err: any, res: any) => {
-    //         expect(res.statusCode).to.be.equal(200);
-    //         expect(res.body).to.be.an("object");
-    //         expect(res.body.features).to.be.an("array");
-    //         expect(res.body.type).to.be.equal("FeatureCollection");
-    //         done();
-    //     });
-    // });
-
     it("should respond with 400 to GET /gtfs/stops?latlng (wrong query param)", (done) => {
         request(app)
             .get("/gtfs/stops?latlng=50.1154814.43732").end((err: any, res: any) => {
@@ -189,7 +166,7 @@ describe("GTFS Router", () => {
 
     it("should respond with 404 to GET /gtfs/routes/:routeId ", (done) => {
         request(app)
-            .get("/gtfs/routes/L991").end((err: any, res: any) => {
+            .get("/gtfs/routes/L991aaaaaaaaaa").end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(404);
                 done();
             });
@@ -212,12 +189,12 @@ describe("GTFS Router", () => {
             });
     });
 
-    // it("should respond with 404 to GET /gtfs/services?date=2019-02-28 ", (done) => {
-    //     request(app)
-    //         .get("/gtfs/services?date=2019-02-28").end((err: any, res: any) => {
-    //         expect(res.statusCode).to.be.equal(200);
-    //         expect(res.body).to.be.instanceOf(Array);
-    //         done();
-    //     });
-    // });
+    it("should respond with 200 to GET /gtfs/services?date=2019-02-28 ", (done) => {
+        request(app)
+            .get("/gtfs/services?date=2019-02-28").end((err: any, res: any) => {
+                expect(res.statusCode).to.be.equal(200);
+                expect(res.body).to.be.instanceOf(Array);
+                done();
+            });
+    });
 });

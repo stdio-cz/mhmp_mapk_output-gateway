@@ -37,6 +37,95 @@ import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter"
 import { sortedWasteRouter } from "./resources/sortedwastestations/SortedWasteRouter";
 import { vehiclepositionsRouter } from "./resources/vehiclepositions/VehiclePositionsRouter";
 
+export const generalRoutes = [
+    {
+        collectionName: IceGatewayStreetLamps.mongoCollectionName,
+        name: IceGatewayStreetLamps.name,
+        schema: IceGatewayStreetLamps.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: IceGatewaySensors.mongoCollectionName,
+        history:
+        {
+            collectionName: IceGatewaySensors.history.mongoCollectionName,
+            name: IceGatewaySensors.history.name,
+            schema: IceGatewaySensors.history.outputMongooseSchemaObject,
+        },
+        name: IceGatewaySensors.name,
+        schema: IceGatewaySensors.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: SharedCars.mongoCollectionName,
+        name: SharedCars.name,
+        schema: SharedCars.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: AirQualityStations.mongoCollectionName,
+        history: {
+            collectionName: AirQualityStations.history.mongoCollectionName,
+            name: AirQualityStations.history.name,
+            schema: AirQualityStations.history.outputMongooseSchemaObject,
+        },
+        name: AirQualityStations.name,
+        schema: AirQualityStations.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: Gardens.mongoCollectionName,
+        name: Gardens.name,
+        schema: Gardens.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: Meteosensors.mongoCollectionName,
+        name: Meteosensors.name,
+        schema: Meteosensors.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: TrafficCameras.mongoCollectionName,
+        name: TrafficCameras.name,
+        schema: TrafficCameras.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: Playgrounds.mongoCollectionName,
+        name: Playgrounds.name,
+        schema: Playgrounds.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: MunicipalPoliceStations.mongoCollectionName,
+        name: MunicipalPoliceStations.name,
+        schema: MunicipalPoliceStations.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: WasteCollectionYards.mongoCollectionName,
+        name: WasteCollectionYards.name,
+        schema: WasteCollectionYards.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: PublicToilets.mongoCollectionName,
+        name: PublicToilets.name,
+        schema: PublicToilets.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: Parkings.mongoCollectionName,
+        history: {
+            collectionName: Parkings.history.mongoCollectionName,
+            name: Parkings.history.name,
+            schema: Parkings.history.outputMongooseSchemaObject,
+        },
+        name: Parkings.name,
+        schema: Parkings.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: SharedBikes.mongoCollectionName,
+        name: SharedBikes.name,
+        schema: SharedBikes.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: BicycleParkings.mongoCollectionName,
+        name: BicycleParkings.name,
+        schema: BicycleParkings.outputMongooseSchemaObject,
+    },
+];
+
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
  */

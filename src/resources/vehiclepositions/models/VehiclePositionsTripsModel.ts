@@ -42,7 +42,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         includePositions?: boolean,
         limit?: number,
         offset?: number,
-    }): Promise<any> => {
+    } = {}): Promise<any> => {
         try {
             const { limit, offset } = options;
             const include = this.ComposeIncludes(options);

@@ -21,26 +21,28 @@ run_tests:
   script:
     - yarn install
     - npm run build
-    - mongorestore --uri=$MONGO_CONN -d dataplatform ./test/data/dataplatform
+    - mongorestore --uri=$MONGO_CONN -d dataplatform ./db/example/mongo_data/dataplatform
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
     - cd node_modules/golemio-schema-definitions && npm run migrate-db && cd -
-    - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f test/dump.sql
+    - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
     - NODE_ENV=production npm run code-coverage
     - dredd
 
 build_image_v1:
   stage: build
   script:
+    - SANITIZED_BRANCH=`echo -n ${CI_COMMIT_REF_NAME//[^a-zA-Z0-9_-]/} | tr A-Z a-z`
     - echo $CI_COMMIT_SHA > commitsha
-    - docker build -t $CI_REGISTRY_IMAGE/v1/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/v1/$CI_COMMIT_REF_NAME:latest .
+    - docker build -t $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:latest .
 
 registry_deployment_v1:
   stage: deploy
   script:
+    - SANITIZED_BRANCH=`echo -n ${CI_COMMIT_REF_NAME//[^a-zA-Z0-9_-]/} | tr A-Z a-z`
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE/v1/$CI_COMMIT_REF_NAME:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/v1/$CI_COMMIT_REF_NAME:latest
+    - docker push $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:latest
   only:
     refs:
       - master

@@ -1,15 +1,13 @@
 "use strict";
 
 import "mocha";
-import { ParkingZonesModel } from "../../src/resources/parkingzones/ParkingZonesModel";
-const config = require("../../src/config/config");
 import { mongooseConnection } from "../../src/core/database";
-import { MongoDatabase } from "../../src/core/database/MongoDatabase";
-import { handleError } from "../../src/core/errors";
+import { ParkingZonesModel } from "../../src/resources/parkingzones/ParkingZonesModel";
 
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
 import { log } from "../../src/core/Logger";
 
 chai.use(chaiAsPromised);
@@ -21,7 +19,6 @@ describe("ParkingZonesModel", () => {
     let coordinates: number[];
 
     before(async () => {
-        const uri: string = config.mongo_connection || "";
         await mongooseConnection;
         model = new ParkingZonesModel();
         parkingZoneCode = "P1-0101";
@@ -34,7 +31,7 @@ describe("ParkingZonesModel", () => {
 
     it("should not fail trying to create the same model again", () => {
         const model2 = new ParkingZonesModel();
-        expect(model).not.to.be.undefined;
+        expect(model2).not.to.be.undefined;
     });
 
     it("should have GetAll method", () => {

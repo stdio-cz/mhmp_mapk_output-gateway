@@ -1,28 +1,26 @@
 "use strict";
 
+import * as express from "express";
 import "mocha";
+import * as sinon from "sinon";
 import App from "../src/App";
 import config from "../src/config/config";
 
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-const request = require("supertest")("localhost:" + config.port);
-const sinon = require("sinon");
-
-import { log } from "../src/core/Logger";
-
-const express = require("express");
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as request from "supertest";
 
 chai.use(chaiAsPromised);
 
 describe("App", () => {
 
+    const app: express.Application = express();
     let sandbox: any;
     let exitStub: any;
 
     beforeEach(() => {
-        sandbox = sinon.createSandbox({ useFakeTimers : true });
+        sandbox = sinon.createSandbox({ useFakeTimers: true });
         exitStub = sandbox.stub(process, "exit");
     });
 
@@ -31,8 +29,7 @@ describe("App", () => {
     });
 
     it("should start", async () => {
-        const app = await new App().start();
-        expect(app).to.be.undefined;
+        expect(app).not.to.be.undefined;
     });
 
     it("should have all config variables set", () => {
@@ -41,32 +38,32 @@ describe("App", () => {
     });
 
     it("should have health check on /", () => {
-        request
-          .get("/")
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .expect(200);
+        request(app)
+            .get("/")
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(200);
     });
 
     it("should have health check on /health-check", () => {
-        request
-          .get("/health-check")
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .expect(200);
+        request(app)
+            .get("/health-check")
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(200);
     });
 
     it("should return 404 on non-existing route /non-existing", () => {
-        request
-          .get("/non-existing")
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .expect(404);
+        request(app)
+            .get("/non-existing")
+            .set("Accept", "application/json")
+            .expect("Content-Type", /json/)
+            .expect(404);
     });
 
     it("should respond with 400 BAD REQUEST to GET /parkings/?latlng&range with bad parameters", () => {
-        request
-          .get("/parkings/?latlng=50.032074,14.492015&range=asd")
-          .expect(400);
+        request(app)
+            .get("/parkings/?latlng=50.032074,14.492015&range=asd")
+            .expect(400);
     });
 });

@@ -2,19 +2,10 @@
 
 import "mocha";
 
-const config = require("../../src/config/config");
-
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-
-import * as path from "path";
-
-import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
-
-const sinon = require("sinon");
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
-import { log } from "../../src/core/Logger";
+import * as chai from "chai";
+import { expect } from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
 import { models } from "../../src/resources/gtfs/models";
 import { GTFSRoutesModel } from "../../src/resources/gtfs/models/GTFSRoutesModel";
 
@@ -36,22 +27,13 @@ describe("GTFSRoutesModel", () => {
         sandbox && sandbox.restore();
     });
 
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [
-            path.resolve(path.join(__dirname, "../../db/example/mongo_data/dataplatform/ropidgtfs_routes.json")),
-        ],
-        {logging: false},
-    );
-
     it("should instantiate", () => {
         expect(routeModel).not.to.be.undefined;
     });
 
     it("should return all items", async () => {
         const result = await routeModel.GetAll();
-        expect(result).to.be.an.instanceOf(Array).and.lengthOf(1);
+        expect(result).to.be.an.instanceOf(Array);
     });
 
     it("should return single item", async () => {

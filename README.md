@@ -78,13 +78,19 @@ Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 
 Application is now running locally on port 3004 or on port specified in the environment variable.
 
+### Importing example data
+
+Example data are stored in `db/example/`.
+
+For importing example data run `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` and `psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql`. 
+
 ## Tests
 
 To run all test defined in /test directory simply run this command:
 ```
 npm test
 ```
-from the application's root directory. All tests should pass with the correct data. Test data are in the `test/data` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
+from the application's root directory. All tests should pass with the correct data. Test data are in the `db/example` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
 
 You can also test the API against the Apiary documentation using `dredd` (https://dredd.org). To run the tests, make sure the app will be run on port 3004 (setting ENV variable or leaving the default) and run
 ```

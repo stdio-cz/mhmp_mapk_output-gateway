@@ -1,3 +1,5 @@
+-- EXAMPLE DATA - contains real example of production data, for testing purposes
+
 INSERT INTO "ropidgtfs_trips" ("bikes_allowed", "block_id", "direction_id", "exceptional", "route_id", "service_id", "shape_id", "trip_headsign", "trip_id", "wheelchair_accessible", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "trip_operation_type", "trip_short_name") VALUES
 (1,	'',	'0',	'0',	'L991',	'1111100-1',	'L991V1',	'Nemocnice Motol',	'991_1151_190107',	1,	NULL,	'2019-05-27 03:20:24.44+00',	NULL,	NULL,	'2019-05-27 03:20:24.44+00',	NULL,	1,	''),
 (1,	'',	1,	'0',	'L991',	'1111100-1',	'L991V2',	'Depo Hostivař',	'991_4_190107',	1,	NULL,	'2019-05-27 03:20:24.44+00',	NULL,	NULL,	'2019-05-27 03:20:24.44+00',	NULL,	1,	''),

@@ -61,7 +61,6 @@ describe("GTFSStopModel", () => {
             lng: 14.43732,
             range: 1000,
         });
-        console.log(result);
         expect(result.features).to.be.an.instanceOf(Array);
         expect(result.type).to.be.equal("FeatureCollection");
     });

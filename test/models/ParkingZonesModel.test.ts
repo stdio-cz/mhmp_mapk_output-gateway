@@ -113,12 +113,12 @@ describe("ParkingZonesModel", () => {
 
     it("should return by coordinates and range", async () => {
         const data = await model.GetAll({ lat: coordinates[0], lng: coordinates[1], limit: 1 });
-        const first = data.features[0];
-        const rangeData = await model.GetAll({
-            lat: first.geometry.coordinates[0][0][1],
-            lng: first.geometry.coordinates[0][0][0],
-            range: 0.1,
-        });
+        // const first = data.features[0];
+        // const rangeData = await model.GetAll({
+        //     lat: first.geometry.coordinates[0][0][1],
+        //     lng: first.geometry.coordinates[0][0][0],
+        //     range: 0.1,
+        // });
         // TODO: Add test to check the last record in array that it is not further from coordinates than range
         expect(data.features.length).to.be.equal(1);
     });

@@ -15,11 +15,7 @@ class RedisClient {
 
     private defaultCacheTtl: number = parseInt(config.redis_ttl || "60000", 10);
 
-    private redisClient = redis.createClient({
-        host: config.redis_host,
-        port: parseInt(config.redis_port as string, 10),
-    }).on("message", (message: string) => log.info(message))
-        .on("error", (error: any) => log.warn(error));
+    private redisClient: redis.RedisClient;
 
     private cacheWithRedisMiddleware = apicache
         .options({
@@ -29,7 +25,13 @@ class RedisClient {
         .middleware;
 
     constructor() {
-        //
+        if (config.redis_enable) {
+            this.redisClient = redis.createClient(
+                config.redis_connection || "",
+            ).on("message", (message: string) => log.info(message))
+                .on("error", (error: any) => log.warn(error))
+                .on("connect", () => log.info("Connected to Redis!"));
+        }
     }
 
     public getDefaultCacheTtl() {
@@ -47,7 +49,7 @@ class RedisClient {
 
     private middleware = (expire?: number | string) => {
         return (req: Request, res: Response, next: NextFunction) => {
-            if (!this.isNoCacheHeader(req, res) && config.redis_enable === "true") {
+            if (!this.isNoCacheHeader(req, res) && config.redis_enable) {
                 const middleware = this.cacheWithRedisMiddleware(expire || this.defaultCacheTtl);
                 middleware(req, res, next);
             } else {

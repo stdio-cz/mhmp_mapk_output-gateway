@@ -50,10 +50,15 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 ### Possible headers:
 
+- `Cache-Control`
+    - Server-side caching is used by default
+    - If this request header value is set to `no-cache`, always fresh data are served and the cache is not used. The server processes the whole request and queries the database/data source. 
+    - You should not need this as the time-to-live values are set very low for all the data; the main purpose is to save database load for concurrent requests.
+
 - `If-None-Match`
-    - Weak E-Tag implementation is used for caching
+    - Weak E-Tag implementation is used for additional caching
     - API returns `ETag` response header, example: W/"21cf-vMBh8gdzFfYJ4qSGaPA6/dooVV0"
-    - If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed.
+    - If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed. This may save data traffic (as the same unchanged data are not sent) but is not faster on the server side. You should not need this unless you're repeatedly querying the same data and trying to save network traffic.
 
 ## Example requests
 
@@ -1492,7 +1497,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (array[Service])
+    + Attributes (array[GTFS Service])
 
 ## GTFS Shapes [/gtfs/shapes/{id}]
 
@@ -1575,7 +1580,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (array[Stop time])
+    + Attributes (array[GTFS Stop time])
 
 # Data structure
 
@@ -2156,12 +2161,14 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + container_type (string)
 + description (string)
 + trash_type (Sorted Waste Station Container Trash Type)
-+ sensor_id: 106970 (number)
++ sensor_container_id: 29907 (number)
++ sensor_code: `0006/ 016C00214` (string)
++ sensor_supplier: `Sensoneo` (string)
 
 ## Sorted Waste Station Container Cleaning Frequency (object)
 
-+ id: 61 (number)
-+ duration: `P6W` (string)
++ id: 21 (number)
++ duration: `P2W` (string)
 + frequency: 1 (number)
 
 ## Sorted Waste Station Container Company (object)
@@ -2173,8 +2180,8 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Sorted Waste Station Container Trash Type (object)
 
-+ description: `benzín` (string, required)
-+ id: 1 (number, required)
++ description: `Čiré sklo` (string, required)
++ id: 7 (number, required)
 
 ## Sorted Waste Pick (object)
 

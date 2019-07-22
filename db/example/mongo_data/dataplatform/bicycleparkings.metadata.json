@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dataplatform2.bicycleparkings"},{"v":2,"key":{"geometry":"2dsphere"},"name":"geometry_2dsphere","ns":"dataplatform2.bicycleparkings","2dsphereIndexVersion":3},{"v":2,"key":{"properties.id":1},"name":"properties.id_1","ns":"dataplatform2.bicycleparkings"}],"uuid":"3b570e7035be4a569ad372e88d9dd9d5"}

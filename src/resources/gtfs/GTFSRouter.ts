@@ -291,7 +291,7 @@ export class GTFSRouter {
             this.stopTimesHandlers,
             pagination,
             checkErrors,
-            (req: any, res: any, next: any) => {
+            (req: Request, res: Response, next: NextFunction) => {
                 if (req.query.from &&
                     req.query.to &&
                     moment(req.query.from, "H:mm:ss").isAfter(moment(req.query.to, "H:mm:ss"))
@@ -306,6 +306,6 @@ export class GTFSRouter {
     }
 }
 
-const gtfsRouter = new GTFSRouter().router;
+const gtfsRouter: Router = new GTFSRouter().router;
 
 export { gtfsRouter };

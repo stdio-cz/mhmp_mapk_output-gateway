@@ -38,6 +38,6 @@ export class ParkingZonesRouter extends GeoJsonRouter {
 
 }
 
-const parkingZonesRouter = new ParkingZonesRouter().router;
+const parkingZonesRouter: Router = new ParkingZonesRouter().router;
 
 export { parkingZonesRouter };

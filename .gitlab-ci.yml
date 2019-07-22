@@ -11,6 +11,11 @@ stages:
   - build
   - deploy
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - node_modules/
+
 run_tests:
   stage: build
   image: gitlab.oict.cz:4567/data-platform/devops/docker-node-env:latest

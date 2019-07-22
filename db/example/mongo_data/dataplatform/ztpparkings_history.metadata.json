@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dataplatform.ztpparkings_history"},{"v":2,"key":{"id":1},"name":"id_1","ns":"dataplatform.ztpparkings_history"},{"v":2,"key":{"last_updated_at":-1},"name":"last_updated_at_-1","ns":"dataplatform.ztpparkings_history"}],"uuid":"7457f08fe90a45a3b7778b0a58634cfc"}

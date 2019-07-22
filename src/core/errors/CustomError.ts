@@ -1,3 +1,11 @@
+export interface ICustomErrorObject {
+    error_code?: number;
+    error_message: string;
+    error_status?: number;
+    error_info?: any;
+    stack_trace?: string;
+}
+
 /**
  * Custom error class, encapsulating a default node Error object,
  * decorating it for extra functionality
@@ -47,8 +55,8 @@ export class CustomError extends Error {
     /**
      * Returns complete error description as object.
      */
-    public toObject = (): {error_code: number, error_message: string, error_info: any} => {
-        const toReturn: any = {
+    public toObject = (): ICustomErrorObject => {
+        const toReturn: ICustomErrorObject = {
             error_message: this.message,
         };
         if (this.code) {

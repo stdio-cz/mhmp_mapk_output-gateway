@@ -1,20 +1,13 @@
 "use strict";
 
 import "mocha";
-import * as path from "path";
 import { models } from "../../src/resources/vehiclepositions/models";
 import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
 
-const config = require("../../src/config/config");
-
-const sequelizeMockingMocha = require("sequelize-mocking").sequelizeMockingMocha;
-
-import { sequelizeConnection as sequelize} from "../../src/core/database/PostgreDatabase";
-
-const sinon = require("sinon");
-const chai = require("chai");
-const expect = chai.expect;
-const chaiAsPromised = require("chai-as-promised");
+import { expect } from "chai";
+import * as chai from "chai";
+import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
 
 chai.use(chaiAsPromised);
 
@@ -33,20 +26,14 @@ describe("VehiclePositionsTripsModel", () => {
         sandbox && sandbox.restore();
     });
 
-    // Load fake data for the users
-    sequelizeMockingMocha(
-        sequelize,
-        [],
-        {logging: false},
-    );
-
     it("should instantiate", () => {
         expect(vehiclepositionsModel).not.to.be.undefined;
     });
 
-    // TODO - sqlite cannot process date functions correctly
-    // it("should return all items", async () => {
-    //     const result = await vehiclepositionsModel.GetAll();
-    //     expect(result).to.be.an.instanceOf(Array).and.lengthOf(0);
-    // });
+    it("should return all items", async () => {
+        const result = await vehiclepositionsModel.GetAll();
+        expect(result).to.be.an.instanceOf(Object);
+        expect(result.features).to.be.an.instanceOf(Array);
+        expect(result.type).to.be.equal("FeatureCollection");
+    });
 });

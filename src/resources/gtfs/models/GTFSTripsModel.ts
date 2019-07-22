@@ -67,10 +67,12 @@ export class GTFSTripsModel extends SequelizeModel {
         const { limit, offset, stopId } = options;
         try {
             const include: any = [];
+            // TODO: why not GetInclusions here?
             if (stopId) {
                 include.push({
                     as: "has_stop_id",
                     attributes: [],
+                    duplicating: false,
                     model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
                     where: {
                         stop_id: stopId,

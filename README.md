@@ -6,6 +6,8 @@
 
 Output Gateway for the Data Platform System. Provides REST API for the data stored in Golemio data platform. 
 
+Uses express server, caching using Redis.
+
 More in Apiary documentation at https://outputgateway.docs.apiary.io
 
 Developed by http://operatorict.cz
@@ -17,9 +19,9 @@ Developed by http://operatorict.cz
 - Mongo
 - Postgres
 
-### Instalation
+### Instalation & run
 1. Build docker image by `docker build -t output-gateway .`
-2. Setup ENV variables by `.env` file or add `-e VAR=VALUE` to docker run
+2. Setup ENV variables by `.env` file or add `-e VAR=VALUE` to docker run. Env variables are described in `.env.template`.
 3. Run container by
 
 ```
@@ -31,50 +33,56 @@ docker run --rm \
     output-gateway # docker image label (defined by step 1)
 ```
 
+## Local Installation
 
-## Prerequisites
+### Prerequisites
 
 - node.js
 - mongoDB
 - Postgres
-- npm
+- yarn
 - typescript
 
-## Installation
+### Installation
 
+Install all prerequisites
 
-Install Node
-
-Install all npm modules using command:
+Install all dependencies using command:
 ```
-npm install
+yarn install
 ```
 
 from the application's root directory.
 
-## Compilation of typescript code
+### Compilation of typescript code
 
 To compile typescript code into js one-time
 
 ```
 npm run build
 ```
-or run this, to watch all changes
+or run this to watch all changes and automatically re-build on save:
 ```
 npm run build-watch
 ```
 from the application's root directory.
 
-## Run
+### Run
 
 ```
 npm start
 ```
-This will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there.
+This will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there. Env variables are described in `.env.template`.
 
 Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 
 Application is now running locally on port 3004 or on port specified in the environment variable.
+
+### Importing example data
+
+Example data are stored in `db/example/`.
+
+For importing example data run `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` and `psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql`. 
 
 ## Tests
 
@@ -82,9 +90,9 @@ To run all test defined in /test directory simply run this command:
 ```
 npm test
 ```
-from the application's root directory. All tests should pass with the correct data. Test data are in the `test/data` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./test/data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
+from the application's root directory. All tests should pass with the correct data. Test data are in the `db/example` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
 
-You can also test the API against the Apiary documentation using `dredd` (https://dredd.org). To run the tests, make sure the app will be run on port 3000 (setting ENV variable or leaving the default) and run
+You can also test the API against the Apiary documentation using `dredd` (https://dredd.org). To run the tests, make sure the app will be run on port 3004 (setting ENV variable or leaving the default) and run
 ```
 dredd
 ```
@@ -102,10 +110,16 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
-## API documentation
+More documentation in `docs/`. Mainly `new_dataset_integration.md` for description on how to add a new dataset and create new API routes.
 
-Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) (master), [outputgatewaydev.docs.apiary.io](https://outputgatewaydev.docs.apiary.io/#) (development) service.
+### API documentation
 
-## Problems?
+Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) (master), [outputgatewaydev.docs.apiary.io](https://outputgatewaydev.docs.apiary.io/#) (development).
+
+## Contribution guidelines
+
+Please read `CONTRIBUTING.md`.
+
+## Troubleshooting
 
 Contact benak@operatorict.cz or vycpalek@operatorict.cz

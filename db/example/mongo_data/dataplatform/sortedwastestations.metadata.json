@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dataplatform2.sortedwastestations"},{"v":2,"key":{"geometry":"2dsphere"},"name":"geometry_2dsphere","ns":"dataplatform2.sortedwastestations","2dsphereIndexVersion":3},{"v":2,"key":{"properties.id":1},"name":"properties.id_1","ns":"dataplatform2.sortedwastestations"}],"uuid":"4f7718a042404a7ea61e0105cb1b47a0"}

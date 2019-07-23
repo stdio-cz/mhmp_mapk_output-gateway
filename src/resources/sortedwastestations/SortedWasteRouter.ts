@@ -13,9 +13,7 @@ import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
 import { checkErrors, pagination } from "../../core/Validation";
-import { SortedWasteMeasurementsModel } from "./SortedWasteMeasurementsModel";
-import { SortedWastePicksModel } from "./SortedWastePicksModel";
-import { SortedWasteStationsModel } from "./SortedWasteStationsModel";
+import { SortedWasteMeasurementsModel, SortedWastePicksModel, SortedWasteStationsModel } from "./models";
 
 export class SortedWasteRouter extends GeoJsonRouter {
 

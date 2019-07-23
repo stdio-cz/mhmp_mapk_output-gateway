@@ -11,7 +11,7 @@ export class CityDistrictsModel extends GeoJsonModel {
 
         // Set model-specific indexes
         this.schema.index(
-            { "properties.name": "text"},
+            { "properties.name": "text" },
         );
     }
 

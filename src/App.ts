@@ -30,13 +30,13 @@ import { mongooseConnection, sequelizeConnection } from "./core/database";
 import { CustomError, handleError, ICustomErrorObject } from "./core/errors";
 import { log } from "./core/Logger";
 import { RouterBuilder } from "./core/routes/";
-import { cityDistrictsRouter } from "./resources/citydistricts/CityDistrictsRouter";
-import { gtfsRouter } from "./resources/gtfs/GTFSRouter";
-import { medicalInstitutionsRouter } from "./resources/medicalinstitutions/MedicalInstitutionsRouter";
-import { municipalAuthoritiesRouter } from "./resources/municipalauthorities/MunicipalAuthoritiesRouter";
-import { parkingZonesRouter } from "./resources/parkingzones/ParkingZonesRouter";
-import { sortedWasteRouter } from "./resources/sortedwastestations/SortedWasteRouter";
-import { vehiclepositionsRouter } from "./resources/vehiclepositions/VehiclePositionsRouter";
+import { cityDistrictsRouter } from "./resources/citydistricts";
+import { gtfsRouter } from "./resources/gtfs";
+import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
+import { municipalAuthoritiesRouter } from "./resources/municipalauthorities";
+import { parkingZonesRouter } from "./resources/parkingzones";
+import { sortedWasteRouter } from "./resources/sortedwastestations";
+import { vehiclepositionsRouter } from "./resources/vehiclepositions";
 
 export const generalRoutes = [
     {

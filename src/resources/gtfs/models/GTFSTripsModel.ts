@@ -1,9 +1,9 @@
-import {RopidGTFS} from "golemio-schema-definitions";
-import {sequelizeConnection} from "../../../core/database";
-import {CustomError} from "../../../core/errors";
-import {buildGeojsonFeature} from "../../../core/Geo";
-import {log} from "../../../core/Logger";
-import {SequelizeModel} from "../../../core/models";
+import { RopidGTFS } from "golemio-schema-definitions";
+import { sequelizeConnection } from "../../../core/database";
+import { CustomError } from "../../../core/errors";
+import { buildGeojsonFeature } from "../../../core/Geo";
+import { log } from "../../../core/Logger";
+import { SequelizeModel } from "../../../core/models";
 
 export class GTFSTripsModel extends SequelizeModel {
 
@@ -57,14 +57,14 @@ export class GTFSTripsModel extends SequelizeModel {
      * @returns Array of the retrieved records
      */
     public GetAll = async (options:
-                               {
-                                   limit?: number,
-                                   offset?: number,
-                                   stopId?: string,
-                                   date?: string,
-                               } = {},
+        {
+            limit?: number,
+            offset?: number,
+            stopId?: string,
+            date?: string,
+        } = {},
     ): Promise<any> => {
-        const { limit, offset, stopId } = options;
+        const { limit, offset, stopId, date } = options;
         try {
             const include: any = [];
             // TODO: why not GetInclusions here?
@@ -77,6 +77,15 @@ export class GTFSTripsModel extends SequelizeModel {
                     where: {
                         stop_id: stopId,
                     },
+                });
+            }
+
+            if (date) {
+                include.push({
+                    as: "service",
+                    attributes: [],
+                    model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName]
+                        .scope({ method: ["forDate", date] }),
                 });
             }
 
@@ -104,9 +113,9 @@ export class GTFSTripsModel extends SequelizeModel {
      */
     public ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean, stopTimes?: boolean }) => {
         const { stop_times: stopTimesItems = [],
-                stops: stopItems = [],
-                shapes: shapeItems = [],
-                ...item } = trip.toJSON();
+            stops: stopItems = [],
+            shapes: shapeItems = [],
+            ...item } = trip.toJSON();
         return {
             ...item,
             ...(options.stops && options.stopTimes &&
@@ -124,14 +133,14 @@ export class GTFSTripsModel extends SequelizeModel {
                         .map((stop: any) => buildGeojsonFeature(stop, "stop_lon", "stop_lat")),
                 }),
             ...(!options.stops && options.stopTimes &&
-                    {
-                        stop_times: stopTimesItems,
-                    }),
+                {
+                    stop_times: stopTimesItems,
+                }),
             ...(options.shapes
                 && {
                     shapes: shapeItems
-                    // TODO: Call {this}.buildResponse and call buildGeojsonFeature from there
-                    // don't call buildGeojsonFeature directly.
+                        // TODO: Call {this}.buildResponse and call buildGeojsonFeature from there
+                        // don't call buildGeojsonFeature directly.
                         .map((shape: any) => buildGeojsonFeature(shape, "shape_pt_lon", "shape_pt_lat")),
                 }),
         };
@@ -159,13 +168,13 @@ export class GTFSTripsModel extends SequelizeModel {
         } = {}): Promise<object> => {
         const { stopTimes, stops, shapes } = options;
         return this.sequelizeModel
-            .findByPk(id, {include: this.GetInclusions(options)})
+            .findByPk(id, { include: this.GetInclusions(options) })
             .then((trip) => {
                 if (!trip) {
                     return null;
                 }
 
-                return this.ConvertItem(trip, {stops, shapes, stopTimes});
+                return this.ConvertItem(trip, { stops, shapes, stopTimes });
             });
     }
 
@@ -187,7 +196,7 @@ export class GTFSTripsModel extends SequelizeModel {
         stopTimes?: boolean,
         date?: string,
     }) => {
-        const {stops, stopTimes, shapes, service, route, date} = options;
+        const { stops, stopTimes, shapes, service, route, date } = options;
         const include: any = [];
 
         // stop_times and stops both selected to include, nest them together
@@ -200,12 +209,12 @@ export class GTFSTripsModel extends SequelizeModel {
                 }],
                 model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
             });
-        // Only stops or only stop times selected to include
+            // Only stops or only stop times selected to include
         } else {
             stops && include.push({
                 as: "stops",
                 model: sequelizeConnection.models[RopidGTFS.stops.pgTableName],
-                through: {attributes: []},
+                through: { attributes: [] },
             });
 
             stopTimes && include.push({
@@ -223,7 +232,7 @@ export class GTFSTripsModel extends SequelizeModel {
             include.push({
                 as: "service",
                 model: sequelizeConnection.models[RopidGTFS.calendar.pgTableName]
-                    .scope({method: ["forDate", date]}),
+                    .scope({ method: ["forDate", date] }),
             });
         }
 

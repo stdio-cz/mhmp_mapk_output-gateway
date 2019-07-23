@@ -5,3 +5,4 @@ test/REPORTING/test.txt
 .nyc_output
 /.idea/
 /.vscode
+docs/typedoc/

@@ -1,10 +1,10 @@
-import {RopidGTFS} from "golemio-schema-definitions";
+import { RopidGTFS } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
-import {sequelizeConnection} from "../../../core/database";
-import {CustomError} from "../../../core/errors";
-import {buildGeojsonFeature, buildGeojsonFeatureCollection} from "../../../core/Geo";
+import { sequelizeConnection } from "../../../core/database";
+import { CustomError } from "../../../core/errors";
+import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../../../core/Geo";
 import { log } from "../../../core/Logger";
-import {SequelizeModel} from "../../../core/models";
+import { SequelizeModel } from "../../../core/models";
 
 export class GTFSStopModel extends SequelizeModel {
 

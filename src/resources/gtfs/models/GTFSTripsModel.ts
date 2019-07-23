@@ -1,9 +1,9 @@
-import {RopidGTFS} from "golemio-schema-definitions";
-import {sequelizeConnection} from "../../../core/database";
-import {CustomError} from "../../../core/errors";
-import {buildGeojsonFeature} from "../../../core/Geo";
-import {log} from "../../../core/Logger";
-import {SequelizeModel} from "../../../core/models";
+import { RopidGTFS } from "golemio-schema-definitions";
+import { sequelizeConnection } from "../../../core/database";
+import { CustomError } from "../../../core/errors";
+import { buildGeojsonFeature } from "../../../core/Geo";
+import { log } from "../../../core/Logger";
+import { SequelizeModel } from "../../../core/models";
 
 export class GTFSTripsModel extends SequelizeModel {
 

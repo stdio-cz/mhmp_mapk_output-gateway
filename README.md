@@ -4,7 +4,7 @@
 
 # Data Platform Output Gateway
 
-Output Gateway for the Data Platform System. Provides REST API for the data stored in Golemio data platform. 
+Output Gateway for the Data Platform System. Provides REST API for the data stored in Golemio data platform.
 
 Uses express server, caching using Redis.
 
@@ -14,12 +14,15 @@ Developed by http://operatorict.cz
 
 
 ## Docker instalation
+
 ### Prerequisites
 - Docker Engine
 - Mongo
 - Postgres
+- Golemio Schema Definitions
 
 ### Instalation & run
+
 1. Build docker image by `docker build -t output-gateway .`
 2. Setup ENV variables by `.env` file or add `-e VAR=VALUE` to docker run. Env variables are described in `.env.template`.
 3. Run container by
@@ -42,6 +45,7 @@ docker run --rm \
 - Postgres
 - yarn
 - typescript
+- Golemio Schema Definitions
 
 ### Installation
 
@@ -82,7 +86,7 @@ Application is now running locally on port 3004 or on port specified in the envi
 
 Example data are stored in `db/example/`.
 
-For importing example data run `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` and `psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql`. 
+For importing example data run `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` and `psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql`.
 
 ## Tests
 

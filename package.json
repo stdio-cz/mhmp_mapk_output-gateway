@@ -4,6 +4,8 @@
   "description": "Output gateway for Golemio data platform",
   "main": "index.js",
   "scripts": {
+    "dev-start": "ts-node-dev -r dotenv/config ./src/Index.ts",
+    "dev-start-debug": "ts-node-dev --inspect-brk=9229 -r dotenv/config ./src/Index.ts",
     "start": "node -r dotenv/config dist/Index.js",
     "debug": "node --inspect-brk=9230 -r dotenv/config dist/Index.js",
     "build": "tsc",
@@ -33,6 +35,7 @@
     "pg": "^7.7.1",
     "redis": "^2.8.0",
     "sequelize": "4.41.2",
+    "ts-node-dev": "^1.0.0-pre.40",
     "winston": "^3.1.0"
   },
   "devDependencies": {

@@ -12,8 +12,7 @@ import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { MunicipalAuthoritiesModel } from "./MunicipalAuthoritiesModel";
-import { MunicipalAuthoritiesQueuesModel } from "./MunicipalAuthoritiesQueuesModel";
+import { MunicipalAuthoritiesModel, MunicipalAuthoritiesQueuesModel } from "./models";
 
 export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
 

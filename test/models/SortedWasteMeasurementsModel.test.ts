@@ -6,7 +6,7 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as sinon from "sinon";
-import { SortedWasteMeasurementsModel } from "../../src/resources/sortedwastestations/SortedWasteMeasurementsModel";
+import { SortedWasteMeasurementsModel } from "../../src/resources/sortedwastestations";
 
 chai.use(chaiAsPromised);
 

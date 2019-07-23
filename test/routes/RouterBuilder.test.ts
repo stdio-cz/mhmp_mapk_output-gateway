@@ -65,7 +65,7 @@ describe("RouterBuilder", () => {
     });
 
     it("should respond with json to GET for all generic routes", async () => {
-        const promises: request.Test[] = generalRoutes.map(x => {
+        const promises: request.Test[] = generalRoutes.map( (x) => {
             const endpoint = "/" + x.name.toLowerCase();
             return request(app)
                 .get(endpoint)

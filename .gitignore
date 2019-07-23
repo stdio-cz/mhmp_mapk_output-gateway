@@ -4,3 +4,5 @@ test/REPORTING/test.txt
 .env
 .nyc_output
 /.idea/
+/.vscode
+docs/typedoc/

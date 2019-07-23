@@ -50,10 +50,15 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 ### Possible headers:
 
+- `Cache-Control`
+    - Server-side caching is used by default
+    - If this request header value is set to `no-cache`, always fresh data are served and the cache is not used. The server processes the whole request and queries the database/data source. 
+    - You should not need this as the time-to-live values are set very low for all the data; the main purpose is to save database load for concurrent requests.
+
 - `If-None-Match`
-    - Weak E-Tag implementation is used for caching
+    - Weak E-Tag implementation is used for additional caching
     - API returns `ETag` response header, example: W/"21cf-vMBh8gdzFfYJ4qSGaPA6/dooVV0"
-    - If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed.
+    - If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed. This may save data traffic (as the same unchanged data are not sent) but is not faster on the server side. You should not need this unless you're repeatedly querying the same data and trying to save network traffic.
 
 ## Example requests
 
@@ -160,7 +165,7 @@ Parking type enum:
             + (Feature Point)
                 + properties (Parking)
 
-## Parkings History [/parkings/history/{?from,to,limit,offset}]
+## Parkings History [/parkings/history/{?from,to,limit,offset,sensorId}]
 
 + Parameters
 
@@ -168,6 +173,7 @@ Parking type enum:
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id (parameter `id` of the parking)
 
 
 ### GET Parkings History [GET]
@@ -1163,6 +1169,80 @@ Sensoric data from the city's IoT network.
             + (Feature Point)
                 + properties (Air Quality Station)
 
+## Air Quality Stations History [/airqualitystations/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
+
+### GET Air Quality Stations History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Air Quality Station History)
+
+
+## ZtpParkings [/ztpparkings{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET ZtpParkings [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Ztp Parking)
+
+## ZtpParkings History [/ztpparkings/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id (parameter `id`)
+
+### GET ZtpParkings History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Ztp Parking History)
 
 ## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -1175,7 +1255,7 @@ Sensoric data from the city's IoT network.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
-### GET Ice Gateway Sensors [GET]
+### GET IceGateway Sensors [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1192,6 +1272,28 @@ Sensoric data from the city's IoT network.
             + (Feature Point)
                 + properties (IceGateway Sensor Group)
 
+## IceGateway Sensors History [/icegatewaysensors/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `ICE-003-042-000-001` (optional, string) - Limits data measured up by sensor with this id (parameter `id`)
+
+### GET IceGateway Sensors History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (IceGateway Sensors History)
 
 ## IceGateway Sensor [/icegatewaysensors/{icegeteway_code}]
 
@@ -1199,7 +1301,7 @@ Sensoric data from the city's IoT network.
 
     + icegeteway_code: `ICE-003-042-000-010` (string) - Identifier of the sensor.
 
-### GET Ice Gate Way Sensor [GET]
+### GET IceGateway Sensor [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1229,7 +1331,7 @@ Sensoric data from the city's IoT network.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
-### GET Ice Gateway Street Lamps [GET]
+### GET IceGateway Street Lamps [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1253,7 +1355,7 @@ Sensoric data from the city's IoT network.
 
     + icegeteway_code: `ICE-003-042-000-001` (string) - Identifier of the lamp.
 
-### GET Ice Gateway Street Lamp [GET]
+### GET IceGateway Street Lamp [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1395,7 +1497,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (array[Service])
+    + Attributes (array[GTFS Service])
 
 ## GTFS Shapes [/gtfs/shapes/{id}]
 
@@ -1478,7 +1580,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (array[Stop time])
+    + Attributes (array[GTFS Stop time])
 
 # Data structure
 
@@ -1545,6 +1647,14 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
   + averaged_hours: 1 (number)
   + value: 10.7 (number),
 + type: NO2 (string)
+
+## Air Quality Station History (object)
+
++ id: ACHOA (string, required)
++ measurement
+  + AQ_hourly_index: 3 (number)
+  + components (array[Air Quality Station Component])
++ updated_at: 1556792400188 (number, required)
 
 ## Bicycle Parking (object)
 
@@ -1676,6 +1786,16 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + avg: 0 (number, required)
 + created_at: 1556802323 (number, required)
++ max: 0 (number, required)
++ min: 0 (number, required)
++ sensor_type: `weather.humidity` (string, required)
++ validity: 3 (number, required)
+
+## IceGateway Sensors History (object)
+
++ avg: 0 (number, required)
++ created_at: 1556802323 (number, required)
++ id: `ICE-003-042-000-020` (string, required)
 + max: 0 (number, required)
 + min: 0 (number, required)
 + sensor_type: `weather.humidity` (string, required)
@@ -2005,12 +2125,14 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + container_type (string)
 + description (string)
 + trash_type (Sorted Waste Station Container Trash Type)
-+ sensor_id: 106970 (number)
++ sensor_container_id: 29907 (number)
++ sensor_code: `0006/ 016C00214` (string)
++ sensor_supplier: `Sensoneo` (string)
 
 ## Sorted Waste Station Container Cleaning Frequency (object)
 
-+ id: 61 (number)
-+ duration: `P6W` (string)
++ id: 21 (number)
++ duration: `P2W` (string)
 + frequency: 1 (number)
 
 ## Sorted Waste Station Container Company (object)
@@ -2022,8 +2144,8 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Sorted Waste Station Container Trash Type (object)
 
-+ description: `benzín` (string, required)
-+ id: 1 (number, required)
++ description: `Čiré sklo` (string, required)
++ id: 7 (number, required)
 
 ## Sorted Waste Pick (object)
 
@@ -2125,3 +2247,39 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `description`: `Příjem odpadu` (string)
 + `id`: `ODPADPRIJEM` (string)
 + `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
+
+## Ztp Parking (object)
+
++ active: `false` (boolean, required)
++ address (Address)
++ device_id: `205A4A` (string)
++ district: `praha-11` (string)
++ failure: `false` (boolean, required)
++ group: `ztpparking` (string)
++ id: 5 (number, required)
++ id_group: `Test002` (string, required)
++ id_park: 0 (number)
++ id_space: 0 (number)
++ image_name: `Pařížská 1.jpeg` (string, required)
++ image_src: `http://tsk.3nicom.cloud/data/spaces/5/Pařížská 1.jpeg` (string, required)
++ last_updated_at: 1556802323 (number, required)
++ location: `Pařížská 1` (string, required)
++ master: `Starom. Nám` (string)
++ note: `Max 4 h.` (string, required)
++ occupied: `false` (boolean)
++ signal_rssi0: 47 (number)
++ signal_rssi1: 40 (number)
++ size: `2,30\tx 4,60` (string, required)
++ source: `CITIQ` (string, required)
++ surface: `asfalt` (string, required)
++ temperature: 859 (number)
++ type: `kolmé` (string, required)
++ updated_at: 1556802323 (number, required)
+
+## Ztp Parking History (object)
+
++ failure: `false` (boolean, required)
++ id: 5 (number, required)
++ last_updated_at: 1556802323 (number, required)
++ occupied: `false` (boolean)
++ updated_at: 1556802323 (number, required)

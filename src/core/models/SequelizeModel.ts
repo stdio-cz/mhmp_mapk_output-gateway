@@ -11,29 +11,34 @@ import { BaseModel } from "./";
  * Performs database queries.
  */
 export abstract class SequelizeModel extends BaseModel {
+    /** The Sequelize Model */
+    public sequelizeModel: Sequelize.Model<any, any>;
+
     /** Name of the model */
     protected name: string;
 
-    /** The Sequelize Model */
-    protected sequelizeModel: Sequelize.Model<any, any>;
-
-    protected constructor(name: string, tableName: string, attributes: DefineModelAttributes<any>,
-                          options?: DefineOptions<any>) {
+    protected constructor(
+        name: string,
+        tableName: string,
+        attributes: DefineModelAttributes<any>,
+        options?: DefineOptions<any>,
+    ) {
         super(name);
         this.sequelizeModel = sequelizeConnection.define(tableName, attributes,
             {
                 // Remove all audit fields in the default scope: they will be automatically excluded,
                 // as they're not needed in the output view, but are present in the table/data
-                    defaultScope: {
-                        attributes: { exclude: ["created_by",
-                                                "updated_by",
-                                                "created_at",
-                                                "updated_at",
-                                                "create_batch_id",
-                                                "update_batch_id"],
-                        },
+                defaultScope: {
+                    attributes: {
+                        exclude: ["created_by",
+                            "updated_by",
+                            "created_at",
+                            "updated_at",
+                            "create_batch_id",
+                            "update_batch_id"],
                     },
-                    ...options,
+                },
+                ...options,
             });
     }
 

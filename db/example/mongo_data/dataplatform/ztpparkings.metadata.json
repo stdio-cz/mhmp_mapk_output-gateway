@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dataplatform.ztpparkings"},{"v":2,"key":{"properties.id":1},"name":"properties.id_1","ns":"dataplatform.ztpparkings"},{"v":2,"key":{"geometry":"2dsphere"},"name":"geometry_2dsphere","ns":"dataplatform.ztpparkings","2dsphereIndexVersion":3}],"uuid":"9d689b1097a64cee9a6cfade21e469c6"}

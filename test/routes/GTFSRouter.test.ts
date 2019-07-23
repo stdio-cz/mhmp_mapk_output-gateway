@@ -106,9 +106,9 @@ describe("GTFS Router", () => {
             });
     });
 
-    it("should respond with routes for specific day GET /gtfs/trips?day=U953Z102P", (done) => {
+    it("should respond with routes for specific date GET /gtfs/trips?date=2019-05-27", (done) => {
         request(app)
-            .get("/gtfs/trips?stop_id=U953Z102P").end((err: any, res: any) => {
+            .get("/gtfs/trips?date=2019-05-27").end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an("array");
                 done();

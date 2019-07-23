@@ -4,8 +4,8 @@
   "description": "Output gateway for Golemio data platform",
   "main": "index.js",
   "scripts": {
-    "start": "node -r dotenv/config dist/Index.js",
-    "debug": "node --inspect-brk=9230 -r dotenv/config dist/Index.js",
+    "start": "node -r dotenv/config dist/index.js",
+    "debug": "node --inspect-brk=9230 -r dotenv/config dist/index.js",
     "build": "tsc",
     "build-watch": "tsc --watch --preserveWatchOutput",
     "test": "mocha -b --check-leaks --timeout 60000 -r ts-node/register -r dotenv/config --recursive test/helpers/*.test.ts test/**/*.test.ts test/*.test.ts --exit",

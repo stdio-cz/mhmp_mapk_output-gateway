@@ -217,7 +217,7 @@ export default class App {
             log.silly("Health check/status called.");
 
             res.json({
-                app_name: "Data Platform Output Gateway",
+                app_name: "Data Platform Output GatewaYYy",
                 commit_sha: this.commitSHA,
                 status: "Up",
                 version: config.app_version,

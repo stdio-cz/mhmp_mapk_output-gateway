@@ -1,5 +1,5 @@
-[![pipeline status](http://gitlab.oict.cz/data-platform/output-gateway/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
-[![coverage report](http://gitlab.oict.cz/data-platform/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
+[![pipeline status](http://gitlab.oict.cz/data-platform/code/output-gateway/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
+[![coverage report](http://gitlab.oict.cz/data-platform/code/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
 
 
 # Data Platform Output Gateway

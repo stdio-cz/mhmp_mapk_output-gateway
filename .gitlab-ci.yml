@@ -81,13 +81,13 @@ api_documentation_deployment_dev:
 
 pages:
   stage: deploy
+  image: node:8
   script:
-  - mkdir .public
-  - cp -r docs/typedoc .public
-  - mv .public public
+  - yarn install
+  - npm run generate-docs
   artifacts:
     paths:
-    - public
+    - docs/typedoc
   only:
     - master
 

@@ -38,6 +38,7 @@ import { parkingZonesRouter } from "./resources/parkingzones";
 import { sortedWasteRouter } from "./resources/sortedwastestations";
 import { vehiclepositionsRouter } from "./resources/vehiclepositions";
 
+// Configuration of the routes to be dynamically created by RouterBuilder
 export const generalRoutes = [
     {
         collectionName: IceGatewayStreetLamps.mongoCollectionName,
@@ -156,7 +157,6 @@ export default class App {
 
     /**
      * Runs configuration methods on the Express instance
-     * and start other necessary services (crons, database, middlewares).
      */
     constructor() {
         //
@@ -220,6 +220,7 @@ export default class App {
                 app_name: "Data Platform Output Gateway",
                 commit_sha: this.commitSHA,
                 status: "Up",
+                // Current app version (fron environment variable) according to package.json version
                 version: config.app_version,
             });
         });
@@ -257,7 +258,9 @@ export default class App {
     }
 
     /**
-     * Loading the Commit SHA of the current build
+     * Load the Commit SHA of the current build
+     *
+     * Only to be used at startup, not in runtime of the application.
      */
     private loadCommitSHA = async (): Promise<string> => {
         return new Promise<string>((resolve, reject) => {

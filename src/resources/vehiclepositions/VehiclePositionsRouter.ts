@@ -57,6 +57,7 @@ export class VehiclePositionsRouter {
 
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
+     * @param {number|string} expire TTL for the caching middleware
      */
     private initRoutes = (expire?: number | string): void => {
         this.router.get("/",

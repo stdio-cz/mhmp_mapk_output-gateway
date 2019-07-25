@@ -16,9 +16,10 @@ Developed by http://operatorict.cz
 ## Docker instalation
 
 ### Prerequisites
-- Docker Engine
-- Mongo
-- Postgres
+- Docker Engine (https://docs.docker.com/)
+- Mongo (https://www.mongodb.com)
+- Postgres (https://www.postgresql.org/)
+- PostGIS (https://postgis.net/)
 - Golemio Schema Definitions
 
 ### Instalation & run
@@ -40,11 +41,12 @@ docker run --rm \
 
 ### Prerequisites
 
-- node.js
-- mongoDB
-- Postgres
-- yarn
-- typescript
+- node.js (https://nodejs.org)
+- Mongo (https://www.mongodb.com)
+- Postgres (https://www.postgresql.org/)
+- PostGIS (https://postgis.net/)
+- yarn (https://yarnpkg.com)
+- TypeScript (https://www.typescriptlang.org/)
 - Golemio Schema Definitions
 
 ### Installation

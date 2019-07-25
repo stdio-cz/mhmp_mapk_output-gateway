@@ -21,9 +21,7 @@ export class GTFSRoutesModel extends SequelizeModel {
     } = {}): Promise<any> => {
         const { limit, offset } = options;
         try {
-
             const order: any = [];
-
             order.push([["route_id", "asc"]]);
             const data = await this.sequelizeModel.findAll({
                 limit,

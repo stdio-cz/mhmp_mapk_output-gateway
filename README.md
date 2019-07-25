@@ -1,5 +1,5 @@
-[![pipeline status](http://gitlab.oict.cz/data-platform/output-gateway/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
-[![coverage report](http://gitlab.oict.cz/data-platform/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
+[![pipeline status](http://gitlab.oict.cz/data-platform/code/output-gateway/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
+[![coverage report](http://gitlab.oict.cz/data-platform/code/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
 
 
 # Data Platform Output Gateway
@@ -16,9 +16,10 @@ Developed by http://operatorict.cz
 ## Docker instalation
 
 ### Prerequisites
-- Docker Engine
-- Mongo
-- Postgres
+- Docker Engine (https://docs.docker.com/)
+- Mongo (https://www.mongodb.com)
+- Postgres (https://www.postgresql.org/)
+- PostGIS (https://postgis.net/)
 - Golemio Schema Definitions
 
 ### Instalation & run
@@ -40,11 +41,12 @@ docker run --rm \
 
 ### Prerequisites
 
-- node.js
-- mongoDB
-- Postgres
-- yarn
-- typescript
+- node.js (https://nodejs.org)
+- Mongo (https://www.mongodb.com)
+- Postgres (https://www.postgresql.org/)
+- PostGIS (https://postgis.net/)
+- yarn (https://yarnpkg.com)
+- TypeScript (https://www.typescriptlang.org/)
 - Golemio Schema Definitions
 
 ### Installation
@@ -58,25 +60,31 @@ yarn install
 
 from the application's root directory.
 
-### Compilation of typescript code
+### Build & Run
 
-To compile typescript code into js one-time
+#### Production
 
+To compile typescript code into js one-time (production build):
 ```
 npm run build
 ```
-or run this to watch all changes and automatically re-build on save:
-```
-npm run build-watch
-```
-from the application's root directory.
-
-### Run
+To run the app:
 
 ```
 npm start
 ```
-This will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there. Env variables are described in `.env.template`.
+
+#### Dev/debug
+Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
+```
+npm run dev-start
+```
+or run with a debugger:
+```
+npm run dev-start-debug
+```
+
+Runing the application in any way will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there.
 
 Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 

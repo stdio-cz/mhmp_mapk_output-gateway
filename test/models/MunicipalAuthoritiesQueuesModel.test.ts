@@ -6,9 +6,7 @@ import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as sinon from "sinon";
-import {
-    MunicipalAuthoritiesQueuesModel
-} from "../../src/resources/municipalauthorities/MunicipalAuthoritiesQueuesModel";
+import { MunicipalAuthoritiesQueuesModel } from "../../src/resources/municipalauthorities";
 
 chai.use(chaiAsPromised);
 

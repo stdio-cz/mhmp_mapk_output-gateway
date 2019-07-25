@@ -1,7 +1,7 @@
 import { SortedWasteStations } from "golemio-schema-definitions";
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import { CustomError } from "../../core/errors";
-import { GeoJsonModel } from "../../core/models";
+import { CustomError } from "../../../core/errors";
+import { GeoJsonModel } from "../../../core/models";
 
 export class SortedWasteStationsModel extends GeoJsonModel {
 

@@ -1,7 +1,7 @@
 import { SortedWasteStations } from "golemio-schema-definitions";
 import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import { CustomError } from "../../core/errors";
-import { MongoModel } from "../../core/models";
+import { CustomError } from "../../../core/errors";
+import { MongoModel } from "../../../core/models";
 
 export class SortedWasteMeasurementsModel extends MongoModel {
 

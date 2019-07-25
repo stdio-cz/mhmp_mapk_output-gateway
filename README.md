@@ -58,25 +58,31 @@ yarn install
 
 from the application's root directory.
 
-### Compilation of typescript code
+### Build & Run
 
-To compile typescript code into js one-time
+#### Production
 
+To compile typescript code into js one-time (production build):
 ```
 npm run build
 ```
-or run this to watch all changes and automatically re-build on save:
-```
-npm run build-watch
-```
-from the application's root directory.
-
-### Run
+To run the app:
 
 ```
 npm start
 ```
-This will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there. Env variables are described in `.env.template`.
+
+#### Dev/debug
+Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
+```
+npm run dev-start
+```
+or run with a debugger:
+```
+npm run dev-start-debug
+```
+
+Runing the application in any way will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there.
 
 Project uses `dotenv` package: https://www.npmjs.com/package/dotenv
 

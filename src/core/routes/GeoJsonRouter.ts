@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { param, query } from "express-validator/check";
+import { param, query, ValidationChain } from "express-validator/check";
 import { Schema } from "mongoose";
 import { CustomError } from "../errors";
 import { handleError } from "../errors";
@@ -29,43 +29,26 @@ export class GeoJsonRouter {
 
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
+     * @param {number|string} expire TTL for the caching middleware
      */
-    public initRoutes = (expire?: number | string): void => {
-        let idParam;
-        this.model.GetSchema().then((schema) => {
-            // Get the primary ID of the schema (the attribute name)
-            const idKey = Object.keys(this.model.PrimaryIdentifierSelection("0"))[0];
-            let message: string = "Created model " + this.model.GetName() + " has ID `"
-                + idKey + "` of type ";
-            if (schema.path(idKey) instanceof Schema.Types.Number) {
-                message += "number.";
-                // Create a url parameter for detail route with type number
-                idParam = param("id").exists().isNumeric();
-            } else {
-                message += "string.";
-                // Create a url parameter for detail route with type string
-                idParam = param("id").exists().isString();
-            }
-            log.silly(message);
-
-            this.router.get("/",
-                useCacheMiddleware(expire),
-                [
-                    query("updatedSince").optional().isNumeric(),
-                    query("districts").optional(),
-                    query("districts.*").isString(),
-                    query("ids").optional(),
-                    query("latlng").optional().isString(),
-                    query("range").optional().isNumeric(),
-                ], pagination, checkErrors, this.GetAll);
-            this.router.get("/:id",
-                useCacheMiddleware(expire),
-                [
-                    // Previously set parameter of type according to the data's primary ID type
-                    idParam,
-                ], checkErrors, this.GetOne);
-        });
-
+    public initRoutes = async (expire?: number | string) => {
+        const idParam = await this.GetIdQueryParamWithCorrectType();
+        this.router.get("/",
+            useCacheMiddleware(expire),
+            [
+                query("updatedSince").optional().isNumeric(),
+                query("districts").optional(),
+                query("districts.*").isString(),
+                query("ids").optional(),
+                query("latlng").optional().isString(),
+                query("range").optional().isNumeric(),
+            ], pagination, checkErrors, this.GetAll);
+        this.router.get("/:id",
+            useCacheMiddleware(expire),
+            [
+                // Previously set parameter of type according to the data's primary ID type
+                idParam,
+            ], checkErrors, this.GetOne);
     }
 
     /**
@@ -118,6 +101,27 @@ export class GeoJsonRouter {
                 .send(data);
         }).catch((err) => {
             next(err);
+        });
+    }
+
+    private GetIdQueryParamWithCorrectType = async (): Promise<ValidationChain> => {
+        let idParam: ValidationChain;
+        return await this.model.GetSchema().then((schema) => {
+            // Get the primary ID of the schema (the attribute name)
+            const idKey = Object.keys(this.model.PrimaryIdentifierSelection("0"))[0];
+            let message: string = "Created model " + this.model.GetName() + " has ID `"
+                + idKey + "` of type ";
+            if (schema.path(idKey) instanceof Schema.Types.Number) {
+                message += "number.";
+                // Create a url parameter for detail route with type number
+                idParam = param("id").exists().isNumeric();
+            } else {
+                message += "string.";
+                // Create a url parameter for detail route with type string
+                idParam = param("id").exists().isString();
+            }
+            log.silly(message);
+            return idParam;
         });
     }
 }

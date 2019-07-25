@@ -67,7 +67,6 @@ export class GTFSTripsModel extends SequelizeModel {
         const { limit, offset, stopId, date } = options;
         try {
             const include: any = [];
-            // TODO: why not GetInclusions here?
             if (stopId) {
                 include.push({
                     as: "has_stop_id",
@@ -103,50 +102,7 @@ export class GTFSTripsModel extends SequelizeModel {
         }
     }
 
-    /**
-     * Convert db result to proper output format
-     * @param {object} trip Trip object
-     * @param {object} options Options object with params
-     * @param {boolean} [options.shapes] If shapes were included in filter then convert shapes payload
-     * @param {boolean} [options.stops] If stops were included in filter then convert stops payload
-     * @return
-     */
-    public ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean, stopTimes?: boolean }) => {
-        const { stop_times: stopTimesItems = [],
-            stops: stopItems = [],
-            shapes: shapeItems = [],
-            ...item } = trip.toJSON();
-        return {
-            ...item,
-            ...(options.stops && options.stopTimes &&
-                {
-                    stop_times: stopTimesItems
-                        .map((stopTime: any) => {
-                            const convertedStopTime = stopTime;
-                            convertedStopTime.stop = buildGeojsonFeature(stopTime.stop, "stop_lon", "stop_lat");
-                            return convertedStopTime;
-                        }),
-                }),
-            ...(options.stops && !options.stopTimes &&
-                {
-                    stops: stopItems
-                        .map((stop: any) => buildGeojsonFeature(stop, "stop_lon", "stop_lat")),
-                }),
-            ...(!options.stops && options.stopTimes &&
-                {
-                    stop_times: stopTimesItems,
-                }),
-            ...(options.shapes
-                && {
-                    shapes: shapeItems
-                        // TODO: Call {this}.buildResponse and call buildGeojsonFeature from there
-                        // don't call buildGeojsonFeature directly.
-                        .map((shape: any) => buildGeojsonFeature(shape, "shape_pt_lon", "shape_pt_lat")),
-                }),
-        };
-    }
-
-    /** Retrieves specific gtfs trip
+    /** Retrieves specific GTFS trip
      * @param {string} id Id of the trip
      * @param {object} [options] Options object with params
      * @param {boolean} [options.route] Enhance response with route data
@@ -173,12 +129,11 @@ export class GTFSTripsModel extends SequelizeModel {
                 if (!trip) {
                     return null;
                 }
-
                 return this.ConvertItem(trip, { stops, shapes, stopTimes });
             });
     }
 
-    /** Prepare orm query with selected params
+    /** Prepare ORM query with selected params
      * @param {object} options Options object with params
      * @param {boolean} [options.route] Enhance response with route data
      * @param {boolean} [options.shapes] Enhance response with shape data
@@ -188,7 +143,7 @@ export class GTFSTripsModel extends SequelizeModel {
      * @param {string} [options.date] Filter by specific date in the 'YYYY-MM-DD' format
      * @returns Array of inclusions
      */
-    public GetInclusions = (options: {
+    protected GetInclusions = (options: {
         route?: boolean,
         shapes?: boolean,
         service?: boolean,
@@ -209,7 +164,7 @@ export class GTFSTripsModel extends SequelizeModel {
                 }],
                 model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
             });
-            // Only stops or only stop times selected to include
+        // Only stops or only stop times selected to include
         } else {
             stops && include.push({
                 as: "stops",
@@ -241,5 +196,53 @@ export class GTFSTripsModel extends SequelizeModel {
             model: sequelizeConnection.models[RopidGTFS.routes.pgTableName],
         });
         return include;
+    }
+
+    /**
+     * Convert a single db result to proper output format with all its included sub-elements
+     * @param {object} trip Trip object
+     * @param {object} options Options object with params
+     * @param {boolean} [options.shapes] If shapes were included in filter then convert shapes payload
+     * @param {boolean} [options.stops] If stops were included in filter then convert stops payload
+     * @returns A converted item of the result
+     */
+    protected ConvertItem = (trip: any, options: { stops?: boolean, shapes?: boolean, stopTimes?: boolean }) => {
+        const { stop_times: stopTimesItems = [],
+            stops: stopItems = [],
+            shapes: shapeItems = [],
+            ...item } = trip.toJSON();
+        return {
+            ...item,
+            ...(options.stops && options.stopTimes &&
+                {
+                    stop_times: stopTimesItems
+                        .map((stopTime: any) => {
+                            const convertedStopTime = stopTime;
+                            convertedStopTime.stop = this.BuildResponse(stopTime.stop, "stop_lon", "stop_lat");
+                            return convertedStopTime;
+                        }),
+                }),
+            ...(options.stops && !options.stopTimes &&
+                {
+                    stops: stopItems
+                        .map((stop: any) => this.BuildResponse(stop, "stop_lon", "stop_lat")),
+                }),
+            ...(!options.stops && options.stopTimes &&
+                {
+                    stop_times: stopTimesItems,
+                }),
+            ...(options.shapes
+                && {
+                    shapes: shapeItems
+                        .map((shape: any) => this.BuildResponse(shape, "shape_pt_lon", "shape_pt_lat")),
+                }),
+        };
+    }
+
+    /**
+     * Builds the correct format of a response data
+     */
+    protected BuildResponse = (responseObject: any, latLoc: string, longLoc: string) => {
+        return buildGeojsonFeature(responseObject, "shape_pt_lon", "shape_pt_lat");
     }
 }

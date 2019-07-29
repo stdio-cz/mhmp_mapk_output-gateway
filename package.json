@@ -11,6 +11,7 @@
     "build": "tsc",
     "build-watch": "tsc --watch --preserveWatchOutput",
     "test": "mocha -b --check-leaks --timeout 60000 -r ts-node/register -r dotenv/config --recursive test/helpers/*.test.ts test/**/*.test.ts test/*.test.ts --exit",
+    "test-debug": "mocha --inspect-brk=9230 -b --check-leaks --timeout 60000 -r ts-node/register -r dotenv/config --recursive test/helpers/*.test.ts test/**/*.test.ts test/*.test.ts --exit",
     "code-coverage": "nyc mocha -b --check-leaks --timeout 60000 -r ts-node/register -r source-map-support/register -r dotenv/config --recursive test/helpers/*.test.ts test/**/*.test.ts test/*.test.ts --exit",
     "generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Output Gateway\" --mode file --out docs/typedoc src",
     "dredd": "dredd",

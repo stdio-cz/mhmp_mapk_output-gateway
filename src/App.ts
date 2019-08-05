@@ -8,18 +8,15 @@ import * as fs from "fs";
 import {
     AirQualityStations,
     BicycleParkings,
-    Gardens,
     IceGatewaySensors,
     IceGatewayStreetLamps,
     Meteosensors,
     MunicipalPoliceStations,
     Parkings,
-    Playgrounds,
     PublicToilets,
     SharedBikes,
     SharedCars,
     TrafficCameras,
-    WasteCollectionYards,
     ZtpParkings,
 } from "golemio-schema-definitions";
 import * as http from "http";
@@ -31,12 +28,15 @@ import { CustomError, handleError, ICustomErrorObject } from "./core/errors";
 import { log } from "./core/Logger";
 import { RouterBuilder } from "./core/routes/";
 import { cityDistrictsRouter } from "./resources/citydistricts";
+import { gardensRouter } from "./resources/gardens";
 import { gtfsRouter } from "./resources/gtfs";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
 import { municipalAuthoritiesRouter } from "./resources/municipalauthorities";
 import { parkingZonesRouter } from "./resources/parkingzones";
+import { playgroundsRouter } from "./resources/playgrounds";
 import { sortedWasteRouter } from "./resources/sortedwastestations";
 import { vehiclepositionsRouter } from "./resources/vehiclepositions";
+import { wasteCollectionYardsRouter } from "./resources/wastecollectionyards";
 
 // Configuration of the routes to be dynamically created by RouterBuilder
 export const generalRoutes = [
@@ -86,11 +86,6 @@ export const generalRoutes = [
         schema: AirQualityStations.outputMongooseSchemaObject,
     },
     {
-        collectionName: Gardens.mongoCollectionName,
-        name: Gardens.name,
-        schema: Gardens.outputMongooseSchemaObject,
-    },
-    {
         collectionName: Meteosensors.mongoCollectionName,
         name: Meteosensors.name,
         schema: Meteosensors.outputMongooseSchemaObject,
@@ -101,19 +96,9 @@ export const generalRoutes = [
         schema: TrafficCameras.outputMongooseSchemaObject,
     },
     {
-        collectionName: Playgrounds.mongoCollectionName,
-        name: Playgrounds.name,
-        schema: Playgrounds.outputMongooseSchemaObject,
-    },
-    {
         collectionName: MunicipalPoliceStations.mongoCollectionName,
         name: MunicipalPoliceStations.name,
         schema: MunicipalPoliceStations.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: WasteCollectionYards.mongoCollectionName,
-        name: WasteCollectionYards.name,
-        schema: WasteCollectionYards.outputMongooseSchemaObject,
     },
     {
         collectionName: PublicToilets.mongoCollectionName,
@@ -234,6 +219,9 @@ export default class App {
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
+        this.express.use("/gardens", gardensRouter);
+        this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
+        this.express.use("/playgrounds", playgroundsRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

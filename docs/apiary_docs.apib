@@ -1560,7 +1560,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + Attributes (Feature Point)
         + properties (GTFS Stop)
 
-## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date}]
+## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
 
 + Parameters
     + `id`: `U118Z101P` (string, required)
@@ -1569,6 +1569,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + includeStop: true (optional, boolean) - Enrich stop times response object with stop.
 
 ### GET GTFS Stop times [GET]
 

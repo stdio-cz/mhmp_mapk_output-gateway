@@ -18,9 +18,9 @@ cache:
 
 run_tests:
   stage: build
-  image: gitlab.oict.cz:4567/data-platform/devops/docker-node-env:latest
+  image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
   services:
-    - name: gitlab.oict.cz:4567/data-platform/devops/docker-postgis:10.5
+    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis:10.5
       alias: postgres
     - mongo:4.0.5
   script:

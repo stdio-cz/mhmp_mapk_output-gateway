@@ -9,8 +9,8 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as request from "supertest";
 import { log } from "../../src/core/Logger";
 
+import { handleError } from "golemio-errors";
 import * as sinon from "sinon";
-import { handleError } from "../../src/core/errors";
 import { gardensRouter } from "../../src/resources/gardens/GardensRouter";
 
 chai.use(chaiAsPromised);

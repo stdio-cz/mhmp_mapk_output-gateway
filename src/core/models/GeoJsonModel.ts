@@ -3,6 +3,7 @@ import { CustomError } from "../errors";
 import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType } from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
+import { IPropertyResponseModel } from "./response";
 
 /**
  * General model for GeoJSON data. Geo-spatial indexing and querying. Implements general GetAll and GetOne functions
@@ -145,5 +146,26 @@ export class GeoJsonModel extends MongoModel {
         } else {
             return found;
         }
+    }
+
+    /**
+     * Retrieves properties of the current model
+     * @returns Array of properties
+     */
+    public GetProperties = async (): Promise<IPropertyResponseModel[]> => {
+        const result: any[] = await this.model.aggregate([
+            { $unwind: "$properties.properties" },
+            { $group: { _id: "$properties.properties.id", setOne: { $addToSet: "$properties.properties" } } },
+            { $project: { properties: { $setUnion: ["$setOne"] } } },
+        ]).exec();
+        return result.map((x) => x.properties)
+            .reduce((x, y) => x.concat(y))
+            .map((x: any) => {
+                const property: IPropertyResponseModel = {
+                    id: x.id,
+                    title: x.description,
+                };
+                return property;
+            });
     }
 }

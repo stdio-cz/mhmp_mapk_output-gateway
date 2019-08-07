@@ -607,6 +607,20 @@ Data from the city public space.
 + Response 404
     + Attributes (Error)
 
+## Gardens Properties [/gardens/properties]
+
+### GET All Gardens Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Garden Property)
 
 ## Medical Institutions [/medicalinstitutions/{?latlng,range,district,type,limit,offset,updatedSince}]
 
@@ -762,6 +776,21 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 + Response 404
     + Attributes (Error)
+
+## Playgrounds Properties [/playgrounds/properties]
+
+### GET All Playgrounds Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Playground Property)
 
 ## Public Toilets [/publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -1003,6 +1032,20 @@ For backwards compatibility, also works on `/waste-collection-yards/`
 + Response 404
     + Attributes (Error)
 
+## Waste Collection Yards Properties [/wastecollectionyards/properties]
+
+### GET All Waste Collection Yards Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Waste Collection Yard Property)
 
 # Group Municipal Authorities
 
@@ -2028,7 +2071,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + id: 72 (number, required)
 + name: `Hostivařský lesopark (východní část) - hřiště 43.B` (string, required)
 + perex: `Trasa je vhodným polodenním rodinným výletem.` (string)
-+ properties (array[Playground Properties])
++ properties (array[Playground Property])
 + updated_at: 1556670601921 (number, required)
 + url: `http://www.hristepraha.cz/hriste/mapa/hostivarsky-lesopark-vychodni-cast-hriste-43-b` (string, required)
 + district: `praha-15` (string)
@@ -2038,7 +2081,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + url: `http://www.hristepraha.cz/images/img/2d73f6832f5ce39fc5987d27d9f4541fo.jpg` (string)
 
-## Playground Properties (object)
+## Playground Property (object)
 
 + id: 6 (number, required)
 + description: `WC na hřišti nebo v bezprostřední blízkosti` (string)

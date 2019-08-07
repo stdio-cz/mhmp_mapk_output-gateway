@@ -9,7 +9,7 @@ import * as sinon from "sinon";
 import * as request from "supertest";
 import { log } from "../../src/core/Logger";
 
-import { handleError } from "../../src/core/errors";
+import { handleError } from "golemio-errors";
 import { municipalAuthoritiesRouter } from "../../src/resources/municipalauthorities/MunicipalAuthoritiesRouter";
 
 chai.use(chaiAsPromised);

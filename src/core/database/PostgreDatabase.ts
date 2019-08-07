@@ -1,7 +1,6 @@
+import { CustomError, handleError } from "golemio-errors";
 import * as Sequelize from "sequelize";
 import config from "../../config/config";
-import { CustomError } from "../errors";
-import { handleError } from "../errors";
 import { log } from "../Logger";
 
 /**
@@ -40,7 +39,7 @@ export class PostgresDatabase {
             log.info("Connected to PostgresSQL DB!");
             return this.sequelize;
         } catch (err) {
-            handleError(new CustomError("Error while connecting to PostgresSQL.", false,
+            handleError(new CustomError("Error while connecting to PostgresSQL.", false, "PostgreDatabase",
                 5001, err));
             return this.sequelize;
         }

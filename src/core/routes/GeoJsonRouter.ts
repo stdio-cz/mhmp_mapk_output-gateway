@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query, ValidationChain } from "express-validator/check";
 import { Schema } from "mongoose";
-import { CustomError } from "../errors";
-import { handleError } from "../errors";
 import { parseCoordinates } from "../Geo";
 import { log } from "../Logger";
 import { GeoJsonModel } from "../models/GeoJsonModel";

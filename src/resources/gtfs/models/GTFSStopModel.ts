@@ -1,9 +1,7 @@
+import { CustomError } from "golemio-errors";
 import { RopidGTFS } from "golemio-schema-definitions";
 import * as Sequelize from "sequelize";
-import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
 import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../../../core/Geo";
-import { log } from "../../../core/Logger";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSStopModel extends SequelizeModel {
@@ -30,7 +28,7 @@ export class GTFSStopModel extends SequelizeModel {
         lng?: number,
         range?: number,
     } = {}): Promise<any> => {
-        const {limit, offset, lat, lng, range} = options;
+        const { limit, offset, lat, lng, range } = options;
         try {
             const order: any = [];
             const attributes: any = Object.keys(RopidGTFS.stops.outputSequelizeAttributes);
@@ -57,7 +55,7 @@ export class GTFSStopModel extends SequelizeModel {
             });
             return buildGeojsonFeatureCollection(data, "stop_lon", "stop_lat");
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "GTFSStopModel", 500, err);
         }
     }
 

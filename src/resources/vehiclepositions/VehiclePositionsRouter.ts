@@ -6,7 +6,7 @@
 
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
-import { CustomError } from "../../core/errors";
+import { CustomError } from "golemio-errors";
 import { useCacheMiddleware } from "../../core/redis";
 import { checkErrors, pagination } from "../../core/Validation";
 import { models } from "./models";
@@ -47,7 +47,7 @@ export class VehiclePositionsRouter {
             },
             );
             if (!data) {
-                throw new CustomError("not_found", true, 404, null);
+                throw new CustomError("not_found", true, "VehiclePositionsRouter", 404, null);
             }
             res.status(200).send(data);
         } catch (err) {

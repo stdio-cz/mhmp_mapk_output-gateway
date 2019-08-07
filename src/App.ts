@@ -5,6 +5,7 @@
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as fs from "fs";
+import { CustomError, handleError, ICustomErrorObject } from "golemio-errors";
 import {
     AirQualityStations,
     BicycleParkings,
@@ -24,7 +25,6 @@ import * as httpLogger from "morgan";
 import * as path from "path";
 import config from "./config/config";
 import { mongooseConnection, sequelizeConnection } from "./core/database";
-import { CustomError, handleError, ICustomErrorObject } from "./core/errors";
 import { log } from "./core/Logger";
 import { RouterBuilder } from "./core/routes/";
 import { cityDistrictsRouter } from "./resources/citydistricts";
@@ -159,7 +159,7 @@ export default class App {
             const server: http.Server = http.createServer(this.express);
             // Setup error handler hook on server error
             server.on("error", (err: Error) => {
-                handleError(new CustomError("Could not start a server", false, 1, err));
+                handleError(new CustomError("Could not start a server", false, "App", 1, err));
             });
             // Serve the application at the given port
             server.listen(this.port, () => {
@@ -230,7 +230,7 @@ export default class App {
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {
-            next(new CustomError("Not found", true, 404));
+            next(new CustomError("Not found", true, "App", 404));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))

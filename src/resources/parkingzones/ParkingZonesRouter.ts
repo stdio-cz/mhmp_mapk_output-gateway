@@ -7,8 +7,6 @@
 
 import { NextFunction, Request, Response, Router } from "express";
 import { ParkingZonesModel } from ".";
-import { CustomError } from "../../core/errors";
-import { handleError } from "../../core/errors";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
 

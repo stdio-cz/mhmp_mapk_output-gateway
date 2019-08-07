@@ -6,9 +6,7 @@
  */
 
 import { NextFunction, Request, Response, Router } from "express";
-import { param, query } from "express-validator/check";
-import { CustomError } from "../../core/errors";
-import { handleError } from "../../core/errors";
+import { query } from "express-validator/check";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";

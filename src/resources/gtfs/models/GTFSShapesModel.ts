@@ -1,6 +1,6 @@
+import { CustomError } from "golemio-errors";
 import { RopidGTFS } from "golemio-schema-definitions";
 import { IGTFSModels } from ".";
-import { CustomError } from "../../../core/errors";
 import { buildGeojsonFeatureCollection } from "../../../core/Geo";
 import { SequelizeModel } from "../../../core/models";
 
@@ -45,7 +45,7 @@ export class GTFSShapesModel extends SequelizeModel {
             }
             return buildGeojsonFeatureCollection(data, "shape_pt_lon", "shape_pt_lat");
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "GTFSShapesModel", 500, err);
         }
     }
 

@@ -1,6 +1,6 @@
-import { CustomError } from "./errors";
+import { CustomError } from "golemio-errors";
+import { getSubProperty } from "golemio-utils";
 import { log } from "./Logger";
-import { GetSubProperty } from "./Utils";
 
 export enum GeoCoordinatesType {
     Point = "Point",
@@ -77,7 +77,7 @@ export const parseCoordinates = async (
         }
         if (isNaN(lat) || isNaN(lng)) {
             log.silly("Wrong input parameter lat: `" + lat + "` or lng: `" + lng + "`");
-            return Promise.reject(new CustomError("Bad request - wrong input parameters", true, 400));
+            return Promise.reject(new CustomError("Bad request - wrong input parameters", true, "Geo", 400));
         }
     }
     return { lat, lng, range: ran };
@@ -92,8 +92,8 @@ export const parseCoordinates = async (
  */
 export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty: string): IGeoJSONFeature => {
     const properties = item.toJSON ? item.toJSON() : item;
-    const lon = GetSubProperty<number>(lonProperty, item);
-    const lat = GetSubProperty<number>(latProperty, item);
+    const lon = getSubProperty<number>(lonProperty, item);
+    const lat = getSubProperty<number>(latProperty, item);
     return ({
         geometry: {
             coordinates: [

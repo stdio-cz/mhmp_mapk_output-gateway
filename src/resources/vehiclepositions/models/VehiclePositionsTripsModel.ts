@@ -1,8 +1,8 @@
+import { CustomError } from "golemio-errors";
 import { VehiclePositions } from "golemio-schema-definitions";
 import { IncludeOptions, Model } from "sequelize";
 import { IVehiclePositionsModels } from ".";
 import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
 import { buildGeojsonFeature, buildGeojsonFeatureCollection, IGeoJSONFeature } from "../../../core/Geo";
 import { SequelizeModel } from "./../../../core/models/";
 
@@ -61,7 +61,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
 
             return buildGeojsonFeatureCollection(data.map((item: any) => this.ConvertItem(item)));
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "VehiclepositionsTripsModel", 500, err);
         }
     }
 
@@ -89,7 +89,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             }
             return this.ConvertItem(data);
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "VehiclePositionsTripsModel", 500, err);
         }
     }
 

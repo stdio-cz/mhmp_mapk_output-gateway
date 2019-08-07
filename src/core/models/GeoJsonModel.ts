@@ -1,5 +1,5 @@
+import { CustomError } from "golemio-errors";
 import { SchemaDefinition } from "mongoose";
-import { CustomError } from "../errors";
 import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType } from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
@@ -129,7 +129,7 @@ export class GeoJsonModel extends MongoModel {
             // Create GeoJSON FeatureCollection output
             return buildGeojsonFeatureCollection(data);
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "GeoJsonModel", 500, err);
         }
     }
 
@@ -142,7 +142,7 @@ export class GeoJsonModel extends MongoModel {
         if (!found || found instanceof Array && found.length === 0) {
             log.debug("Could not find any record by following selection:");
             log.debug(this.PrimaryIdentifierSelection(inId));
-            throw new CustomError("Id `" + inId + "` not found", true, 404);
+            throw new CustomError("Id `" + inId + "` not found", true, "GeoJsonModel", 404);
         } else {
             return found;
         }

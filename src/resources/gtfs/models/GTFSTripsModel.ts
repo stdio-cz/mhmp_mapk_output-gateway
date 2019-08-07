@@ -1,6 +1,6 @@
+import { CustomError } from "golemio-errors";
 import { RopidGTFS } from "golemio-schema-definitions";
 import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
 import { buildGeojsonFeature } from "../../../core/Geo";
 import { log } from "../../../core/Logger";
 import { SequelizeModel } from "../../../core/models";
@@ -98,7 +98,7 @@ export class GTFSTripsModel extends SequelizeModel {
             return data;
 
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "GTFSTripsModel", 500, err);
         }
     }
 
@@ -164,7 +164,7 @@ export class GTFSTripsModel extends SequelizeModel {
                 }],
                 model: sequelizeConnection.models[RopidGTFS.stop_times.pgTableName],
             });
-        // Only stops or only stop times selected to include
+            // Only stops or only stop times selected to include
         } else {
             stops && include.push({
                 as: "stops",

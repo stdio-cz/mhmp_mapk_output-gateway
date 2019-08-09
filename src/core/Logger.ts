@@ -5,7 +5,7 @@ import * as debug from "debug";
 import * as logform from "logform";
 import * as winston from "winston";
 
-const debugLog: debug.Debugger = debug("data-platform:output-gateway");
+const debugLog: debug.Debugger = debug("golemio:output-gateway");
 
 /**
  * Sets up a Winston logger format - https://www.npmjs.com/package/winston#formats

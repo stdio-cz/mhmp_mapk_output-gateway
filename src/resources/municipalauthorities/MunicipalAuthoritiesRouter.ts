@@ -74,7 +74,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
 
     public GetQueues = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.queuesModel.GetQueues(req.params.id);
+            const data = await this.queuesModel.GetQueuesByOfficeId(req.params.id);
             if (!data) {
                 return res.status(204).send();
             } else {

@@ -24,7 +24,7 @@ export class GeoJsonModel extends MongoModel {
     /**
      * Creates a model with specified schema definition
      * @param inName Name of the model - corresponding with mongo collection name (eg. "parkings" for "Parking" model)
-     * @param inSchema Schema of the data
+     * @param inSchema Schema of the data to be stored in this model
      * @param inCollectionName (optional) Name of the mongo collection
      * if empty, collection named as plural of model's name is used
      */
@@ -33,6 +33,10 @@ export class GeoJsonModel extends MongoModel {
 
         // create $geonear index
         this.schema.index({ geometry: "2dsphere" });
+        if (!this.HasRequiredGeojsonProps(inSchema)) {
+            log.warn("Creating " + inName + " GeoJSON model: imported schema not in GeoJSON format!");
+            log.debug(inSchema);
+        }
     }
 
     /** Retrieves all the records from database
@@ -167,5 +171,16 @@ export class GeoJsonModel extends MongoModel {
                 };
                 return property;
             });
+    }
+
+    private HasRequiredGeojsonProps = (inSchema: SchemaDefinition): boolean => {
+        if (!inSchema || !inSchema.geometry || !inSchema.type || !inSchema.properties) {
+            return false;
+        }
+        const schemaPropertiesField: any = inSchema.properties;
+        if (!schemaPropertiesField.updated_at) {
+            return false;
+        }
+        return true;
     }
 }

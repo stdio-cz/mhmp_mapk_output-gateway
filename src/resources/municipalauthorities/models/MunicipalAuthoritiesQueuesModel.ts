@@ -1,7 +1,7 @@
 import { MunicipalAuthorities } from "golemio-schema-definitions";
-import { GeoJsonModel } from "../../../core/models";
+import { MongoModel } from "../../../core/models";
 
-export class MunicipalAuthoritiesQueuesModel extends GeoJsonModel {
+export class MunicipalAuthoritiesQueuesModel extends MongoModel {
 
     /**
      * Instantiates the model according to the given schema.
@@ -12,8 +12,15 @@ export class MunicipalAuthoritiesQueuesModel extends GeoJsonModel {
             MunicipalAuthorities.waitingQueues.mongoCollectionName);
     }
 
-    public GetQueues = async (municipalAuthorityId: string) => {
+    public GetQueuesByOfficeId = async (municipalAuthorityId: string) => {
         return this.model.findOne({ municipal_authority_id: municipalAuthorityId });
     }
 
+    public GetOne = async (municipalAuthorityId: string) => {
+        return await this.GetQueuesByOfficeId(municipalAuthorityId);
+    }
+
+    public GetAll = async () => {
+        return this.model.find({});
+    }
 }

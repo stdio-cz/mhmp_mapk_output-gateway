@@ -5,6 +5,9 @@ import { log } from "./Logger";
 export enum GeoCoordinatesType {
     Point = "Point",
     Polygon = "Polygon",
+    MultiPolygon = "MultiPolygon",
+    LineString = "LineString",
+    MultiLineString = "MultiLineString",
 }
 
 export interface IGeoCoordinatesPoint {

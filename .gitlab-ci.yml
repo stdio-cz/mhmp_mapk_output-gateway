@@ -59,7 +59,7 @@ registry_deployment_v1:
 
 #APIARY
 include:
-  - remote: 'https://gitlab.com/operator-ict/golemio/devops/gitlab-ci-pipelines/raw/apiary/apiary.yml'
+  - remote: 'https://gitlab.com/operator-ict/golemio/devops/gitlab-ci-pipelines/raw/master/apiary.yml'
 
 pages:
   stage: deploy

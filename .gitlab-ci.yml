@@ -59,7 +59,7 @@ api_documentation_deployment_master:
   script:
     - gem install apiaryio
     - P='<!-- __DATE__ -->';D='('`date '+%m\/%d\/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
-    - P='<!-- __HOST__ -->';D='https://api.golemio.cz';sed -i "s/$P/$D/g" docs/apiary_docs.apib
+    - P='<!-- __HOST__ -->';D='https:\/\/api.golemio.cz';sed -i "s/$P/$D/g" docs/apiary_docs.apib
     - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgateway"
   only:
     changes:
@@ -73,7 +73,7 @@ api_documentation_deployment_dev:
   script:
     - gem install apiaryio
     - P='<!-- __DATE__ -->';D='('`date '+%m\/%d\/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
-    - P='<!-- __HOST__ -->';D='https://rabin.golemio.cz/dev/output-gateway';sed -i "s/$P/$D/g" docs/apiary_docs.apib
+    - P='<!-- __HOST__ -->';D='https:\/\/rabin.golemio.cz\/dev\/output-gateway';sed -i "s/$P/$D/g" docs/apiary_docs.apib
     - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgatewaydev"
   only:
     changes:

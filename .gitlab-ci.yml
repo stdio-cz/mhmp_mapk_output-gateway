@@ -9,7 +9,7 @@ variables:
   APIARY_NAME: 'outputgateway'
   APIARY_NAME_DEV: 'outputgatewaydev'
   HOST_URL: 'https://api.golemio.cz'
-  HOST_URL_DEV: 'https://rabin.golemio.cz/dev/output-gateway'
+  HOST_URL_DEV: 'http://rabin.golemio.cz/dev/output-gateway'
 
 stages:
   - build

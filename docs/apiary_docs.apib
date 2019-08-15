@@ -1,5 +1,4 @@
 FORMAT: 1A
-HOST: <!-- __HOST__ -->
 
 # Golemio Output Gateway
 
@@ -37,7 +36,7 @@ Otherwise success responses return `200`.
 Following parameters are applicaple for most of the resoures/routes. Their meaning is explained here. All parameters are optional. Don't copy-paste example API calls with all parameters if you don't need them.
 
 - `latlng`
-   - location, API performs geo-spatial search to retrieve data close to the location (sorts data by proximity)
+   - location, API performs geo-spatial search to retrieve data close to the location (sorts data by proximity); Latitude and Longitude separated by comma, latitude first
 
 - `range`
    - filters the results by their distance from provided latlng in meters (range query); is ignored when latlng is not specified
@@ -98,7 +97,7 @@ General resources.
 + Parameters
 
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -161,7 +160,7 @@ Parking type enum:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -252,7 +251,7 @@ For backwards compatibility, also works on `/parking-zones/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -326,7 +325,7 @@ Availability enum:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -390,7 +389,7 @@ Types enum:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -447,7 +446,7 @@ For backwards compatibility, also works on `/shared-bikes/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -504,7 +503,7 @@ For backwards compatibility, also works on `/traffic-cameras/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -625,7 +624,7 @@ Data from the city public space.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -698,7 +697,7 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + type: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
@@ -810,7 +809,7 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -886,7 +885,7 @@ For backwards compatibility, also works on `/public-toilets/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -979,7 +978,7 @@ Cleaning Frequency:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + accessibility: 1 (optional, string) - Filter by accessibility id.
@@ -1087,7 +1086,7 @@ For backwards compatibility, also works on `/waste-collection-yards/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1167,7 +1166,7 @@ Data from municipal authorities.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
@@ -1253,7 +1252,7 @@ For backwards compatibility, also works on `/municipal-police-stations/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1316,7 +1315,7 @@ Sensoric data from the city's IoT network.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1373,7 +1372,7 @@ Sensoric data from the city's IoT network.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1430,7 +1429,7 @@ Sensoric data from the city's IoT network.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1512,7 +1511,7 @@ Sensoric data from the city's IoT network.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1572,7 +1571,7 @@ Sensoric data from the city's IoT network.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.

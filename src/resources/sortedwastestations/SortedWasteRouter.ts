@@ -80,7 +80,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
             if (onlyMonitoredFilter === "true") {
                 additionalFilters = {
                     ...additionalFilters,
-                    ...{ "properties.containers": { $elemMatch: { sensor_id: { $exists: true } } } },
+                    ...{ "properties.containers": { $elemMatch: { sensor_container_id: { $exists: true } } } },
                 };
             }
             const data = await this.model.GetAll({

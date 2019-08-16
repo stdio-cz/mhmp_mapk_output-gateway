@@ -34,6 +34,7 @@ import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
 import { municipalAuthoritiesRouter } from "./resources/municipalauthorities";
 import { parkingZonesRouter } from "./resources/parkingzones";
 import { playgroundsRouter } from "./resources/playgrounds";
+import { sharedBikesRouter } from "./resources/sharedbikes";
 import { sortedWasteRouter } from "./resources/sortedwastestations";
 import { vehiclepositionsRouter } from "./resources/vehiclepositions";
 import { wasteCollectionYardsRouter } from "./resources/wastecollectionyards";
@@ -47,8 +48,7 @@ export const generalRoutes = [
     },
     {
         collectionName: ZtpParkings.mongoCollectionName,
-        history:
-        {
+        history: {
             collectionName: ZtpParkings.history.mongoCollectionName,
             historyTimePropertyLocation: "last_updated_at",
             name: ZtpParkings.history.name,
@@ -59,8 +59,7 @@ export const generalRoutes = [
     },
     {
         collectionName: IceGatewaySensors.mongoCollectionName,
-        history:
-        {
+        history: {
             collectionName: IceGatewaySensors.history.mongoCollectionName,
             historyTimePropertyLocation: "created_at",
             name: IceGatewaySensors.history.name,
@@ -116,12 +115,6 @@ export const generalRoutes = [
         schema: Parkings.outputMongooseSchemaObject,
     },
     {
-        collectionName: SharedBikes.mongoCollectionName,
-        expire: 30000,
-        name: SharedBikes.name,
-        schema: SharedBikes.outputMongooseSchemaObject,
-    },
-    {
         collectionName: BicycleParkings.mongoCollectionName,
         name: BicycleParkings.name,
         schema: BicycleParkings.outputMongooseSchemaObject,
@@ -132,7 +125,6 @@ export const generalRoutes = [
  * Entry point of the application. Creates and configures an ExpressJS web server.
  */
 export default class App {
-
     // Create a new express application instance
     public express: express.Application = express();
     // The port the express app will listen on
@@ -189,7 +181,6 @@ export default class App {
             return new Date().toISOString();
         });
         this.express.use(httpLogger("combined"));
-
         this.express.use(this.setHeaders);
     }
 
@@ -198,9 +189,7 @@ export default class App {
 
         // Create base url route handler
         defaultRouter.get(["/", "/health-check", "/status"], (req, res, next) => {
-
             log.silly("Health check/status called.");
-
             res.json({
                 app_name: "Data Platform Output Gateway",
                 commit_sha: this.commitSHA,
@@ -222,6 +211,7 @@ export default class App {
         this.express.use("/gardens", gardensRouter);
         this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
         this.express.use("/playgrounds", playgroundsRouter);
+        this.express.use("/sharedbikes", sharedBikesRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
@@ -238,7 +228,10 @@ export default class App {
             handleError(err).then((error: ICustomErrorObject) => {
                 if (error) {
                     log.silly("Error caught by the router error handler.");
-                    res.setHeader("Content-Type", "application/json; charset=utf-8");
+                    res.setHeader(
+                        "Content-Type",
+                        "application/json; charset=utf-8",
+                    );
                     res.status(error.error_status || 500).send(error);
                 }
             });

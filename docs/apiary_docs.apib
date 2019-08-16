@@ -378,7 +378,7 @@ For backwards compatibility, also works on `/shared-cars/`
     + Attributes (403 Error)
 
 
-## Shared Bikes [/sharedbikes/{?latlng,range,limit,offset,updatedSince}]
+## Shared Bikes [/sharedbikes/{?latlng,range,limit,offset,updatedSince,companyName}]
 
 For backwards compatibility, also works on `/shared-bikes/`
 
@@ -393,7 +393,8 @@ Types enum:
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter.
+    + companyName: Rekola (optional, string) - Filters all results with company.name property by this parameter.
 
 ### GET All Shared Bikes [GET]
 

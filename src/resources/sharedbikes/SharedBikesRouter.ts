@@ -1,5 +1,5 @@
 /**
- * app/routers/MedicalInstitutionsRouter.ts
+ * app/routers/sharedBikesRouter.ts
  *
  * Router /WEB LAYER/: maps routes to specific model functions, passes request parameters and handles responses.
  * Handles web logic (http request, response). Sets response headers, handles error responses.
@@ -7,25 +7,24 @@
 
 import { NextFunction, Request, Response, Router } from "express";
 import { query } from "express-validator/check";
-import { MedicalInstitutionsModel } from ".";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { pagination } from "../../core/Validation";
+import { checkErrors, pagination } from "../../core/Validation";
+import { SharedBikesModel } from "./SharedBikesModel";
 
-export class MedicalInstitutionsRouter extends GeoJsonRouter {
-
-    protected model: MedicalInstitutionsModel = new MedicalInstitutionsModel();
+export class SharedBikesRouter extends GeoJsonRouter {
+    protected model: SharedBikesModel = new SharedBikesModel();
 
     constructor() {
-        super(new MedicalInstitutionsModel());
-        this.router.get("/types", this.GetTypes);
+        super(new SharedBikesModel());
         this.initRoutes();
         this.router.get("/", [
-            query("group").optional().isString(),
+                query("companyName").optional().isString(),
         ],
             this.standardParams,
             pagination,
+            checkErrors,
             useCacheMiddleware(),
             this.GetAll,
         );
@@ -34,27 +33,26 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
         // Parsing parameters
         let ids: number[] = req.query.ids;
-        let districts: string[] = req.query.districts;
-        const groupFilter = req.query.group;
+        const companyName = req.query.companyName;
         let additionalFilters = {};
 
-        if (districts) {
-            districts = this.ConvertToArray(districts);
-        }
         if (ids) {
             ids = this.ConvertToArray(ids);
         }
         try {
-            const coords = await parseCoordinates(req.query.latlng, req.query.range);
-            if (groupFilter) {
+            const coords = await parseCoordinates(
+                req.query.latlng,
+                req.query.range,
+            );
+            if (companyName) {
                 additionalFilters = {
                     ...additionalFilters,
-                    ...{ "properties.type.group": groupFilter },
+                    ...{ "properties.company.name": companyName },
                 };
             }
+
             const data = await this.model.GetAll({
                 additionalFilters,
-                districts,
                 ids,
                 lat: coords.lat,
                 limit: req.query.limit,
@@ -68,17 +66,8 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
             next(err);
         }
     }
-
-    public GetTypes = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const data = await this.model.GetTypes();
-            res.status(200).send(data);
-        } catch (err) {
-            next(err);
-        }
-    }
 }
 
-const medicalInstitutionsRouter: Router = new MedicalInstitutionsRouter().router;
+const sharedBikesRouter: Router = new SharedBikesRouter().router;
 
-export { medicalInstitutionsRouter };
+export { sharedBikesRouter };

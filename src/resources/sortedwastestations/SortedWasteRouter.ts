@@ -48,6 +48,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
                 query("accessibility").optional().isNumeric(),
                 query("onlyMonitored").optional().isBoolean(),
             ],
+            this.standardParams,
             pagination,
             checkErrors,
             useCacheMiddleware(),

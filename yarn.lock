@@ -1171,6 +1171,11 @@ dotenv@^6.1.0:
   resolved "http://10.200.0.50:4873/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
 
+dotenv@^8.0.0:
+  version "8.0.0"
+  resolved "http://10.200.0.50:4873/dotenv/-/dotenv-8.0.0.tgz#ed310c165b4e8a97bb745b0a9d99c31bda566440"
+  integrity sha512-30xVGqjLjiUOArT4+M5q9sYdvuR4riM6yK9wMcas9Vbp6zZa+ocC9dp6QoftuhTPhFAiLK/0C5Ni2nou/Bk8lg==
+
 dottie@^2.0.0:
   version "2.0.1"
   resolved "http://10.200.0.50:4873/dottie/-/dottie-2.0.1.tgz#697ad9d72004db7574d21f892466a3c285893659"
@@ -1739,6 +1744,15 @@ globals@^11.1.0:
   resolved "http://10.200.0.50:4873/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
+golemio-errors@^0.0.1:
+  version "0.0.1"
+  resolved "http://10.200.0.50:4873/golemio-errors/-/golemio-errors-0.0.1.tgz#56098e45b2136c6b5e0e48c8e77f57309beacf77"
+  integrity sha512-OBrUmtlWGcNr7QcUwE79YAo4ZYoUgGFXB9BbjCfykORw1lhttBxZnjEhXNUnES0PUD4z2us5hLysyozkcvChMw==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    winston "^3.2.1"
+
 golemio-schema-definitions@0.1.11:
   version "0.1.11"
   resolved "http://10.200.0.50:4873/golemio-schema-definitions/-/golemio-schema-definitions-0.1.11.tgz#55db508dfa1ebb65806bb813dee41667c7156fc1"
@@ -1749,6 +1763,15 @@ golemio-schema-definitions@0.1.11:
     db-migrate-pg "0.5.0"
     mongoose "5.3.14"
     sequelize "4.41.2"
+
+golemio-utils@^0.0.1:
+  version "0.0.1"
+  resolved "http://10.200.0.50:4873/golemio-utils/-/golemio-utils-0.0.1.tgz#97b41594c7217c7e41c431a1d9d9c9b79a21e0b7"
+  integrity sha512-NvsCJkQKJpP65MqT+U650XzEOBiJhKMd5SOtn4QPAfakIlB1CccA8DpgiTzxG161BliC3VC8zXWn1eHUqti3lA==
+  dependencies:
+    debug "^4.1.1"
+    dotenv "^8.0.0"
+    winston "^3.2.1"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.2.0"
@@ -4548,7 +4571,7 @@ winston@2.4.0:
     isstream "0.1.x"
     stack-trace "0.0.x"
 
-winston@^3.1.0:
+winston@^3.1.0, winston@^3.2.1:
   version "3.2.1"
   resolved "http://10.200.0.50:4873/winston/-/winston-3.2.1.tgz#63061377976c73584028be2490a1846055f77f07"
   integrity sha512-zU6vgnS9dAWCEKg/QYigd6cgMVVNwyTzKs81XZtTFuRwJOcDdBg7AU0mXVyNbs7O5RH2zdv+BdNZUlx7mXPuOw==

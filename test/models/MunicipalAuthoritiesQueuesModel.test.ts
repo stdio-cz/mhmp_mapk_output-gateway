@@ -31,14 +31,16 @@ describe("MunicipalAuthoritiesQueuesModel", () => {
         expect(municipalAuthoritiesQueuesModel).not.to.be.undefined;
     });
 
-    it("should return all items", async () => {
-        const result = await municipalAuthoritiesQueuesModel.GetAll();
-        expect(result).to.be.an.instanceOf(Object);
-        expect(result.features).to.be.an.instanceOf(Array);
+    it("should have GetOne, GetAll and GetQueuesByOfficeId methods", () => {
+        expect(municipalAuthoritiesQueuesModel.GetOne).not.to.be.undefined;
+        expect(municipalAuthoritiesQueuesModel.GetQueuesByOfficeId).not.to.be.undefined;
+        expect(municipalAuthoritiesQueuesModel.GetAll).not.to.be.undefined;
     });
 
-    it("should return all queues", async () => {
-        const result = await municipalAuthoritiesQueuesModel.GetQueues(authorityId);
+    it("should return all queues for one Municipal Authority office", async () => {
+        const result = await municipalAuthoritiesQueuesModel.GetQueuesByOfficeId(authorityId);
         expect(result).to.be.an.instanceOf(Object);
+        expect(result.municipal_authority_id).not.to.be.undefined;
+        expect(result.municipal_authority_id).to.be.equal(authorityId);
     });
 });

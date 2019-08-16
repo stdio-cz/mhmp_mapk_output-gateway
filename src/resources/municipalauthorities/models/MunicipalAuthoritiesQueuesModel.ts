@@ -1,22 +1,26 @@
 import { MunicipalAuthorities } from "golemio-schema-definitions";
-import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import { CustomError } from "../../../core/errors";
-import { log } from "../../../core/Logger";
-import { GeoJsonModel } from "../../../core/models";
+import { MongoModel } from "../../../core/models";
 
-export class MunicipalAuthoritiesQueuesModel extends GeoJsonModel {
+export class MunicipalAuthoritiesQueuesModel extends MongoModel {
 
     /**
      * Instantiates the model according to the given schema.
      */
     constructor() {
-        super(  MunicipalAuthorities.waitingQueues.name,
-                MunicipalAuthorities.waitingQueues.outputMongooseSchemaObject,
-                MunicipalAuthorities.waitingQueues.mongoCollectionName );
+        super(MunicipalAuthorities.waitingQueues.name,
+            MunicipalAuthorities.waitingQueues.outputMongooseSchemaObject,
+            MunicipalAuthorities.waitingQueues.mongoCollectionName);
     }
 
-    public GetQueues = async (municipalAuthorityId: string) => {
-        return this.model.findOne( { municipal_authority_id: municipalAuthorityId } );
+    public GetQueuesByOfficeId = async (municipalAuthorityId: string) => {
+        return this.model.findOne({ municipal_authority_id: municipalAuthorityId });
     }
 
+    public GetOne = async (municipalAuthorityId: string) => {
+        return await this.GetQueuesByOfficeId(municipalAuthorityId);
+    }
+
+    public GetAll = async () => {
+        return this.model.find({});
+    }
 }

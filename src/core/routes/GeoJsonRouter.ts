@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query, ValidationChain } from "express-validator/check";
 import { Schema } from "mongoose";
-import { CustomError } from "../errors";
-import { handleError } from "../errors";
 import { parseCoordinates } from "../Geo";
 import { log } from "../Logger";
 import { GeoJsonModel } from "../models/GeoJsonModel";
@@ -23,6 +21,15 @@ export class GeoJsonRouter {
 
     protected model: GeoJsonModel;
 
+    protected standardParams = [
+        query("updatedSince").optional().isNumeric(),
+        query("districts").optional(),
+        query("districts.*").isString(),
+        query("ids").optional(),
+        query("latlng").optional().isString(),
+        query("range").optional().isNumeric(),
+    ];
+
     public constructor(inModel: GeoJsonModel) {
         this.model = inModel;
     }
@@ -35,14 +42,10 @@ export class GeoJsonRouter {
         const idParam = await this.GetIdQueryParamWithCorrectType();
         this.router.get("/",
             useCacheMiddleware(expire),
-            [
-                query("updatedSince").optional().isNumeric(),
-                query("districts").optional(),
-                query("districts.*").isString(),
-                query("ids").optional(),
-                query("latlng").optional().isString(),
-                query("range").optional().isNumeric(),
-            ], pagination, checkErrors, this.GetAll);
+            this.standardParams,
+            pagination,
+            checkErrors,
+            this.GetAll);
         this.router.get("/:id",
             useCacheMiddleware(expire),
             [
@@ -124,4 +127,5 @@ export class GeoJsonRouter {
             return idParam;
         });
     }
+
 }

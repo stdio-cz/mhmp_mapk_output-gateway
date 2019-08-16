@@ -1,5 +1,5 @@
+import { CustomError } from "golemio-errors";
 import { SchemaDefinition } from "mongoose";
-import { CustomError } from "../../core/errors";
 import { MongoModel } from "../../core/models";
 import { log } from "../Logger";
 
@@ -62,7 +62,7 @@ export class HistoryModel extends MongoModel {
             q.sort({ [this.primaryTimePropertyLocation]: -1 });
             return await q.exec();
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "HistoryModel", 500, err);
         }
     }
 
@@ -80,7 +80,7 @@ export class HistoryModel extends MongoModel {
         if (!found || found instanceof Array && found.length === 0) {
             log.debug("Could not find any record by following selection:");
             log.debug(this.PrimaryIdentifierSelection(inId));
-            throw new CustomError("Id `" + inId + "` not found", true, 404);
+            throw new CustomError("Id `" + inId + "` not found", true, "HistoryModel", 404);
         } else {
             return found;
         }

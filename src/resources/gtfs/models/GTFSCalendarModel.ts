@@ -1,8 +1,8 @@
+import { CustomError } from "golemio-errors";
 import { RopidGTFS } from "golemio-schema-definitions";
-import moment = require("moment");
+import * as moment from "moment";
 import { models as sequelizeModels } from ".";
 import { sequelizeConnection } from "../../../core/database";
-import { CustomError } from "../../../core/errors";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSCalendarModel extends SequelizeModel {
@@ -63,7 +63,7 @@ export class GTFSCalendarModel extends SequelizeModel {
                 });
             return data;
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "GFSCalendar", 500, err);
         }
     }
 

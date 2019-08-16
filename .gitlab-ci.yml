@@ -6,6 +6,10 @@ variables:
   POSTGRES_PASS: test-pass
   POSTGRES_DB: testdb
   MONGO_CONN: "mongodb://mongo/dataplatform"
+  APIARY_NAME: 'outputgateway'
+  APIARY_NAME_DEV: 'outputgatewaydev'
+  HOST_URL: 'https://api.golemio.cz'
+  HOST_URL_DEV: 'http://rabin.golemio.cz/dev/output-gateway'
 
 stages:
   - build
@@ -18,9 +22,9 @@ cache:
 
 run_tests:
   stage: build
-  image: gitlab.oict.cz:4567/data-platform/devops/docker-node-env:latest
+  image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
   services:
-    - name: gitlab.oict.cz:4567/data-platform/devops/docker-postgis:10.5
+    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis:10.5
       alias: postgres
     - mongo:4.0.5
   script:
@@ -53,31 +57,9 @@ registry_deployment_v1:
       - master
       - development
 
-api_documentation_deployment_master:
-  stage: deploy
-  image: ruby:2.6
-  script:
-    - gem install apiaryio
-    - P='<!-- __DATE__ -->';D='('`date '+%m\/%d\/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
-    - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgateway"
-  only:
-    changes:
-      - docs/apiary_docs.apib
-    refs:
-      - master
-      
-api_documentation_deployment_dev:
-  stage: deploy
-  image: ruby:2.6
-  script:
-    - gem install apiaryio
-    - P='<!-- __DATE__ -->';D='('`date '+%m\/%d\/%Y %H:%M'`' - v'$CI_PIPELINE_ID')';sed -i "s/$P/$D/g" docs/apiary_docs.apib
-    - apiary publish --path="docs/apiary_docs.apib" --api-name="outputgatewaydev"
-  only:
-    changes:
-      - docs/apiary_docs.apib
-    refs:
-      - development
+#APIARY
+include:
+  - remote: 'https://gitlab.com/operator-ict/golemio/devops/gitlab-ci-pipelines/raw/master/apiary.yml'
 
 pages:
   stage: deploy

@@ -1,8 +1,9 @@
+import { CustomError } from "golemio-errors";
 import { SchemaDefinition } from "mongoose";
-import { CustomError } from "../errors";
 import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType } from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
+import { IPropertyResponseModel } from "./response";
 
 /**
  * General model for GeoJSON data. Geo-spatial indexing and querying. Implements general GetAll and GetOne functions
@@ -23,7 +24,7 @@ export class GeoJsonModel extends MongoModel {
     /**
      * Creates a model with specified schema definition
      * @param inName Name of the model - corresponding with mongo collection name (eg. "parkings" for "Parking" model)
-     * @param inSchema Schema of the data
+     * @param inSchema Schema of the data to be stored in this model
      * @param inCollectionName (optional) Name of the mongo collection
      * if empty, collection named as plural of model's name is used
      */
@@ -32,6 +33,10 @@ export class GeoJsonModel extends MongoModel {
 
         // create $geonear index
         this.schema.index({ geometry: "2dsphere" });
+        if (!this.HasRequiredGeojsonProps(inSchema)) {
+            log.warn("Creating " + inName + " GeoJSON model: imported schema not in GeoJSON format!");
+            log.debug(inSchema);
+        }
     }
 
     /** Retrieves all the records from database
@@ -128,7 +133,7 @@ export class GeoJsonModel extends MongoModel {
             // Create GeoJSON FeatureCollection output
             return buildGeojsonFeatureCollection(data);
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "GeoJsonModel", 500, err);
         }
     }
 
@@ -141,9 +146,41 @@ export class GeoJsonModel extends MongoModel {
         if (!found || found instanceof Array && found.length === 0) {
             log.debug("Could not find any record by following selection:");
             log.debug(this.PrimaryIdentifierSelection(inId));
-            throw new CustomError("Id `" + inId + "` not found", true, 404);
+            throw new CustomError("Id `" + inId + "` not found", true, "GeoJsonModel", 404);
         } else {
             return found;
         }
+    }
+
+    /**
+     * Retrieves properties of the current model
+     * @returns Array of properties
+     */
+    public GetProperties = async (): Promise<IPropertyResponseModel[]> => {
+        const result: any[] = await this.model.aggregate([
+            { $unwind: "$properties.properties" },
+            { $group: { _id: "$properties.properties.id", setOne: { $addToSet: "$properties.properties" } } },
+            { $project: { properties: { $setUnion: ["$setOne"] } } },
+        ]).exec();
+        return result.map((x) => x.properties)
+            .reduce((x, y) => x.concat(y))
+            .map((x: any) => {
+                const property: IPropertyResponseModel = {
+                    id: x.id,
+                    title: x.description,
+                };
+                return property;
+            });
+    }
+
+    private HasRequiredGeojsonProps = (inSchema: SchemaDefinition): boolean => {
+        if (!inSchema || !inSchema.geometry || !inSchema.type || !inSchema.properties) {
+            return false;
+        }
+        const schemaPropertiesField: any = inSchema.properties;
+        if (!schemaPropertiesField.updated_at) {
+            return false;
+        }
+        return true;
     }
 }

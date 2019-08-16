@@ -1,5 +1,5 @@
+import { CustomError } from "golemio-errors";
 import { RopidGTFS } from "golemio-schema-definitions";
-import { CustomError } from "../../../core/errors";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSRoutesModel extends SequelizeModel {
@@ -30,7 +30,7 @@ export class GTFSRoutesModel extends SequelizeModel {
             });
             return data;
         } catch (err) {
-            throw new CustomError("Database error", true, 500, err);
+            throw new CustomError("Database error", true, "GTFSRoutesModel", 500, err);
         }
     }
 

@@ -6,13 +6,12 @@
  */
 
 import { NextFunction, Request, Response, Router } from "express";
-import { param, query } from "express-validator/check";
+import { query } from "express-validator/check";
 import { MedicalInstitutionsModel } from ".";
-import { CustomError } from "../../core/errors";
-import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
+import { pagination } from "../../core/Validation";
 
 export class MedicalInstitutionsRouter extends GeoJsonRouter {
 
@@ -25,6 +24,8 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
         this.router.get("/", [
             query("group").optional().isString(),
         ],
+            this.standardParams,
+            pagination,
             useCacheMiddleware(),
             this.GetAll,
         );

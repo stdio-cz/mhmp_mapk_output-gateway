@@ -6,9 +6,7 @@
  */
 
 import { NextFunction, Request, Response, Router } from "express";
-import { param, query } from "express-validator/check";
-import { CustomError } from "../../core/errors";
-import { handleError } from "../../core/errors";
+import { query } from "express-validator/check";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
@@ -50,6 +48,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
                 query("accessibility").optional().isNumeric(),
                 query("onlyMonitored").optional().isBoolean(),
             ],
+            this.standardParams,
             pagination,
             checkErrors,
             useCacheMiddleware(),
@@ -82,7 +81,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
             if (onlyMonitoredFilter === "true") {
                 additionalFilters = {
                     ...additionalFilters,
-                    ...{ "properties.containers": { $elemMatch: { sensor_id: { $exists: true } } } },
+                    ...{ "properties.containers": { $elemMatch: { sensor_container_id: { $exists: true } } } },
                 };
             }
             const data = await this.model.GetAll({

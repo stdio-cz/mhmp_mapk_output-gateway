@@ -1,6 +1,4 @@
 import { MedicalInstitutions } from "golemio-schema-definitions";
-import { Document, Model, model, Schema, SchemaDefinition } from "mongoose";
-import { CustomError } from "../../core/errors";
 import { GeoJsonModel } from "../../core/models";
 
 export class MedicalInstitutionsModel extends GeoJsonModel {
@@ -9,9 +7,9 @@ export class MedicalInstitutionsModel extends GeoJsonModel {
      * Instantiates the model according to the given schema.
      */
     constructor() {
-        super(  MedicalInstitutions.name,
-                MedicalInstitutions.outputMongooseSchemaObject,
-                MedicalInstitutions.mongoCollectionName );
+        super(MedicalInstitutions.name,
+            MedicalInstitutions.outputMongooseSchemaObject,
+            MedicalInstitutions.mongoCollectionName);
 
         // Set model-specific indexes
         this.schema.index(
@@ -19,7 +17,7 @@ export class MedicalInstitutionsModel extends GeoJsonModel {
         );
     }
 
-    public  GetTypes = async () => {
+    public GetTypes = async () => {
         const types = {
             health_care: [
                 "Fakultní nemocnice",

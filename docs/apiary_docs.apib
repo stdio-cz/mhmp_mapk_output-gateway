@@ -21,10 +21,22 @@ About project Golemio on https://golemio.cz
 
 ## General info
 
+### General responses
 
-### Parameters:
+All routes can return `403: Forbidden` if you (your API-Key) don't have the necessary rights to the specific route. Permissions are explicitly granted for each API-key per-route.
+
+Non-existing routes or not-found resource returns `404`.
+
+API can also return `429: Too Many Requests` if you exceed you rate-limit (again, rate-limits are explicitly granted for each API-key individually).
+
+Otherwise success responses return `200`.
+
+### General Parameters:
+
+Following parameters are applicaple for most of the resoures/routes. Their meaning is explained here. All parameters are optional. Don't copy-paste example API calls with all parameters if you don't need them.
+
 - `latlng`
-   - location, API performs geo-spatial search to retrieve data close to the location (sorts data by proximity)
+   - location, API performs geo-spatial search to retrieve data close to the location (sorts data by proximity); Latitude and Longitude separated by comma, latitude first
 
 - `range`
    - filters the results by their distance from provided latlng in meters (range query); is ignored when latlng is not specified
@@ -85,7 +97,7 @@ General resources.
 + Parameters
 
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -107,6 +119,9 @@ General resources.
             + (Feature Polygon)
                 + properties (City District)
 
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+    
 
 ## Prague City District [/citydistricts/{id}]
 
@@ -130,6 +145,9 @@ General resources.
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 # Group Traffic
 Online traffic data from Prague.
@@ -142,7 +160,7 @@ Parking type enum:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -164,6 +182,9 @@ Parking type enum:
         + features (array)
             + (Feature Point)
                 + properties (Parking)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Parkings History [/parkings/history/{?from,to,limit,offset,sensorId}]
 
@@ -188,6 +209,9 @@ Parking type enum:
 
     + Attributes (array)
         + (Parkings History)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Parking [/parkings/{id}]
 
@@ -210,6 +234,9 @@ Parking type enum:
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Parking Zones [/parkingzones/{?latlng,range,districts,limit,offset,updatedSince}]
@@ -224,7 +251,7 @@ For backwards compatibility, also works on `/parking-zones/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -246,6 +273,9 @@ For backwards compatibility, also works on `/parking-zones/`
         + features (array)
             + (Feature Polygon)
                 + properties (Parking Zone)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Parking Zone [/parkingzones/{parkingzone_code}]
@@ -271,6 +301,9 @@ For backwards compatibility, also works on `/parking-zones/`
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
 
@@ -292,7 +325,7 @@ Availability enum:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -313,6 +346,9 @@ Availability enum:
         + features (array)
             + (Feature Point)
                 + properties (Shared Car)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Shared Car [/sharedcars/{id}]
 
@@ -337,9 +373,12 @@ For backwards compatibility, also works on `/shared-cars/`
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
-## Shared Bikes [/sharedbikes/{?latlng,range,limit,offset,updatedSince}]
+## Shared Bikes [/sharedbikes/{?latlng,range,limit,offset,updatedSince,companyName}]
 
 For backwards compatibility, also works on `/shared-bikes/`
 
@@ -350,11 +389,12 @@ Types enum:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter.
+    + companyName: Rekola (optional, string) - Filters all results with company.name property by this parameter.
 
 ### GET All Shared Bikes [GET]
 
@@ -371,6 +411,9 @@ Types enum:
         + features (array)
             + (Feature Point)
                 + properties (Shared Bike)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Shared Bike [/sharedbikes/{id}]
 
@@ -395,13 +438,16 @@ For backwards compatibility, also works on `/shared-bikes/`
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Bicycle Parkings [/bicycleparkings/{?latlng,range,limit,offset,updatedSince}]
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -422,6 +468,9 @@ For backwards compatibility, also works on `/shared-bikes/`
         + features (array)
             + (Feature Point)
                 + properties (Bicycle Parking)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Bicycle Parking [/bicycleparkings/{id}]
 
@@ -444,6 +493,9 @@ For backwards compatibility, also works on `/shared-bikes/`
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Traffic Cameras [/trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
@@ -452,7 +504,7 @@ For backwards compatibility, also works on `/traffic-cameras/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -474,6 +526,9 @@ For backwards compatibility, also works on `/traffic-cameras/`
         + features (array)
             + (Feature Point)
                 + properties (Traffic Camera)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Traffic Camera [/trafficcameras/{id}]
 
@@ -498,6 +553,9 @@ For backwards compatibility, also works on `/traffic-cameras/`
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 # Group Vehicle Positions
 
@@ -528,6 +586,9 @@ Online positions of public transport vehicles.
         + features (array)
             + (Feature Point)
                 + properties (Vehicleposition Compound)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
@@ -552,6 +613,9 @@ Online positions of public transport vehicles.
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 # Group Public Space
 
@@ -561,7 +625,7 @@ Data from the city public space.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -583,6 +647,9 @@ Data from the city public space.
         + features (array)
             + (Feature Point)
                 + properties (Garden)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Garden [/gardens/{id}]
@@ -606,7 +673,24 @@ Data from the city public space.
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
+## Gardens Properties [/gardens/properties]
+
+### GET All Gardens Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Garden Property)
 
 ## Medical Institutions [/medicalinstitutions/{?latlng,range,district,type,limit,offset,updatedSince}]
 
@@ -614,7 +698,7 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + type: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
@@ -640,6 +724,9 @@ For backwards compatibility, also works on `/medical-institutions/`
         + features (array)
             + (Feature Point)
                 + properties (Medical Institution)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Medical Institution [/medicalinstitutions/{id}]
@@ -665,6 +752,9 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Medical Institutions Types [/medicalinstitutions/types]
@@ -711,13 +801,16 @@ For backwards compatibility, also works on `/medical-institutions/`
                     "Zdravotnické středisko"
                 ]
             }
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Playgrounds [/playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -739,6 +832,9 @@ For backwards compatibility, also works on `/medical-institutions/`
         + features (array)
             + (Feature Point)
                 + properties (Playground)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Playground [/playgrounds/{id}]
@@ -762,6 +858,27 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Playgrounds Properties [/playgrounds/properties]
+
+### GET All Playgrounds Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Playground Property)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Public Toilets [/publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -769,7 +886,7 @@ For backwards compatibility, also works on `/public-toilets/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -792,6 +909,9 @@ For backwards compatibility, also works on `/public-toilets/`
             + (Feature Point)
                 + properties (Public Toilet)
 
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Public Toilet [/publictoilets/{id}]
 
@@ -816,6 +936,9 @@ For backwards compatibility, also works on `/public-toilets/`
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Sorted Waste Stations [/sortedwastestations/{?latlng,range,district,accessibility,limit,offset,onlyMonitored}]
 
@@ -856,7 +979,7 @@ Cleaning Frequency:
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + accessibility: 1 (optional, string) - Filter by accessibility id.
@@ -879,6 +1002,9 @@ Cleaning Frequency:
         + features (array)
             + (Feature Point)
                 + properties (Sorted Waste Station)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Sorted Waste Station [/sortedwastestations/{id}]
@@ -902,6 +1028,9 @@ Cleaning Frequency:
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Sorted Waste Measurements [/sortedwastestations/measurements/{?containerId,limit,offset,from,to}]
 
@@ -948,6 +1077,9 @@ Cleaning Frequency:
 
     + Attributes (array)
         + (Sorted Waste Pick)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Waste Collection Yards [/wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -955,7 +1087,7 @@ For backwards compatibility, also works on `/waste-collection-yards/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -977,6 +1109,9 @@ For backwards compatibility, also works on `/waste-collection-yards/`
         + features (array)
             + (Feature Point)
                 + properties (Waste Collection Yard)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Waste Collection Yard [/wastecollectionyards/{id}]
@@ -1002,7 +1137,27 @@ For backwards compatibility, also works on `/waste-collection-yards/`
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
+## Waste Collection Yards Properties [/wastecollectionyards/properties]
+
+### GET All Waste Collection Yards Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Waste Collection Yard Property)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 # Group Municipal Authorities
 
@@ -1012,7 +1167,7 @@ Data from municipal authorities.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
@@ -1038,6 +1193,9 @@ Data from municipal authorities.
         + features (array)
             + (Feature Point)
                 + properties (Municipal Authority)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Municipal Authority [/municipalauthorities/{id}]
@@ -1061,6 +1219,9 @@ Data from municipal authorities.
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 
@@ -1081,6 +1242,9 @@ Data from municipal authorities.
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Municipal Authority Queues)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Municipal Police Stations [/municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
@@ -1089,7 +1253,7 @@ For backwards compatibility, also works on `/municipal-police-stations/`
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1111,6 +1275,9 @@ For backwards compatibility, also works on `/municipal-police-stations/`
         + features (array)
             + (Feature Point)
                 + properties (Municipal Police Station)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Municipal Police Station [/municipalpolicestations/{id}]
@@ -1136,6 +1303,9 @@ For backwards compatibility, also works on `/municipal-police-stations/`
 
 + Response 404
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 # Group Sensors
@@ -1146,7 +1316,7 @@ Sensoric data from the city's IoT network.
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1168,6 +1338,9 @@ Sensoric data from the city's IoT network.
         + features (array)
             + (Feature Point)
                 + properties (Air Quality Station)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Air Quality Stations History [/airqualitystations/history/{?from,to,limit,offset,sensorId}]
 
@@ -1191,13 +1364,16 @@ Sensoric data from the city's IoT network.
 
     + Attributes (array)
         + (Air Quality Station History)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## ZtpParkings [/ztpparkings{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1220,6 +1396,9 @@ Sensoric data from the city's IoT network.
         + features (array)
             + (Feature Point)
                 + properties (Ztp Parking)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## ZtpParkings History [/ztpparkings/history/{?from,to,limit,offset,sensorId}]
 
@@ -1243,12 +1422,15 @@ Sensoric data from the city's IoT network.
 
     + Attributes (array)
         + (Ztp Parking History)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1271,6 +1453,9 @@ Sensoric data from the city's IoT network.
         + features (array)
             + (Feature Point)
                 + properties (IceGateway Sensor Group)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## IceGateway Sensors History [/icegatewaysensors/history/{?from,to,limit,offset,sensorId}]
 
@@ -1318,13 +1503,16 @@ Sensoric data from the city's IoT network.
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1347,6 +1535,9 @@ Sensoric data from the city's IoT network.
         + features (array)
             + (Feature Point)
                 + properties (IceGateway Street Lamp)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## IceGateway Street Lamp [/icegatewaystreetlamps/{icegeteway_code}]
@@ -1372,13 +1563,16 @@ Sensoric data from the city's IoT network.
 + Response 404 (application/json; charset=utf-8)
 
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 ## Meteosensors [/meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma).
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1400,6 +1594,9 @@ Sensoric data from the city's IoT network.
         + features (array)
             + (Feature Point)
                 + properties (Meteosensor)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Meteosensor [/meteosensors/{id}]
 
@@ -1423,6 +1620,9 @@ Sensoric data from the city's IoT network.
 + Response 404 (application/json; charset=utf-8)
 
     + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 
 # Group GTFS
@@ -1450,6 +1650,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
     + Attributes (array)
         + (GTFS Trip)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## GTFS Trip [/gtfs/trips/{id}{?includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
 
@@ -1479,6 +1682,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
                 + properties (GTFS Shape)
         + service (GTFS Service)
         + route (GTFS Route)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## GTFS Services [/gtfs/services{?limit,offset,date}]
 
@@ -1498,6 +1704,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (array[GTFS Service])
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## GTFS Shapes [/gtfs/shapes/{id}]
 
@@ -1519,6 +1728,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
         + features (array)
             + (Feature Point)
                 + properties (GTFS Shape)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## GTFS Stops [/gtfs/stops{?limit,offset}]
 
@@ -1541,6 +1753,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
         + features (array)
             + (Feature Point)
                 + properties (GTFS Stop)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## GTFS Stop [/gtfs/stops/{id}]
 
@@ -1559,8 +1774,11 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
     + Attributes (Feature Point)
         + properties (GTFS Stop)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
-## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date}]
+## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
 
 + Parameters
     + `id`: `U118Z101P` (string, required)
@@ -1569,6 +1787,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + includeStop: true (optional, boolean) - Enrich stop times response object with stop.
 
 ### GET GTFS Stop times [GET]
 
@@ -1581,6 +1800,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (array[GTFS Stop time])
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 # Data structure
 
@@ -1603,8 +1825,12 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + (Polygon, optional) - Next ones are cut out areas
 
 ## Error (object)
-+ error_message: `Not Found` (required, string)
++ error_message: `Route Not Found` (required, string)
 + error_status: 404 (required, number)
+
+## 403 Error (object)
++ error_message: `Forbidden` (required, string)
++ error_status: 403 (required, number)
 
 ## Feature Point (object)
 
@@ -1946,15 +2172,16 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Parking Occupancy (object)
 
++ 0 (Parking Occupancy Day)
 + 1 (Parking Occupancy Day)
 + 2 (Parking Occupancy Day)
 + 3 (Parking Occupancy Day)
 + 4 (Parking Occupancy Day)
 + 5 (Parking Occupancy Day)
 + 6 (Parking Occupancy Day)
-+ 7 (Parking Occupancy Day)
 
 ## Parking Occupancy Day
++ 00: 32 (number)
 + 01: 57 (number)
 + 02: 17 (number)
 + 03: 47 (number)
@@ -1996,8 +2223,8 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + tariffs (array[Parking Zone Tariff Schedule])
 + updated_at: 1553130910437 (number, required)
 + type (Parking Zone Type)
-+ zps_id: 3312 (number)
-+ zps_ids (array[number])
++ zps_id: 3312 (number, optional, nullable)
++ zps_ids (array[number], optional)
 + tariffs_text: `Po-Ne 08:00-19:59 80 Kč/hod. (max. 1 hod.); Po-Ne 20:00-05:59 80 Kč/hod. (max. 1 hod.); Po-Ne (ve svátek) 08:00-05:59 80 Kč/hod. (max. 1 hod.)` (string)
 
 ## Parking Zone Tariff Schedule (object)
@@ -2027,7 +2254,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + id: 72 (number, required)
 + name: `Hostivařský lesopark (východní část) - hřiště 43.B` (string, required)
 + perex: `Trasa je vhodným polodenním rodinným výletem.` (string)
-+ properties (array[Playground Properties])
++ properties (array[Playground Property])
 + updated_at: 1556670601921 (number, required)
 + url: `http://www.hristepraha.cz/hriste/mapa/hostivarsky-lesopark-vychodni-cast-hriste-43-b` (string, required)
 + district: `praha-15` (string)
@@ -2037,7 +2264,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + url: `http://www.hristepraha.cz/images/img/2d73f6832f5ce39fc5987d27d9f4541fo.jpg` (string)
 
-## Playground Properties (object)
+## Playground Property (object)
 
 + id: 6 (number, required)
 + description: `WC na hřišti nebo v bezprostřední blízkosti` (string)

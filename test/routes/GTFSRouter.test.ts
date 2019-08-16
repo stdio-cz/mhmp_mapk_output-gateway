@@ -13,7 +13,7 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as sinon from "sinon";
 import * as request from "supertest";
 
-import { handleError } from "../../src/core/errors";
+import { handleError } from "golemio-errors";
 import { log } from "../../src/core/Logger";
 import { gtfsRouter } from "../../src/resources/gtfs/GTFSRouter";
 

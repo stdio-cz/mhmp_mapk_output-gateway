@@ -5,21 +5,19 @@
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as fs from "fs";
+import { CustomError, handleError, ICustomErrorObject } from "golemio-errors";
 import {
     AirQualityStations,
     BicycleParkings,
-    Gardens,
     IceGatewaySensors,
     IceGatewayStreetLamps,
     Meteosensors,
     MunicipalPoliceStations,
     Parkings,
-    Playgrounds,
     PublicToilets,
     SharedBikes,
     SharedCars,
     TrafficCameras,
-    WasteCollectionYards,
     ZtpParkings,
 } from "golemio-schema-definitions";
 import * as http from "http";
@@ -27,16 +25,19 @@ import * as httpLogger from "morgan";
 import * as path from "path";
 import config from "./config/config";
 import { mongooseConnection, sequelizeConnection } from "./core/database";
-import { CustomError, handleError, ICustomErrorObject } from "./core/errors";
 import { log } from "./core/Logger";
 import { RouterBuilder } from "./core/routes/";
 import { cityDistrictsRouter } from "./resources/citydistricts";
+import { gardensRouter } from "./resources/gardens";
 import { gtfsRouter } from "./resources/gtfs";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
 import { municipalAuthoritiesRouter } from "./resources/municipalauthorities";
 import { parkingZonesRouter } from "./resources/parkingzones";
+import { playgroundsRouter } from "./resources/playgrounds";
+import { sharedBikesRouter } from "./resources/sharedbikes";
 import { sortedWasteRouter } from "./resources/sortedwastestations";
 import { vehiclepositionsRouter } from "./resources/vehiclepositions";
+import { wasteCollectionYardsRouter } from "./resources/wastecollectionyards";
 
 // Configuration of the routes to be dynamically created by RouterBuilder
 export const generalRoutes = [
@@ -47,8 +48,7 @@ export const generalRoutes = [
     },
     {
         collectionName: ZtpParkings.mongoCollectionName,
-        history:
-        {
+        history: {
             collectionName: ZtpParkings.history.mongoCollectionName,
             historyTimePropertyLocation: "last_updated_at",
             name: ZtpParkings.history.name,
@@ -59,8 +59,7 @@ export const generalRoutes = [
     },
     {
         collectionName: IceGatewaySensors.mongoCollectionName,
-        history:
-        {
+        history: {
             collectionName: IceGatewaySensors.history.mongoCollectionName,
             historyTimePropertyLocation: "created_at",
             name: IceGatewaySensors.history.name,
@@ -86,11 +85,6 @@ export const generalRoutes = [
         schema: AirQualityStations.outputMongooseSchemaObject,
     },
     {
-        collectionName: Gardens.mongoCollectionName,
-        name: Gardens.name,
-        schema: Gardens.outputMongooseSchemaObject,
-    },
-    {
         collectionName: Meteosensors.mongoCollectionName,
         name: Meteosensors.name,
         schema: Meteosensors.outputMongooseSchemaObject,
@@ -101,19 +95,9 @@ export const generalRoutes = [
         schema: TrafficCameras.outputMongooseSchemaObject,
     },
     {
-        collectionName: Playgrounds.mongoCollectionName,
-        name: Playgrounds.name,
-        schema: Playgrounds.outputMongooseSchemaObject,
-    },
-    {
         collectionName: MunicipalPoliceStations.mongoCollectionName,
         name: MunicipalPoliceStations.name,
         schema: MunicipalPoliceStations.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: WasteCollectionYards.mongoCollectionName,
-        name: WasteCollectionYards.name,
-        schema: WasteCollectionYards.outputMongooseSchemaObject,
     },
     {
         collectionName: PublicToilets.mongoCollectionName,
@@ -131,12 +115,6 @@ export const generalRoutes = [
         schema: Parkings.outputMongooseSchemaObject,
     },
     {
-        collectionName: SharedBikes.mongoCollectionName,
-        expire: 30000,
-        name: SharedBikes.name,
-        schema: SharedBikes.outputMongooseSchemaObject,
-    },
-    {
         collectionName: BicycleParkings.mongoCollectionName,
         name: BicycleParkings.name,
         schema: BicycleParkings.outputMongooseSchemaObject,
@@ -147,7 +125,6 @@ export const generalRoutes = [
  * Entry point of the application. Creates and configures an ExpressJS web server.
  */
 export default class App {
-
     // Create a new express application instance
     public express: express.Application = express();
     // The port the express app will listen on
@@ -174,7 +151,7 @@ export default class App {
             const server: http.Server = http.createServer(this.express);
             // Setup error handler hook on server error
             server.on("error", (err: Error) => {
-                handleError(new CustomError("Could not start a server", false, 1, err));
+                handleError(new CustomError("Could not start a server", false, "App", 1, err));
             });
             // Serve the application at the given port
             server.listen(this.port, () => {
@@ -204,7 +181,6 @@ export default class App {
             return new Date().toISOString();
         });
         this.express.use(httpLogger("combined"));
-
         this.express.use(this.setHeaders);
     }
 
@@ -213,9 +189,7 @@ export default class App {
 
         // Create base url route handler
         defaultRouter.get(["/", "/health-check", "/status"], (req, res, next) => {
-
             log.silly("Health check/status called.");
-
             res.json({
                 app_name: "Data Platform Output Gateway",
                 commit_sha: this.commitSHA,
@@ -234,6 +208,10 @@ export default class App {
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
+        this.express.use("/gardens", gardensRouter);
+        this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
+        this.express.use("/playgrounds", playgroundsRouter);
+        this.express.use("/sharedbikes", sharedBikesRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
@@ -242,7 +220,7 @@ export default class App {
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {
-            next(new CustomError("Not found", true, 404));
+            next(new CustomError("Not found", true, "App", 404));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
@@ -250,7 +228,10 @@ export default class App {
             handleError(err).then((error: ICustomErrorObject) => {
                 if (error) {
                     log.silly("Error caught by the router error handler.");
-                    res.setHeader("Content-Type", "application/json; charset=utf-8");
+                    res.setHeader(
+                        "Content-Type",
+                        "application/json; charset=utf-8",
+                    );
                     res.status(error.error_status || 500).send(error);
                 }
             });

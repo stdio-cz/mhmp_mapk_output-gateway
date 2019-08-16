@@ -7,11 +7,10 @@
 
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
-import { CustomError } from "../../core/errors";
-import { handleError } from "../../core/errors";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
+import { pagination } from "../../core/Validation";
 import { MunicipalAuthoritiesModel, MunicipalAuthoritiesQueuesModel } from "./models";
 
 export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
@@ -31,6 +30,8 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
         this.router.get("/", [
             query("type").optional().isString(),
         ],
+            this.standardParams,
+            pagination,
             useCacheMiddleware(),
             this.GetAll,
         );
@@ -76,7 +77,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
 
     public GetQueues = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.queuesModel.GetQueues(req.params.id);
+            const data = await this.queuesModel.GetQueuesByOfficeId(req.params.id);
             if (!data) {
                 return res.status(204).send();
             } else {

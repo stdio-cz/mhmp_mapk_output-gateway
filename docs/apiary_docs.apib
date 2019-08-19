@@ -1,10 +1,8 @@
 FORMAT: 1A
 
-# Golemio Output Gateway
+# Golemio API
 
-Documentation URL:
-- https://outputgateway.docs.apiary.io/ (master)
-- https://outputgatewaydev.docs.apiary.io/ (development)
+**Dokumentace Golemio API, přístup lze získat na [api.golemio.cz/api-keys](https://api.golemio.cz/api-keys). Veškeré dotazy prosím směřujte na [golemio@operatorict.cz](mailto:golemio@operatorict.cz?subject=golemioapiv1)**
 
 Open RESTful API gateway for Golemio.cz Prague Data plafrorm.
 Gathers, enriches and caches data from various sources and provides a single access point to the data.
@@ -394,7 +392,7 @@ Types enum:
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter.
-    + companyName: Rekola (optional, string) - Filters all results with company.name property by this parameter.
+    + companyName: HOMEPORT (optional, string) - Filters all results with company.name property by this parameter.
 
 ### GET All Shared Bikes [GET]
 
@@ -1627,7 +1625,7 @@ Sensoric data from the city's IoT network.
 
 # Group GTFS
 
-GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules.
+GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules. We refresh data from ROPID every day. Transit data are always valid for next 14 days, but can change every day. More on https://pid.cz/o-systemu/opendata/.
 
 ## GTFS Trips [/gtfs/trips{?limit,offset,stopId,date}]
 

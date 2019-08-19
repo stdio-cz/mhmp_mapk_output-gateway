@@ -6,10 +6,10 @@ variables:
   POSTGRES_PASS: test-pass
   POSTGRES_DB: testdb
   MONGO_CONN: "mongodb://mongo/dataplatform"
-  APIARY_NAME: 'outputgateway'
+  APIARY_NAME: 'golemioapi'
   APIARY_NAME_DEV: 'outputgatewaydev'
-  HOST_URL: 'https://api.golemio.cz'
-  HOST_URL_DEV: 'http://rabin.golemio.cz/dev/output-gateway'
+  HOST_URL: 'https://api.golemio.cz/v1'
+  HOST_URL_DEV: 'http://rabin.golemio.cz/v1'
 
 stages:
   - build

@@ -8,7 +8,7 @@ Output Gateway for the Data Platform System. Provides REST API for the data stor
 
 Uses express server, caching using Redis.
 
-More in Apiary documentation at https://outputgateway.docs.apiary.io
+More in Apiary documentation at https://golemioapi.docs.apiary.io
 
 Developed by http://operatorict.cz
 
@@ -126,7 +126,7 @@ More documentation in `docs/`. Mainly `new_dataset_integration.md` for descripti
 
 ### API documentation
 
-Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [outputgateway.docs.apiary.io](https://outputgateway.docs.apiary.io/#) (master), [outputgatewaydev.docs.apiary.io](https://outputgatewaydev.docs.apiary.io/#) (development).
+Rest API documentation is placed in `docs/apiary_docs.apib` which is also up-to-date on [golemioapi.docs.apiary.io](https://golemioapi.docs.apiary.io/#) (master), [outputgatewaydev.docs.apiary.io](https://outputgatewaydev.docs.apiary.io/#) (development).
 
 ## Contribution guidelines
 

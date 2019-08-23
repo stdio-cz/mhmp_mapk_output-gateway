@@ -23,7 +23,7 @@ About project Golemio on https://golemio.cz
 
 ### General responses
 
-All routes can return `403: Forbidden` if you (your API-Key) don't have the necessary rights to the specific route. Permissions are explicitly granted for each API-key per-route.
+All routes can return `403: Forbidden` if you (your API-Key) don't have the necessary rights to the specific route (or specific route+parameters combination). Permissions are explicitly granted for each API-key per route. API can also return `403` to a call with invalid parameters (for example, you can have permission to view only `route/?type=1` and try to call `route/?type=2`, you can get a `403`)
 
 Non-existing routes or not-found resource returns `404`.
 

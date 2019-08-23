@@ -123,7 +123,7 @@ export class GTFSRouter {
                 });
 
             if (!data) {
-                throw new CustomError("not_found", true, "GFSRouter", 404, null);
+                throw new CustomError("not_found", true, "GTFSRouter", 404, null);
             }
             res.status(200).send(data);
         } catch (err) {
@@ -152,7 +152,7 @@ export class GTFSRouter {
             const id: string = req.params.id;
             const data = await this.stopModel.GetOne(id);
             if (!data) {
-                throw new CustomError("not_found", true, "GFSRouter", 404, null);
+                throw new CustomError("not_found", true, "GTFSRouter", 404, null);
             }
             res.status(200).send(data);
         } catch (err) {
@@ -178,7 +178,7 @@ export class GTFSRouter {
             const id: string = req.params.id;
             const data = await this.routeModel.GetOne(id);
             if (!data) {
-                throw new CustomError("not_found", true, "GFSRouter", 404, null);
+                throw new CustomError("not_found", true, "GTFSRouter", 404, null);
             }
             res.status(200).send(data);
         } catch (err) {
@@ -195,7 +195,7 @@ export class GTFSRouter {
                     offset: req.query.offset,
                 });
             if (!data) {
-                throw new CustomError("not_found", true, "GFSRouter", 404, null);
+                throw new CustomError("not_found", true, "GTFSRouter", 404, null);
             }
             res.status(200).send(data);
         } catch (err) {
@@ -295,7 +295,7 @@ export class GTFSRouter {
                     req.query.to &&
                     moment(req.query.from, "H:mm:ss").isAfter(moment(req.query.to, "H:mm:ss"))
                 ) {
-                    throw new CustomError("Validation error", true, "GFSRouter",
+                    throw new CustomError("Validation error", true, "GTFSRouter",
                         400, { from: "'to' cannot be later than 'from'" });
                 }
                 return next();

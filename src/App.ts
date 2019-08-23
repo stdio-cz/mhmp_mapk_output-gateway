@@ -130,6 +130,8 @@ export default class App {
     // The port the express app will listen on
     public port: number = parseInt(config.port || "3004", 10);
 
+    private server: http.Server;
+
     private commitSHA: string;
 
     /**
@@ -148,19 +150,23 @@ export default class App {
             this.express = express();
             this.middleware();
             this.routes();
-            const server: http.Server = http.createServer(this.express);
+            this.server = http.createServer(this.express);
             // Setup error handler hook on server error
-            server.on("error", (err: Error) => {
+            this.server.on("error", (err: Error) => {
                 handleError(new CustomError("Could not start a server", false, "App", 1, err));
             });
             // Serve the application at the given port
-            server.listen(this.port, () => {
+            this.server.listen(this.port, () => {
                 // Success callback
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
         } catch (err) {
             handleError(err);
         }
+    }
+
+    public stop = async (): Promise<void> => {
+        this.server.close();
     }
 
     private setHeaders = (req: Request, res: Response, next: NextFunction): void => {

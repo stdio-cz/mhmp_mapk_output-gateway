@@ -47,7 +47,7 @@ describe("SortedWasteStationsModel", () => {
         expect(result).to.be.an.instanceOf(Object);
         expect(result.features).to.be.an.instanceOf(Array);
         for (const station of result.features) {
-            expect(station.properties.isMonitored).to.be.equal(true);
+            expect(station.properties.is_monitored).to.be.equal(true);
         }
     });
 

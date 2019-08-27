@@ -67,9 +67,10 @@ pages:
   script:
   - yarn install
   - npm run generate-docs
+  - mv docs/typedoc public
   artifacts:
     paths:
-    - docs/typedoc
+    - public
   only:
     - master
 

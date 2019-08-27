@@ -51,7 +51,7 @@ export class GeoJsonModel extends MongoModel {
      * @param options.additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
      */
-    public GetAll = async (options: {
+    public async GetAll(options?: {
         /** Latitude to sort results by (by proximity) */
         lat?: number,
         /** Longitute to sort results by */
@@ -72,9 +72,12 @@ export class GeoJsonModel extends MongoModel {
         ids?: number[],
         /** Object with additional filter conditions to be added to the selection */
         additionalFilters?: object,
-    } = {}) => {
+    }): Promise<any> {
+        if (!options) {
+            options = {};
+        }
         try {
-            const q = this.model.find({});
+            const q = this.model.find({}).lean();
 
             // Specify a query filter conditions to search by geometry location
             if (options.lat) {
@@ -141,7 +144,7 @@ export class GeoJsonModel extends MongoModel {
      * @param inId Id of the record to be retrieved
      * @returns Object of the retrieved record or null
      */
-    public GetOne = async (inId: any): Promise<object> => {
+    public async GetOne(inId: any): Promise<object> {
         const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").exec();
         if (!found || found instanceof Array && found.length === 0) {
             log.debug("Could not find any record by following selection:");

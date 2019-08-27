@@ -94,7 +94,8 @@ export class SortedWasteStationsModel extends GeoJsonModel {
     }
 
     /**
-     * Enriches the item with flag "isMonitored", which is true if the item has at least one container that is monitored
+     * Enriches the item with flag "is_monitored",
+     * which is true if the item has at least one container that is monitored
      * @param item Sorted waste GeoJSON feature to be enriched with flag if it contains a monitored
      * container
      */
@@ -104,7 +105,7 @@ export class SortedWasteStationsModel extends GeoJsonModel {
             geometry: item.geometry,
             properties: {
                 ...item.properties,
-                isMonitored: true,
+                is_monitored: true,
             },
             type: item.type,
         } : item;

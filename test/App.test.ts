@@ -15,9 +15,16 @@ chai.use(chaiAsPromised);
 
 describe("App", () => {
 
-    const app: express.Application = express();
+    let expressApp: express.Application;
+    let app: App;
     let sandbox: any;
     let exitStub: any;
+
+    before(async () => {
+        app = new App();
+        await app.start();
+        expressApp = app.express;
+    });
 
     beforeEach(() => {
         sandbox = sinon.createSandbox({ useFakeTimers: true });
@@ -29,7 +36,7 @@ describe("App", () => {
     });
 
     it("should start", async () => {
-        expect(app).not.to.be.undefined;
+        expect(expressApp).not.to.be.undefined;
     });
 
     it("should have all config variables set", () => {
@@ -37,33 +44,33 @@ describe("App", () => {
         expect(config.mongo_connection).not.to.be.undefined;
     });
 
-    it("should have health check on /", () => {
-        request(app)
+    it("should have health check on /", (done) => {
+        request(expressApp)
             .get("/")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
-            .expect(200);
+            .expect(200, done);
     });
 
-    it("should have health check on /health-check", () => {
-        request(app)
+    it("should have health check on /health-check", (done) => {
+        request(expressApp)
             .get("/health-check")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
-            .expect(200);
+            .expect(200, done);
     });
 
-    it("should return 404 on non-existing route /non-existing", () => {
-        request(app)
+    it("should return 404 on non-existing route /non-existing", (done) => {
+        request(expressApp)
             .get("/non-existing")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
-            .expect(404);
+            .expect(404, done);
     });
 
-    it("should respond with 400 BAD REQUEST to GET /parkings/?latlng&range with bad parameters", () => {
-        request(app)
+    it("should respond with 400 BAD REQUEST to GET /parkings/?latlng&range with bad parameters", (done) => {
+        request(expressApp)
             .get("/parkings/?latlng=50.032074,14.492015&range=asd")
-            .expect(400);
+            .expect(400, done);
     });
 });

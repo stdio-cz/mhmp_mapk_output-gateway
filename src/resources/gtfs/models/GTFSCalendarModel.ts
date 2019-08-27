@@ -63,7 +63,7 @@ export class GTFSCalendarModel extends SequelizeModel {
                 });
             return data;
         } catch (err) {
-            throw new CustomError("Database error", true, "GFSCalendar", 500, err);
+            throw new CustomError("Database error", true, "GTFSCalendar", 500, err);
         }
     }
 

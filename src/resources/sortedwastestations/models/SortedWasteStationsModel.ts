@@ -1,4 +1,4 @@
-import { SortedWasteStations } from "golemio-schema-definitions";
+import { SortedWasteStations } from "@golemio/schema-definitions";
 import { IGeoJSONFeature } from "../../../core/Geo";
 import { log } from "../../../core/Logger";
 import { GeoJsonModel } from "../../../core/models";

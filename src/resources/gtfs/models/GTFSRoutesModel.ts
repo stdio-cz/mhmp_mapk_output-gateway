@@ -1,5 +1,5 @@
-import { CustomError } from "golemio-errors";
-import { RopidGTFS } from "golemio-schema-definitions";
+import { CustomError } from "@golemio/errors";
+import { RopidGTFS } from "@golemio/schema-definitions";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSRoutesModel extends SequelizeModel {

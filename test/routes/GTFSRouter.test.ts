@@ -1,21 +1,18 @@
 "use strict";
 
-import "mocha";
-
+import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
 import { expect } from "chai";
-import * as express from "express";
-import { NextFunction, Request, Response } from "express";
-
-const config = require("../../src/config/config");
-
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import * as express from "express";
+import { NextFunction, Request, Response } from "express";
+import "mocha";
 import * as sinon from "sinon";
 import * as request from "supertest";
-
-import { handleError } from "golemio-errors";
 import { log } from "../../src/core/Logger";
 import { gtfsRouter } from "../../src/resources/gtfs/GTFSRouter";
+
+const config = require("../../src/config/config");
 
 chai.use(chaiAsPromised);
 
@@ -37,13 +34,10 @@ describe("GTFS Router", () => {
         // Mount the tested router to the express instance
         app.use("/gtfs", gtfsRouter);
         app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-            handleError(err).then((error) => {
-                if (error) {
-                    log.silly("Error caught by the router error handler.");
-                    res.setHeader("Content-Type", "application/json; charset=utf-8");
-                    res.status(error.error_status || 500).send(error);
-                }
-            });
+            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err);
+            log.silly("Error caught by the router error handler.");
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
+            res.status(errObject.error_status || 500).send(errObject);
         });
     });
 
@@ -150,7 +144,7 @@ describe("GTFS Router", () => {
         request(app)
             .get("/gtfs/stoptimes/U118Z102P?from=13:22:11&to=12:12:12").end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(400);
-                expect(res.body.cause).to.have.property("from", "'to' cannot be later than 'from'");
+                expect(res.body.error_info).to.contain("'to' cannot be later than 'from'");
                 done();
             });
     });

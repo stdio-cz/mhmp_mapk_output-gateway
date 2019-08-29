@@ -1,6 +1,6 @@
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response } from "express";
 import { query, validationResult } from "express-validator/check";
-import { CustomError } from "golemio-errors";
 
 /**
  * Checks for errors in request parameters, using express-validator https://www.npmjs.com/package/express-validator

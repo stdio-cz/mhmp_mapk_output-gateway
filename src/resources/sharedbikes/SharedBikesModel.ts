@@ -1,4 +1,4 @@
-import { SharedBikes } from "golemio-schema-definitions";
+import { SharedBikes } from "@golemio/schema-definitions";
 import { GeoJsonModel } from "../../core/models";
 
 export class SharedBikesModel extends GeoJsonModel {

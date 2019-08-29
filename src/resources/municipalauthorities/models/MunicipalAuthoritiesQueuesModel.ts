@@ -1,4 +1,4 @@
-import { MunicipalAuthorities } from "golemio-schema-definitions";
+import { MunicipalAuthorities } from "@golemio/schema-definitions";
 import { MongoModel } from "../../../core/models";
 
 export class MunicipalAuthoritiesQueuesModel extends MongoModel {

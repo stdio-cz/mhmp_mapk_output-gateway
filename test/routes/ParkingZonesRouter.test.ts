@@ -6,7 +6,6 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as express from "express";
 import "mocha";
 import * as request from "supertest";
-
 import { parkingZonesRouter } from "../../src/resources/parkingzones/ParkingZonesRouter";
 
 chai.use(chaiAsPromised);

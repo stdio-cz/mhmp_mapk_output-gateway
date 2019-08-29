@@ -1,4 +1,4 @@
-import { Playgrounds } from "golemio-schema-definitions";
+import { Playgrounds } from "@golemio/schema-definitions";
 import { GeoJsonModel } from "../../core/models";
 
 export class PlaygroundsModel extends GeoJsonModel {

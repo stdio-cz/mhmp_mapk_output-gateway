@@ -1,16 +1,14 @@
 "use strict";
 
+import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
+import * as chai from "chai";
+import * as chaiAsPromised from "chai-as-promised";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import "mocha";
-
-import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import * as sinon from "sinon";
 import * as request from "supertest";
 import { log } from "../../src/core/Logger";
-
-import { handleError } from "golemio-errors";
-import * as sinon from "sinon";
 import { gardensRouter } from "../../src/resources/gardens/GardensRouter";
 
 chai.use(chaiAsPromised);
@@ -33,13 +31,10 @@ describe("Gardens Router", () => {
         // Mount the tested router to the express instance
         app.use("/gardens", gardensRouter);
         app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-            handleError(err).then((error) => {
-                if (error) {
-                    log.silly("Error caught by the router error handler.");
-                    res.setHeader("Content-Type", "application/json; charset=utf-8");
-                    res.status(error.error_status || 500).send(error);
-                }
-            });
+            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err);
+            log.silly("Error caught by the router error handler.");
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
+            res.status(errObject.error_status || 500).send(errObject);
         });
     });
 

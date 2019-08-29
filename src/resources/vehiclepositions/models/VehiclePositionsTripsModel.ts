@@ -1,5 +1,5 @@
-import { CustomError } from "golemio-errors";
-import { VehiclePositions } from "golemio-schema-definitions";
+import { CustomError } from "@golemio/errors";
+import { VehiclePositions } from "@golemio/schema-definitions";
 import { IncludeOptions, Model } from "sequelize";
 import { IVehiclePositionsModels } from ".";
 import { sequelizeConnection } from "../../../core/database";

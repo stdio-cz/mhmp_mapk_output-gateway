@@ -1,4 +1,4 @@
-import { Gardens } from "golemio-schema-definitions";
+import { Gardens } from "@golemio/schema-definitions";
 import { GeoJsonModel } from "../../core/models";
 
 export class GardensModel extends GeoJsonModel {

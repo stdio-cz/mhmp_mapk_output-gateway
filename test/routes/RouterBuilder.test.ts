@@ -1,14 +1,13 @@
 "use strict";
 
-import * as express from "express";
-import "mocha";
-import * as sinon from "sinon";
-import { generalRoutes } from "../../src/App";
-
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
+import * as express from "express";
+import "mocha";
+import * as sinon from "sinon";
 import * as request from "supertest";
+import { generalRoutes } from "../../src/App";
 import { log } from "../../src/core/Logger";
 import { RouterBuilder } from "../../src/core/routes/RouterBuilder";
 

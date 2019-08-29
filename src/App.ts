@@ -2,10 +2,7 @@
 /* app/server.ts */
 
 // Import everything from express and assign it to the express variable
-import * as express from "express";
-import { NextFunction, Request, Response } from "express";
-import * as fs from "fs";
-import { CustomError, handleError, ICustomErrorObject } from "golemio-errors";
+import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
 import {
     AirQualityStations,
     BicycleParkings,
@@ -19,7 +16,10 @@ import {
     SharedCars,
     TrafficCameras,
     ZtpParkings,
-} from "golemio-schema-definitions";
+} from "@golemio/schema-definitions";
+import * as express from "express";
+import { NextFunction, Request, Response } from "express";
+import * as fs from "fs";
 import * as http from "http";
 import * as httpLogger from "morgan";
 import * as path from "path";
@@ -153,7 +153,7 @@ export default class App {
             this.server = http.createServer(this.express);
             // Setup error handler hook on server error
             this.server.on("error", (err: Error) => {
-                handleError(new CustomError("Could not start a server", false, "App", 1, err));
+                ErrorHandler.handle(new CustomError("Could not start a server", false, "App", 1, err));
             });
             // Serve the application at the given port
             this.server.listen(this.port, () => {
@@ -161,7 +161,7 @@ export default class App {
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
         } catch (err) {
-            handleError(err);
+            ErrorHandler.handle(err);
         }
     }
 
@@ -231,16 +231,13 @@ export default class App {
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
-            handleError(err).then((error: ICustomErrorObject) => {
-                if (error) {
-                    log.silly("Error caught by the router error handler.");
-                    res.setHeader(
-                        "Content-Type",
-                        "application/json; charset=utf-8",
-                    );
-                    res.status(error.error_status || 500).send(error);
-                }
-            });
+            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err);
+            log.silly("Error caught by the router error handler.");
+            res.setHeader(
+                "Content-Type",
+                "application/json; charset=utf-8",
+            );
+            res.status(errObject.error_status || 500).send(errObject);
         });
     }
 

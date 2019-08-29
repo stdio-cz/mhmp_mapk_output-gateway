@@ -1,5 +1,5 @@
-import { CustomError } from "golemio-errors";
-import { RopidGTFS } from "golemio-schema-definitions";
+import { CustomError } from "@golemio/errors";
+import { RopidGTFS } from "@golemio/schema-definitions";
 import { IGTFSModels } from ".";
 import { buildGeojsonFeatureCollection } from "../../../core/Geo";
 import { SequelizeModel } from "../../../core/models";

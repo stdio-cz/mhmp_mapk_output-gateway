@@ -1,4 +1,4 @@
-import { WasteCollectionYards } from "golemio-schema-definitions";
+import { WasteCollectionYards } from "@golemio/schema-definitions";
 import { GeoJsonModel } from "../../core/models";
 
 export class WasteCollectionYardsModel extends GeoJsonModel {

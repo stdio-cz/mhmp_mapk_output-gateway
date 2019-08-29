@@ -1,4 +1,4 @@
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import { SchemaDefinition } from "mongoose";
 import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType } from "../Geo";
 import { log } from "../Logger";

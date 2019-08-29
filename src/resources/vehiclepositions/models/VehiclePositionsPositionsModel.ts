@@ -1,4 +1,4 @@
-import { VehiclePositions } from "golemio-schema-definitions";
+import { VehiclePositions } from "@golemio/schema-definitions";
 import * as Sequelize from "sequelize";
 import { IVehiclePositionsModels } from ".";
 import { sequelizeConnection } from "../../../core/database";

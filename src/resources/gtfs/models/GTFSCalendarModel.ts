@@ -1,5 +1,5 @@
-import { CustomError } from "golemio-errors";
-import { RopidGTFS } from "golemio-schema-definitions";
+import { CustomError } from "@golemio/errors";
+import { RopidGTFS } from "@golemio/schema-definitions";
 import * as moment from "moment";
 import { models as sequelizeModels } from ".";
 import { sequelizeConnection } from "../../../core/database";

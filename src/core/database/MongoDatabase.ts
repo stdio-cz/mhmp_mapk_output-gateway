@@ -1,4 +1,4 @@
-import { CustomError, handleError } from "golemio-errors";
+import { CustomError, ErrorHandler } from "@golemio/errors";
 import * as mongoose from "mongoose";
 import config from "../../config/config";
 import { log } from "../Logger";
@@ -31,7 +31,7 @@ export class MongoDatabase {
         }
         log.info("Connected to Mongo DB!");
         mongoose.connection.on("disconnected", () => {
-            handleError(new CustomError("Database disconnected", false, "MongoDatabase", 5002));
+            ErrorHandler.handle(new CustomError("Database disconnected", false, "MongoDatabase", 5002));
         });
     }
 }

@@ -5,9 +5,9 @@
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
 
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
-import { CustomError } from "golemio-errors";
 import * as moment from "moment";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
@@ -296,7 +296,7 @@ export class GTFSRouter {
                     moment(req.query.from, "H:mm:ss").isAfter(moment(req.query.to, "H:mm:ss"))
                 ) {
                     throw new CustomError("Validation error", true, "GTFSRouter",
-                        400, { from: "'to' cannot be later than 'from'" });
+                        400, new Error("'to' cannot be later than 'from'"));
                 }
                 return next();
             },

@@ -4,9 +4,9 @@
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
 
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
-import { CustomError } from "golemio-errors";
 import { useCacheMiddleware } from "../../core/redis";
 import { checkErrors, pagination } from "../../core/Validation";
 import { models } from "./models";

@@ -1,4 +1,4 @@
-import { MunicipalAuthorities } from "golemio-schema-definitions";
+import { MunicipalAuthorities } from "@golemio/schema-definitions";
 import { GeoJsonModel } from "../../../core/models";
 
 export class MunicipalAuthoritiesModel extends GeoJsonModel {

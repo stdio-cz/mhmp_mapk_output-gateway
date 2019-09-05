@@ -6,15 +6,15 @@
  */
 export abstract class BaseModel {
 
-    public abstract GetAll: (options?: any) => Promise<any>;
-    public abstract GetOne: (id: any) => Promise<any>;
-
     /** Name of the model */
     protected name: string;
 
     protected constructor(name: string) {
         this.name = name;
     }
+
+    public abstract async GetAll(options?: any): Promise<any>;
+    public abstract async GetOne(id: any): Promise<any>;
 
     public GetName = (): string => {
         return this.name;

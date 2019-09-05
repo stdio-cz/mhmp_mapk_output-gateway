@@ -1,5 +1,5 @@
-import { CustomError } from "golemio-errors";
-import { getSubProperty } from "golemio-utils";
+import { CustomError } from "@golemio/errors";
+import { getSubProperty } from "@golemio/utils";
 import { log } from "./Logger";
 
 export enum GeoCoordinatesType {

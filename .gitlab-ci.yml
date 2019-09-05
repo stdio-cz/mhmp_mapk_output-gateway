@@ -28,13 +28,14 @@ run_tests:
       alias: postgres
     - mongo:4.0.5
   script:
-    - yarn install
+    - cat $VERDACCIO_NPMRC_PATH > .npmrc
+    - yarn
     - npm run build
     - mongorestore --uri=$MONGO_CONN -d dataplatform ./db/example/mongo_data/dataplatform
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
-    - cd node_modules/golemio-schema-definitions && npm run migrate-db && cd -
+    - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
     - NODE_ENV=production npm run code-coverage
     - dredd
@@ -42,6 +43,7 @@ run_tests:
 build_image_v1:
   stage: build
   script:
+    - cat $VERDACCIO_NPMRC_PATH > .npmrc
     - SANITIZED_BRANCH=`echo -n ${CI_COMMIT_REF_NAME//[^a-zA-Z0-9_-]/} | tr A-Z a-z`
     - echo $CI_COMMIT_SHA > commitsha
     - docker build -t $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/v1/$SANITIZED_BRANCH:latest .
@@ -65,7 +67,8 @@ pages:
   stage: deploy
   image: node:8
   script:
-  - yarn install
+  - cat $VERDACCIO_NPMRC_PATH > .npmrc
+  - yarn install && rm -f .npmrc
   - npm run generate-docs
   - mv docs/typedoc public
   artifacts:

@@ -239,8 +239,6 @@ Parking type enum:
 
 ## Parking Zones [/parkingzones/{?latlng,range,districts,limit,offset,updatedSince}]
 
-For backwards compatibility, also works on `/parking-zones/`
-
 "Category" definition:
 - RES - residential area (blue)
 - VIS - visitor area (orange)
@@ -278,8 +276,6 @@ For backwards compatibility, also works on `/parking-zones/`
 
 ## Parking Zone [/parkingzones/{parkingzone_code}]
 
-For backwards compatibility, also works on `/parking-zones/`
-
 + Parameters
 
     + parkingzone_code: `P1-0101` (string) - Identifier of the parking zone.
@@ -304,8 +300,6 @@ For backwards compatibility, also works on `/parking-zones/`
     + Attributes (403 Error)
 
 ## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
-
-For backwards compatibility, also works on `/shared-cars/`
 
 Fuel enum:
 - 1 benzin
@@ -350,8 +344,6 @@ Availability enum:
 
 ## Shared Car [/sharedcars/{id}]
 
-For backwards compatibility, also works on `/shared-cars/`
-
 + Parameters
 
     + id: `1BF8210` (string) - Identifier of the car.
@@ -377,8 +369,6 @@ For backwards compatibility, also works on `/shared-cars/`
 
 
 ## Shared Bikes [/sharedbikes/{?latlng,range,limit,offset,updatedSince,companyName}]
-
-For backwards compatibility, also works on `/shared-bikes/`
 
 Types enum:
 - 1 bike
@@ -414,8 +404,6 @@ Types enum:
     + Attributes (403 Error)
 
 ## Shared Bike [/sharedbikes/{id}]
-
-For backwards compatibility, also works on `/shared-bikes/`
 
 + Parameters
 
@@ -498,8 +486,6 @@ For backwards compatibility, also works on `/shared-bikes/`
 
 ## Traffic Cameras [/trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
 
-For backwards compatibility, also works on `/traffic-cameras/`
-
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
@@ -529,8 +515,6 @@ For backwards compatibility, also works on `/traffic-cameras/`
     + Attributes (403 Error)
 
 ## Traffic Camera [/trafficcameras/{id}]
-
-For backwards compatibility, also works on `/traffic-cameras/`
 
 + Parameters
 
@@ -692,8 +676,6 @@ Data from the city public space.
 
 ## Medical Institutions [/medicalinstitutions/{?latlng,range,district,type,limit,offset,updatedSince}]
 
-For backwards compatibility, also works on `/medical-institutions/`
-
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
@@ -729,8 +711,6 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 ## Medical Institution [/medicalinstitutions/{id}]
 
-For backwards compatibility, also works on `/medical-institutions/`
-
 + Parameters
 
     + id: `2526713200064203-fakultni-nemocnice-v-motole` (string) - Identifier of the medical institution.
@@ -756,8 +736,6 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 
 ## Medical Institutions Types [/medicalinstitutions/types]
-
-For backwards compatibility, also works on `/medical-institutions/`
 
 ### GET All Medical Institution Types [GET]
 
@@ -880,8 +858,6 @@ For backwards compatibility, also works on `/medical-institutions/`
 
 ## Public Toilets [/publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
 
-For backwards compatibility, also works on `/public-toilets/`
-
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
@@ -912,8 +888,6 @@ For backwards compatibility, also works on `/public-toilets/`
     + Attributes (403 Error)
 
 ## Public Toilet [/publictoilets/{id}]
-
-For backwards compatibility, also works on `/public-toilets/`
 
 + Parameters
 
@@ -1081,8 +1055,6 @@ Cleaning Frequency:
 
 ## Waste Collection Yards [/wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
 
-For backwards compatibility, also works on `/waste-collection-yards/`
-
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
@@ -1113,8 +1085,6 @@ For backwards compatibility, also works on `/waste-collection-yards/`
 
 
 ## Waste Collection Yard [/wastecollectionyards/{id}]
-
-For backwards compatibility, also works on `/waste-collection-yards/`
 
 + Parameters
 
@@ -1247,8 +1217,6 @@ Data from municipal authorities.
 
 ## Municipal Police Stations [/municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
 
-For backwards compatibility, also works on `/municipal-police-stations/`
-
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
@@ -1279,8 +1247,6 @@ For backwards compatibility, also works on `/municipal-police-stations/`
 
 
 ## Municipal Police Station [/municipalpolicestations/{id}]
-
-For backwards compatibility, also works on `/municipal-police-stations/`
 
 + Parameters
 
@@ -2381,6 +2347,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
 + station_number: `SDHMP` (string)
 + updated_at: `1556670300498` (number, required)
++ is_monitored: true (boolean, optional) - contains at least one container which is monitored with sensor
 
 ## Sorted Waste Station Accessibility (object)
 
@@ -2394,9 +2361,11 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + container_type (string)
 + description (string)
 + trash_type (Sorted Waste Station Container Trash Type)
-+ sensor_container_id: 29907 (number)
-+ sensor_code: `0006/ 016C00214` (string)
-+ sensor_supplier: `Sensoneo` (string)
++ last_measurement (Sorted Waste Station Last Measurement, optional)
++ last_pick (Sorted Waste Station Last Pick, optional)
++ sensor_container_id: 29907 (number, optional)
++ sensor_code: `0006/ 016C00214` (string, optional)
++ sensor_supplier: `Sensoneo` (string, optional)
 
 ## Sorted Waste Station Container Cleaning Frequency (object)
 
@@ -2410,6 +2379,16 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + name (string)
 + phone (string)
 + web (string)
+
+## Sorted Waste Station Last Pick (object)
+
++ pick_at_utc: `2019-07-09T09:00:37.000Z` (string)
+
+## Sorted Waste Station Last Measurement (object)
+
++ measured_at_utc: `2019-08-27T14:00:32.000Z` (string)
++ percent_calculated: 62 (number)
++ prediction_utc: `2019-09-03T07:46:25.000Z` (string)
 
 ## Sorted Waste Station Container Trash Type (object)
 

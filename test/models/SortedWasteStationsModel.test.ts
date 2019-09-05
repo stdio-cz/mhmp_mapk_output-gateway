@@ -37,6 +37,20 @@ describe("SortedWasteStationsModel", () => {
         expect(result.features).to.be.an.instanceOf(Array);
     });
 
+    it("should return only monitored items", async () => {
+        const result = await sortedWasteStationsModel.GetAll(
+            {
+                additionalFilters:
+                    { "properties.containers": { $elemMatch: { sensor_container_id: { $exists: true } } } },
+            },
+        );
+        expect(result).to.be.an.instanceOf(Object);
+        expect(result.features).to.be.an.instanceOf(Array);
+        for (const station of result.features) {
+            expect(station.properties.is_monitored).to.be.equal(true);
+        }
+    });
+
     it("should return single item", async () => {
         const route: any = await sortedWasteStationsModel.GetOne(id);
         expect(route).not.to.be.empty;

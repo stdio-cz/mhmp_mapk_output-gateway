@@ -1,4 +1,4 @@
-import { CustomError } from "golemio-errors";
+import { CustomError } from "@golemio/errors";
 import { SchemaDefinition } from "mongoose";
 import { MongoModel } from "../../core/models";
 import { log } from "../Logger";

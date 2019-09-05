@@ -1,4 +1,4 @@
-import { MedicalInstitutions } from "golemio-schema-definitions";
+import { MedicalInstitutions } from "@golemio/schema-definitions";
 import { GeoJsonModel } from "../../core/models";
 
 export class MedicalInstitutionsModel extends GeoJsonModel {

@@ -1,5 +1,5 @@
-import { CustomError } from "golemio-errors";
-import { ParkingZones } from "golemio-schema-definitions";
+import { CustomError } from "@golemio/errors";
+import { ParkingZones } from "@golemio/schema-definitions";
 import { log } from "../../core/Logger";
 import { GeoJsonModel } from "../../core/models";
 

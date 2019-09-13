@@ -1,5 +1,5 @@
-[![pipeline status](http://gitlab.oict.cz/data-platform/code/output-gateway/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
-[![coverage report](http://gitlab.oict.cz/data-platform/code/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
+[![pipeline status](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
+[![coverage report](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
 
 
 # Data Platform Output Gateway
@@ -8,10 +8,11 @@ Output Gateway for the Data Platform System. Provides REST API for the data stor
 
 Uses express server, caching using Redis.
 
-More in Apiary documentation at https://golemioapi.docs.apiary.io
+Documentation at https://operator-ict.gitlab.io/golemio/code/output-gateway/
+
+API specification at https://golemioapi.docs.apiary.io
 
 Developed by http://operatorict.cz
-
 
 ## Docker instalation
 

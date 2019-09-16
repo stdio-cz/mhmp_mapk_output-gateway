@@ -10,6 +10,8 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as sinon from "sinon";
 import { log } from "../../src/core/Logger";
 
+const gJsonTools = require("geojson-tools");
+
 chai.use(chaiAsPromised);
 
 describe("ParkingZonesModel", () => {
@@ -112,14 +114,23 @@ describe("ParkingZonesModel", () => {
     });
 
     it("should return by coordinates and range", async () => {
+        const range = 50;
         const data = await model.GetAll({ lat: coordinates[0], lng: coordinates[1], limit: 1 });
-        // const first = data.features[0];
-        // const rangeData = await model.GetAll({
-        //     lat: first.geometry.coordinates[0][0][1],
-        //     lng: first.geometry.coordinates[0][0][0],
-        //     range: 0.1,
-        // });
-        // TODO: Add test to check the last record in array that it is not further from coordinates than range
+        const rangeData = await model.GetAll({
+            lat: data.features[0].geometry.coordinates[0][0][1],
+            lng: data.features[0].geometry.coordinates[0][0][0],
+            range,
+        });
+        const firstFeature = rangeData.features[0];
+        const lastFeature = rangeData.features[rangeData.features.length - 1];
+
+        const first = gJsonTools.toArray(firstFeature.geometry);
+        const last = gJsonTools.toArray(lastFeature.geometry);
+        const distance = gJsonTools.getDistance([
+            first,
+            last,
+        ], 4) * 1000;
+        expect(distance <= range).to.be.true;
         expect(data.features.length).to.be.equal(1);
     });
 

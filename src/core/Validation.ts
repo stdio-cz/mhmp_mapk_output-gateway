@@ -13,7 +13,7 @@ import { query, validationResult } from "express-validator/check";
 export const checkErrors = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        throw new CustomError("Validation error", true, "Validation", 400, errors.mapped());
+        throw new CustomError("Validation error", true, "Validation", 400, JSON.stringify(errors.mapped()));
     }
     next();
 };

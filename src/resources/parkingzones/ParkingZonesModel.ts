@@ -24,8 +24,7 @@ export class ParkingZonesModel extends GeoJsonModel {
             { "properties.tariffs": 1, "_id": 0 },
         ).exec();
         if (!found || found instanceof Array && found.length === 0) {
-            log.debug("Could not find any record by following selection:");
-            log.debug(this.PrimaryIdentifierSelection(inId));
+            log.debug("Could not find any record by specified selection.", this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, "ParkingZonesModel", 404);
         } else if (!found.properties || found.properties.tariffs === undefined) {
             log.debug("Object doesn't have properties or properties.tariffs");

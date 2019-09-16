@@ -147,8 +147,7 @@ export class GeoJsonModel extends MongoModel {
     public async GetOne(inId: any): Promise<object> {
         const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").exec();
         if (!found || found instanceof Array && found.length === 0) {
-            log.debug("Could not find any record by following selection:");
-            log.debug(this.PrimaryIdentifierSelection(inId));
+            log.debug("Could not find any record by specified selection.", this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, "GeoJsonModel", 404);
         } else {
             return found;

@@ -21,11 +21,10 @@ import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as fs from "fs";
 import * as http from "http";
-import * as httpLogger from "morgan";
 import * as path from "path";
 import config from "./config/config";
 import { mongooseConnection, sequelizeConnection } from "./core/database";
-import { log } from "./core/Logger";
+import { getRequestLogger, log } from "./core/Logger";
 import { RouterBuilder } from "./core/routes/";
 import { cityDistrictsRouter } from "./resources/citydistricts";
 import { gardensRouter } from "./resources/gardens";
@@ -183,10 +182,7 @@ export default class App {
     }
 
     private middleware = (): void => {
-        httpLogger.token("date", () => {
-            return new Date().toISOString();
-        });
-        this.express.use(httpLogger("combined"));
+        this.express.use(getRequestLogger);
         this.express.use(this.setHeaders);
     }
 

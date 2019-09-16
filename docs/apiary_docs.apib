@@ -60,6 +60,10 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 ### Possible headers:
 
+- `X-Access-Token`
+    - Token (API key) for authorization/authentication
+    - Request or generate your API key
+
 - `Cache-Control`
     - Server-side caching is used by default
     - If this request header value is set to `no-cache`, always fresh data are served and the cache is not used. The server processes the whole request and queries the database/data source. 

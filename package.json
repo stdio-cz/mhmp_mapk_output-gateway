@@ -1,6 +1,6 @@
 {
-  "name": "golemio-output-gateway",
-  "version": "0.0.2",
+  "name": "@golemio/output-gateway",
+  "version": "1.0.0",
   "description": "Output gateway for Golemio data platform",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.oict.cz/data-platform/output-gateway"
+    "url": "https://gitlab.com/operator-ict/golemio/code/output-gateway"
   },
   "dependencies": {
     "@golemio/errors": "^0.0.5",

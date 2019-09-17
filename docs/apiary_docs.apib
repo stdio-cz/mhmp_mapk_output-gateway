@@ -60,6 +60,10 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 ### Possible headers:
 
+- `X-Access-Token`
+    - Token (API key) for authorization/authentication
+    - Request or generate your API key
+
 - `Cache-Control`
     - Server-side caching is used by default
     - If this request header value is set to `no-cache`, always fresh data are served and the cache is not used. The server processes the whole request and queries the database/data source. 
@@ -200,11 +204,11 @@ Data from air quality stations
     + Attributes (array)
         + (IceGateway Sensors History)
 
-## Meteosensor Karlín [/icegatewaysensors/{icegeteway_code}]
+## Meteosensor Karlín [/icegatewaysensors/{icegatewayCode}]
 
 + Parameters
 
-    + icegeteway_code: `ICE-003-042-000-010` (string) - Identifier of the sensor.
+    + icegatewayCode: `ICE-003-042-000-010` (string) - Identifier of the sensor.
 
 ### GET Meteosensor Karlín [GET]
 
@@ -409,11 +413,11 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parking Zone [/parkingzones/{parkingzone_code}]
+## Parking Zone [/parkingzones/{parkingzoneCode}]
 
 + Parameters
 
-    + parkingzone_code: `P1-0101` (string) - Identifier of the parking zone.
+    + parkingzoneCode: `P1-0101` (string) - Identifier of the parking zone.
 
 ### GET Parking Zone [GET]
 
@@ -1207,11 +1211,11 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + Attributes (403 Error)
 
 
-## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
+## Vehicle Position [/vehiclepositions/{gtfsTripId}{?includePositions}]
 
 + Parameters
 
-    + gtfs_trip_id: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
+    + gtfsTripId: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
 
 ### GET Vehicle Position [GET]
@@ -1268,11 +1272,11 @@ Data from ICE Gateway street lamps.
     + Attributes (403 Error)
 
 
-## Street Lamp Karlín [/icegatewaystreetlamps/{icegeteway_code}]
+## Street Lamp Karlín [/icegatewaystreetlamps/{icegatewayCode}]
 
 + Parameters
 
-    + icegeteway_code: `ICE-003-042-000-001` (string) - Identifier of the lamp.
+    + icegatewayCode: `ICE-003-042-000-001` (string) - Identifier of the lamp.
 
 ### GET Street Lamp Karlín [GET]
 
@@ -2187,12 +2191,12 @@ Cleaning Frequency:
 
 ## Parking Zone Tariff (object)
 
-+ timeFrom: `PT8H` (string)
-+ payAtHoliday: `false` (boolean)
-+ maxParkingTime: `PT1H` (string)
-+ timeTo: `PT19H59M` (string)
-+ pricePerHour: 80 (number)
-+ maxPrice: 0 (number)
++ time_from: `PT8H` (string)
++ pay_at_holiday: `false` (boolean)
++ max_parking_time: `PT1H` (string)
++ time_to: `PT19H59M` (string)
++ price_per_hour: 80 (number)
++ max_price: 0 (number)
 + divisibility: `PT15M` (string)
 
 ## Parking Zone Type (object)

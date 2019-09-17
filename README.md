@@ -2,9 +2,9 @@
 [![coverage report](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
 
 
-# Data Platform Output Gateway
+# Golemio Data Platform Output Gateway
 
-Output Gateway for the Data Platform System. Provides REST API for the data stored in Golemio data platform.
+Output Gateway for the Golemio data platform system. Provides unified REST API for the data stored in Golemio data platform.
 
 Uses express server, caching using Redis.
 

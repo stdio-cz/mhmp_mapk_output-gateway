@@ -78,8 +78,7 @@ export class HistoryModel extends MongoModel {
     public GetOne = async (inId: any): Promise<object> => {
         const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), this.projection).exec();
         if (!found || found instanceof Array && found.length === 0) {
-            log.debug("Could not find any record by following selection:");
-            log.debug(this.PrimaryIdentifierSelection(inId));
+            log.debug("Could not find any record by specified selection.", this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, "HistoryModel", 404);
         } else {
             return found;

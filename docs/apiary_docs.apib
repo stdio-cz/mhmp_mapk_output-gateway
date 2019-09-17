@@ -60,6 +60,10 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 ### Possible headers:
 
+- `X-Access-Token`
+    - Token (API key) for authorization/authentication
+    - Request or generate your API key
+
 - `Cache-Control`
     - Server-side caching is used by default
     - If this request header value is set to `no-cache`, always fresh data are served and the cache is not used. The server processes the whole request and queries the database/data source. 
@@ -87,21 +91,21 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 - get 10th - 20th record (2nd page of 10 elements each when paginating) of parkings in Prague 7 or Prague 8, which are in 3000m range from location 50.11548,14.437327. All parameters are evaluated at the same time (AND condition), but multiple values of the same array parameter `districts` are taken as OR. All filtering parameters are evaluated first, pagination (`limit` and `offset`) at the end on already filtered results.
     - `{baseurl}/parkings/?latlng=50.11548,14.437327&range=300&districts[]=praha7&districts[]=praha8&limit=10&offset=10`
 
-# Group General
-General resources.
+# Group Air Quality
+Data from air quality stations
 
-## Prague City Districts [/citydistricts/{?latlng,range,limit,offset,updatedSince}]
+## Air Quality Stations CHMI [/airqualitystations/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
-
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
-### GET All Districts [GET]
+### GET All Air Quality CHMI Stations [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -114,20 +118,23 @@ General resources.
     + Attributes (object)
         + type: FeatureCollection (string, required)
         + features (array)
-            + (Feature Polygon)
-                + properties (City District)
-
+            + (Feature Point)
+                + properties (Air Quality Station)
+    
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
-    
 
-## Prague City District [/citydistricts/{id}]
+## Air Quality Stations CHMI History [/airqualitystations/history/{?from,to,limit,offset,sensorId}]
 
 + Parameters
 
-    + id: `praha-1` (string) - Identifier or slug of the city district.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
 
-### GET District [GET]
+### GET Air Quality Stations CHMI History [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -137,8 +144,85 @@ General resources.
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (Feature Polygon)
-        + properties (City District)
+    + Attributes (array)
+        + (Air Quality Station History)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Meteosensors Karlín [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET Meteosensors Karlín [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (IceGateway Sensor Group)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Meteosensors Karlín History [/icegatewaysensors/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `ICE-003-042-000-001` (optional, string) - Limits data measured up by sensor with this id (parameter `id`)
+
+### GET Meteosensors Karlín History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (IceGateway Sensors History)
+
+## Meteosensor Karlín [/icegatewaysensors/{icegatewayCode}]
+
++ Parameters
+
+    + icegatewayCode: `ICE-003-042-000-010` (string) - Identifier of the sensor.
+
+### GET Meteosensor Karlín [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (IceGateway Sensor Group)
 
 
 + Response 404 (application/json; charset=utf-8)
@@ -147,10 +231,67 @@ General resources.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-# Group Traffic
-Online traffic data from Prague.
+## Meteosensors TSK [/meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
 
-## Parkings [/parkings/{?latlng,range,districts,limit,offset,updatedSince}]
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Meteosensors TSK [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Meteosensor)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Meteosensor TSK [/meteosensors/{id}]
+
++ Parameters
+
+    + id: 531801 (number) - Identifier of the meteosensor.
+
+### GET Meteosensor TSK [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Meteosensor)
+
++ Response 404 (application/json; charset=utf-8)
+
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+# Group Parking
+Data about parking.
+
+## Parking Lots [/parkings/{?latlng,range,districts,limit,offset,updatedSince}]
 
 Parking type enum:
 - 1 P+R parkoviště
@@ -165,7 +306,7 @@ Parking type enum:
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
 
-### GET All Parkings [GET]
+### GET All Parking Lots [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -184,7 +325,7 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parkings History [/parkings/history/{?from,to,limit,offset,sensorId}]
+## Parking Lots History [/parkings/history/{?from,to,limit,offset,sensorId}]
 
 + Parameters
 
@@ -195,7 +336,7 @@ Parking type enum:
     + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id (parameter `id` of the parking)
 
 
-### GET Parkings History [GET]
+### GET Parking Lots History [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -211,13 +352,13 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parking [/parkings/{id}]
+## Parking Lot [/parkings/{id}]
 
 + Parameters
 
     + id: 534017 (number) - Identifier of the parking.
 
-### GET Parking [GET]
+### GET Parking Lot [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -235,7 +376,6 @@ Parking type enum:
     
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
-
 
 ## Parking Zones [/parkingzones/{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -273,12 +413,11 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Parking Zone [/parkingzones/{parkingzone_code}]
+## Parking Zone [/parkingzones/{parkingzoneCode}]
 
 + Parameters
 
-    + parkingzone_code: `P1-0101` (string) - Identifier of the parking zone.
+    + parkingzoneCode: `P1-0101` (string) - Identifier of the parking zone.
 
 ### GET Parking Zone [GET]
 
@@ -298,6 +437,870 @@ Parking type enum:
     
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
+
+## ZTP Parkings [/ztpparkings{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET ZTP Parkings [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (ZTP Parking)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## ZTP Parkings History [/ztpparkings/history/{?from,to,limit,offset,sensorId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id (parameter `id`)
+
+### GET ZTP Parkings History [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (ZTP Parking History)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+# Group Public Space
+Data from the city public space.
+
+## Gardens [/gardens/{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Gardens [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Garden)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Garden [/gardens/{id}]
+
++ Parameters
+
+    + id: `frantiskanska-zahrada` (string) - Identifier of the garden.
+
+### GET Garden [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Garden)
+
++ Response 404
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Gardens Properties [/gardens/properties]
+
+### GET All Gardens Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Garden Property)
+
+## Medical Institutions [/medicalinstitutions/{?latlng,range,district,type,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + type: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
+        + Members
+            + `pharmacies`
+            + `health_care`
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter.
+
+### GET All Medical Institutions [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Medical Institution)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Medical Institution [/medicalinstitutions/{id}]
+
++ Parameters
+
+    + id: `2526713200064203-fakultni-nemocnice-v-motole` (string) - Identifier of the medical institution.
+
+### GET Medical Institution [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Medical Institution)
+
++ Response 404
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Medical Institutions Types [/medicalinstitutions/types]
+
+### GET All Medical Institution Types [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "pharmacies": [
+                    "Nemocniční lékárna s odbornými pracovišti",
+                    "Lékárna",
+                    "Lékárna s odbornými pracovišti",
+                    "Výdejna",
+                    "Vojenská lékárna",
+                    "Vojenská lékárna s OOVL",
+                    "Nemocniční lékárna",
+                    "Lékárna s odbornými pracovišti s OOVL",
+                    "Nemocniční lékárna s OOVL",
+                    "Nemocniční lékárna s odbor. pracovišti s OOVL",
+                    "Odloučené oddělení výdeje léčivých přípravků",
+                    "Lékárna s OOVL",
+                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení",
+                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení s OOVL",
+                    "Lékárna zásobujicí zařízení ústavní péče",
+                    "Lékárna zásobujicí zařízení ústavní péče s OOVL"
+                ],
+                "health_care": [
+                    "Fakultní nemocnice",
+                    "Nemocnice",
+                    "Ostatní ambulantní zařízení",
+                    "Ostatní zdravotnická zařízení",
+                    "Zdravotní záchranná služba",
+                    "Zdravotnické středisko"
+                ]
+            }
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Municipal Authorities [/municipalauthorities/{?latlng,range,district,type,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
+        + Members
+            + `municipality`
+            + `city-hall`
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Municipal Authorities [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Municipal Authority)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Municipal Authority [/municipalauthorities/{id}]
+
++ Parameters
+
+    + id: `urad-mestske-casti-praha-10` (string) - Identifier of the municipality.
+
+### GET Municipal Authority [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Municipal Authority)
+
++ Response 404
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+
+## Municipal Authority Waiting Queues [/municipalauthorities/{id}/queues]
+
++ Parameters
+
+    + id: `skoduv-palac` (string) - Identifier of the municipality.
+
+### GET All Municipal Authority Waiting Queues [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Municipal Authority Queues)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Municipal Police Stations [/municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Municipal Police Stations [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Municipal Police Station)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Municipal Police Station [/municipalpolicestations/{id}]
+
++ Parameters
+
+    + id: 72 (number) - Identifier of the police station.
+
+### GET Municipal Police Station [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Municipal Police Station)
+
++ Response 404
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Playgrounds [/playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Playgrounds [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Playground)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Playground [/playgrounds/{id}]
+
++ Parameters
+
+    + id: 72 (number) - Identifier of the playground.
+
+### GET Playground [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Playground)
+
++ Response 404
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Playgrounds Properties [/playgrounds/properties]
+
+### GET All Playgrounds Properties [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Playground Property)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Prague City Districts [/citydistricts/{?latlng,range,limit,offset,updatedSince}]
+
++ Parameters
+
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Districts [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Polygon)
+                + properties (City District)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+    
+## Prague City District [/citydistricts/{id}]
+
++ Parameters
+
+    + id: `praha-1` (string) - Identifier or slug of the city district.
+
+### GET District [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Polygon)
+        + properties (City District)
+
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Public Toilets [/publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET All Public Toilets [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Public Toilet)
+
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Public Toilet [/publictoilets/{id}]
+
++ Parameters
+
+    + id: 72 (number) - Identifier of the public toilet.
+
+### GET Public Toilet[GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            Authorization: Basic bW9qZTpwcmFoYQo=
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Public Toilet)
+
++ Response 404
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+# Group Public Transport
+GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules. We refresh data from ROPID every day. Transit data are always valid for next 14 days, but can change every day. More on https://pid.cz/o-systemu/opendata/.
+
+## GTFS Trips [/gtfs/trips{?limit,offset,stopId,date}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + stopId: U953Z102P (optional, string) - Filter trips that include specific stop.
+    + date: `2018-01-01` (optional, string) - Filter trips by specific date.
+
+### GET All GTFS Trips [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (GTFS Trip)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Trip [/gtfs/trips/{id}{?includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
+
++ Parameters
+    + `id`: `991_30_190107` (string, required)
+    + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
+    + includeStops: true (optional, boolean) - Enrich trip response object with stops.
+    + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
+    + includeService: true (optional, boolean) - Enrich trip response object with service.
+    + includeRoute: true (optional, boolean) - Enrich trip response object with routes.
+    + date: `2019-01-01` (optional, string) - Filter trips by specific date in format (YYYY-MM-DD).
+
+### GET GTFS Trip [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (GTFS Trip)
+        + stop_times (array[GTFS Stop time])
+        + shapes (array)
+            + (Feature Point)
+                + properties (GTFS Shape)
+        + service (GTFS Service)
+        + route (GTFS Route)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Services [/gtfs/services{?limit,offset,date}]
+
++ Parameters
+    + date: `2019-01-01` (optional, string) - Filter services by specific date in format (YYYY-MM-DD).
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
+### GET GTFS Services [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Service])
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Shapes [/gtfs/shapes/{id}]
+
++ Parameters
+    + `id`: `L991V2` (string, required) - GTFS shapes_id to filter shapes by GTFS trip
+
+### GET GTFS Shape [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (GTFS Shape)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Stops [/gtfs/stops{?limit,offset}]
+
++ Parameters
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
+### GET All GTFS Stops [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (GTFS Stop)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Stop [/gtfs/stops/{id}]
+
++ Parameters
+    + `id`: `U118Z101P` (string, required)
+
+### GET GTFS Stop [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (GTFS Stop)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
+
++ Parameters
+    + `id`: `U118Z101P` (string, required)
+    + date: `2019-01-01` (optional, string) - Filter stop times by specific date in format (YYYY-MM-DD).
+    + from: `07:12:33` (optional, string) - Filter stop times by time departure in format (H:mm:ss).
+    + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + includeStop: true (optional, boolean) - Enrich stop times response object with stop.
+
+### GET GTFS Stop times [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Stop time])
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + includePositions: true (optional, boolean) - Enrich result dataset with positions
+    + routeId: 100381 (string, optional) Filter result by route id
+    + routeShortName: 381 (string, optional) Filter result by short name
+
+### GET All Vehicle Positions [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Vehicleposition Compound)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Vehicle Position [/vehiclepositions/{gtfsTripId}{?includePositions}]
+
++ Parameters
+
+    + gtfsTripId: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
+    + includePositions: true (optional, boolean) - Enrich result dataset with positions
+
+### GET Vehicle Position [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Vehicleposition Compound)
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+# Group Lighting
+Data from ICE Gateway street lamps.
+
+## Street Lamps Karlín [/icegatewaystreetlamps{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
+
+### GET Street Lamps Karlín [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (IceGateway Street Lamp)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Street Lamp Karlín [/icegatewaystreetlamps/{icegatewayCode}]
+
++ Parameters
+
+    + icegatewayCode: `ICE-003-042-000-001` (string) - Identifier of the lamp.
+
+### GET Street Lamp Karlín [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (IceGateway Street Lamp)
+
++ Response 404 (application/json; charset=utf-8)
+
+    + Attributes (Error)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+# Group Traffic
+Online traffic data from Prague.
 
 ## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
 
@@ -539,378 +1542,9 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-# Group Vehicle Positions
 
-Online positions of public transport vehicles.
-
-## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName}]
-
-+ Parameters
-
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + includePositions: true (optional, boolean) - Enrich result dataset with positions
-    + routeId: 100381 (string, optional) Filter result by route id
-    + routeShortName: 381 (string, optional) Filter result by short name
-
-### GET All Vehicle Positions [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Vehicleposition Compound)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Vehicle Position [/vehiclepositions/{gtfs_trip_id}{?includePositions}]
-
-+ Parameters
-
-    + gtfs_trip_id: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
-    + includePositions: true (optional, boolean) - Enrich result dataset with positions
-
-### GET Vehicle Position [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Vehicleposition Compound)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-# Group Public Space
-
-Data from the city public space.
-
-## Gardens [/gardens/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET All Gardens [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Garden)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Garden [/gardens/{id}]
-
-+ Parameters
-
-    + id: `frantiskanska-zahrada` (string) - Identifier of the garden.
-
-### GET Garden [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Garden)
-
-+ Response 404
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Gardens Properties [/gardens/properties]
-
-### GET All Gardens Properties [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Garden Property)
-
-## Medical Institutions [/medicalinstitutions/{?latlng,range,district,type,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
-    + type: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
-        + Members
-            + `pharmacies`
-            + `health_care`
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter.
-
-### GET All Medical Institutions [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Medical Institution)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Medical Institution [/medicalinstitutions/{id}]
-
-+ Parameters
-
-    + id: `2526713200064203-fakultni-nemocnice-v-motole` (string) - Identifier of the medical institution.
-
-### GET Medical Institution [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Medical Institution)
-
-+ Response 404
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Medical Institutions Types [/medicalinstitutions/types]
-
-### GET All Medical Institution Types [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Body
-
-            {
-                "pharmacies": [
-                    "Nemocniční lékárna s odbornými pracovišti",
-                    "Lékárna",
-                    "Lékárna s odbornými pracovišti",
-                    "Výdejna",
-                    "Vojenská lékárna",
-                    "Vojenská lékárna s OOVL",
-                    "Nemocniční lékárna",
-                    "Lékárna s odbornými pracovišti s OOVL",
-                    "Nemocniční lékárna s OOVL",
-                    "Nemocniční lékárna s odbor. pracovišti s OOVL",
-                    "Odloučené oddělení výdeje léčivých přípravků",
-                    "Lékárna s OOVL",
-                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení",
-                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení s OOVL",
-                    "Lékárna zásobujicí zařízení ústavní péče",
-                    "Lékárna zásobujicí zařízení ústavní péče s OOVL"
-                ],
-                "health_care": [
-                    "Fakultní nemocnice",
-                    "Nemocnice",
-                    "Ostatní ambulantní zařízení",
-                    "Ostatní zdravotnická zařízení",
-                    "Zdravotní záchranná služba",
-                    "Zdravotnické středisko"
-                ]
-            }
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Playgrounds [/playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET All Playgrounds [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Playground)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Playground [/playgrounds/{id}]
-
-+ Parameters
-
-    + id: 72 (number) - Identifier of the playground.
-
-### GET Playground [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Playground)
-
-+ Response 404
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Playgrounds Properties [/playgrounds/properties]
-
-### GET All Playgrounds Properties [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Playground Property)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Public Toilets [/publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET All Public Toilets [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Public Toilet)
-
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Public Toilet [/publictoilets/{id}]
-
-+ Parameters
-
-    + id: 72 (number) - Identifier of the public toilet.
-
-### GET Public Toilet[GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Public Toilet)
-
-+ Response 404
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
+# Group Waste
+Waste information.
 
 ## Sorted Waste Stations [/sortedwastestations/{?latlng,range,district,accessibility,limit,offset,onlyMonitored}]
 
@@ -1123,691 +1757,6 @@ Cleaning Frequency:
 
     + Attributes (array)
         + (Waste Collection Yard Property)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-# Group Municipal Authorities
-
-Data from municipal authorities.
-
-## Municipal Authorities [/municipalauthorities/{?latlng,range,district,type,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
-    + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
-        + Members
-            + `municipality`
-            + `city-hall`
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET All Municipal Authorities [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Municipal Authority)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Municipal Authority [/municipalauthorities/{id}]
-
-+ Parameters
-
-    + id: `urad-mestske-casti-praha-10` (string) - Identifier of the municipality.
-
-### GET Municipal Authority [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Municipal Authority)
-
-+ Response 404
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-
-## Municipal Authority Waiting Queues [/municipalauthorities/{id}/queues]
-
-+ Parameters
-
-    + id: `skoduv-palac` (string) - Identifier of the municipality.
-
-### GET All Municipal Authority Waiting Queues [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Municipal Authority Queues)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Municipal Police Stations [/municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET All Municipal Police Stations [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Municipal Police Station)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Municipal Police Station [/municipalpolicestations/{id}]
-
-+ Parameters
-
-    + id: 72 (number) - Identifier of the police station.
-
-### GET Municipal Police Station [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            Authorization: Basic bW9qZTpwcmFoYQo=
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Municipal Police Station)
-
-+ Response 404
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-# Group Sensors
-
-Sensoric data from the city's IoT network.
-
-## Air Quality Stations [/airqualitystations/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET All Air Quality Stations [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Air Quality Station)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Air Quality Stations History [/airqualitystations/history/{?from,to,limit,offset,sensorId}]
-
-+ Parameters
-
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
-
-### GET Air Quality Stations History [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Air Quality Station History)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## ZtpParkings [/ztpparkings{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET ZtpParkings [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Ztp Parking)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## ZtpParkings History [/ztpparkings/history/{?from,to,limit,offset,sensorId}]
-
-+ Parameters
-
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id (parameter `id`)
-
-### GET ZtpParkings History [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Ztp Parking History)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## IceGateway Sensors [/icegatewaysensors{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET IceGateway Sensors [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (IceGateway Sensor Group)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## IceGateway Sensors History [/icegatewaysensors/history/{?from,to,limit,offset,sensorId}]
-
-+ Parameters
-
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-    + sensorId: `ICE-003-042-000-001` (optional, string) - Limits data measured up by sensor with this id (parameter `id`)
-
-### GET IceGateway Sensors History [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (IceGateway Sensors History)
-
-## IceGateway Sensor [/icegatewaysensors/{icegeteway_code}]
-
-+ Parameters
-
-    + icegeteway_code: `ICE-003-042-000-010` (string) - Identifier of the sensor.
-
-### GET IceGateway Sensor [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (IceGateway Sensor Group)
-
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## IceGateway Street Lamps [/icegatewaystreetlamps{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET IceGateway Street Lamps [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (IceGateway Street Lamp)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## IceGateway Street Lamp [/icegatewaystreetlamps/{icegeteway_code}]
-
-+ Parameters
-
-    + icegeteway_code: `ICE-003-042-000-001` (string) - Identifier of the lamp.
-
-### GET IceGateway Street Lamp [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (IceGateway Street Lamp)
-
-+ Response 404 (application/json; charset=utf-8)
-
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Meteosensors [/meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: 1547466937208 (optional, number) - Filters all results with older updated_at timestamp than this parameter
-
-### GET All Meteosensors [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Meteosensor)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Meteosensor [/meteosensors/{id}]
-
-+ Parameters
-
-    + id: 531801 (number) - Identifier of the meteosensor.
-
-### GET Meteosensor [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Meteosensor)
-
-+ Response 404 (application/json; charset=utf-8)
-
-    + Attributes (Error)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-# Group GTFS
-
-GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules. We refresh data from ROPID every day. Transit data are always valid for next 14 days, but can change every day. More on https://pid.cz/o-systemu/opendata/.
-
-## GTFS Trips [/gtfs/trips{?limit,offset,stopId,date}]
-
-+ Parameters
-
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + stopId: U953Z102P (optional, string) - Filter trips that include specific stop.
-    + date: `2018-01-01` (optional, string) - Filter trips by specific date.
-
-### GET All GTFS Trips [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (GTFS Trip)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Trip [/gtfs/trips/{id}{?includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
-
-+ Parameters
-    + `id`: `991_30_190107` (string, required)
-    + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
-    + includeStops: true (optional, boolean) - Enrich trip response object with stops.
-    + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
-    + includeService: true (optional, boolean) - Enrich trip response object with service.
-    + includeRoute: true (optional, boolean) - Enrich trip response object with routes.
-    + date: `2019-01-01` (optional, string) - Filter trips by specific date in format (YYYY-MM-DD).
-
-### GET GTFS Trip [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (GTFS Trip)
-        + stop_times (array[GTFS Stop time])
-        + shapes (array)
-            + (Feature Point)
-                + properties (GTFS Shape)
-        + service (GTFS Service)
-        + route (GTFS Route)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-    
-
-## GTFS Routes [/gtfs/routes{?limit,offset}]
-
-+ Parameters
-
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET All GTFS Routes [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (GTFS Route)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Route [/gtfs/routes/{id}]
-
-+ Parameters
-    + `id`: `L991` (string, required)
-
-### GET GTFS Route [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (GTFS Route)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Services [/gtfs/services{?limit,offset,date}]
-
-+ Parameters
-    + date: `2019-01-01` (optional, string) - Filter services by specific date in format (YYYY-MM-DD).
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET GTFS Services [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array[GTFS Service])
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Shapes [/gtfs/shapes/{id}]
-
-+ Parameters
-    + `id`: `L991V2` (string, required) - GTFS shapes_id to filter shapes by GTFS trip
-
-### GET GTFS Shape [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (GTFS Shape)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Stops [/gtfs/stops{?limit,offset}]
-
-+ Parameters
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET All GTFS Stops [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (GTFS Stop)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Stop [/gtfs/stops/{id}]
-
-+ Parameters
-    + `id`: `U118Z101P` (string, required)
-
-### GET GTFS Stop [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (GTFS Stop)
-    
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
-
-+ Parameters
-    + `id`: `U118Z101P` (string, required)
-    + date: `2019-01-01` (optional, string) - Filter stop times by specific date in format (YYYY-MM-DD).
-    + from: `07:12:33` (optional, string) - Filter stop times by time departure in format (H:mm:ss).
-    + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + includeStop: true (optional, boolean) - Enrich stop times response object with stop.
-
-### GET GTFS Stop times [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array[GTFS Stop time])
     
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
@@ -2242,12 +2191,12 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Parking Zone Tariff (object)
 
-+ timeFrom: `PT8H` (string)
-+ payAtHoliday: `false` (boolean)
-+ maxParkingTime: `PT1H` (string)
-+ timeTo: `PT19H59M` (string)
-+ pricePerHour: 80 (number)
-+ maxPrice: 0 (number)
++ time_from: `PT8H` (string)
++ pay_at_holiday: `false` (boolean)
++ max_parking_time: `PT1H` (string)
++ time_to: `PT19H59M` (string)
++ price_per_hour: 80 (number)
++ max_price: 0 (number)
 + divisibility: `PT15M` (string)
 
 ## Parking Zone Type (object)
@@ -2496,7 +2445,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + `id`: `ODPADPRIJEM` (string)
 + `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
 
-## Ztp Parking (object)
+## ZTP Parking (object)
 
 + active: `false` (boolean, required)
 + address (Address)
@@ -2524,7 +2473,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + type: `kolmé` (string, required)
 + updated_at: 1556802323 (number, required)
 
-## Ztp Parking History (object)
+## ZTP Parking History (object)
 
 + failure: `false` (boolean, required)
 + id: 5 (number, required)

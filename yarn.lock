@@ -99,10 +99,10 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@0.1.14-dev.2894":
-  version "0.1.14-dev.2894"
-  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.14-dev.2894.tgz#f4777429b910fba70d989c9617ad9481174698b9"
-  integrity sha512-rcSp+ItFmnOauRjTCVLCBIHXaXv/4pPANeNw8gjjJiUcRzGuy72IOTxNuAn6N+cjPEjm3BOqG2bOMCHdO6kxYg==
+"@golemio/schema-definitions@0.1.15":
+  version "0.1.15"
+  resolved "http://gitlab.oict.cz:10007/@golemio%2fschema-definitions/-/schema-definitions-0.1.15.tgz#286b7c0e1b68ce05c77ca575a112f40cf00847c4"
+  integrity sha512-LFdFUHW/FEgTbY+5jZHBuXbf8np7efIJyKgtM2VXTxWmmqb2mZ4rwPjqiGMy0yM4smJyr9Wx2per3Z8x1zAE0g==
   dependencies:
     db-migrate "0.11.5"
     db-migrate-mongodb "1.5.0"
@@ -1716,6 +1716,13 @@ generic-pool@^3.4.0:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/generic-pool/-/generic-pool-3.7.1.tgz#36fe5bb83e7e0e032e5d32cd05dc00f5ff119aa8"
   integrity sha512-ug6DAZoNgWm6q5KhPFA+hzXfBLFQu5sTXxPpv44DmE0A2g+CiHoq9LTVdkXpZMkYVMoGw83F6W+WT0h0MFMK/w==
+
+geojson-tools@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/geojson-tools/-/geojson-tools-0.2.2.tgz#b3d3db92e96e4910a839b273b61ad70a577cb3fb"
+  integrity sha1-s9PbkuluSRCoObJzthrXCld8s/s=
+  dependencies:
+    underscore "^1.8.3"
 
 get-caller-file@^1.0.1:
   version "1.0.3"
@@ -4450,6 +4457,11 @@ underscore@1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.7.0.tgz#6bbaf0877500d36be34ecaa584e0db9fef035209"
   integrity sha1-a7rwh3UA02vjTsqlhODbn+8DUgk=
+
+underscore@^1.8.3:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
+  integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
 
 universalify@^0.1.0:
   version "0.1.2"

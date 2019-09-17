@@ -3,10 +3,10 @@ import config from "../config/config";
 
 import * as debug from "debug";
 import * as logform from "logform";
+import * as httpLogger from "morgan";
 import * as winston from "winston";
 
 const debugLog: debug.Debugger = debug("golemio:output-gateway");
-
 /**
  * Sets up a Winston logger format - https://www.npmjs.com/package/winston#formats
  */
@@ -59,4 +59,9 @@ logger.debug = (formatter: any, ...args: any[]): void => {
     winstonDebugLog(formatter);
 };
 
-export { logger as log };
+httpLogger.token("date", () => {
+    return new Date().toISOString();
+});
+const getRequestLogger = httpLogger("combined");
+
+export { logger as log, getRequestLogger };

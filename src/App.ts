@@ -37,6 +37,10 @@ import { sharedBikesRouter } from "./resources/sharedbikes";
 import { sortedWasteRouter } from "./resources/sortedwastestations";
 import { vehiclepositionsRouter } from "./resources/vehiclepositions";
 import { wasteCollectionYardsRouter } from "./resources/wastecollectionyards";
+const securityTxt = require("express-security-txt");
+const options = {
+    contact: "security@opertorict.cz",
+};
 
 // Configuration of the routes to be dynamically created by RouterBuilder
 export const generalRoutes = [
@@ -184,6 +188,7 @@ export default class App {
     private middleware = (): void => {
         this.express.use(getRequestLogger);
         this.express.use(this.setHeaders);
+        this.express.use(securityTxt.setup(options));
     }
 
     private routes = (): void => {

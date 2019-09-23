@@ -24,7 +24,7 @@
     "url": "https://gitlab.com/operator-ict/golemio/code/output-gateway"
   },
   "dependencies": {
-    "@golemio/errors": "^0.0.5",
+    "@golemio/errors": "^0.0.6",
     "@golemio/schema-definitions": "0.1.15",
     "@golemio/utils": "^0.0.3",
     "apicache": "^1.4.0",

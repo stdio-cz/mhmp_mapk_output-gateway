@@ -5,6 +5,7 @@
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
 
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { query } from "express-validator/check";
 import { parseCoordinates } from "../../core/Geo";
@@ -20,7 +21,7 @@ export class SharedBikesRouter extends GeoJsonRouter {
         super(new SharedBikesModel());
         this.initRoutes();
         this.router.get("/", [
-                query("companyName").optional().isString(),
+            query("companyName").optional().isString(),
         ],
             this.standardParams,
             pagination,
@@ -51,7 +52,7 @@ export class SharedBikesRouter extends GeoJsonRouter {
                 };
             }
 
-            const data = await this.model.GetAll({
+            let data = await this.model.GetAll({
                 additionalFilters,
                 ids,
                 lat: coords.lat,
@@ -61,6 +62,9 @@ export class SharedBikesRouter extends GeoJsonRouter {
                 range: coords.range,
                 updatedSince: req.query.updatedSince,
             });
+
+            data = await this.CheckBeforeSendingData(data);
+
             res.status(200).send(data);
         } catch (err) {
             next(err);

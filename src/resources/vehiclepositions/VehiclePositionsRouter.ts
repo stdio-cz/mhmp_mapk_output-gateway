@@ -7,6 +7,7 @@
 import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
+import config from "../../config/config";
 import { useCacheMiddleware } from "../../core/redis";
 import { checkErrors, pagination } from "../../core/Validation";
 import { models } from "./models";
@@ -33,6 +34,11 @@ export class VehiclePositionsRouter {
                 routeId: req.query.routeId,
                 routeShortName: req.query.routeShortName,
             });
+
+            if (data.features.length > config.pagination_max_limit) {
+                throw new CustomError("Pagination limit error", true, "VehiclePositionsRouter", 413);
+            }
+
             res.status(200).send(data);
         } catch (err) {
             next(err);

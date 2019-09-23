@@ -9,8 +9,10 @@ import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
 import * as moment from "moment";
+import config from "../../config/config";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
+import { BaseRouter } from "../../core/routes/BaseRouter";
 import { checkErrors, pagination } from "../../core/Validation";
 import { models } from "./models";
 import { GTFSCalendarModel } from "./models/GTFSCalendarModel";
@@ -20,7 +22,7 @@ import { GTFSStopModel } from "./models/GTFSStopModel";
 import { GTFSStopTimesModel } from "./models/GTFSStopTimesModel";
 import { GTFSTripsModel } from "./models/GTFSTripsModel";
 
-export class GTFSRouter {
+export class GTFSRouter extends BaseRouter {
 
     // Assign router to the express.Router() instance
     public router: Router = Router();
@@ -53,6 +55,7 @@ export class GTFSRouter {
     ];
 
     public constructor() {
+        super();
         this.tripModel = models.GTFSTripsModel;
         this.stopModel = models.GTFSStopModel;
         this.stopTimeModel = models.GTFSStopTimesModel;
@@ -64,12 +67,15 @@ export class GTFSRouter {
 
     public GetAllServices = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.serviceModel
+            let data = await this.serviceModel
                 .GetAll({
                     date: req.query.date || null,
                     limit: req.query.limit,
                     offset: req.query.offset,
                 });
+
+            data = await this.CheckBeforeSendingData(data);
+
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -78,7 +84,7 @@ export class GTFSRouter {
 
     public GetAllStopTimes = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.stopTimeModel
+            let data = await this.stopTimeModel
                 .GetAll({
                     date: req.query.date || null,
                     from: req.query.from || null,
@@ -88,6 +94,9 @@ export class GTFSRouter {
                     stopId: req.params.stopId,
                     to: req.query.to || null,
                 });
+
+            data = await this.CheckBeforeSendingData(data);
+
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -96,13 +105,16 @@ export class GTFSRouter {
 
     public GetAllTrips = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.tripModel
+            let data = await this.tripModel
                 .GetAll({
                     date: req.query.date || false,
                     limit: req.query.limit,
                     offset: req.query.offset,
                     stopId: req.query.stopId,
                 });
+
+            data = await this.CheckBeforeSendingData(data);
+
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -141,6 +153,11 @@ export class GTFSRouter {
                 offset: req.query.offset,
                 range: coords.range,
             });
+
+            if (data.features.length > config.pagination_max_limit) {
+                throw new CustomError("Pagination limit error", true, "GTFSRouter", 413);
+            }
+
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -162,11 +179,14 @@ export class GTFSRouter {
 
     public GetAllRoutes = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const data = await this.routeModel
+            let data = await this.routeModel
                 .GetAll({
                     limit: req.query.limit,
                     offset: req.query.offset,
                 });
+
+            data = await this.CheckBeforeSendingData(data);
+
             res.status(200).send(data);
         } catch (err) {
             next(err);

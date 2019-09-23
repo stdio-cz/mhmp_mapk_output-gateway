@@ -30,14 +30,15 @@ run_tests:
   script:
     - cat $VERDACCIO_NPMRC_PATH > .npmrc
     - yarn
-    - npm run build
+    - yarn run tslint
+    - yarn run build
     - mongorestore --uri=$MONGO_CONN -d dataplatform ./db/example/mongo_data/dataplatform
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
     - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
-    - NODE_ENV=production npm run code-coverage
+    - NODE_ENV=production yarn run code-coverage
     - dredd
 
 build_image_v1:

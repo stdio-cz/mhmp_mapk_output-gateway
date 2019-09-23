@@ -184,6 +184,7 @@ export default class App {
     private middleware = (): void => {
         this.express.use(getRequestLogger);
         this.express.use(this.setHeaders);
+        this.express.use(express.static("public"));
     }
 
     private routes = (): void => {

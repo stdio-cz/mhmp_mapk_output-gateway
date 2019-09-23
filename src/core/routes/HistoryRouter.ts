@@ -1,12 +1,14 @@
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
-import { param, query, ValidationChain } from "express-validator/check";
+import { query, ValidationChain } from "express-validator/check";
 import { Schema } from "mongoose";
 import { log } from "../Logger";
 import { HistoryModel } from "../models";
 import { useCacheMiddleware } from "../redis";
 import { checkErrors, pagination } from "../Validation";
+import { BaseRouter } from "./BaseRouter";
 
-export class HistoryRouter {
+export class HistoryRouter extends BaseRouter {
 
     // Assign router to the express.Router() instance
     public router: Router = Router();
@@ -14,6 +16,7 @@ export class HistoryRouter {
     protected model: HistoryModel;
 
     public constructor(inModel: HistoryModel) {
+        super();
         this.model = inModel;
     }
 
@@ -32,20 +35,23 @@ export class HistoryRouter {
         const timestampFrom = new Date(req.query.from).getTime();
         const timestampTo = new Date(req.query.to).getTime();
         try {
-            const data = await this.model.GetAll({
+            let data = await this.model.GetAll({
                 from: timestampFrom,
                 limit: req.query.limit,
                 offset: req.query.offset,
                 sensorId: req.query.sensorId,
                 to: timestampTo,
             });
+
+            data = await this.CheckBeforeSendingData(data);
+
             res.status(200).send(data);
         } catch (err) {
             next(err);
         }
     }
 
-    private GetIdQueryParamWithCorrectType = async (): Promise<ValidationChain> => {
+    protected GetIdQueryParamWithCorrectType = async (): Promise<ValidationChain> => {
         let sensorIdParam: ValidationChain;
         return await this.model.GetSchema().then((schema) => {
             // Get the location of the ID of the sensor (the attribute name)

@@ -5,8 +5,10 @@
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
 
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { query } from "express-validator/check";
+import config from "../../config/config";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
@@ -84,7 +86,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
                     ...{ "properties.containers": { $elemMatch: { sensor_container_id: { $exists: true } } } },
                 };
             }
-            const data = await this.model.GetAll({
+            let data = await this.model.GetAll({
                 additionalFilters,
                 districts,
                 ids,
@@ -95,6 +97,9 @@ export class SortedWasteRouter extends GeoJsonRouter {
                 range: coords.range,
                 updatedSince: req.query.updatedSince,
             });
+
+            data = await this.CheckBeforeSendingData(data);
+
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -110,6 +115,11 @@ export class SortedWasteRouter extends GeoJsonRouter {
                 req.query.from,
                 req.query.to,
             );
+
+            if (data.length > config.pagination_max_limit) {
+                throw new CustomError("Pagination limit error", true, "SortedWasteRouter", 413);
+            }
+
             res.status(200).send(data);
         } catch (err) {
             next(err);

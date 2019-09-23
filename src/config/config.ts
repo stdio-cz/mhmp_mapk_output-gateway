@@ -1,9 +1,21 @@
+const getPaginationMaxLimit = (): number => {
+    if (process.env.PAGINATION_MAX_LIMIT) {
+        const parsed = parseInt(process.env.PAGINATION_MAX_LIMIT, 10);
+        if (!isNaN(parsed)) {
+            return parsed;
+        }
+    }
+
+    return 10000;
+};
+
 export default {
     // App version, statically defined here, does not depend on environment
     app_version: process.env.npm_package_version,
     log_level: process.env.LOG_LEVEL,
     mongo_connection: process.env.MONGO_CONN,
     node_env: process.env.NODE_ENV,
+    pagination_max_limit: getPaginationMaxLimit(),
     port: process.env.PORT,
     postgres_connection: process.env.POSTGRES_CONN,
     redis_connection: process.env.REDIS_CONN,

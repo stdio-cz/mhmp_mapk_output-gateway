@@ -1,11 +1,14 @@
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query, ValidationChain } from "express-validator/check";
 import { Schema } from "mongoose";
+import config from "../../config/config";
 import { parseCoordinates } from "../Geo";
 import { log } from "../Logger";
 import { GeoJsonModel } from "../models/GeoJsonModel";
 import { useCacheMiddleware } from "../redis";
 import { checkErrors, pagination } from "../Validation";
+import { BaseRouter } from "./BaseRouter";
 
 /**
  * Router for data in GeoJSON format using GeoJSON model -
@@ -14,7 +17,7 @@ import { checkErrors, pagination } from "../Validation";
  * Router /WEB LAYER/: maps routes to specific model functions, passes request parameters and handles responses.
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
-export class GeoJsonRouter {
+export class GeoJsonRouter extends BaseRouter {
 
     // Assign router to the express.Router() instance
     public router: Router = Router();
@@ -31,6 +34,7 @@ export class GeoJsonRouter {
     ];
 
     public constructor(inModel: GeoJsonModel) {
+        super();
         this.model = inModel;
     }
 
@@ -80,7 +84,7 @@ export class GeoJsonRouter {
         }
         try {
             const coords = await parseCoordinates(req.query.latlng, req.query.range);
-            const data = await this.model.GetAll({
+            let data = await this.model.GetAll({
                 districts,
                 ids,
                 lat: coords.lat,
@@ -90,6 +94,8 @@ export class GeoJsonRouter {
                 range: coords.range,
                 updatedSince: req.query.updatedSince,
             });
+
+            data = await this.CheckBeforeSendingData(data);
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -107,7 +113,19 @@ export class GeoJsonRouter {
         });
     }
 
-    private GetIdQueryParamWithCorrectType = async (): Promise<ValidationChain> => {
+    /**
+     * @override CheckBeforeSendingData
+     * Performs a final check on the data before sending them to the client (response)
+     * @param data data to be sent to response
+     */
+    protected async CheckBeforeSendingData(data: any) {
+        if (data.features.length > config.pagination_max_limit) {
+            throw new CustomError("Pagination limit error", true, "GeoJsonRouter", 413);
+        }
+        return data;
+    }
+
+    protected GetIdQueryParamWithCorrectType = async (): Promise<ValidationChain> => {
         let idParam: ValidationChain;
         return await this.model.GetSchema().then((schema) => {
             // Get the primary ID of the schema (the attribute name)

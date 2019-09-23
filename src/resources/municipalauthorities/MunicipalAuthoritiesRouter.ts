@@ -5,6 +5,7 @@
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
 
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
 import { parseCoordinates } from "../../core/Geo";
@@ -58,7 +59,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
                     ...{ "properties.type.id": req.query.type },
                 };
             }
-            const data = await this.model.GetAll({
+            let data = await this.model.GetAll({
                 additionalFilters,
                 districts,
                 ids,
@@ -69,6 +70,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
                 range: coords.range,
                 updatedSince: req.query.updatedSince,
             });
+            data = await this.CheckBeforeSendingData(data);
             res.status(200).send(data);
         } catch (err) {
             next(err);

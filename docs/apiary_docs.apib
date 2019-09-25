@@ -287,6 +287,22 @@ Data from air quality stations
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+## Parking Zones Tariffs [/parkingzones/tariffs]
+
+### GET Parking Zones Tariffs [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+       + Attributes (array)
+        + (Parking Zone Tariff)
+
+## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
 
 # Group Parking
 Data about parking.
@@ -2178,11 +2194,11 @@ Cleaning Frequency:
 + number_of_places: 31 (number, required)
 + payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=P1-0111` (string)
 + southwest: 14.3933334097666, 50.0906432052142 (array[number], required)
-+ tariffs (array[Parking Zone Tariff Schedule])
 + updated_at: 1553130910437 (number, required)
 + type (Parking Zone Type)
 + zps_id: 3312 (number, optional, nullable)
 + zps_ids (array[number], optional)
++ tariff_ids: `d1bc6cae620aa65200d47b61cf483299ca03d6c9` (array[string])
 + tariffs_text: `Po-Ne 08:00-19:59 80 Kč/hod. (max. 1 hod.); Po-Ne 20:00-05:59 80 Kč/hod. (max. 1 hod.); Po-Ne (ve svátek) 08:00-05:59 80 Kč/hod. (max. 1 hod.)` (string)
 
 ## Parking Zone Tariff Schedule (object)
@@ -2199,6 +2215,7 @@ Cleaning Frequency:
 + price_per_hour: 80 (number)
 + max_price: 0 (number)
 + divisibility: `PT15M` (string)
++ tariff_id: `d1bc6cae620aa65200d47b61cf483299ca03d6c9` (array[string])
 
 ## Parking Zone Type (object)
 

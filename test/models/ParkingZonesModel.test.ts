@@ -40,6 +40,10 @@ describe("ParkingZonesModel", () => {
         expect(model.GetAll).not.to.be.undefined;
     });
 
+    it("should have GetAllTariffs method", () => {
+        expect(model.GetAllTariffs).not.to.be.undefined;
+    });
+
     it("should return fulfilled promise to GetAll call", async () => {
         const promise = model.GetAll();
         expect(Object.prototype.toString.call(promise)).to.equal("[object Promise]");
@@ -51,6 +55,12 @@ describe("ParkingZonesModel", () => {
         expect(data).to.be.an.instanceOf(Object);
         expect(data.features).to.be.an.instanceOf(Array);
         expect(data.type).to.be.equal("FeatureCollection");
+    });
+
+    it("should return all tariffs as array with tariff_id as hash", async () => {
+        const data: any[] = await model.GetAllTariffs();
+        expect(data).to.be.an.instanceOf(Array);
+        expect(data[0]).to.has.property("tariff_id");
     });
 
     it("should return 2 first records (limit)", async () => {
@@ -115,7 +125,7 @@ describe("ParkingZonesModel", () => {
 
     it("should return by coordinates and range", async () => {
         const range = 50;
-        const data = await model.GetAll({ lat: coordinates[0], lng: coordinates[1], limit: 1 });
+        const data: any = await model.GetAll({ lat: coordinates[0], lng: coordinates[1], limit: 1 });
         const rangeData = await model.GetAll({
             lat: data.features[0].geometry.coordinates[0][0][1],
             lng: data.features[0].geometry.coordinates[0][0][0],
@@ -134,32 +144,28 @@ describe("ParkingZonesModel", () => {
         expect(data.features.length).to.be.equal(1);
     });
 
-    it("should have GetTariffs method", () => {
-        expect(model.GetTariffs).not.to.be.undefined;
-    });
-
-    it("should have GetTariffs method", () => {
-        expect(model.GetTariffs).not.to.be.undefined;
+    it("should have GetTariffsByParkingZoneId method", () => {
+        expect(model.GetTariffsByParkingZoneId).not.to.be.undefined;
     });
 
     it("should return fulfilled promise to GetTariffs call", async () => {
-        const promise = model.GetTariffs(parkingZoneCode);
+        const promise = model.GetTariffsByParkingZoneId(parkingZoneCode);
         expect(Object.prototype.toString.call(promise)).to.equal("[object Promise]");
         await expect(promise).to.be.fulfilled;
     });
 
     it("should return one parking zone tariffs by code", async () => {
-        const data = await model.GetTariffs(parkingZoneCode);
+        const data = await model.GetTariffsByParkingZoneId(parkingZoneCode);
         expect(data).to.be.an.instanceOf(Object);
     });
 
     it("should throw an error (reject promise) for non-existing parking zone by code", async () => {
-        const promise = model.GetTariffs("kovfefe");
+        const promise = model.GetTariffsByParkingZoneId("kovfefe");
         await expect(promise).to.be.rejected;
     });
 
     it("should throw an error (reject promise) for parking zone which has no tariffs", async () => {
-        const promise = model.GetTariffs("kovfefe");
+        const promise = model.GetTariffsByParkingZoneId("kovfefe");
         await expect(promise).to.be.rejected;
     });
 

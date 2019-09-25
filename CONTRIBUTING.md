@@ -38,7 +38,7 @@ Name your single issue branches aimed for MR as `<issue-number>-issue-descriptio
 - `core` is a base part of our application, similar to `libs` in other projects, server for the core data platform functionality, should be usable by another project (different city, different datasets, different use-cases) and SHOULD NOT depend on anything project-specific (anything outside `core`).
 - `resources` are our project-specific resources (datasets) that we use.
 - We use Async/Await for asynchronous stuff (try to avoid callbacks or Promises).
-- We use OOP, try to design your changes with this in mind - use Classes, Interfaces, inheritence so that it makes sense.
+- We use OOP, try to design your changes with this in mind - use Classes, Interfaces, inheritance so that it makes sense.
 - We use TypeScript for a reason - try to avoid using :any or not defining types at all.
 - Study our class hierarchy and make your additions fit it.
 - Name variables and properties by their purpose.

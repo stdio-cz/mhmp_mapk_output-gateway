@@ -38,6 +38,15 @@ describe("ParkingZonesRouter", () => {
             });
     });
 
+    it("should respond with Tariffs array to GET /parkingzones/tariffs", (done) => {
+        request(app)
+            .get("/parkingzones/tariffs").end((err: any, res: any) => {
+                expect(res.statusCode).to.be.equal(200);
+                expect(res.body).to.be.an.instanceOf(Array);
+                done();
+            });
+    });
+
     it("should respond with json to GET /parkingzones/:id ", (done) => {
         request(app)
             .get("/parkingzones/" + parkingZoneCode)

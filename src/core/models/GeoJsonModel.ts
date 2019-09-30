@@ -1,6 +1,6 @@
 import { CustomError } from "@golemio/errors";
 import { SchemaDefinition } from "mongoose";
-import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType } from "../Geo";
+import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType, IGeoJSONFeatureCollection } from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
 import { IPropertyResponseModel } from "./response";

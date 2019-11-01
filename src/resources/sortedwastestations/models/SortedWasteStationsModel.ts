@@ -1,7 +1,18 @@
 import { SortedWasteStations } from "@golemio/schema-definitions";
+import * as moment from "moment";
 import { IGeoJSONFeature } from "../../../core/Geo";
 import { log } from "../../../core/Logger";
 import { GeoJsonModel } from "../../../core/models";
+
+export interface ILastMeasurement {
+    measured_at_utc: number | string;
+    percent_calculated: number;
+    prediction_utc: number | string;
+}
+
+export interface ILastPick {
+    pick_at_utc: number | string;
+}
 
 export interface IContainer {
     cleaning_frequency: number;
@@ -12,6 +23,8 @@ export interface IContainer {
     sensor_container_id: number;
     sensor_code: string;
     sensor_supplier: string;
+    last_measurement: ILastMeasurement;
+    last_pick: ILastPick;
 }
 
 export interface ISortedWasteStationProperties {
@@ -64,6 +77,7 @@ export class SortedWasteStationsModel extends GeoJsonModel {
     }): Promise<any> {
         const data = await super.GetAll(options);
         data.features = data.features.map((record: any) => this.EnrichOutputFeatureRecord(record));
+        data.features = data.features.map((record: any) => this.MapToISOString(record));
         return data;
     }
 
@@ -109,5 +123,25 @@ export class SortedWasteStationsModel extends GeoJsonModel {
             },
             type: item.type,
         } : item;
+    }
+
+    protected MapToISOString(item: ISortedWasteStationFeature): any {
+        item.properties.containers = item.properties.containers.map((singleContainer) => {
+            if (!singleContainer.last_measurement) {
+                return singleContainer;
+            }
+            singleContainer.last_measurement.measured_at_utc =
+            moment(+singleContainer.last_measurement.measured_at_utc).toISOString();
+            singleContainer.last_measurement.prediction_utc =
+            moment(+singleContainer.last_measurement.prediction_utc).toISOString();
+
+            if (!singleContainer.last_pick) {
+                return singleContainer;
+            }
+            singleContainer.last_pick.pick_at_utc =
+            moment(+singleContainer.last_pick.pick_at_utc).toISOString();
+            return singleContainer;
+        });
+        return item;
     }
 }

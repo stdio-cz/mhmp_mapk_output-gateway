@@ -287,6 +287,22 @@ Data from air quality stations
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+## Parking Zones Tariffs [/parkingzones/tariffs]
+
+### GET Parking Zones Tariffs [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+       + Attributes (array)
+        + (Parking Zone Tariff)
+
+## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
 
 # Group Parking
 Data about parking.
@@ -515,7 +531,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -541,7 +557,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -562,7 +578,8 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
+
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -777,7 +794,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -803,7 +820,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -833,7 +850,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -859,7 +876,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -880,7 +897,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -963,7 +980,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -989,7 +1006,7 @@ Data from the city public space.
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -1215,7 +1232,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Parameters
 
-    + gtfsTripId: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
+    + gtfsTripId: `115_107_180501` (string, required) Filter result by trip id (gtfs_trip_id)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
 
 ### GET Vehicle Position [GET]
@@ -1704,7 +1721,7 @@ Cleaning Frequency:
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -1730,7 +1747,7 @@ Cleaning Frequency:
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -1751,7 +1768,7 @@ Cleaning Frequency:
 
     + Headers
 
-            Authorization: Basic bW9qZTpwcmFoYQo=
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -2177,11 +2194,11 @@ Cleaning Frequency:
 + number_of_places: 31 (number, required)
 + payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=P1-0111` (string)
 + southwest: 14.3933334097666, 50.0906432052142 (array[number], required)
-+ tariffs (array[Parking Zone Tariff Schedule])
 + updated_at: 1553130910437 (number, required)
 + type (Parking Zone Type)
 + zps_id: 3312 (number, optional, nullable)
 + zps_ids (array[number], optional)
++ tariff_ids: `d1bc6cae620aa65200d47b61cf483299ca03d6c9` (array[string])
 + tariffs_text: `Po-Ne 08:00-19:59 80 Kč/hod. (max. 1 hod.); Po-Ne 20:00-05:59 80 Kč/hod. (max. 1 hod.); Po-Ne (ve svátek) 08:00-05:59 80 Kč/hod. (max. 1 hod.)` (string)
 
 ## Parking Zone Tariff Schedule (object)
@@ -2198,6 +2215,7 @@ Cleaning Frequency:
 + price_per_hour: 80 (number)
 + max_price: 0 (number)
 + divisibility: `PT15M` (string)
++ tariff_id: `d1bc6cae620aa65200d47b61cf483299ca03d6c9` (array[string])
 
 ## Parking Zone Type (object)
 
@@ -2337,7 +2355,7 @@ Cleaning Frequency:
 
 + measured_at_utc: `2019-08-27T14:00:32.000Z` (string)
 + percent_calculated: 62 (number)
-+ prediction_utc: `2019-09-03T07:46:25.000Z` (string)
++ prediction_utc: `2019-05-18T07:38:37.000Z` (string)
 
 ## Sorted Waste Station Container Trash Type (object)
 
@@ -2421,7 +2439,7 @@ Cleaning Frequency:
 + `gtfs_shape_dist_traveled`: "12.5" (string, optional, nullable) <!-- This is DECIMAL in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
 + `is_canceled`: false (boolean, nullable, required)
 + `origin_time`: `13:34:27` (string, required)
-+ `origin_timestamp`: `2019-03-18T12:34:27.000Z` (string, required)
++ `origin_timestamp`: `2019-03-18T11:00:00.000Z` (string, required)
 + `tracking`: 2 (number, required)
 + `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
 

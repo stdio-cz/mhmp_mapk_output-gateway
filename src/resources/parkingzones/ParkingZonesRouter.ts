@@ -20,13 +20,47 @@ export class ParkingZonesRouter extends GeoJsonRouter {
         this.router.get(
             "/:id/tariffs",
             useCacheMiddleware(),
-            this.GetTariffs,
+            this.GetTariffsByParkingZoneId,
+        );
+        this.router.get(
+            "/tariffs",
+            useCacheMiddleware(),
+            this.GetAllTariffs,
         );
     }
 
-    public GetTariffs = (req: Request, res: Response, next: NextFunction) => {
+    public GetAll = async (req: Request, res: Response, next: NextFunction) => {
+        this.model.GetAll().then((data) => {
+            res.status(200)
+                .send(data);
+        }).catch((err) => {
+            next(err);
+        });
+    }
+
+    public GetOne = async (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
-        this.model.GetTariffs(id).then((data) => {
+
+        this.model.GetOne(id).then((data) => {
+            res.status(200)
+                .send(data);
+        }).catch((err) => {
+            next(err);
+        });
+    }
+
+    public GetTariffsByParkingZoneId = async (req: Request, res: Response, next: NextFunction) => {
+        const id: string = req.params.id;
+        this.model.GetTariffsByParkingZoneId(id).then((data) => {
+            res.status(200)
+                .send(data);
+        }).catch((err) => {
+            next(err);
+        });
+    }
+
+    public GetAllTariffs = (req: Request, res: Response, next: NextFunction) => {
+        this.model.GetAllTariffs().then((data) => {
             res.status(200)
                 .send(data);
         }).catch((err) => {

@@ -7,6 +7,9 @@
 import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
+import * as moment from "moment";
+import config from "../../config/config";
+import { IGeoJSONFeature, IGeoJSONFeatureCollection } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { checkErrors, pagination } from "../../core/Validation";
 import { models } from "./models";
@@ -25,6 +28,7 @@ export class VehiclePositionsRouter {
     }
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
+
         try {
             const data = await this.model.GetAll({
                 includePositions: req.query.includePositions || false,
@@ -33,7 +37,19 @@ export class VehiclePositionsRouter {
                 routeId: req.query.routeId,
                 routeShortName: req.query.routeShortName,
             });
-            res.status(200).send(data);
+            if (data.features.length > config.pagination_max_limit) {
+                throw new CustomError("Pagination limit error", true, "VehiclePositionsRouter", 413);
+            }
+            const result = {
+                ...data,
+                features: data.features.map((x: any) => {
+                    return {
+                        ...x,
+                        properties: this.mapPositionItemToISOString(x.properties),
+                    };
+                }),
+            };
+            res.status(200).send(result);
         } catch (err) {
             next(err);
         }
@@ -42,17 +58,57 @@ export class VehiclePositionsRouter {
     public GetOne = async (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
         try {
-            const data = await this.model.GetOne(id, {
+            const data: any = await this.model.GetOne(id, {
                 includePositions: req.query.includePositions || false,
             },
             );
             if (!data) {
                 throw new CustomError("not_found", true, "VehiclePositionsRouter", 404, null);
             }
-            res.status(200).send(data);
+            const result = {
+                ...data,
+                properties: this.mapPositionItemToISOString(data.properties),
+            };
+            res.status(200).send(result);
         } catch (err) {
             next(err);
         }
+    }
+
+    private mapPositionItemToISOString(x: any) {
+        const defaultFeatureObject: IGeoJSONFeatureCollection = {
+            features: [],
+            type: "FeatureCollection",
+        };
+        return {
+            ...x,
+            all_positions: x.all_positions != null ? {
+                ...x.all_positions,
+                features: x.all_positions.features.map((y: any) => {
+                    return {
+                        ...y,
+                        properties: {
+                            ...y.properties,
+                            origin_timestamp: y.properties.origin_timestamp != null ?
+                                moment(parseInt(y.properties.origin_timestamp, 10)).toISOString() :
+                                null,
+                        },
+                    };
+                }),
+            } : defaultFeatureObject,
+            last_position: x.last_position != null ? {
+                ...x.last_position,
+                origin_timestamp: x.last_position.origin_timestamp != null ?
+                    moment(parseInt(x.last_position.origin_timestamp, 10)).toISOString() :
+                    null,
+            } : defaultFeatureObject,
+            trip: x.trip != null ? {
+                ...x.trip,
+                start_timestamp: x.trip.start_timestamp != null ?
+                    moment(parseInt(x.trip.start_timestamp, 10)).toISOString() :
+                    null,
+            } : defaultFeatureObject,
+        };
     }
 
     /**

@@ -1,5 +1,5 @@
-[![pipeline status](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/pipeline.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
-[![coverage report](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/coverage.svg)](http://gitlab.oict.cz/data-platform/output-gateway/commits/master)
+[![pipeline status](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/pipeline.svg)](https://gitlab.com/operator-ict/golemio/code/output-gateway/commits/master)
+[![coverage report](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/coverage.svg)](https://gitlab.com/operator-ict/golemio/code/output-gateway/commits/master)
 
 
 # Golemio Data Platform Output Gateway

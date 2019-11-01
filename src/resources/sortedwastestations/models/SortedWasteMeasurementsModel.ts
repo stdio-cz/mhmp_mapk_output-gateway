@@ -1,4 +1,5 @@
 import { SortedWasteStations } from "@golemio/schema-definitions";
+import * as moment from "moment";
 import { MongoModel } from "../../../core/models";
 
 export class SortedWasteMeasurementsModel extends MongoModel {
@@ -30,14 +31,24 @@ export class SortedWasteMeasurementsModel extends MongoModel {
             q.where({ container_id: sensorId });
         }
         if (from) {
-            q.where({ measured_at_utc: { $gt: from } });
+            const fromTimestamp = new Date(from).getTime();
+            q.where({ measured_at_utc: { $gt: fromTimestamp } });
         }
         if (to) {
-            q.where({ measured_at_utc: { $lt: to } });
+            const toTimestamp = new Date(to).getTime();
+            q.where({ measured_at_utc: { $lt: toTimestamp } });
         }
         q.select(this.projection);
         q.sort({ measured_at_utc: -1 });
-        return await q.exec();
+        const result = await q.exec();
+        return result.map((x: any) => {
+            const json = x.toJSON();
+            return {
+                ...json,
+                measured_at_utc: json.measured_at_utc != null ? moment(json.measured_at_utc).toISOString() : null,
+                prediction_utc: json.measured_at_utc != null ? moment(json.prediction_utc).toISOString() : null,
+            };
+        });
     }
 
     public GetOne = async () => {

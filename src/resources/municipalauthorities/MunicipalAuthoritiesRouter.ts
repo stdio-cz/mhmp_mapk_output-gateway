@@ -5,8 +5,10 @@
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
 
+import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
+import * as moment from "moment";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
@@ -58,7 +60,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
                     ...{ "properties.type.id": req.query.type },
                 };
             }
-            const data = await this.model.GetAll({
+            let data = await this.model.GetAll({
                 additionalFilters,
                 districts,
                 ids,
@@ -69,6 +71,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
                 range: coords.range,
                 updatedSince: req.query.updatedSince,
             });
+            data = await this.CheckBeforeSendingData(data);
             res.status(200).send(data);
         } catch (err) {
             next(err);
@@ -80,9 +83,13 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
             const data = await this.queuesModel.GetQueuesByOfficeId(req.params.id);
             if (!data) {
                 return res.status(204).send();
-            } else {
-                return res.status(200).send(data);
             }
+            const dataJson = data.toJSON();
+            const result = {
+                ...dataJson,
+                last_updated: moment(dataJson.last_updated).toISOString(),
+            };
+            return res.status(200).send(result);
         } catch (err) {
             next(err);
         }

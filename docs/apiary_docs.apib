@@ -1232,7 +1232,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 + Parameters
 
-    + gtfsTripId: 100381 (string, required) Filter result by trip id (gtfs_trip_id)
+    + gtfsTripId: `115_107_180501` (string, required) Filter result by trip id (gtfs_trip_id)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
 
 ### GET Vehicle Position [GET]
@@ -2355,7 +2355,7 @@ Cleaning Frequency:
 
 + measured_at_utc: `2019-08-27T14:00:32.000Z` (string)
 + percent_calculated: 62 (number)
-+ prediction_utc: `2019-09-03T07:46:25.000Z` (string)
++ prediction_utc: `2019-05-18T07:38:37.000Z` (string)
 
 ## Sorted Waste Station Container Trash Type (object)
 
@@ -2439,7 +2439,7 @@ Cleaning Frequency:
 + `gtfs_shape_dist_traveled`: "12.5" (string, optional, nullable) <!-- This is DECIMAL in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
 + `is_canceled`: false (boolean, nullable, required)
 + `origin_time`: `13:34:27` (string, required)
-+ `origin_timestamp`: `2019-03-18T12:34:27.000Z` (string, required)
++ `origin_timestamp`: `2019-03-18T11:00:00.000Z` (string, required)
 + `tracking`: 2 (number, required)
 + `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
 

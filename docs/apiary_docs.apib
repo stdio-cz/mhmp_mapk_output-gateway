@@ -302,8 +302,6 @@ Data from air quality stations
        + Attributes (array)
         + (Parking Zone Tariff)
 
-## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
-
 # Group Parking
 Data about parking.
 
@@ -1448,6 +1446,37 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+## Bicycle Counters [/bicyclecounters/{?id,latlng,range,timePeriod}]
+
++ Parameters
+
+    + id (optional, string) - filters by bicycle counter ID
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + timePeriod: `today` (optional, enum[string]) - Limits number of measurements by time (`today` = since 00:00, `hour` = in last hour, `12hours` = in last 12 hours, default `today`).
+        + Members
+            + `today`
+            + `hour`
+            + `12hours`
+
+### GET All Bicycle Counters [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+   + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Bicycle Counter)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Bicycle Parkings [/bicycleparkings/{?latlng,range,limit,offset,updatedSince}]
 
@@ -1855,6 +1884,37 @@ Cleaning Frequency:
   + AQ_hourly_index: 3 (number)
   + components (array[Air Quality Station Component])
 + updated_at: 1556792400188 (number, required)
+
+## Bicycle Counter (object)
+
++ id: `5dc547e9c12b8c6acc70bb7b` (string, required)
++ `extern_id`: `BC_AT_STLA` (string, required)
++ `extern_source`: `camea` (string, required)
++ name: `Altetická` (string, required)
++ route: `A140` (string)
++ detections (Bicycle Counter Measurement)
++ temperature (object) - can be null if there is no temperature sensor
+    + unit: `°C` (string, required)
+    + value: 5 (number, required)
+    + updated_at: 1556792400188 (number, required)
++ updated_at: 1556792400188 (number, required)
+
+## Bicycle Counter Measurement (object)
+
++ directions (array[Bicycle Counter Direction])
++ `incomplete_data`: false (boolean, required) - true if some data is missing in the `time_period` interval 
++ `measured_at`: 1556792400188 (number) - can be null if `incomplete_data` is true 
++ `time_period`: `today` (enum[string], required)
+    + Members
+        + `today`
+        + `hour`
+        + `12hours`
+
+## Bicycle Counter Direction (object)
+
++ id: `BC_AT_ST` (string, required) - direction ID
++ name: `Strahov` (string, required) - direction name
++ value: 6 (number) - aggregated data for `time_period` interval - can be null if `incomplete_data` is true
 
 ## Bicycle Parking (object)
 

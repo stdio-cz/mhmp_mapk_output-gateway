@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@golemio/errors": "^0.0.6",
-    "@golemio/schema-definitions": "file:./../schema-definitions/golemio-schema-definitions-0.1.20s.tgz",
+    "@golemio/schema-definitions": "file:./golemio-schema-definitions-0.1.20s.tgz",
     "@golemio/utils": "^0.0.3",
     "apicache": "^1.4.0",
     "debug": "^4.1.0",

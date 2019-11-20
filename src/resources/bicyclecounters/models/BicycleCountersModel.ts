@@ -156,7 +156,7 @@ export class BicycleCountersModel extends GeoJsonModel {
                     const stepInSeconds = step * 60; // seconds;
 
                     x.properties.measurements.forEach((m: any) => {
-                        if (timestamp !== m.measured_from) {
+                        if (timestamp !== m.measured_from / 1000) {
                             incompleteData = true;
                         }
                         timestamp += stepInSeconds;

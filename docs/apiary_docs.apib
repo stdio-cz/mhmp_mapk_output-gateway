@@ -1446,11 +1446,11 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicycle Counters [/bicyclecounters/{?id,latlng,range,timePeriod}]
+## Bicycle Counters [/bicyclecounters/{?ids,latlng,range,timePeriod}]
 
 + Parameters
 
-    + id (optional, string) - filters by bicycle counter ID
+    + ids (optional, string) - filters by bicycle counter IDs
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + timePeriod: `today` (optional, enum[string]) - Limits number of measurements by time (`today` = since 00:00, `hour` = in last hour, `12hours` = in last 12 hours, default `today`).

@@ -49,10 +49,4 @@ describe("BicycleCountersModel", () => {
             expect((item as any).properties.id.toString()).to.be.equal(id);
         }
     });
-
-    // it("should return single item", async () => {
-    //     const route: any = await bicycleCountersModel.GetOne(id);
-    //     expect(route).not.to.be.empty;
-    //     expect(route.properties).to.have.property("id", id);
-    // });
 });

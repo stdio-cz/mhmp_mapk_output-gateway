@@ -20,7 +20,7 @@ export class BicycleCountersRouter extends GeoJsonRouter {
     }
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
-        let ids = req.query.id;
+        let ids = req.query.ids;
         if (ids) {
             ids = this.ConvertToArray(ids);
         }

@@ -1,2 +1,2 @@
-export * from "./BicycleCountersModel";
+export * from "./models";
 export * from "./BicycleCountersRouter";

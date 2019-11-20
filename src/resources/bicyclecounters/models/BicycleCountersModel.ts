@@ -2,9 +2,9 @@ import { CustomError } from "@golemio/errors";
 import { BicycleCounters } from "@golemio/schema-definitions";
 import * as moment from "moment";
 import { Model, model, Schema } from "mongoose";
-import { buildGeojsonFeatureCollection, GeoCoordinatesType, IGeoJSONFeatureCollection } from "../../core/Geo";
-import { log } from "../../core/Logger";
-import { GeoJsonModel } from "../../core/models";
+import { buildGeojsonFeatureCollection, GeoCoordinatesType, IGeoJSONFeatureCollection } from "../../../core/Geo";
+import { log } from "../../../core/Logger";
+import { GeoJsonModel } from "../../../core/models";
 
 export class BicycleCountersModel extends GeoJsonModel {
 

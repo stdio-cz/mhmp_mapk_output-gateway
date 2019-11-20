@@ -1446,7 +1446,7 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicycle Counters [/bicyclecounters/{?ids,latlng,range,timePeriod}]
+## Bicycle Counters [/bicyclecounters/{?ids,latlng,range,timePeriod,limit,offset}]
 
 + Parameters
 
@@ -1476,6 +1476,33 @@ Types enum:
         + features (array)
             + (Feature Point)
                 + properties (Bicycle Counter)
+    
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Bicycle Counters Measurements [/bicyclecounters/measurements/{?from,to,limit,offset,counterId}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data to data measured no sooner than this datetime (measured_from)
+    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data to data measured no later than this datetime (measured_to)
+    + counterId: `12345` (optional, string) - Limits data measured up by counter with this id (parameter `id` of the bicycle counter)
+
+
+### GET Bicycle Counters Measurements [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Bicycle Counter Measurement)
     
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
@@ -1892,14 +1919,14 @@ Cleaning Frequency:
 + id: `camea-BC_AT-STLA` (string, required)
 + name: `Altetická` (string, required)
 + route: `A140` (string)
-+ detections (Bicycle Counter Measurement)
++ detections (Bicycle Counter Detections)
 + temperature (object) - can be null if there is no temperature sensor
     + unit: `°C` (string, required)
     + value: 5 (number, required)
     + updated_at: 1556792400188 (number, required)
 + updated_at: 1556792400188 (number, required)
 
-## Bicycle Counter Measurement (object)
+## Bicycle Counter Detections (object)
 
 + directions (array[Bicycle Counter Direction])
 + `incomplete_data`: false (boolean, required) - true if some data is missing in the `time_period` interval 
@@ -1910,10 +1937,17 @@ Cleaning Frequency:
         + `hour`
         + `12hours`
 
+## Bicycle Counter Measurement (object)
++ `directions` (array[Bicycle Counter Direction])
++ `counter_id` (string, required)
++ `measured_from`: `2019-08-27T14:00:32.000Z` (string)
++ `measured_to`: `2019-08-27T14:00:32.000Z` (string)
++ `updated_at`: 1556792400188 (number)
+
 ## Bicycle Counter Direction (object)
 
 + id: `BC_AT_ST` (string, required) - direction ID
-+ name: `Strahov` (string, required) - direction name
++ name: `Strahov` (string) - direction name
 + value: 6 (number) - aggregated data for `time_period` interval - can be null if `incomplete_data` is true
 
 ## Bicycle Parking (object)

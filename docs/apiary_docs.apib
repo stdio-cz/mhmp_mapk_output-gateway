@@ -302,8 +302,6 @@ Data from air quality stations
        + Attributes (array)
         + (Parking Zone Tariff)
 
-## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
-
 # Group Parking
 Data about parking.
 
@@ -586,14 +584,14 @@ Data from the city public space.
     + Attributes (array)
         + (Garden Property)
 
-## Medical Institutions [/medicalinstitutions/{?latlng,range,district,type,limit,offset,updatedSince}]
+## Medical Institutions [/medicalinstitutions/{?latlng,range,district,group,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
-    + type: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
+    + group: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
         + Members
             + `pharmacies`
             + `health_care`

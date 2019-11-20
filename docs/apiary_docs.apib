@@ -1453,6 +1453,8 @@ Types enum:
     + ids (optional, string) - filters by bicycle counter IDs
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
     + timePeriod: `today` (optional, enum[string]) - Limits number of measurements by time (`today` = since 00:00, `hour` = in last hour, `12hours` = in last 12 hours, default `today`).
         + Members
             + `today`

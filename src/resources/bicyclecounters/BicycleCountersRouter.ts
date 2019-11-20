@@ -32,7 +32,9 @@ export class BicycleCountersRouter extends GeoJsonRouter {
         this.model.GetAll({
             ids,
             lat: coords.lat,
+            limit: req.query.limit,
             lng: coords.lng,
+            offset: req.query.offset,
             range: coords.range,
             timePeriod,
         }).then((data) => {

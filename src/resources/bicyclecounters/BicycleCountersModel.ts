@@ -55,6 +55,8 @@ export class BicycleCountersModel extends GeoJsonModel {
     public async GetAll(options: {
         lat?: number,
         lng?: number,
+        limit?: number,
+        offset?: number,
         range?: number,
         timePeriod?: "today" | "hour" | "12hours",
         ids?: any[],
@@ -107,6 +109,13 @@ export class BicycleCountersModel extends GeoJsonModel {
                 match: { measured_to: { $gte: fromAsNumber/*, $lt: to*/ } },
                 path: "properties.measurements",
             });
+
+            if (options.limit) {
+                q.limit(options.limit);
+            }
+            if (options.offset) {
+                q.skip(options.offset);
+            }
 
             q.select(this.projection);
 

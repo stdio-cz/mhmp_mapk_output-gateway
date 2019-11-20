@@ -56,7 +56,7 @@ export class HistoryModel extends MongoModel {
                 q.where({ [this.primaryTimePropertyLocation]: { $lt: options.to } });
             }
             if (options.sensorId != null) {
-                q.where({ [this.primarySensorIdPropertyLocation]: options.sensorId });
+                q.where({ [this.primarySensorIdPropertyLocation]: { $in: options.sensorId }});
             }
             q.select(this.projection);
             q.sort({ [this.primaryTimePropertyLocation]: -1 });

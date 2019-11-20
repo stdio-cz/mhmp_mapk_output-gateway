@@ -34,6 +34,10 @@ export class HistoryRouter extends BaseRouter {
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
         const timestampFrom = new Date(req.query.from).getTime();
         const timestampTo = new Date(req.query.to).getTime();
+        let sensorIds = req.query.ids;
+        if (sensorIds) {
+            sensorIds = this.ConvertToArray(sensorIds);
+        }
         try {
             let data = await this.model.GetAll({
                 from: timestampFrom,
@@ -62,12 +66,12 @@ export class HistoryRouter extends BaseRouter {
             if (schema.path(idKey) instanceof Schema.Types.Number) {
                 message += "number.";
                 // Create a query parameter (which validates by express-validator) for detail route with type number
-                sensorIdParam = query("sensorId").optional().isNumeric();
+                sensorIdParam = query("sensorId.*").optional().isNumeric();
                 // ID of the sensor has type "String" in the schema
             } else {
                 message += "string.";
                 // Create a query parameter (which validates by express-validator) for detail route with type string
-                sensorIdParam = query("sensorId").optional().isString();
+                sensorIdParam = query("sensorId.*").optional().isString();
             }
             log.silly(message);
             return sensorIdParam;

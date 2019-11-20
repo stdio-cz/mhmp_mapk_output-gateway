@@ -26,6 +26,7 @@ import config from "./config/config";
 import { mongooseConnection, sequelizeConnection } from "./core/database";
 import { getRequestLogger, log } from "./core/Logger";
 import { RouterBuilder } from "./core/routes/";
+import { bicycleCountersRouter } from "./resources/bicyclecounters";
 import { cityDistrictsRouter } from "./resources/citydistricts";
 import { gardensRouter } from "./resources/gardens";
 import { gtfsRouter } from "./resources/gtfs";
@@ -204,6 +205,7 @@ export default class App {
 
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
+        this.express.use("/bicyclecounters", bicycleCountersRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
         this.express.use("/gtfs", gtfsRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);

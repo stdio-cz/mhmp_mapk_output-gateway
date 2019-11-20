@@ -180,7 +180,7 @@ export class BicycleCountersModel extends GeoJsonModel {
                 const detections = {
                     directions,
                     incomplete_data: incompleteData,
-                    measured_at: lastMeasuredAt,
+                    measured_at: lastMeasuredAt != null ? moment(lastMeasuredAt).toISOString() : null,
                     time_period: timePeriod,
                 };
 

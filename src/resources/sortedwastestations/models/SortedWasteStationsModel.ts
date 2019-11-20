@@ -83,7 +83,7 @@ export class SortedWasteStationsModel extends GeoJsonModel {
 
     // @override
     public async GetOne(inId: number): Promise<object> {
-        return await this.EnrichOutputFeatureRecord(await super.GetOne(inId));
+        return this.MapToISOString(await this.EnrichOutputFeatureRecord(await super.GetOne(inId)));
     }
 
     /**
@@ -131,15 +131,15 @@ export class SortedWasteStationsModel extends GeoJsonModel {
                 return singleContainer;
             }
             singleContainer.last_measurement.measured_at_utc =
-            moment(+singleContainer.last_measurement.measured_at_utc).toISOString();
+                moment(+singleContainer.last_measurement.measured_at_utc).toISOString();
             singleContainer.last_measurement.prediction_utc =
-            moment(+singleContainer.last_measurement.prediction_utc).toISOString();
+                moment(+singleContainer.last_measurement.prediction_utc).toISOString();
 
             if (!singleContainer.last_pick) {
                 return singleContainer;
             }
             singleContainer.last_pick.pick_at_utc =
-            moment(+singleContainer.last_pick.pick_at_utc).toISOString();
+                moment(+singleContainer.last_pick.pick_at_utc).toISOString();
             return singleContainer;
         });
         return item;

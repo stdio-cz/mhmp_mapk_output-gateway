@@ -150,7 +150,7 @@ export class GeoJsonModel extends MongoModel {
             log.debug("Could not find any record by specified selection.", this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, "GeoJsonModel", 404);
         } else {
-            return found;
+            return found.toObject();
         }
     }
 

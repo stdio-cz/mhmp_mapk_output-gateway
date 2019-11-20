@@ -16,7 +16,7 @@ describe("BicycleCountersModel", () => {
 
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
-    const id = "5dc547e9c12b8c6acc70bb7b";
+    const id = "camea-BC_AT-STLA";
 
     before(() => {
         sandbox = sinon.createSandbox();

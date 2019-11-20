@@ -18,10 +18,7 @@ export class BicycleCountersModel extends GeoJsonModel {
         super(BicycleCounters.name, BicycleCounters.outputMongooseSchemaObject, BicycleCounters.mongoCollectionName);
 
         this.schema.index({ "properties.name": "text" });
-        // this.schema.add({
-        //     "properties.measurements": [{ type: Schema.Types.ObjectId, ref: BicycleCounters.measurements.name }],
-        // });
-        this.projection = { __v: 0 };
+        this.projection = { __v: 0, _id: 0 };
 
         this.measurementsSchema = new Schema(BicycleCounters.measurements.outputMongooseSchemaObject);
 
@@ -39,15 +36,11 @@ export class BicycleCountersModel extends GeoJsonModel {
         this.schema.virtual("properties.measurements", {
             foreignField: "counter_id",
             justOne: false,
-            localField: "_id",
+            localField: "properties.id",
             // Query options, see http://bit.ly/mongoose-query-options
             options: { sort: { measured_to: 1 } },
             ref: BicycleCounters.measurements.name,
         });
-    }
-
-    public PrimaryIdentifierSelection = (inId: any) => {
-        return { _id: inId };
     }
 
     /** Retrieves all the records from database
@@ -127,8 +120,6 @@ export class BicycleCountersModel extends GeoJsonModel {
 
             geoJsonData.features.forEach((x: any) => {
                 const properties: any = x.properties;
-                properties.id = x._id;
-                delete x._id;
 
                 const directions = properties.directions.map((d: any) => ({
                     ...d,

@@ -46,9 +46,9 @@ describe("BicycleCounters Router", () => {
             .expect(200, done);
     });
 
-    it("should NOT respond with json to GET /bicyclecounters/5dc547e9c12b8c6acc70bb7b", (done) => {
+    it("should NOT respond with json to GET /bicyclecounters/camea-BC_AT-STLA-nesmysl", (done) => {
         request(app)
-            .get("/bicyclecounters/5dc547e9c12b8c6acc70bb7b")
+            .get("/bicyclecounters/camea-BC_AT-STLA-nesmysl")
             .set("Accept", "application/json")
             .expect(404, done);
     });

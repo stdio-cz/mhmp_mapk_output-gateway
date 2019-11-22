@@ -1,14 +1,10 @@
-FROM node:8
+FROM node:12
+WORKDIR /user/src/app/
 
-WORKDIR /home/node/app
-
-COPY . .
-
-RUN chown -R node:node .
-
-USER node
-
-RUN yarn && rm -f .npmrc
-RUN npm run build
+COPY package.json .npmrc* ./
+RUN yarn install
+COPY --chown=node:node . .
+RUN npm run build && \
+    rm -rf `find . -maxdepth 1 ! -name . ! -name dist ! -name package.json ! -name public ! -name LICENSE.txt ! -name node_modules -print`
 
 CMD ["npm","start"]

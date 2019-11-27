@@ -133,6 +133,7 @@ export default class App {
             this.server.listen(this.port, () => {
                 // Success callback
                 log.info(`Listening at http://localhost:${this.port}/`);
+                Sentry.captureMessage("GolemioOUT, test critical", Sentry.Severity.Critical);
             });
         } catch (err) {
             ErrorHandler.handle(err);

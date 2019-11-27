@@ -30,6 +30,7 @@
     "@golemio/errors": "^0.0.6",
     "@golemio/schema-definitions": "1.0.1-dev.121231506",
     "@golemio/utils": "^0.0.3",
+    "@sentry/node": "^5.9.0",
     "apicache": "^1.4.0",
     "debug": "^4.1.0",
     "dotenv": "^6.1.0",

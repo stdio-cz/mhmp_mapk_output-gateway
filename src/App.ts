@@ -13,6 +13,7 @@ import {
     SharedCars,
     TrafficCameras,
 } from "@golemio/schema-definitions";
+import * as Sentry from "@sentry/node";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as fs from "fs";
@@ -114,6 +115,9 @@ export default class App {
     // Starts the application and runs the server
     public start = async (): Promise<void> => {
         try {
+            if (config.sentry_enable) {
+                Sentry.init({ dsn: config.sentry_dsn });
+            }
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
@@ -129,6 +133,7 @@ export default class App {
             this.server.listen(this.port, () => {
                 // Success callback
                 log.info(`Listening at http://localhost:${this.port}/`);
+                Sentry.captureMessage("GolemioOUT, test critical", Sentry.Severity.Critical);
             });
         } catch (err) {
             ErrorHandler.handle(err);

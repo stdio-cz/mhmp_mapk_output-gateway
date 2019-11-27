@@ -21,4 +21,6 @@ export default {
     redis_connection: process.env.REDIS_CONN,
     redis_enable: process.env.REDIS_ENABLE === "true" || false,
     redis_ttl: process.env.REDIS_DEFAULT_TTL,
+    sentry_dsn: process.env.SENTRY_DSN,
+    sentry_enable: process.env.SENTRY_ENABLE || false,
 };

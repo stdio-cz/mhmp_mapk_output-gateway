@@ -6,7 +6,8 @@
     "outDir": "./dist",
     "strict": true,
     "sourceMap": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*.ts"

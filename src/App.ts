@@ -230,7 +230,8 @@ export default class App {
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
-            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err);
+            const warnCodes = [400, 404];
+            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err, (warnCodes.includes(err.code) ? "warn" : "error"));
             log.silly("Error caught by the router error handler.");
             res.setHeader(
                 "Content-Type",

@@ -45,8 +45,8 @@ export class BicycleCountersMeasurementsModel extends MongoModel {
             const json = x.toJSON();
             return {
                 ...json,
-                measured_from: json.measured_from != null ? moment(json.measured_at_utc).toISOString() : null,
-                measured_to: json.measured_to != null ? moment(json.prediction_utc).toISOString() : null,
+                measured_from: json.measured_from != null ? moment(json.measured_from).toISOString() : null,
+                measured_to: json.measured_to != null ? moment(json.measured_to).toISOString() : null,
             };
         });
     }

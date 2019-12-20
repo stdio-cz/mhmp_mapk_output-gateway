@@ -103,7 +103,7 @@ export class BicycleCountersModel extends GeoJsonModel {
                 from = moment.utc(now).startOf("day");
             }
 
-            const fromAsNumber: number = from.unix();
+            const fromAsNumber: number = from.unix() * 1000;
 
             q.populate({
                 match: { measured_to: { $gte: fromAsNumber/*, $lt: to*/ } },
@@ -160,7 +160,6 @@ export class BicycleCountersModel extends GeoJsonModel {
                             incompleteData = true;
                         }
                         timestamp += stepInSeconds;
-
                         if (m.directions) {
                             m.directions.forEach((md: any) => {
                                 const direction = directions.find((d: any) => d.id === md.id);

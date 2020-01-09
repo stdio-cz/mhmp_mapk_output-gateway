@@ -42,7 +42,7 @@ export class BicycleCountersRouter extends GeoJsonRouter {
             ids = this.ConvertToArray(ids);
         }
 
-        const timePeriod = req.query.timeperiod;
+        const timePeriod = req.query.timePeriod;
 
         const coords = await parseCoordinates(req.query.latlng, req.query.range);
 

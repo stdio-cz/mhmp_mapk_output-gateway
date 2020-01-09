@@ -8,6 +8,9 @@ import { GeoJsonModel } from "../../../core/models";
 
 export class BicycleCountersModel extends GeoJsonModel {
 
+    public static CAMEA_TIME_STEP = 5;
+    public static ECOCOUNTER_TIME_STEP = 15;
+
     public measurementsModel: Model<any>;
     protected measurementsSchema: Schema;
 
@@ -33,6 +36,7 @@ export class BicycleCountersModel extends GeoJsonModel {
                 BicycleCounters.measurements.mongoCollectionName);
         }
 
+        // Define the relation (`measurements.name` collection to properties.measurements)
         this.schema.virtual("properties.measurements", {
             foreignField: "counter_id",
             justOne: false,
@@ -94,7 +98,6 @@ export class BicycleCountersModel extends GeoJsonModel {
 
             const now: moment.Moment = moment.utc();
             let from: moment.Moment;
-            const to: number = moment.utc(now).unix();
             if (timePeriod === "hour") {
                 from = moment.utc(now).subtract(1, "hour");
             } else if (timePeriod === "12hours") {
@@ -103,10 +106,10 @@ export class BicycleCountersModel extends GeoJsonModel {
                 from = moment.utc(now).startOf("day");
             }
 
-            const fromAsNumber: number = from.unix() * 1000;
-
+            // Populate the relation table, add measurements as properties.measurements for the counter
             q.populate({
-                match: { measured_to: { $gte: fromAsNumber/*, $lt: to*/ } },
+                // * 1000 because mongo saves date as milliseconds, .unix() is in seconds
+                match: { measured_from: { $gte: from.unix() * 1000 } },
                 path: "properties.measurements",
             });
 
@@ -125,73 +128,104 @@ export class BicycleCountersModel extends GeoJsonModel {
             const data = await q.exec();
 
             // Create GeoJSON FeatureCollection output
-            const geoJsonData = buildGeojsonFeatureCollection(data);
+            let geoJsonData = buildGeojsonFeatureCollection(data);
 
-            geoJsonData.features.forEach((x: any) => {
-                const properties: any = x.properties;
-
-                const directions = properties.directions.map((d: any) => ({
-                    ...d,
-                    value: null,
-                }));
-
-                const isCamea = properties.extern_source === "camea";
-                const step = isCamea ? 5 : 15;
-
-                let lastMeasuredAt = null;
-                let lastTemperature = null;
-                let incompleteData = true;
-
-                if (x.properties.measurements && x.properties.measurements.length > 0) {
-                    incompleteData = false;
-
-                    let timestamp = fromAsNumber;
-                    if (timePeriod === "hour" || timePeriod === "12hours") {
-                        const remainder = (from.minute() % step);
-
-                        const rounded = moment.utc(from).subtract(remainder, "minutes").seconds(0).milliseconds(0);
-                        timestamp = rounded.unix();
-                    }
-
-                    const stepInSeconds = step * 60; // seconds;
-
-                    x.properties.measurements.forEach((m: any) => {
-                        if (timestamp !== m.measured_from / 1000) {
-                            incompleteData = true;
-                        }
-                        timestamp += stepInSeconds;
-                        if (m.directions) {
-                            m.directions.forEach((md: any) => {
-                                const direction = directions.find((d: any) => d.id === md.id);
-                                if (direction) {
-                                    direction.value = (direction.value || 0) + md.value;
-                                }
-                            });
-                        }
-
-                        lastMeasuredAt = m.measured_from;
-                        if (m.temperature) {
-                            lastTemperature = m.temperature;
-                        }
-                    });
-                }
-
-                const detections = {
-                    directions,
-                    incomplete_data: incompleteData,
-                    measured_at: lastMeasuredAt != null ? moment(lastMeasuredAt).toISOString() : null,
-                    time_period: timePeriod,
-                };
-
-                x.properties.detections = detections;
-                x.properties.temperature = lastTemperature; // m.temperature;
-
-                delete x.properties.measurements;
-                delete x.properties.directions;
-            });
+            geoJsonData = this.PopulateDirectionsWithMeasurementsValues(geoJsonData, from, timePeriod);
+            // Map updated_at to ISOString
+            geoJsonData.features = geoJsonData.features.map(this.MapUpdatedAtToISOString);
             return geoJsonData;
         } catch (err) {
             throw new CustomError("Database error", true, "BicycleCountersModel", 500, err);
         }
+    }
+
+    private PopulateDirectionsWithMeasurementsValues(   data: IGeoJSONFeatureCollection,
+                                                        from: moment.Moment,
+                                                        timePeriod: string,
+    ): IGeoJSONFeatureCollection {
+        data.features.forEach((bicycleCounter: any) => {
+            const properties: any = bicycleCounter.properties;
+
+            // Add "value" to bicycle counter's directions
+            const bicycleCounterDirections = properties.directions.map((d: any) => ({
+                ...d,
+                value: null,
+            }));
+
+            const isCamea = properties.id.substring(0, 5).toLowerCase() === "camea";
+            // Set step according to data source (Camea = 5, ecoCounter = 15 minutes)
+            const step = isCamea ? BicycleCountersModel.CAMEA_TIME_STEP : BicycleCountersModel.ECOCOUNTER_TIME_STEP;
+
+            let lastMeasuredAt = null;
+            let lastTemperature = null;
+            let incompleteData = true;
+
+            // If this counter has some measurements from the measurements collection
+            if (bicycleCounter.properties.measurements && bicycleCounter.properties.measurements.length > 0) {
+                // Set flag as false
+                incompleteData = false;
+
+                let currentStepTimestamp = this.RoundToStepSize(from, step);
+
+                const stepInMilliSeconds = step * 60 * 1000; // milliseconds;
+
+                bicycleCounter.properties.measurements.forEach((singleMeasurement: any) => {
+                    // If measured data are not timestamped properly by each next step, something is missing
+                    if (singleMeasurement.measured_from !== currentStepTimestamp) {
+                        incompleteData = true;
+                    }
+                    this.AddMeasurementsValuesToCounterDirections(bicycleCounterDirections, singleMeasurement);
+                    currentStepTimestamp += stepInMilliSeconds;
+                    lastMeasuredAt = singleMeasurement.measured_from;
+                    if (singleMeasurement.temperature) {
+                        lastTemperature = singleMeasurement.temperature;
+                    }
+                });
+            }
+
+            const detections = {
+                directions: bicycleCounterDirections,
+                incomplete_data: incompleteData,
+                measured_at: lastMeasuredAt != null ? moment(lastMeasuredAt).toISOString() : null,
+                time_period: timePeriod,
+            };
+
+            bicycleCounter.properties.detections = detections;
+            bicycleCounter.properties.temperature = lastTemperature;
+
+            delete bicycleCounter.properties.measurements;
+            delete bicycleCounter.properties.directions;
+        });
+        return data;
+    }
+    /**
+     * Adds all measurements' values to matching directions of this bicycle counter
+     * @param bicycleCounterDirections This counter's directions to add values to
+     * @param singleMeasurement Measurement record to to add values from
+     */
+    private AddMeasurementsValuesToCounterDirections(bicycleCounterDirections: any, singleMeasurement: any) {
+        if (singleMeasurement.directions) {
+            singleMeasurement.directions.forEach((measurementDirection: any) => {
+                // Find direction of the counter with the same ID as this measurement's direction
+                // and add value
+                const directionFound = bicycleCounterDirections.find(
+                    (singleBicycleCounterDirection: any) => {
+                        return singleBicycleCounterDirection.id === measurementDirection.id;
+                    },
+                );
+                if (directionFound) {
+                    directionFound.value = (directionFound.value || 0) + measurementDirection.value;
+                }
+            });
+        }
+    }
+    /**
+     * Round to the step-size (subtract remaining minutes, set seconds and millis to 0)
+     * If "today", it is already rounded
+     */
+    private RoundToStepSize = (timestamp: moment.Moment, step: number) => {
+        const remainder = (timestamp.minute() % step);
+        const rounded = moment.utc(timestamp).subtract(remainder, "minutes").seconds(0).milliseconds(0);
+        return (rounded.unix() * 1000);
     }
 }

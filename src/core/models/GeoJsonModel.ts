@@ -1,6 +1,7 @@
 import { CustomError } from "@golemio/errors";
+import * as moment from "moment";
 import { SchemaDefinition } from "mongoose";
-import { buildGeojsonFeature, buildGeojsonFeatureCollection, GeoCoordinatesType, IGeoJSONFeatureCollection } from "../Geo";
+import { buildGeojsonFeatureCollection, GeoCoordinatesType, IGeoJSONFeature, IGeoJSONFeatureCollection } from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
 import { IPropertyResponseModel } from "./response";
@@ -134,6 +135,9 @@ export class GeoJsonModel extends MongoModel {
 
             const data = await q.exec();
             // Create GeoJSON FeatureCollection output
+            // const featureCollection: IGeoJSONFeatureCollection = buildGeojsonFeatureCollection(data);
+            // featureCollection.features = featureCollection.features.map(
+            //     (feature) => this.MapUpdatedAtToISOString(feature));
             return buildGeojsonFeatureCollection(data);
         } catch (err) {
             throw new CustomError("Database error", true, "GeoJsonModel", 500, err);
@@ -150,6 +154,7 @@ export class GeoJsonModel extends MongoModel {
             log.debug("Could not find any record by specified selection.", this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, "GeoJsonModel", 404);
         } else {
+            // return this.MapUpdatedAtToISOString(found.toObject());
             return found.toObject();
         }
     }
@@ -173,6 +178,15 @@ export class GeoJsonModel extends MongoModel {
                 };
                 return property;
             });
+    }
+
+    protected MapUpdatedAtToISOString = (feature: IGeoJSONFeature): IGeoJSONFeature => {
+        const properties: any = feature.properties;
+        if (!isNaN(properties.updated_at)) {
+            properties.updated_at = moment(+properties.updated_at).toISOString();
+        }
+        feature.properties = properties;
+        return feature;
     }
 
     private HasRequiredGeojsonProps = (inSchema: SchemaDefinition): boolean => {

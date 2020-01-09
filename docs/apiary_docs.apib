@@ -1920,11 +1920,11 @@ Cleaning Frequency:
 + name: `Altetická` (string, required)
 + route: `A140` (string)
 + detections (Bicycle Counter Detections)
-+ temperature (object) - can be null if there is no temperature sensor
++ temperature (object, optional) - can be null if there is no temperature sensor
     + unit: `°C` (string, required)
     + value: 5 (number, required)
-    + updated_at: 1556792400188 (number, required)
-+ updated_at: 1556792400188 (number, required)
+    + updated_at: 1556792400188 (number)
++ updated_at: `2019-05-18T04:27:58.000Z` (string)
 
 ## Bicycle Counter Detections (object)
 
@@ -1942,7 +1942,7 @@ Cleaning Frequency:
 + `counter_id` (string, required)
 + `measured_from`: `2019-08-27T14:00:32.000Z` (string)
 + `measured_to`: `2019-08-27T14:00:32.000Z` (string)
-+ `updated_at`: 1556792400188 (number)
++ `updated_at`: `2019-05-18T04:27:58.000Z` (string)
 
 ## Bicycle Counter Direction (object)
 

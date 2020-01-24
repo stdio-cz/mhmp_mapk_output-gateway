@@ -3,7 +3,7 @@ import { VehiclePositions } from "@golemio/schema-definitions";
 import { IncludeOptions, Model } from "sequelize";
 import { IVehiclePositionsModels } from ".";
 import { sequelizeConnection } from "../../../core/database";
-import { buildGeojsonFeature, buildGeojsonFeatureCollection, IGeoJSONFeature } from "../../../core/Geo";
+import { buildGeojsonFeatureCollection, buildGeojsonFeatureLatLng, IGeoJSONFeature } from "../../../core/Geo";
 import { SequelizeModel } from "./../../../core/models/";
 
 export class VehiclePositionsTripsModel extends SequelizeModel {
@@ -103,21 +103,93 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             ropidgtfs_trip,
             all_positions = [],
             ...trip } = item.toJSON ? item.toJSON() : item;
+
         const tripObject = {
-            trip,
-            ...{ last_position },
+            last_position: {
+                bearing: last_position.bearing,
+                delay: {
+                    actual: last_position.delay,
+                    last_stop_arrival: last_position.delay_stop_arrival,
+                    last_stop_departure: last_position.delay_stop_departure,
+                },
+                is_canceled: last_position.is_canceled,
+                last_stop: {
+                    arrival_time: last_position.last_stop_arrival_time,
+                    departure_time: last_position.last_stop_departure_time,
+                    id: last_position.last_stop_id,
+                    sequence: last_position.last_stop_sequence,
+                },
+                next_stop: {
+                    arrival_time: last_position.next_stop_arrival_time,
+                    departure_time: last_position.next_stop_departure_time,
+                    id: last_position.next_stop_id,
+                    sequence: last_position.next_stop_sequence,
+                },
+                origin_timestamp: last_position.origin_timestamp,
+                shape_dist_traveled: last_position.shape_dist_traveled,
+                speed: last_position.speed,
+            },
+            trip: {
+                agency_name: {
+                    real: trip.agency_name_real,
+                    scheduled: trip.agency_name_scheduled,
+                },
+                cis: {
+                    line_id: trip.cis_line_id,
+                    line_number: trip.cis_line_number,
+                },
+                gtfs: {
+                    route_id: trip.gtfs_route_id,
+                    route_short_name: trip.gtfs_route_short_name,
+                    trip_headsign: trip.gtfs_trip_headsign,
+                    trip_id: trip.gtfs_trip_id,
+                },
+                origin_route_name: trip.origin_route_name,
+                sequence_id: trip.sequence_id,
+                vehicle_registration_number: trip.vehicle_registration_number,
+                vehicle_type: trip.vehicle_type,
+                wheelchair_accessible: trip.wheelchair_accessible,
+            },
             ...(all_positions.length &&
                 {
                     all_positions: buildGeojsonFeatureCollection(
-                        all_positions,
+                        all_positions.map( (position: any) => {
+                            return {
+                                bearing: position.bearing,
+                                delay: {
+                                    actual: position.delay,
+                                    last_stop_arrival: position.delay_stop_arrival,
+                                    last_stop_departure: position.delay_stop_departure,
+                                },
+                                is_canceled: position.is_canceled,
+                                last_stop: {
+                                    arrival_time: position.last_stop_arrival_time,
+                                    departure_time: position.last_stop_departure_time,
+                                    id: position.last_stop_id,
+                                    sequence: position.last_stop_sequence,
+                                },
+                                lat: position.lat,
+                                lng: position.lng,
+                                next_stop: {
+                                    arrival_time: position.next_stop_arrival_time,
+                                    departure_time: position.next_stop_departure_time,
+                                    id: position.next_stop_id,
+                                    sequence: position.next_stop_sequence,
+                                },
+                                origin_timestamp: position.origin_timestamp,
+                                shape_dist_traveled: position.shape_dist_traveled,
+                                speed: position.speed,
+                            };
+                        }),
                         "lng",
                         "lat",
+                        true,
                     ),
                 }
             ),
         };
 
-        return buildGeojsonFeature(tripObject, "last_position.lng", "last_position.lat");
+        return buildGeojsonFeatureLatLng(tripObject, last_position.lng, last_position.lat);
     }
 
     /** Prepare orm query with selected params

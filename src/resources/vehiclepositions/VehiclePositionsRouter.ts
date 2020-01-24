@@ -89,6 +89,24 @@ export class VehiclePositionsRouter {
                         ...y,
                         properties: {
                             ...y.properties,
+                            last_stop: {
+                                ...y.properties.last_stop,
+                                arrival_time: y.properties.last_stop.arrival_time != null ?
+                                    moment(parseInt(y.properties.last_stop.arrival_time, 10)).toISOString() :
+                                    null,
+                                departure_time: y.properties.last_stop.departure_time != null ?
+                                    moment(parseInt(y.properties.last_stop.departure_time, 10)).toISOString() :
+                                    null,
+                            },
+                            next_stop: {
+                                ...y.properties.next_stop,
+                                arrival_time: y.properties.next_stop.arrival_time != null ?
+                                    moment(parseInt(x.last_position.next_stop.arrival_time, 10)).toISOString() :
+                                    null,
+                                departure_time: y.properties.next_stop.departure_time != null ?
+                                    moment(parseInt(y.properties.next_stop.departure_time, 10)).toISOString() :
+                                    null,
+                            },
                             origin_timestamp: y.properties.origin_timestamp != null ?
                                 moment(parseInt(y.properties.origin_timestamp, 10)).toISOString() :
                                 null,
@@ -98,6 +116,24 @@ export class VehiclePositionsRouter {
             } : defaultFeatureObject,
             last_position: x.last_position != null ? {
                 ...x.last_position,
+                last_stop: {
+                    ...x.last_position.last_stop,
+                    arrival_time: x.last_position.last_stop.arrival_time != null ?
+                        moment(parseInt(x.last_position.last_stop.arrival_time, 10)).toISOString() :
+                        null,
+                    departure_time: x.last_position.last_stop.departure_time != null ?
+                        moment(parseInt(x.last_position.last_stop.departure_time, 10)).toISOString() :
+                        null,
+                },
+                next_stop: {
+                    ...x.last_position.next_stop,
+                    arrival_time: x.last_position.next_stop.arrival_time != null ?
+                        moment(parseInt(x.last_position.next_stop.arrival_time, 10)).toISOString() :
+                        null,
+                    departure_time: x.last_position.next_stop.departure_time != null ?
+                        moment(parseInt(x.last_position.next_stop.departure_time, 10)).toISOString() :
+                        null,
+                },
                 origin_timestamp: x.last_position.origin_timestamp != null ?
                     moment(parseInt(x.last_position.origin_timestamp, 10)).toISOString() :
                     null,

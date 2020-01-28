@@ -24,7 +24,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             foreignKey: "trips_id",
         });
 
-        this.sequelizeModel.hasOne(m.VehiclePositionsVehicleTypesModel.sequelizeModel, {
+        this.sequelizeModel.belongsTo(m.VehiclePositionsVehicleTypesModel.sequelizeModel, {
             as: "vehicle_type",
             foreignKey: "vehicle_type_id",
         });

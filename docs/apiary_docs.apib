@@ -2499,9 +2499,9 @@ Cleaning Frequency:
 + url: `http://www.tsk-praha.cz/cams/cam606748.jpg?1557229128000` (string, required)
 
 ## Vehicleposition Compound (object)
-+ `trip` (Vehicleposition Trip)
-+ `last_position` (Vehicleposition Position)
-+ `all_positions` (object)
++ `trip` (Vehicleposition Trip) - Trip properties
++ `last_position` (Vehicleposition Position) - Properties of last known position
++ `all_positions` (object) - All known positions with their properties
     + type: FeatureCollection (string, required)
     + features (array)
         + (Feature Point)
@@ -2509,33 +2509,50 @@ Cleaning Frequency:
 
 ## Vehicleposition Trip (object)
 
-+ `cis_id`: "100381" (string, required) <!-- This is BIGINT in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
-+ `cis_number`: 29 (number, required)
-+ `cis_order`: 1 (number, required)
-+ `cis_short_name`: 381 (string, required)
-+ `gtfs_route_id`: L381 (string, required)
-+ `gtfs_route_short_name`: 381 (string, required)
-+ `gtfs_trip_id`: `381_51_180728` (string, required)
-+ `id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
-+ `start_cis_stop_id`: 55083 (number, required)
-+ `start_cis_stop_platform_code`: D (string, required)
-+ `start_time`: `12:00:00` (string, required)
-+ `start_timestamp`: `2019-03-18T11:00:00.000Z` (string, required)
-+ `vehicle_type`: 4 (number, required)
-+ `wheelchair_accessible`: true (boolean, required)
++ `agency_name` (object)
+    + `real`: `OAD KO Kolín` (string, required) - Agency name that normally operates the trip
+    + `scheduled`: `OAD KO Kolín` (string, required) - Agency name that currently operates the trip (normally identical to planned_agency_name)
++ `cis` (object) - All properties that come from nation central information system
+    + `line_id`: `100381` (string, required) - Full line licence number (nation-wide unique, always 6 digits) <!-- This is BIGINT in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
+    + `line_number`: 29 (number, required) - Trip number (unique within specific cis_line_id)
++ `sequence_id`: 1 (number, required) - Identifier of trip sequence operated by a single vehicle
++ `origin_route_name`: 381 (string, required) - Name of the route from which the vehicle originates
++ `gtfs` (object) - All properties tied with GTFS data format
+    + `route_id`: L381 (string, required) - Identifier of the owner route in the GTFS static feed
+    + `route_short_name`: 381 (number, required) - Identification of the line used for the public
+    + `trip_id`: `381_51_180728` (string, required) - Identifier of the trip in the GTFS static feed
+    + `trip_headsign`: `Sídliště Modřany` (string, required) - Heading of the trip (identical to what is shown on the bus)
++ `start_timestamp`: `2019-03-18T11:00:00.000Z` (string, required) - Timestamp of arrival time in first stop (UTC)
++ `vehicle_type` (Vehicleposition Vehicle Type) - Type of vehicle
++ `vehicle_registration_number`: 8635 (number, required) - Four-digit identifier of the vehicle in the system
++ `wheelchair_accessible`: true (boolean, required) - Determines wheter the vehicle has wheelchair access
+
+## Vehicleposition Vehicle Type (object)
++ `id`: 1 (number, required) - Unique id code of type
++ `description_cs`: `Autobus` (string, required) - Description of type in Czech
++ `description_en`: `Bus` (string, required) - Description of type in English
 
 ## Vehicleposition Position (object)
 
-+ `delay`: 213 (number, optional, nullable)
-+ `delay_stop_arrival`: 23 (number, optional, nullable)
-+ `delay_stop_departure`: `-84` (number, optional, nullable)
-+ `gtfs_next_stop_id`: 331 (string, optional, nullable)
-+ `gtfs_shape_dist_traveled`: "12.5" (string, optional, nullable) <!-- This is DECIMAL in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
-+ `is_canceled`: false (boolean, nullable, required)
-+ `origin_time`: `13:34:27` (string, required)
-+ `origin_timestamp`: `2019-03-18T11:00:00.000Z` (string, required)
-+ `tracking`: 2 (number, required)
-+ `trips_id`: `2019-03-18T11:00:00Z_100381_381_29` (string, required)
++ `bearing`: 34 (number, required, nullable) - Bearing, in degrees (0 = north, 90 = east, 180 = south, 270 = west)
++ `delay` (object) - Calculated delay for this position
+    + `actual`: 213 (number, optional, nullable) - Current delay, in seconds, based on actual location of a trip on its shape between stops
+    + `last_stop_arrival`: 23 (number, optional, nullable) - Delay, in seconds, at the last confirmed stop on arrival. Null, if the arrival time to the last stop equal departure time
+    + `last_stop_departure`: `-84` (number, optional, nullable) - Delay, in seconds, at the last confirmed stop on departure. Null, if it was a terminal stop.
++ `last_stop` (object) - Properties for last stop passed
+    + `id`: 331 (string, required, nullable) - GTFS Static identifier of the last stop passed on the route of the trip
+    + `sequence`: 11 (number, required, nullable) - Sequence number of the last stop passed on the route of the trip
+    + `arrival_time`: `2019-03-18T11:00:00.000Z` (string, required, nullable) - Scheduled arrival time to the last passed stop (UTC)
+    + `departure_time`: `2019-03-18T11:04:00.000Z` (string, required, nullable) - Scheduled departure time from the last passed stop (UTC)
++ `next_stop` (object) - Properties of the next stop on the route of the trip
+    + `id`: 334 (string, required, nullable) - GTFS Static identifier of the next stop on the route of the trip
+    + `sequence`: 12 (number, required, nullable) - Sequence number of the next stop on the route of the trip
+    + `arrival_time`: `2019-03-18T11:10:00.000Z` (string, required, nullable) - Scheduled arrival time of the next stop on the route of the trip
+    + `departure_time`: `2019-03-18T11:14:00.000Z` (string, required, nullable) - Scheduled departure time of the next stop on the route of the trip
++ `is_canceled`: false (boolean, nullable, required) - True, if the trip was canceled. Other fields about the position have non-defined values in case this value is true
++ `origin_timestamp`: `2019-03-18T11:00:00.000Z` (string, required) - Time at which the position was sent from the vehicle (UTC)
++ `speed`: 34 (number, optional, nullable) - Current speed of the vehicle (kilometers per hour)
++ `shape_dist_traveled`: `12.3` (string, optional, nullable) - Number of kilometers traveled on the route
 
 
 ## Waste Collection Yard (object)

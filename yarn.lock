@@ -98,9 +98,9 @@
     dotenv "^8.0.0"
     winston "^3.2.1"
 
-"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-0.2.2-5.tgz":
+"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-0.2.2-b.tgz":
   version "0.2.2"
-  resolved "../schema-definitions/golemio-schema-definitions-0.2.2-5.tgz#6fa200fcd066cced2e4ff79c221851167e506b56"
+  resolved "../schema-definitions/golemio-schema-definitions-0.2.2-b.tgz#24b30363df6615dae638fbda2fd4918c60396c70"
   dependencies:
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"
@@ -109,9 +109,9 @@
     mongoose "^5.8.9"
     sequelize "4.41.2"
 
-"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-0.2.2-a.tgz":
+"@golemio/schema-definitions@../schema-definitions/golemio-schema-definitions-0.2.2-d.tgz":
   version "0.2.2"
-  resolved "../schema-definitions/golemio-schema-definitions-0.2.2-a.tgz#7460d796364a5fabb94fdf20fbc818716bccbef6"
+  resolved "../schema-definitions/golemio-schema-definitions-0.2.2-d.tgz#4bfdea6a7596a9f31edcffdb823309f3a2a427e2"
   dependencies:
     connection-string-parser "^1.0.2"
     db-migrate "0.11.5"

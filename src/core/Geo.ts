@@ -145,7 +145,7 @@ export const buildGeojsonFeatureCollection =
     (items: any,
      lonProperty?: string,
      latProperty?: string,
-     removeLonLatProperties: boolean = false): IGeoJSONFeatureCollection => {
+     removeLonLatProperties?: boolean): IGeoJSONFeatureCollection => {
         if (!lonProperty || !latProperty) {
             log.silly("Custom lat or lon property path not specified when building GeoJSON FeatureCollection,"
                 + " assuming GeoJSONFeature format of data.");

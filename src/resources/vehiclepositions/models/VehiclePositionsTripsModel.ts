@@ -23,6 +23,11 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             as: "last_position",
             foreignKey: "trips_id",
         });
+
+        this.sequelizeModel.hasOne(m.VehiclePositionsVehicleTypesModel.sequelizeModel, {
+            as: "vehicle_type",
+            foreignKey: "vehicle_type_id",
+        });
     }
 
     /** Retrieves all vehicle trips
@@ -43,6 +48,10 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         limit?: number,
         offset?: number,
     } = {}): Promise<any> => {
+
+        // console.log(await this.sequelizeModel
+        //     .findAll({}));
+
         try {
             const { limit, offset } = options;
             const include = this.ComposeIncludes(options);
@@ -58,7 +67,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                         ...(options.tripId && { gtfs_trip_id: options.tripId }),
                     },
                 });
-
             return buildGeojsonFeatureCollection(data.map((item: any) => this.ConvertItem(item)));
         } catch (err) {
             throw new CustomError("Database error", true, "VehiclepositionsTripsModel", 500, err);
@@ -100,6 +108,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      */
     private ConvertItem = (item: any): IGeoJSONFeature => {
         const { last_position,
+            vehicle_type,
             ropidgtfs_trip,
             all_positions = [],
             ...trip } = item.toJSON ? item.toJSON() : item;
@@ -147,7 +156,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 origin_route_name: trip.origin_route_name,
                 sequence_id: trip.sequence_id,
                 vehicle_registration_number: trip.vehicle_registration_number,
-                vehicle_type: trip.vehicle_type,
+                vehicle_type,
                 wheelchair_accessible: trip.wheelchair_accessible,
             },
             ...(all_positions.length &&
@@ -202,10 +211,14 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
             as: "last_position",
-            model: sequelizeConnection.models.v_vehiclepositions_last_position,
+            model: sequelizeConnection.models.v_vehiclepositions_last_position_v2,
             where: {
                 tracking: 2,
             },
+        },
+        {
+            as: "vehicle_type",
+            model: sequelizeConnection.models[VehiclePositions.vehicleTypes.pgTableName],
         }];
         if (options.includePositions) {
             include.push({

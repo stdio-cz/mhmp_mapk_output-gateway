@@ -155,6 +155,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 },
                 origin_route_name: trip.origin_route_name,
                 sequence_id: trip.sequence_id,
+                start_timestamp: trip.start_timestamp,
                 vehicle_registration_number: trip.vehicle_registration_number,
                 vehicle_type,
                 wheelchair_accessible: trip.wheelchair_accessible,

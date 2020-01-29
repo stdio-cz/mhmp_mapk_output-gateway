@@ -211,7 +211,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
             as: "last_position",
-            model: sequelizeConnection.models.v_vehiclepositions_last_position_v2,
+            model: sequelizeConnection.models.v_vehiclepositions_last_position,
             where: {
                 tracking: 2,
             },

@@ -2453,7 +2453,7 @@ Cleaning Frequency:
     + `scheduled`: `OAD KO Kolín` (string, required) - Agency name that currently operates the trip (normally identical to planned_agency_name)
 + `cis` (object) - All properties that come from nation central information system
     + `line_id`: `100381` (string, required) - Full line licence number (nation-wide unique, always 6 digits) <!-- This is BIGINT in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
-    + `line_number`: 29 (number, required) - Trip number (unique within specific cis_line_id)
+    + `trip_number`: 29 (number, required) - Trip number (unique within specific cis_line_id)
 + `sequence_id`: 1 (number, required) - Identifier of trip sequence operated by a single vehicle
 + `origin_route_name`: 381 (string, required) - Name of the route from which the vehicle originates
 + `gtfs` (object) - All properties tied with GTFS data format

@@ -145,7 +145,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 },
                 cis: {
                     line_id: trip.cis_line_id,
-                    line_number: trip.cis_line_number,
+                    trip_number: trip.cis_trip_number,
                 },
                 gtfs: {
                     route_id: trip.gtfs_route_id,

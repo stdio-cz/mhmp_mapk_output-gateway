@@ -58,19 +58,6 @@ export class GeoJsonRouter extends BaseRouter {
             ], checkErrors, this.GetOne);
     }
 
-    /**
-     * Converts a single value of `any` type to an array containing this element
-     */
-    public ConvertToArray = (toBeArray: any) => {
-        if (!(toBeArray instanceof Array)) {
-            log.silly("Converting value `" + toBeArray + "` to array.");
-            const val = toBeArray;
-            toBeArray = [];
-            toBeArray.push(val);
-        }
-        return toBeArray;
-    }
-
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
         // Parsing parameters
         let ids: number[] = req.query.ids;

@@ -16,6 +16,19 @@ export class BaseRouter {
     protected model: BaseModel;
 
     /**
+     * Converts a single value of `any` type to an array containing this element
+     */
+    public ConvertToArray = (toBeArray: any) => {
+        if (!(toBeArray instanceof Array)) {
+            log.silly("Converting value `" + toBeArray + "` to array.");
+            const val = toBeArray;
+            toBeArray = [];
+            toBeArray.push(val);
+        }
+        return toBeArray;
+    }
+
+    /**
      * Performs a final check on the data before sending them to the client (response)
      * @param data data to be sent to response
      */

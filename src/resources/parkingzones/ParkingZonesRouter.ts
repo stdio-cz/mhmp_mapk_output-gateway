@@ -29,15 +29,6 @@ export class ParkingZonesRouter extends GeoJsonRouter {
         );
     }
 
-    public GetAll = async (req: Request, res: Response, next: NextFunction) => {
-        this.model.GetAll().then((data) => {
-            res.status(200)
-                .send(data);
-        }).catch((err) => {
-            next(err);
-        });
-    }
-
     public GetOne = async (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
 

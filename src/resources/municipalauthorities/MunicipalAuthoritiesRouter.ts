@@ -84,12 +84,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
             if (!data) {
                 return res.status(204).send();
             }
-            const dataJson = data.toJSON();
-            const result = {
-                ...dataJson,
-                last_updated: moment(dataJson.last_updated).toISOString(),
-            };
-            return res.status(200).send(result);
+            return res.status(200).send(data);
         } catch (err) {
             next(err);
         }

@@ -1,4 +1,5 @@
 import { CustomError } from "@golemio/errors";
+import * as moment from "moment";
 import { SchemaDefinition } from "mongoose";
 import { MongoModel } from "../../core/models";
 import { log } from "../Logger";
@@ -42,7 +43,7 @@ export class HistoryModel extends MongoModel {
         sensorId?: string | number,
     }) => {
         try {
-            const q = this.model.find();
+            const q = this.model.find().lean();
             if (options.limit) {
                 q.limit(options.limit);
             }
@@ -60,7 +61,13 @@ export class HistoryModel extends MongoModel {
             }
             q.select(this.projection);
             q.sort({ [this.primaryTimePropertyLocation]: -1 });
-            return await q.exec();
+            const data = await q.exec();
+            return data.map((record: any) => {
+                if (record.updated_at) {
+                    record.updated_at = moment(record.updated_at).toISOString();
+                }
+                return record;
+            });
         } catch (err) {
             throw new CustomError("Database error", true, "HistoryModel", 500, err);
         }

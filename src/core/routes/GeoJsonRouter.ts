@@ -25,7 +25,7 @@ export class GeoJsonRouter extends BaseRouter {
     protected model: GeoJsonModel;
 
     protected standardParams = [
-        query("updatedSince").optional().isNumeric(),
+        query("updatedSince").optional().isISO8601(),
         query("districts").optional(),
         query("districts.*").isString(),
         query("ids").optional(),

@@ -1,14 +1,11 @@
 "use strict";
 
-import "mocha";
-import { mongooseConnection } from "../../src/core/database";
-import { ParkingZonesModel } from "../../src/resources/parkingzones/ParkingZonesModel";
-
 import * as chai from "chai";
 import { expect } from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { log } from "../../src/core/Logger";
+import "mocha";
+import { mongooseConnection } from "../../src/core/database";
+import { ParkingZonesModel } from "../../src/resources/parkingzones/ParkingZonesModel";
 
 const gJsonTools = require("geojson-tools");
 
@@ -78,7 +75,7 @@ describe("ParkingZonesModel", () => {
     });
 
     it("should return by last updated (timestamp)", async () => {
-        const currentDate = new Date().getTime();
+        const currentDate = new Date().toISOString();
         const data = await model.GetAll({ updatedSince: currentDate });
         // TODO: Better test to check if the data are recently updated
         expect(data.features.length).to.be.equal(0);

@@ -1,7 +1,12 @@
 import { CustomError } from "@golemio/errors";
-import * as moment from "moment";
+import moment = require("moment");
 import { SchemaDefinition } from "mongoose";
-import { buildGeojsonFeatureCollection, GeoCoordinatesType, IGeoJSONFeature, IGeoJSONFeatureCollection } from "../Geo";
+import {
+    buildGeojsonFeatureCollection,
+    GeoCoordinatesType,
+    IGeoJSONFeature,
+    IGeoJSONFeatureCollection,
+} from "../Geo";
 import { log } from "../Logger";
 import { MongoModel } from "./";
 import { IPropertyResponseModel } from "./response";
@@ -47,7 +52,7 @@ export class GeoJsonModel extends MongoModel {
      * @param options.range Maximum range from specified latLng. Only data within this range will be returned.
      * @param options.limit Limit
      * @param options.offset Offset
-     * @param options.updatedSince Filters all results with older updated_at timestamp than this parameter
+     * @param options.updatedSince Filters out all results with older updated_at than this parameter
      * (filters not-updated data)
      * @param options.additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
@@ -63,10 +68,10 @@ export class GeoJsonModel extends MongoModel {
         limit?: number,
         /** Offset (can be used for pagination). Evaluated last, after all filters applied. */
         offset?: number,
-        /** Filters all results with older updated_at timestamp than this parameter
+        /** Filters out all results with older updated_at than this parameter
          * (filters not-updated data)
          */
-        updatedSince?: number,
+        updatedSince?: string,
         /** Filters the data to include only these with one of the specified "district" value */
         districts?: string[],
         /** Filters the data to include only specified IDs */
@@ -101,7 +106,8 @@ export class GeoJsonModel extends MongoModel {
 
             // Specify a query filter conditions to search by last updated time
             if (options.updatedSince) {
-                this.AddSelection({ "properties.updated_at": { $gte: options.updatedSince } });
+                const unixUpdatedSince = moment(options.updatedSince).unix();
+                this.AddSelection({ "properties.updated_at": { $gte: unixUpdatedSince * 1000 } });
             }
 
             // Specify a query filter conditions to search by districts
@@ -135,10 +141,10 @@ export class GeoJsonModel extends MongoModel {
 
             const data = await q.exec();
             // Create GeoJSON FeatureCollection output
-            // const featureCollection: IGeoJSONFeatureCollection = buildGeojsonFeatureCollection(data);
-            // featureCollection.features = featureCollection.features.map(
-            //     (feature) => this.MapUpdatedAtToISOString(feature));
-            return buildGeojsonFeatureCollection(data);
+            const featureCollection: IGeoJSONFeatureCollection = buildGeojsonFeatureCollection(data);
+            featureCollection.features = featureCollection.features.map(
+                (feature) => this.MapUpdatedAtToISOString(feature));
+            return featureCollection;
         } catch (err) {
             throw new CustomError("Database error", true, "GeoJsonModel", 500, err);
         }
@@ -149,13 +155,13 @@ export class GeoJsonModel extends MongoModel {
      * @returns Object of the retrieved record or null
      */
     public async GetOne(inId: any): Promise<object> {
-        const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").exec();
+        const found: IGeoJSONFeature =
+            await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").lean().exec();
         if (!found || found instanceof Array && found.length === 0) {
             log.debug("Could not find any record by specified selection.", this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, "GeoJsonModel", 404);
         } else {
-            // return this.MapUpdatedAtToISOString(found.toObject());
-            return found.toObject();
+            return this.MapUpdatedAtToISOString(found);
         }
     }
 

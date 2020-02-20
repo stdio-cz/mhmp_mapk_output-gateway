@@ -6,8 +6,6 @@ import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from 
 import {
     AirQualityStations,
     BicycleParkings,
-    IceGatewaySensors,
-    IceGatewayStreetLamps,
     Meteosensors,
     MunicipalPoliceStations,
     Parkings,
@@ -15,7 +13,6 @@ import {
     SharedBikes,
     SharedCars,
     TrafficCameras,
-    ZtpParkings,
 } from "@golemio/schema-definitions";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
@@ -40,33 +37,6 @@ import { wasteCollectionYardsRouter } from "./resources/wastecollectionyards";
 
 // Configuration of the routes to be dynamically created by RouterBuilder
 export const generalRoutes = [
-    {
-        collectionName: IceGatewayStreetLamps.mongoCollectionName,
-        name: IceGatewayStreetLamps.name,
-        schema: IceGatewayStreetLamps.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: ZtpParkings.mongoCollectionName,
-        history: {
-            collectionName: ZtpParkings.history.mongoCollectionName,
-            historyTimePropertyLocation: "last_updated_at",
-            name: ZtpParkings.history.name,
-            schema: ZtpParkings.history.outputMongooseSchemaObject,
-        },
-        name: ZtpParkings.name,
-        schema: ZtpParkings.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: IceGatewaySensors.mongoCollectionName,
-        history: {
-            collectionName: IceGatewaySensors.history.mongoCollectionName,
-            historyTimePropertyLocation: "created_at",
-            name: IceGatewaySensors.history.name,
-            schema: IceGatewaySensors.history.outputMongooseSchemaObject,
-        },
-        name: IceGatewaySensors.name,
-        schema: IceGatewaySensors.outputMongooseSchemaObject,
-    },
     {
         collectionName: SharedCars.mongoCollectionName,
         expire: 30000,

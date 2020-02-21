@@ -67,7 +67,7 @@ export class SortedWasteStationsModel extends GeoJsonModel {
         /** Filters all results with older updated_at timestamp than this parameter
          * (filters not-updated data)
          */
-        updatedSince?: number,
+        updatedSince?: string,
         /** Filters the data to include only these with one of the specified "district" value */
         districts?: string[],
         /** Filters the data to include only specified IDs */

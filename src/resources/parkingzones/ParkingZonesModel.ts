@@ -23,7 +23,7 @@ export class ParkingZonesModel extends GeoJsonModel {
      * @param options.range Maximum range from specified latLng. Only data within this range will be returned.
      * @param options.limit Limit
      * @param options.offset Offset
-     * @param options.updatedSince Filters all results with older updated_at timestamp than this parameter
+     * @param options.updatedSince Filters out all results with older updated_at than this parameter
      * (filters not-updated data)
      * @param options.additionalFilters Object with additional filter conditions to be added to the selection
      * @returns GeoJSON FeatureCollection with all retrieved objects in "features"
@@ -34,7 +34,7 @@ export class ParkingZonesModel extends GeoJsonModel {
         range?: number,
         limit?: number,
         offset?: number,
-        updatedSince?: number,
+        updatedSince?: string,
         districts?: string[],
         ids?: number[],
         additionalFilters?: object,
@@ -58,13 +58,13 @@ export class ParkingZonesModel extends GeoJsonModel {
      * @returns Object of the retrieved record or null
      */
     public GetOne = async (inId: any): Promise<object> => {
-        const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").exec();
+        const found = await this.model.findOne(this.PrimaryIdentifierSelection(inId), "-_id -__v").lean().exec();
         if (!found || found instanceof Array && found.length === 0) {
             log.debug("Could not find any record by following selection:");
             log.debug(this.PrimaryIdentifierSelection(inId));
             throw new CustomError("Id `" + inId + "` not found", true, "ParkingZonesModel", 404);
         } else {
-            return this.mapFeatureRecord(found);
+            return this.mapFeatureRecord(this.MapUpdatedAtToISOString(found));
         }
     }
 

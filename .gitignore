@@ -95,5 +95,3 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
-
-.npmrc

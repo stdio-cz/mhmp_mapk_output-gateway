@@ -28,7 +28,6 @@ run_tests:
       alias: postgres
     - mongo:4.0.5
   script:
-    - cat $VERDACCIO_NPMRC_PATH > .npmrc
     - yarn
     - yarn run tslint
     - yarn run build
@@ -44,7 +43,6 @@ run_tests:
 build_image_v2:
   stage: build
   script:
-    - cat $VERDACCIO_NPMRC_PATH > .npmrc
     - SANITIZED_BRANCH=`echo -n ${CI_COMMIT_REF_NAME//[^a-zA-Z0-9_-]/} | tr A-Z a-z`
     - echo $CI_COMMIT_SHA > commitsha
     - docker build -t $CI_REGISTRY_IMAGE/v2/$SANITIZED_BRANCH:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/v2/$SANITIZED_BRANCH:latest .
@@ -66,10 +64,9 @@ include:
 
 pages:
   stage: deploy
-  image: node:8
+  image: node:12
   script:
-  - cat $VERDACCIO_NPMRC_PATH > .npmrc
-  - yarn install && rm -f .npmrc
+  - yarn
   - npm run generate-docs
   - mv docs/typedoc public
   artifacts:

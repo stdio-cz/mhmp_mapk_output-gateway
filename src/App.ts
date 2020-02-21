@@ -10,7 +10,6 @@ import {
     MunicipalPoliceStations,
     Parkings,
     PublicToilets,
-    SharedBikes,
     SharedCars,
     TrafficCameras,
 } from "@golemio/schema-definitions";

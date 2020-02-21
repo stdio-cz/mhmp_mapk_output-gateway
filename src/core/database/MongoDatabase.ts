@@ -21,9 +21,9 @@ export class MongoDatabase {
                 throw new Error("Undefined connection string.");
             }
             await mongoose.connect(this.connectionString, {
-                autoReconnect: true,
                 useCreateIndex: true,
                 useNewUrlParser: true,
+                useUnifiedTopology: true,
             });
         } catch (err) {
             log.error("Could not connect to " + this.connectionString);

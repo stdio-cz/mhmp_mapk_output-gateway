@@ -34,8 +34,21 @@ export class BaseRouter {
      */
     protected async CheckBeforeSendingData(data: any) {
         if (data.length > config.pagination_max_limit) {
-            throw new CustomError("Pagination limit error", true, "GeoJsonRouter", 413);
+            throw new CustomError("Pagination limit error", true, "BaseRouter", 413);
         }
         return data;
+    }
+
+    /**
+     * Performs a check if limit of requested data is not exceded
+     * @param routerName name passed to the returned Error object in case of fail
+     */
+    protected CheckPaginationLimitMiddleware(routerName?: string) {
+        return (req: Request, res: Response, next: NextFunction) => {
+            if (req.query.limit && config.pagination_max_limit < +req.query.limit) {
+                return next( new CustomError("Pagination limit error", true, routerName || "BaseRouter", 413));
+            }
+            return next();
+        };
     }
 }

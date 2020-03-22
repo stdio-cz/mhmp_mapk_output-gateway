@@ -94,7 +94,7 @@ export const parseCoordinates = async (
  * @returns {IGeoJSONFeature} GeoJSON feature - object with geometry, properties, and type = "Feature"
  */
 export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty: string): IGeoJSONFeature => {
-    const properties = item.toJSON ? item.toJSON() : item;
+    const properties = item.toJSON ? item.toJSON() : (item || {});
     const lon = getSubProperty<number>(lonProperty, item);
     const lat = getSubProperty<number>(latProperty, item);
     return ({
@@ -168,8 +168,8 @@ export const buildGeojsonFeatureCollection =
                     .map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty))
                     .map((feature: any) => {
                         if (removeLonLatProperties) {
-                            delete feature[lonProperty];
-                            delete feature[latProperty];
+                            delete feature.properties[lonProperty];
+                            delete feature.properties[latProperty];
                             return feature;
                         } else {
                             return feature;

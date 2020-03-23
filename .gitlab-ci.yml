@@ -5,7 +5,7 @@ variables:
   POSTGRES_USER: postgres
   POSTGRES_PASS: test-pass
   POSTGRES_DB: testdb
-  MONGO_CONN: "mongodb://mongo/dataplatform"
+  MONGO_CONN: "mongodb://mongo:27017/dataplatform"
   APIARY_NAME: 'golemioapi'
   APIARY_NAME_DEV: 'outputgatewaydev'
   HOST_URL: 'https://api.golemio.cz/v2'

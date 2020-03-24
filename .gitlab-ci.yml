@@ -6,6 +6,7 @@ variables:
   POSTGRES_PASS: test-pass
   POSTGRES_DB: testdb
   MONGO_CONN: "mongodb://mongo:27017/dataplatform"
+  MONGO_TIMEOUT: 60000
   APIARY_NAME: 'golemioapi'
   APIARY_NAME_DEV: 'outputgatewaydev'
   HOST_URL: 'https://api.golemio.cz/v2'

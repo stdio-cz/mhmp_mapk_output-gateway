@@ -4,7 +4,7 @@ custom:
   apiaryApiName: outputgatewaydev
 dry-run: null
 language: nodejs
-server: npm start
+server: node -r dotenv/config dist/index.js
 server-wait: 3
 init: false
 names: false

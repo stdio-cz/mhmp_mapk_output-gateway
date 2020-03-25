@@ -22,8 +22,10 @@ export class MongoDatabase {
             if (!this.connectionString || this.connectionString === "YOUR CONNECTION STRING GOES HERE") {
                 throw new Error("Undefined connection string.");
             }
+
             await mongoose.connect(this.connectionString, {
                 connectTimeoutMS: this.connectTimeoutMS,
+                serverSelectionTimeoutMS: this.connectTimeoutMS,
                 useCreateIndex: true,
                 useNewUrlParser: true,
                 useUnifiedTopology: true,

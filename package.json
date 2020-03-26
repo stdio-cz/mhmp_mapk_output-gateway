@@ -1,6 +1,6 @@
 {
   "name": "@golemio/output-gateway",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Output gateway for Golemio data platform",
   "main": "index.js",
   "scripts": {
@@ -51,7 +51,7 @@
     "@types/express": "^4.16.0",
     "@types/mocha": "^5.2.5",
     "@types/moment": "^2.13.0",
-    "@types/mongodb": "^3.1.12",
+    "@types/mongodb": "^3.5.3",
     "@types/mongoose": "^5.2.19",
     "@types/morgan": "^1.7.35",
     "@types/node": "^10.12.7",

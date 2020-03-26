@@ -309,10 +309,10 @@
   dependencies:
     moment "*"
 
-"@types/mongodb@*", "@types/mongodb@^3.1.12":
-  version "3.3.16"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.3.16.tgz#3b125aa0e31ef0f6733fcfcf507cce1324823a26"
-  integrity sha512-i1Ov36BXdp+urtPsaSvrNfCdsaVn4Ukq1m1kGyzdWB1+eg3gJ68unXU5LNmnF4EAMRFY6FXZzA7/W3NST40b8g==
+"@types/mongodb@*", "@types/mongodb@^3.5.3":
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.3.tgz#30187822af029b21c419a1e0415a7dcf48c2668a"
+  integrity sha512-89Ftby4+/qliA+Yb8FYMPYBryKdqnJ63FmZwZ0EFNI8HZ7adT9r2XxdMkqC9SdIOMfk39km9iFXr+obBm1dFGQ==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"

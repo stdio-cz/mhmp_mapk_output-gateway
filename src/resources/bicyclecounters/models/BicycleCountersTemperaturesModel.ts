@@ -51,6 +51,7 @@ export class BicycleCountersTemperaturesModel extends SequelizeModel {
 
             if (aggregate) {
                 attributes.push([Sequelize.fn("avg", Sequelize.col("value")), "value"]);
+                attributes.push([Sequelize.fn("count", Sequelize.col("locations_id")), "measurement_count"]);
                 group = ["locations_id"];
             } else {
                 attributes.push("value");

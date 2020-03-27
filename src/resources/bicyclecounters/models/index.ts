@@ -12,6 +12,7 @@ export interface IBicycleCountersModels {
 
 export interface IDetection {
     id: string;
+    measurement_count: number;
     measured_from: string;
     measured_to: string;
     value: number;

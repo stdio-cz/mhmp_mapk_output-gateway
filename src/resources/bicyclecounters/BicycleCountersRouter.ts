@@ -89,6 +89,7 @@ export class BicycleCountersRouter extends BaseRouter {
                         element.measured_to = (isoDateTo || new Date()).toISOString();
                         element.value = Math.round((element.value) * 100) / 100;
                     } else {
+                        element.measurement_count = 1;
                         element.measured_from = (new Date(parseInt(element.measured_from, 10))).toISOString();
                         element.measured_to = (new Date(parseInt(element.measured_to, 10))).toISOString();
                     }

@@ -98,12 +98,14 @@ describe("bicycleCountersRouter", () => {
                   id: "camea-BC_ZA-KL",
                   measured_from: "2020-03-14T10:45:00.000Z",
                   measured_to: "2020-03-14T10:50:00.000Z",
+                  measurement_count: 1,
                   value: 10,
                 },
                 {
                   id: "camea-BC_ZA-KL",
                   measured_from: "2020-03-14T10:40:00.000Z",
                   measured_to: "2020-03-14T10:45:00.000Z",
+                  measurement_count: 1,
                   value: 3,
                 },
               ], done);
@@ -119,12 +121,14 @@ describe("bicycleCountersRouter", () => {
                   id: "camea-BC_ZA-KLBO",
                   measured_from: "2020-03-14T10:05:00.000Z",
                   measured_to: "2020-03-14T10:10:00.000Z",
+                  measurement_count: 1,
                   value: 10,
                 },
                 {
                   id: "camea-BC_ZA-KLBO",
                   measured_from: "2020-03-14T10:10:00.000Z",
                   measured_to: "2020-03-14T10:15:00.000Z",
+                  measurement_count: 1,
                   value: 10,
                 },
               ], done);

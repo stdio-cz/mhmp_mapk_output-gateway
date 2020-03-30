@@ -206,21 +206,6 @@ Data from air quality stations
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parking Zones Tariffs [/parkingzones/tariffs]
-
-### GET Parking Zones Tariffs [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
-
-+ Response 200 (application/json; charset=utf-8)
-
-       + Attributes (array)
-        + (Parking Zone Tariff)
-
 # Group Parking
 Data about parking.
 
@@ -345,6 +330,21 @@ Parking type enum:
 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
+
+## Parking Zones Tariffs [/parkingzones/tariffs]
+
+### GET Parking Zones Tariffs [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+       + Attributes (array)
+        + (Parking Zone Tariff)
 
 ## Parking Zone [/parkingzones/{parkingzoneCode}]
 

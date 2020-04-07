@@ -1058,7 +1058,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName}]
+## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName,updatedSince}]
 
 + Parameters
 
@@ -1067,6 +1067,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
     + routeId: 100381 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
+    + updatedSince: 2020-04-07T06:32:29.000Z (string, optional) Limit results to the ones updated since
 
 ### GET All Vehicle Positions [GET]
 

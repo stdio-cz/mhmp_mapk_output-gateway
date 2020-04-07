@@ -1032,6 +1032,47 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+## GTFS Routes [/gtfs/routes{?limit,offset}]
+
++ Parameters
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
+### GET All GTFS Stops [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Route])
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Route [/gtfs/routes/{id}]
+
++ Parameters
+    + `id`: `L991` (string, required)
+
+### GET GTFS Stop [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (GTFS Route)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
 ## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
 
 + Parameters

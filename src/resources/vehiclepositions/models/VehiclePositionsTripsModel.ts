@@ -47,7 +47,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         includePositions?: boolean,
         limit?: number,
         offset?: number,
-        updatedSince?: any,
+        updatedSince?: Date | null,
     } = {}): Promise<any> => {
 
         // console.log(await this.sequelizeModel

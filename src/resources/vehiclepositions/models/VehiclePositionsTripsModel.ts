@@ -218,7 +218,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             where: {
                 tracking: 2,
                 ...(options.updatedSince && {
-                    updated_at: {
+                    origin_timestamp: {
                         [sequelizeConnection.Sequelize.Op.gte]: options.updatedSince.getTime(),
                     },
                 }),

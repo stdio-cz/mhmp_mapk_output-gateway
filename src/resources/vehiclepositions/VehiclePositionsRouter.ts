@@ -36,6 +36,7 @@ export class VehiclePositionsRouter {
                 offset: req.query.offset,
                 routeId: req.query.routeId,
                 routeShortName: req.query.routeShortName,
+                updatedSince: req.query.updatedSince ? (new Date(req.query.updatedSince)) : null,
             });
             if (data.features.length > config.pagination_max_limit) {
                 throw new CustomError("Pagination limit error", true, "VehiclePositionsRouter", 413);
@@ -157,6 +158,7 @@ export class VehiclePositionsRouter {
                 query("routeId").optional(),
                 query("routeShortName").optional(),
                 query("includePositions").optional().isBoolean(),
+                query("updatedSince").optional().isISO8601(),
             ],
             pagination,
             checkErrors,

@@ -47,6 +47,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         includePositions?: boolean,
         limit?: number,
         offset?: number,
+        updatedSince?: Date | null,
     } = {}): Promise<any> => {
 
         // console.log(await this.sequelizeModel
@@ -209,12 +210,18 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      */
     private ComposeIncludes = (options: {
         includePositions?: boolean,
+        updatedSince?: any,
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
             as: "last_position",
             model: sequelizeConnection.models.v_vehiclepositions_last_position,
             where: {
                 tracking: 2,
+                ...(options.updatedSince && {
+                    updated_at: {
+                        [sequelizeConnection.Sequelize.Op.gte]: options.updatedSince.getTime(),
+                    },
+                }),
             },
         },
         {

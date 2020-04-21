@@ -10,7 +10,11 @@ import { NextFunction, Request, Response, Router } from "express";
 import { param } from "express-validator/check";
 import { useCacheMiddleware } from "../../core/redis";
 import { BaseRouter } from "../../core/routes/BaseRouter";
-import { checkErrors, pagination } from "../../core/Validation";
+import {
+    checkErrors,
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 import { DepartureBoardsModel } from "./DepartureBoardsModel";
 
 export class DepartureBoardsRouter extends BaseRouter {
@@ -48,6 +52,7 @@ export class DepartureBoardsRouter extends BaseRouter {
             param("id").exists().isString(),
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("DepartureBoardsRouter"),
             useCacheMiddleware(expire),
             this.GetDepartureBoard,
         );

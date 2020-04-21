@@ -10,7 +10,11 @@ import {
 } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { BaseRouter } from "../../core/routes/BaseRouter";
-import { checkErrors, pagination } from "../../core/Validation";
+import {
+    checkErrors,
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 
 import { IGeoJSONFeatureCollection } from "../../core/Geo";
 
@@ -153,7 +157,7 @@ export class BicycleCountersRouter extends BaseRouter {
             ],
             pagination,
             checkErrors,
-            this.CheckPaginationLimitMiddleware("BicycleCountersRouter"),
+            checkPaginationLimitMiddleware("BicycleCountersRouter"),
             useCacheMiddleware(expire),
             this.GetData(this.BicycleCountersTemperaturesModel),
         );
@@ -167,7 +171,7 @@ export class BicycleCountersRouter extends BaseRouter {
             ],
             pagination,
             checkErrors,
-            this.CheckPaginationLimitMiddleware("BicycleCountersRouter"),
+            checkPaginationLimitMiddleware("BicycleCountersRouter"),
             useCacheMiddleware(expire),
             this.GetData(this.BicycleCountersDetectionsModel),
         );
@@ -179,7 +183,7 @@ export class BicycleCountersRouter extends BaseRouter {
             ],
             pagination,
             checkErrors,
-            this.CheckPaginationLimitMiddleware("BicycleCountersRouter"),
+            checkPaginationLimitMiddleware("BicycleCountersRouter"),
             useCacheMiddleware(expire),
             this.GetAll,
         );

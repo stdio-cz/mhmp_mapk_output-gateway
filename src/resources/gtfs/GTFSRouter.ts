@@ -13,7 +13,11 @@ import config from "../../config/config";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { BaseRouter } from "../../core/routes/BaseRouter";
-import { checkErrors, pagination } from "../../core/Validation";
+import {
+    checkErrors,
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 import { models } from "./models";
 import { GTFSCalendarModel } from "./models/GTFSCalendarModel";
 import { GTFSRoutesModel } from "./models/GTFSRoutesModel";
@@ -239,6 +243,7 @@ export class GTFSRouter extends BaseRouter {
         this.router.get("/routes",
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("GTFSRouter"),
             useCacheMiddleware(expire),
             this.GetAllRoutes,
         );
@@ -254,6 +259,7 @@ export class GTFSRouter extends BaseRouter {
             query("date").optional().isISO8601(),
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("GTFSRouter"),
             useCacheMiddleware(expire),
             this.GetAllServices,
         );
@@ -263,6 +269,7 @@ export class GTFSRouter extends BaseRouter {
         this.router.get("/shapes/:id",
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("GTFSRouter"),
             param("id").exists(),
             useCacheMiddleware(expire),
             this.GetAllShapes,
@@ -275,6 +282,7 @@ export class GTFSRouter extends BaseRouter {
             this.tripInclusions,
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("GTFSRouter"),
             useCacheMiddleware(expire),
             this.GetAllTrips,
         );
@@ -295,6 +303,7 @@ export class GTFSRouter extends BaseRouter {
             ],
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("GTFSRouter"),
             useCacheMiddleware(expire),
             this.GetAllStops);
         this.router.get("/stops/:id",
@@ -309,6 +318,7 @@ export class GTFSRouter extends BaseRouter {
             "/stoptimes/:stopId",
             this.stopTimesHandlers,
             pagination,
+            checkPaginationLimitMiddleware("GTFSRouter"),
             checkErrors,
             (req: Request, res: Response, next: NextFunction) => {
                 if (req.query.from &&

@@ -115,9 +115,12 @@ export default class App {
     // Starts the application and runs the server
     public start = async (): Promise<void> => {
         try {
-            if (config.sentry_enable) {
+            if (config.sentry_enable && config.sentry_dsn) {
                 Sentry.init({ dsn: config.sentry_dsn });
+            } else {
+                throw new Error("sentry cannot be null");
             }
+            this.express.use(Sentry.Handlers.requestHandler());
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
@@ -135,6 +138,7 @@ export default class App {
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
         } catch (err) {
+            Sentry.captureException(err);
             ErrorHandler.handle(err);
         }
     }
@@ -157,6 +161,8 @@ export default class App {
     }
 
     private middleware = (): void => {
+        // The request handler must be the first middleware on the app
+        // this.express.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
         this.express.use(getRequestLogger);
         this.express.use(this.setHeaders);
         this.express.use(express.static("public"));
@@ -197,6 +203,20 @@ export default class App {
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);
         builder.BuildAllRoutes();
+
+        // The error handler must be before any other error middleware and after all controllers
+        // this.express.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
+
+        this.express.get("/debug-sentry", function mainHandler(req, res) {
+            try {
+                throw new CustomError("Test sentry error!", true, "App.ts", 500);
+            } catch (e) {
+                Sentry.captureException(e);
+                // ErrorHandler.handle(e);
+            }
+        });
+
+        this.express.use(Sentry.Handlers.errorHandler());
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {

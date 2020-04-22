@@ -11,7 +11,11 @@ import * as moment from "moment";
 import config from "../../config/config";
 import { IGeoJSONFeature, IGeoJSONFeatureCollection } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
-import { checkErrors, pagination } from "../../core/Validation";
+import {
+    checkErrors,
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 import { models } from "./models";
 import { VehiclePositionsTripsModel } from "./models/VehiclePositionsTripsModel";
 
@@ -162,6 +166,7 @@ export class VehiclePositionsRouter {
             ],
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("VehiclePositionsRouter"),
             useCacheMiddleware(expire),
             this.GetAll,
         );

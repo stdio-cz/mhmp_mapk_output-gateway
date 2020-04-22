@@ -12,7 +12,11 @@ import config from "../../config/config";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { checkErrors, pagination } from "../../core/Validation";
+import {
+    checkErrors,
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 import { SortedWasteMeasurementsModel, SortedWastePicksModel, SortedWasteStationsModel } from "./models";
 
 export class SortedWasteRouter extends GeoJsonRouter {
@@ -31,6 +35,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
         ],
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("SortedWasteRouter"),
             useCacheMiddleware(),
             this.GetMeasurements,
         );
@@ -42,6 +47,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
             ],
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("SortedWasteRouter"),
             useCacheMiddleware(),
             this.GetPicks,
         );
@@ -53,6 +59,7 @@ export class SortedWasteRouter extends GeoJsonRouter {
             this.standardParams,
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("SortedWasteRouter"),
             useCacheMiddleware(),
             this.GetAll,
         );

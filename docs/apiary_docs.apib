@@ -1038,7 +1038,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 
-### GET All GTFS Stops [GET]
+### GET All GTFS Routes [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1108,7 +1108,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
     + routeId: 100381 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
-    + updatedSince: 2020-04-07T06:32:29.000Z (string, optional) Limit results to the ones updated since
+    + updatedSince: `2020-04-07T06:32:29.000Z` (string, optional) Limit results to the ones updated since
 
 ### GET All Vehicle Positions [GET]
 

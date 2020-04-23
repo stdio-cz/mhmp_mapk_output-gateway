@@ -56,8 +56,8 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         try {
             const { limit, offset } = options;
             const include = this.ComposeIncludes(options);
-            const data = await this.sequelizeModel
-                .findAll({
+            const {rows, count} = await this.sequelizeModel
+                .findAndCountAll({
                     include,
                     limit,
                     offset,
@@ -68,7 +68,21 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                         ...(options.tripId && { gtfs_trip_id: options.tripId }),
                     },
                 });
-            return buildGeojsonFeatureCollection(data.map((item: any) => this.ConvertItem(item)));
+
+            if (count === 0) {
+                return {
+                    data: buildGeojsonFeatureCollection([]),
+                    metadata: {
+                        max_updated_at: options.updatedSince,
+                    },
+                };
+            }
+            return {
+                data: buildGeojsonFeatureCollection(rows.map((item: any) => this.ConvertItem(item))),
+                metadata: {
+                    max_updated_at: new Date(Math.max(...rows.map((d) => d.last_position.updated_at))),
+                },
+            };
         } catch (err) {
             throw new CustomError("Database error", true, "VehiclepositionsTripsModel", 500, err);
         }
@@ -157,6 +171,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 origin_route_name: trip.origin_route_name,
                 sequence_id: trip.sequence_id,
                 start_timestamp: trip.start_timestamp,
+                updated_at: trip.updated_at,
                 vehicle_registration_number: trip.vehicle_registration_number,
                 vehicle_type,
                 wheelchair_accessible: trip.wheelchair_accessible,
@@ -218,8 +233,8 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             where: {
                 tracking: 2,
                 ...(options.updatedSince && {
-                    origin_timestamp: {
-                        [sequelizeConnection.Sequelize.Op.gte]: options.updatedSince.getTime(),
+                    updated_at: {
+                        [sequelizeConnection.Sequelize.Op.gt]: options.updatedSince.getTime(),
                     },
                 }),
             },

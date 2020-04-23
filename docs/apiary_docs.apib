@@ -1101,6 +1101,9 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName,updatedSince}]
 
+This endpoint returns special header `X-Last-Modified` which coresponds with the latest resource update timestamp. 
+It is posible to use it as `?updatedSince` query parameter value to obtain only newer data than this timestamp.
+
 + Parameters
 
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1108,7 +1111,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
     + routeId: 100381 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
-    + updatedSince: `2020-04-07T06:32:29.000Z` (string, optional) Limit results to the ones updated since
+    + updatedSince: `2020-04-07T06:32:29.000Z` (string, optional) Limit results to the ones updated after (timestamp greater than)
 
 ### GET All Vehicle Positions [GET]
 

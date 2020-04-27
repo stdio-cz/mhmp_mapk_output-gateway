@@ -21,7 +21,6 @@ export class VehiclePositionsLastPositionModel {
         this.sequelizeModel.removeAttribute("create_batch_id");
         this.sequelizeModel.removeAttribute("updated_by");
         this.sequelizeModel.removeAttribute("created_at");
-        this.sequelizeModel.removeAttribute("updated_at");
     }
 
     public Associate = (m: IVehiclePositionsModels) => {

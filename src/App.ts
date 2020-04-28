@@ -110,6 +110,15 @@ export default class App {
      */
     constructor() {
         //
+        process.on("uncaughtException", (err: Error) => {
+            Sentry.captureException(err);
+        });
+        process.on("unhandledRejection", (reason, promise) => {
+            Sentry.captureException(reason);
+        });
+        process.on("exit", (code) => {
+            Sentry.captureMessage(`Output gateway exited with code: ${code}`);
+        });
     }
 
     // Starts the application and runs the server
@@ -120,7 +129,7 @@ export default class App {
             } else {
                 throw new Error("sentry cannot be null");
             }
-            this.express.use(Sentry.Handlers.requestHandler());
+            this.express.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
@@ -207,16 +216,17 @@ export default class App {
         // The error handler must be before any other error middleware and after all controllers
         // this.express.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
 
-        this.express.get("/debug-sentry", function mainHandler(req, res) {
-            try {
-                throw new CustomError("Test sentry error!", true, "App.ts", 500);
-            } catch (e) {
-                Sentry.captureException(e);
-                // ErrorHandler.handle(e);
-            }
+        this.express.get("/debug-sentry", function mainHandler(req, res, next) {
+            throw new CustomError("Test sentry error!", true, "App.ts", 500);
         });
 
-        this.express.use(Sentry.Handlers.errorHandler());
+        this.express.use(Sentry.Handlers.errorHandler(
+            {
+                shouldHandleError(error): boolean {
+                    return true;
+                },
+            },
+            ) as express.ErrorRequestHandler);
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {

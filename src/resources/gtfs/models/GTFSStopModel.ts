@@ -36,7 +36,7 @@ export class GTFSStopModel extends SequelizeModel {
             if (lat && lng) {
                 const location = Sequelize.literal(`ST_GeomFromText('POINT(${lng} ${lat})')`);
                 const distance = Sequelize
-                    .fn("ST_Distance_Sphere", Sequelize.literal("ST_MakePoint(stop_lon, stop_lat)"), location);
+                    .fn("ST_DistanceSphere", Sequelize.literal("ST_MakePoint(stop_lon, stop_lat)"), location);
                 attributes.push([distance, "distance"]);
                 order.push([[Sequelize.literal("distance"), "asc"]]);
                 if (range) {

@@ -56,7 +56,7 @@ export class BicycleCountersLocationsModel extends SequelizeModel {
             if (lat && lng) {
                 const location = Sequelize.literal(`ST_GeomFromText('POINT(${lng} ${lat})')`);
                 const distance = Sequelize
-                    .fn("ST_Distance_Sphere", Sequelize.literal("ST_MakePoint(lng, lat)"), location);
+                    .fn("ST_DistanceSphere", Sequelize.literal("ST_MakePoint(lng, lat)"), location);
 
                 attributes.push([distance, "distance"]);
                 order.push([Sequelize.literal("distance"), "asc"]);

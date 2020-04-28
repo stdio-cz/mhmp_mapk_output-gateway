@@ -25,7 +25,7 @@ run_tests:
   stage: build
   image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
   services:
-    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis:11.5
+    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/11.5:postgis2.5
       alias: postgres
     - mongo:4.0.5
   script:

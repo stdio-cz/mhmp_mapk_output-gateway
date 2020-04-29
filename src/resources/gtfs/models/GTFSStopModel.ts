@@ -5,10 +5,27 @@ import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../../../cor
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSStopModel extends SequelizeModel {
+    protected outputAttributes: string[] = [];
 
     public constructor() {
         super(RopidGTFS.stops.name, RopidGTFS.stops.pgTableName,
             RopidGTFS.stops.outputSequelizeAttributes);
+
+        this.outputAttributes = Object.keys(RopidGTFS.stops.outputSequelizeAttributes);
+
+        const auditColumns = [
+            "created_by",
+            "update_batch_id",
+            "create_batch_id",
+            "updated_by",
+            "created_at",
+            "updated_at",
+        ];
+        auditColumns.forEach((column) => {
+            this.sequelizeModel.removeAttribute(column);
+            this.outputAttributes.splice(this.outputAttributes.indexOf(column), 1);
+        });
+
     }
 
     /** Retrieves all gtfs stops
@@ -31,7 +48,7 @@ export class GTFSStopModel extends SequelizeModel {
         const { limit, offset, lat, lng, range } = options;
         try {
             const order: any = [];
-            const attributes: any = Object.keys(RopidGTFS.stops.outputSequelizeAttributes);
+            const attributes: any = this.outputAttributes;
             let where: any = {};
             if (lat && lng) {
                 const location = Sequelize.literal(`ST_GeomFromText('POINT(${lng} ${lat})')`);
@@ -53,7 +70,7 @@ export class GTFSStopModel extends SequelizeModel {
                 order,
                 where,
             });
-            return buildGeojsonFeatureCollection(data, "stop_lon", "stop_lat");
+            return buildGeojsonFeatureCollection(data, "stop_lon", "stop_lat", true);
         } catch (err) {
             throw new CustomError("Database error", true, "GTFSStopModel", 500, err);
         }
@@ -68,7 +85,7 @@ export class GTFSStopModel extends SequelizeModel {
         .findByPk(id)
         .then((data) => {
             if (data) {
-                return buildGeojsonFeature(data, "stop_lon", "stop_lat");
+                return buildGeojsonFeature(data, "stop_lon", "stop_lat", true);
             }
             return null;
         })

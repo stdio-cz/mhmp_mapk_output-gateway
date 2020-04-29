@@ -242,7 +242,7 @@ export class GTFSTripsModel extends SequelizeModel {
     /**
      * Builds the correct format of a response data
      */
-    protected BuildResponse = (responseObject: any, latLoc: string, longLoc: string) => {
-        return buildGeojsonFeature(responseObject, longLoc, latLoc);
+    protected BuildResponse = (responseObject: any, longLoc: string, latLoc: string) => {
+        return buildGeojsonFeature(responseObject, longLoc, latLoc, true);
     }
 }

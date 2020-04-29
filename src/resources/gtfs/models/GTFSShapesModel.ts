@@ -5,10 +5,26 @@ import { buildGeojsonFeatureCollection } from "../../../core/Geo";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSShapesModel extends SequelizeModel {
+    protected outputAttributes: string[] = [];
 
     public constructor() {
         super(RopidGTFS.shapes.name, RopidGTFS.shapes.pgTableName,
             RopidGTFS.shapes.outputSequelizeAttributes);
+
+        this.outputAttributes = Object.keys(RopidGTFS.shapes.outputSequelizeAttributes);
+
+        const auditColumns = [
+            "created_by",
+            "update_batch_id",
+            "create_batch_id",
+            "updated_by",
+            "created_at",
+            "updated_at",
+        ];
+        auditColumns.forEach((column) => {
+            this.sequelizeModel.removeAttribute(column);
+            this.outputAttributes.splice(this.outputAttributes.indexOf(column), 1);
+        });
     }
 
     public Associate = (models: IGTFSModels) => {
@@ -43,7 +59,7 @@ export class GTFSShapesModel extends SequelizeModel {
             if (data.length === 0) {
                 return;
             }
-            return buildGeojsonFeatureCollection(data, "shape_pt_lon", "shape_pt_lat");
+            return buildGeojsonFeatureCollection(data, "shape_pt_lon", "shape_pt_lat", true);
         } catch (err) {
             throw new CustomError("Database error", true, "GTFSShapesModel", 500, err);
         }

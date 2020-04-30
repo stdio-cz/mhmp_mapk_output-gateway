@@ -125,7 +125,10 @@ export default class App {
     public start = async (): Promise<void> => {
         try {
             if (config.sentry_enable && config.sentry_dsn) {
-                Sentry.init({ dsn: config.sentry_dsn });
+                Sentry.init({
+                    dsn: config.sentry_dsn,
+                    environment: process.env.NODE_ENV,
+                });
             } else {
                 throw new Error("sentry cannot be null");
             }
@@ -170,8 +173,6 @@ export default class App {
     }
 
     private middleware = (): void => {
-        // The request handler must be the first middleware on the app
-        // this.express.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
         this.express.use(getRequestLogger);
         this.express.use(this.setHeaders);
         this.express.use(express.static("public"));
@@ -212,13 +213,6 @@ export default class App {
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);
         builder.BuildAllRoutes();
-
-        // The error handler must be before any other error middleware and after all controllers
-        // this.express.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
-
-        this.express.get("/debug-sentry", function mainHandler(req, res, next) {
-            throw new CustomError("Test sentry error!", true, "App.ts", 500);
-        });
 
         this.express.use(Sentry.Handlers.errorHandler(
             {

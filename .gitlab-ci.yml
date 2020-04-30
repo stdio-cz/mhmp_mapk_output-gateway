@@ -36,6 +36,7 @@ run_tests:
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
+    - export SENTRY_ENABLE=false
     - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
     - NODE_ENV=production yarn run code-coverage

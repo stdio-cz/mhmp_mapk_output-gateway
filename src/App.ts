@@ -13,6 +13,7 @@ import {
     SharedCars,
     TrafficCameras,
 } from "@golemio/schema-definitions";
+import * as Sentry from "@sentry/node";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as fs from "fs";
@@ -109,11 +110,27 @@ export default class App {
      */
     constructor() {
         //
+        process.on("uncaughtException", (err: Error) => {
+            Sentry.captureException(err);
+        });
+        process.on("unhandledRejection", (reason, promise) => {
+            Sentry.captureException(reason);
+        });
+        process.on("exit", (code) => {
+            Sentry.captureMessage(`Output gateway exited with code: ${code}`);
+        });
     }
 
     // Starts the application and runs the server
     public start = async (): Promise<void> => {
         try {
+            if (config.sentry_enable) {
+                Sentry.init({
+                    dsn: config.sentry_dsn,
+                    environment: process.env.NODE_ENV,
+                });
+            }
+            this.express.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
@@ -131,6 +148,7 @@ export default class App {
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
         } catch (err) {
+            Sentry.captureException(err);
             ErrorHandler.handle(err);
         }
     }
@@ -193,6 +211,14 @@ export default class App {
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);
         builder.BuildAllRoutes();
+
+        this.express.use(Sentry.Handlers.errorHandler(
+            {
+                shouldHandleError(error): boolean {
+                    return true;
+                },
+            },
+            ) as express.ErrorRequestHandler);
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {

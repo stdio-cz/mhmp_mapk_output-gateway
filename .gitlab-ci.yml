@@ -28,6 +28,7 @@ run_tests:
     - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/11.5:postgis2.5
       alias: postgres
     - mongo:4.0.5
+    - redis:5.0-alpine
   script:
     - yarn
     - yarn run tslint
@@ -39,6 +40,9 @@ run_tests:
     - export SENTRY_ENABLE=false
     - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
+    - export REDIS_CONN=redis://redis/
+    - redis-cli -h redis -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
+    - redis-cli -h redis -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin
     - NODE_ENV=production yarn run code-coverage
     - dredd
 

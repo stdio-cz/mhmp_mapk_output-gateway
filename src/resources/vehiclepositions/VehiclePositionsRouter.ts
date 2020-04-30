@@ -10,7 +10,7 @@ import { param, query } from "express-validator/check";
 import * as moment from "moment";
 import config from "../../config/config";
 import { IGeoJSONFeature, IGeoJSONFeatureCollection } from "../../core/Geo";
-import { useCacheMiddleware } from "../../core/redis";
+import { hget, useCacheMiddleware } from "../../core/redis";
 import {
     checkErrors,
     checkPaginationLimitMiddleware,
@@ -77,6 +77,32 @@ export class VehiclePositionsRouter {
                 properties: this.mapPositionItemToISOString(data.properties),
             };
             res.status(200).send(response);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    public GetGtfsRtTripUpdates = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const file = await hget("files", "trip_updates.pb");
+            if (!file) {
+                throw new CustomError("not_found", true, "VehiclePositionsRouter", 404, null);
+            }
+            res.setHeader("Content-Type", "application/octet-stream");
+            res.status(200).send(Buffer.from(file, "hex"));
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    public GetGtfsRtVehiclePositions = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const file = await hget("files", "vehicle_positions.pb");
+            if (!file) {
+                throw new CustomError("not_found", true, "VehiclePositionsRouter", 404, null);
+            }
+            res.setHeader("Content-Type", "application/octet-stream");
+            res.status(200).send(Buffer.from(file, "hex"));
         } catch (err) {
             next(err);
         }
@@ -180,6 +206,12 @@ export class VehiclePositionsRouter {
             checkErrors,
             useCacheMiddleware(expire),
             this.GetOne,
+        );
+        this.router.get("/gtfsrt/trip_updates.pb",
+            this.GetGtfsRtTripUpdates,
+        );
+        this.router.get("/gtfsrt/vehicle_positions.pb",
+            this.GetGtfsRtVehiclePositions,
         );
     }
 }

@@ -1101,7 +1101,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 
 ## Vehicle Positions [/vehiclepositions{?limit,offset,includePositions,routeId,routeShortName,updatedSince}]
 
-This endpoint returns special header `X-Last-Modified` which coresponds with the latest resource update timestamp. 
+This endpoint returns special header `X-Last-Modified` which coresponds with the latest resource update timestamp.
 It is posible to use it as `?updatedSince` query parameter value to obtain only newer data than this timestamp.
 
 + Parameters
@@ -1159,6 +1159,35 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+## Vehicle Positions GTFS RealTime Trip Updates [/vehiclepositions/gtfsrt/trip_updates.pb]
+
+### GET GTFS RealTime Trip Updates Protocol Buffer [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/octet-stream; charset=utf-8)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Vehicle Positions GTFS RealTime Vehicle Positions [/vehiclepositions/gtfsrt/vehicle_positions.pb]
+
+### GET GTFS RealTime Vehicle Positions Protocol Buffer [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/octet-stream; charset=utf-8)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
 
 ## Departure Boards [/departureboards/{stopId}/{?limit}]
 

@@ -40,8 +40,8 @@ run_tests:
     - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
     - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
     - export REDIS_CONN=redis://redis/
-    - redis-cli -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
-    - redis-cli -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin
+    - redis-cli -h redis -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
+    - redis-cli -h redis -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin
     - NODE_ENV=production yarn run code-coverage
     - dredd
 

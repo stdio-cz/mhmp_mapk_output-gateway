@@ -48,7 +48,7 @@ class RedisClient {
     }
 
     public hget(hash: string, key: string): Promise<any> {
-        if (!this.redisClient && config.redis_enable) {
+        if (!this.redisClient) {
             this.redisClient = redis.createClient(
                 config.redis_connection || "",
             ).on("message", (message: string) => log.info(message))

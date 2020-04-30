@@ -124,13 +124,11 @@ export default class App {
     // Starts the application and runs the server
     public start = async (): Promise<void> => {
         try {
-            if (config.sentry_enable && config.sentry_dsn) {
+            if (config.sentry_enable) {
                 Sentry.init({
                     dsn: config.sentry_dsn,
                     environment: process.env.NODE_ENV,
                 });
-            } else {
-                throw new Error("sentry cannot be null");
             }
             this.express.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
             this.commitSHA = await this.loadCommitSHA();

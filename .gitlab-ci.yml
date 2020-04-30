@@ -28,7 +28,7 @@ run_tests:
     - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/11.5:postgis2.5
       alias: postgres
     - mongo:4.0.5
-    - redis:5.0
+    - redis:5.0-alpine
   script:
     - yarn
     - yarn run tslint

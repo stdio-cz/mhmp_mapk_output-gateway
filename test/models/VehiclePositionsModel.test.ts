@@ -33,7 +33,8 @@ describe("VehiclePositionsTripsModel", () => {
     it("should return all items", async () => {
         const result = await vehiclepositionsModel.GetAll();
         expect(result).to.be.an.instanceOf(Object);
-        expect(result.features).to.be.an.instanceOf(Array);
-        expect(result.type).to.be.equal("FeatureCollection");
+        expect(result.data).to.be.an.instanceOf(Object);
+        expect(result.data.features).to.be.an.instanceOf(Array);
+        expect(result.data.type).to.be.equal("FeatureCollection");
     });
 });

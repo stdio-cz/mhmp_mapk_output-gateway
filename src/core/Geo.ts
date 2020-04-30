@@ -91,12 +91,19 @@ export const parseCoordinates = async (
  * @param item Item to convert to GeoJSON Feature format
  * @param lonProperty Location of lon property
  * @param latProperty Location of lat property
+ * @param removeLonLatProperties Removes lon and lat properties from GeoJSON properties. Default false.
  * @returns {IGeoJSONFeature} GeoJSON feature - object with geometry, properties, and type = "Feature"
  */
-export const buildGeojsonFeature = (item: any, lonProperty: string, latProperty: string): IGeoJSONFeature => {
-    const properties = item.toJSON ? item.toJSON() : item;
+export const buildGeojsonFeature = (
+        item: any, lonProperty: string, latProperty: string,
+        removeLonLatProperties?: boolean): IGeoJSONFeature => {
+    const properties = item.toJSON ? item.toJSON() : (item || {});
     const lon = getSubProperty<number>(lonProperty, item);
     const lat = getSubProperty<number>(latProperty, item);
+    if (removeLonLatProperties) {
+        delete properties[lonProperty];
+        delete properties[latProperty];
+    }
     return ({
         geometry: {
             coordinates: [
@@ -165,16 +172,7 @@ export const buildGeojsonFeatureCollection =
         } else {
             return {
                 features: items
-                    .map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty))
-                    .map((feature: any) => {
-                        if (removeLonLatProperties) {
-                            delete feature[lonProperty];
-                            delete feature[latProperty];
-                            return feature;
-                        } else {
-                            return feature;
-                        }
-                    }),
+                    .map((item: any) => buildGeojsonFeature(item, lonProperty, latProperty, removeLonLatProperties)),
                 type: "FeatureCollection",
             };
         }

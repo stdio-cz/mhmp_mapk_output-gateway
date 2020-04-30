@@ -73,10 +73,56 @@ describe("GTFSTripsModel", () => {
             stopTimes: true,
             stops: true,
         });
+
         expect(trip).to.be.an.instanceOf(Object);
         expect(trip).to.have.property("route").and.be.instanceOf(Object);
+        let keys = [
+            "agency_id",
+            "is_night",
+            "route_color",
+            "route_id",
+            "route_long_name",
+            "route_short_name",
+            "route_text_color",
+            "route_type",
+            "route_url",
+            "route_desc",
+        ];
+
+        expect(trip.route).to.have.keys(keys);
+        keys.pop(); // `route_desc` removed
+        keys.forEach((prop) => {
+            expect(trip.route[prop]).to.not.be.null;
+        });
+
         expect(trip).to.have.property("service").and.be.instanceOf(Object);
+
+        keys = [
+            "end_date",
+            "friday",
+            "monday",
+            "saturday",
+            "service_id",
+            "start_date",
+            "sunday",
+            "thursday",
+            "tuesday",
+            "wednesday",
+            "create_batch_id",
+            "created_at",
+            "created_by",
+            "update_batch_id",
+            "updated_at",
+            "updated_by",
+        ];
+
+        expect(trip.service).to.have.keys(keys);
+        keys.forEach((prop) => {
+            expect(trip.route[prop]).to.not.be.null;
+        });
+
         expect(trip).to.have.property("shapes").and.be.instanceOf(Array);
+        expect(trip.shapes.length).to.be.eql(2);
         expect(trip).to.have.property("stop_times").and.be.instanceOf(Array);
     });
 

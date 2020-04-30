@@ -11,7 +11,11 @@ import * as moment from "moment";
 import config from "../../config/config";
 import { IGeoJSONFeature, IGeoJSONFeatureCollection } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
-import { checkErrors, pagination } from "../../core/Validation";
+import {
+    checkErrors,
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 import { models } from "./models";
 import { VehiclePositionsTripsModel } from "./models/VehiclePositionsTripsModel";
 
@@ -30,26 +34,29 @@ export class VehiclePositionsRouter {
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
 
         try {
-            const data = await this.model.GetAll({
+            const result = await this.model.GetAll({
                 includePositions: req.query.includePositions || false,
                 limit: req.query.limit,
                 offset: req.query.offset,
                 routeId: req.query.routeId,
                 routeShortName: req.query.routeShortName,
+                updatedSince: req.query.updatedSince ? (new Date(req.query.updatedSince)) : null,
             });
-            if (data.features.length > config.pagination_max_limit) {
+            if (result.data.features.length > config.pagination_max_limit) {
                 throw new CustomError("Pagination limit error", true, "VehiclePositionsRouter", 413);
             }
-            const result = {
-                ...data,
-                features: data.features.map((x: any) => {
+            const response = {
+                ...result.data,
+                features: result.data.features.map((x: any) => {
                     return {
                         ...x,
                         properties: this.mapPositionItemToISOString(x.properties),
                     };
                 }),
             };
-            res.status(200).send(result);
+            res
+                .set("X-Last-Modified", moment(result.metadata.max_updated_at).toISOString())
+                .status(200).send(response);
         } catch (err) {
             next(err);
         }
@@ -65,11 +72,11 @@ export class VehiclePositionsRouter {
             if (!data) {
                 throw new CustomError("not_found", true, "VehiclePositionsRouter", 404, null);
             }
-            const result = {
+            const response = {
                 ...data,
                 properties: this.mapPositionItemToISOString(data.properties),
             };
-            res.status(200).send(result);
+            res.status(200).send(response);
         } catch (err) {
             next(err);
         }
@@ -157,9 +164,11 @@ export class VehiclePositionsRouter {
                 query("routeId").optional(),
                 query("routeShortName").optional(),
                 query("includePositions").optional().isBoolean(),
+                query("updatedSince").optional().isISO8601(),
             ],
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("VehiclePositionsRouter"),
             useCacheMiddleware(expire),
             this.GetAll,
         );

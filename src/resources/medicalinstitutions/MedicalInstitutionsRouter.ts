@@ -12,7 +12,10 @@ import { MedicalInstitutionsModel } from ".";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { pagination } from "../../core/Validation";
+import {
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 
 export class MedicalInstitutionsRouter extends GeoJsonRouter {
 
@@ -27,6 +30,7 @@ export class MedicalInstitutionsRouter extends GeoJsonRouter {
         ],
             this.standardParams,
             pagination,
+            checkPaginationLimitMiddleware("MedicalInstitutionsModel"),
             useCacheMiddleware(),
             this.GetAll,
         );

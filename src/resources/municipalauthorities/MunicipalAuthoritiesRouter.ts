@@ -12,7 +12,10 @@ import * as moment from "moment";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { pagination } from "../../core/Validation";
+import {
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 import { MunicipalAuthoritiesModel, MunicipalAuthoritiesQueuesModel } from "./models";
 
 export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
@@ -34,6 +37,7 @@ export class MunicipalAuthoritiesRouter extends GeoJsonRouter {
         ],
             this.standardParams,
             pagination,
+            checkPaginationLimitMiddleware("MunicipalAuthoritiesRouter"),
             useCacheMiddleware(),
             this.GetAll,
         );

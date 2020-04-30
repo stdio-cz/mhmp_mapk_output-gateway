@@ -22,7 +22,9 @@ import config from "./config/config";
 import { mongooseConnection, sequelizeConnection } from "./core/database";
 import { getRequestLogger, log } from "./core/Logger";
 import { RouterBuilder } from "./core/routes/";
+import { bicycleCountersRouter } from "./resources/bicyclecounters";
 import { cityDistrictsRouter } from "./resources/citydistricts";
+import { departureBoardsRouter } from "./resources/departureboards";
 import { gardensRouter } from "./resources/gardens";
 import { gtfsRouter } from "./resources/gtfs";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
@@ -173,7 +175,9 @@ export default class App {
 
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
+        this.express.use("/bicyclecounters", bicycleCountersRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
+        this.express.use("/departureboards", departureBoardsRouter);
         this.express.use("/gtfs", gtfsRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);

@@ -5,7 +5,8 @@ variables:
   POSTGRES_USER: postgres
   POSTGRES_PASS: test-pass
   POSTGRES_DB: testdb
-  MONGO_CONN: "mongodb://mongo/dataplatform"
+  MONGO_CONN: "mongodb://mongo:27017/dataplatform"
+  MONGO_TIMEOUT: 60000
   APIARY_NAME: 'golemioapi'
   APIARY_NAME_DEV: 'outputgatewaydev'
   HOST_URL: 'https://api.golemio.cz/v2'
@@ -24,7 +25,7 @@ run_tests:
   stage: build
   image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
   services:
-    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis:10.5
+    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/11.5:postgis2.5
       alias: postgres
     - mongo:4.0.5
   script:

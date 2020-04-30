@@ -1,3 +1,5 @@
+import config from "../config/config";
+
 import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response } from "express";
 import { query, validationResult } from "express-validator/check";
@@ -30,3 +32,16 @@ export const pagination = [
         next();
     },
 ];
+
+/**
+ * Performs a check if limit of requested data is not exceded
+ * @param routerName name passed to the returned Error object in case of fail
+ */
+export const checkPaginationLimitMiddleware = (routerName?: string) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (req.query.limit && config.pagination_max_limit < +req.query.limit) {
+            return next( new CustomError("Pagination limit error", true, routerName || "BaseRouter", 413));
+        }
+        return next();
+    };
+};

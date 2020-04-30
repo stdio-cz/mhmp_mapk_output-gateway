@@ -8,10 +8,12 @@ import { log } from "../Logger";
  */
 export class MongoDatabase {
     private connectionString: string | undefined;
+    private connectTimeoutMS: number;
 
     /** Set up connection string */
     constructor() {
         this.connectionString = config.mongo_connection;
+        this.connectTimeoutMS = config.mongo_timeout;
     }
 
     /** Connects to db */
@@ -20,7 +22,10 @@ export class MongoDatabase {
             if (!this.connectionString || this.connectionString === "YOUR CONNECTION STRING GOES HERE") {
                 throw new Error("Undefined connection string.");
             }
+
             await mongoose.connect(this.connectionString, {
+                connectTimeoutMS: this.connectTimeoutMS,
+                serverSelectionTimeoutMS: this.connectTimeoutMS,
                 useCreateIndex: true,
                 useNewUrlParser: true,
                 useUnifiedTopology: true,

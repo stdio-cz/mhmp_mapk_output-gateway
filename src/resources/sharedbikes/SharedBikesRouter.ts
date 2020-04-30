@@ -11,7 +11,11 @@ import { query } from "express-validator/check";
 import { parseCoordinates } from "../../core/Geo";
 import { useCacheMiddleware } from "../../core/redis";
 import { GeoJsonRouter } from "../../core/routes";
-import { checkErrors, pagination } from "../../core/Validation";
+import {
+    checkErrors,
+    checkPaginationLimitMiddleware,
+    pagination,
+} from "../../core/Validation";
 import { SharedBikesModel } from "./SharedBikesModel";
 
 export class SharedBikesRouter extends GeoJsonRouter {
@@ -26,6 +30,7 @@ export class SharedBikesRouter extends GeoJsonRouter {
             this.standardParams,
             pagination,
             checkErrors,
+            checkPaginationLimitMiddleware("SharedBikesRouter"),
             useCacheMiddleware(),
             this.GetAll,
         );

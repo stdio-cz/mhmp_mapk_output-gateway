@@ -3,7 +3,7 @@ image: docker:stable
 variables:
   POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
-  POSTGRES_PASS: test-pass
+  POSTGRES_PASSWORD: test-pass
   POSTGRES_DB: testdb
   MONGO_CONN: "mongodb://mongo:27017/dataplatform"
   MONGO_TIMEOUT: 60000
@@ -25,7 +25,7 @@ run_tests:
   stage: build
   image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
   services:
-    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/11.5:postgis2.5
+    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/11.7:postgis3
       alias: postgres
     - mongo:4.0.5
     - redis:5.0-alpine
@@ -36,10 +36,10 @@ run_tests:
     - mongorestore --uri=$MONGO_CONN -d dataplatform ./db/example/mongo_data/dataplatform
     - export LOG_LEVEL=INFO
     - export MONGO_CONN=$MONGO_CONN
-    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASS@$POSTGRES_HOST/$POSTGRES_DB
+    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
     - export SENTRY_ENABLE=false
     - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
-    - psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
+    - PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
     - export REDIS_CONN=redis://redis/
     - redis-cli -h redis -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
     - redis-cli -h redis -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin

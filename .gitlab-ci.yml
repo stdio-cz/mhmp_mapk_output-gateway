@@ -69,7 +69,7 @@ pages:
   script:
   - yarn
   - npm run generate-docs
-  - mv docs/typedoc public
+  - mv docs/typedoc/* public
   artifacts:
     paths:
     - public

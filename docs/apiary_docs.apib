@@ -2419,7 +2419,6 @@ Cleaning Frequency:
     + `trip_id`: `381_51_180728` (string, required) - Identifier of the trip in the GTFS static feed
     + `trip_headsign`: `Sídliště Modřany` (string, optional, nullable) - Heading of the trip (identical to what is shown on the bus)
 + `start_timestamp`: `2019-03-18T11:00:00.000Z` (string, required) - Timestamp of arrival time in first stop (UTC)
-+ `tracking`: false (boolean, required) - True if trip is tracked, meaning that trip is on its track.
 + `vehicle_type` (Vehicleposition Vehicle Type) - Type of vehicle
 + `vehicle_registration_number`: 8635 (number, required) - Four-digit identifier of the vehicle in the system
 + `wheelchair_accessible`: true (boolean, required) - Determines wheter the vehicle has wheelchair access
@@ -2450,6 +2449,7 @@ Cleaning Frequency:
 + `origin_timestamp`: `2019-03-18T11:00:00.000Z` (string, required) - Time at which the position was sent from the vehicle (UTC)
 + `speed`: 34 (number, optional, nullable) - Current speed of the vehicle (kilometers per hour)
 + `shape_dist_traveled`: `12.3` (string, optional, nullable) - Number of kilometers traveled on the route
++ `tracking`: false (boolean, required) - True if trip is tracked, meaning that trip is on its track.
 
 
 ## Waste Collection Yard (object)

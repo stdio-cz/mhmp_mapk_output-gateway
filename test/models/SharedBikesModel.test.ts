@@ -34,6 +34,6 @@ describe("SharedBikesModel", () => {
     it("should return all items", async () => {
         const result = await sharedBikesModel.GetAll();
         expect(result).to.be.an.instanceOf(Object);
-        expect(result.features).to.be.an.instanceOf(Array); 
+        expect(result.features).to.be.an.instanceOf(Array);
     });
 });

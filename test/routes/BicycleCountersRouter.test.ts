@@ -16,7 +16,6 @@ describe("bicycleCountersRouter", () => {
     // Create clean express instance
     const app = express();
 
-
     before(() => {
         // Mount the tested router to the express instance
         app.use("/bicyclecounters", bicycleCountersRouter);
@@ -34,7 +33,7 @@ describe("bicycleCountersRouter", () => {
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200, {
-                features:[
+                features: [
                    {
                       geometry: {
                          coordinates: [

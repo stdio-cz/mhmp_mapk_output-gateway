@@ -26,8 +26,9 @@ export class DepartureBoardsModel {
             throw new CustomError("Stop not found", true, "DepartureBoardsRouter", 404, null);
         }
         try {
-            return sequelizeConnection.query(`
-                SELECT * FROM (SELECT
+            return sequelizeConnection.query(
+            /* tslint:disable */
+                `SELECT * FROM (SELECT
                     (CASE WHEN "t6"."delay" >= 0 THEN ROUND("t6"."delay"/60) ELSE 0 END)::INT AS "delay_minutes",
                     (CASE WHEN "t6"."delay" IS NULL THEN FALSE ELSE TRUE END) AS "is_delay_available",
                     "t1"."arrival_time", "t1"."departure_time",
@@ -51,8 +52,9 @@ export class DepartureBoardsModel {
                 ORDER BY "arrival_datetime_real"
                 ) AS "t"
                 WHERE "t"."arrival_datetime_real" BETWEEN ((NOW()- INTERVAL '1' year) AT TIME zone 'Etc/UTC') AND ((NOW() + INTERVAL '12' hour) AT TIME zone 'Etc/UTC')
-                LIMIT :limit
-            `, {
+                LIMIT :limit`
+            /* tslint:enable */
+            , {
                 replacements: {
                     limit: options.limit ? options.limit : config.pagination_max_limit,
                     stopId: options.stopId,

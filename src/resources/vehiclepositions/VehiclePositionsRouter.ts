@@ -35,6 +35,7 @@ export class VehiclePositionsRouter {
 
         try {
             const result = await this.model.GetAll({
+                includeNotTracking: req.query.includeNotTracking || false,
                 includePositions: req.query.includePositions || false,
                 limit: req.query.limit,
                 offset: req.query.offset,

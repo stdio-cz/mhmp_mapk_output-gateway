@@ -44,25 +44,25 @@ describe("DepartureBoards Router", () => {
 
     it("should respond with list of stop times of specific stop /departureboards/{id}", (done) => {
         request(app)
-            .get(`/departureboards/${id}`).end((err: any, res: any) => {
+            .get(`/departureboards?id=${id}`).end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an("array");
                 done();
             });
     });
 
-    it("should respond with an empty array /departureboards/{id}", (done) => {
+    it("should respond with an empty array /departureboards?id", (done) => {
         request(app)
-            .get("/departureboards/U476Z103P").end((err: any, res: any) => {
+            .get("/departureboards?id=U476Z103P").end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).that.eql([]);
                 done();
             });
     });
 
-    it("should respond with 404 to non-existant stop /departureboards/{id}", (done) => {
+    it("should respond with 404 to non-existant stop /departureboards?id", (done) => {
         request(app)
-            .get("/departureboards/kovfefe").end((err: any, res: any) => {
+            .get("/departureboards?id=kovfefe").end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(404);
                 done();
             });

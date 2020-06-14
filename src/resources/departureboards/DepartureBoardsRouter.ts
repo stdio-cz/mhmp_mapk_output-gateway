@@ -7,7 +7,8 @@
 
 import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
-import { param } from "express-validator/check";
+import { oneOf, query  } from "express-validator/check";
+import { IDeparture } from ".";
 import { useCacheMiddleware } from "../../core/redis";
 import { BaseRouter } from "../../core/routes/BaseRouter";
 import {
@@ -31,13 +32,70 @@ export class DepartureBoardsRouter extends BaseRouter {
     }
 
     public GetDepartureBoard = async (req: Request, res: Response, next: NextFunction) => {
+        const aswIds: string[] = this.ConvertToArray(req.query.aswIds || []);
+        if (req.query.aswId) { aswIds.push(req.query.aswId); }
+        const cisIds: number[] = this.ConvertToArray(req.query.cisIds || []);
+        if (req.query.cisId) { cisIds.push(req.query.cisId); }
+        const gtfsIds: string[] = this.ConvertToArray(req.query.ids || []);
+        if (req.query.id) { gtfsIds.push(req.query.id); }
+
         try {
             const data = await this.departureBoardsModel
-                .GetOne({ stopId: req.params.id, limit: req.query.limit });
-            res.status(200).send(data);
+                .GetAll({
+                    aswIds,
+                    cisIds,
+                    gtfsIds,
+                    limit: req.query.limit,
+                    minutesAfter: parseInt(req.query.minutesAfter || 60, 10),
+                    minutesBefore: parseInt(req.query.minutesBefore || 10, 10),
+                    orderBySchedule: (req.query.orderBySchedule === "true") ? true : false,
+                    showAllRoutesFirst: (req.query.showAllRoutesFirst === "true") ? true : false,
+                });
+            res.status(200).send(data.map((d: IDeparture) => this.transformResponseData(d)));
         } catch (err) {
             next(err);
         }
+    }
+
+    /**
+     * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
+     */
+    private transformResponseData = (x: IDeparture): any => {
+        return {
+            arrival_timestamp: {
+                predicted: x.arrival_datetime_real, // připočtené zpoždění
+                scheduled: x.arrival_datetime, // současné arrival_datetime
+            },
+            delay: {
+              is_available: x.is_delay_available, // současně is_delay_available
+              minutes: x.delay_minutes,
+              seconds: x.delay_seconds, // přidat v sekundách
+            },
+            departure_timestamp: {
+                predicted: x.departure_datetime, // připočtené zpoždění
+                scheduled: x.departure_datetime, // současné departure_datetime
+            },
+            // last_stop: {
+            //     id: null, // nově
+            //     name: null, // nově
+            // },
+            route: {
+                short_name: x.route_short_name,
+                type: x.route_type, // nově typ dopravy metro/tram/...
+            },
+            stop: {
+                id: x.stop_id, // nově
+                name: x.stop_name, // nově
+                platform_code: x.platform_code, // nově
+                wheelchair_boarding: x.wheelchair_boarding, // nově
+            },
+            trip: {
+                headsign: x.trip_headsign,
+                id: x.trip_id,
+                is_canceled: x.is_canceled, // nově budeme vůbec chít uvádět zrušené spoje?
+                is_wheelchair_accessible: x.wheelchair_accessible, // nově
+            },
+        };
     }
 
     /**
@@ -48,8 +106,20 @@ export class DepartureBoardsRouter extends BaseRouter {
     }
 
     private initDepartureBoardsEndpoints = (expire?: number | string): void => {
-        this.router.get("/:id",
-            param("id").exists().isString(),
+        this.router.get("/",
+            [
+                query("ids").optional().isArray(),
+                query("awsIds").optional().isArray(),
+                query("cisIds").optional().isArray(),
+                query("cisIds.*").optional().isInt(),
+                query("id").optional().isString(),
+                query("awsId").optional().isString(),
+                query("cisId").optional().isInt(),
+                query("minutesBefore").optional().isInt(),
+                query("minutesAfter").optional().isInt(),
+                query("orderBySchedule").optional().isBoolean(),
+                query("showAllRoutesFirst").optional().isBoolean(),
+            ],
             pagination,
             checkErrors,
             checkPaginationLimitMiddleware("DepartureBoardsRouter"),

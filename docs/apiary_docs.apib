@@ -1190,11 +1190,19 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Departure Boards [/departureboards/{stopId}/{?limit}]
+## Departure Boards [/departureboards/{?ids[]&cisIds[]&aswId[]&minutesBefore&minutesAfter&orderBySchedule&limit}]
+
+You can use multiple stops by making 
 
 + Parameters
 
-    + stopId: `U476Z103P` (string, required) Get result by stop_id (GTFS, id of specific stop, not station)
+    + id: `U476Z103P` (optional, string) Get result by stop_id (GTFS, id of specific stop)
+    + aswId: `1833_12` (optional, string) Get result by ASW, use `_` instead of `/`
+    + cisId: `12345` (optional, number) Get result by CIS Id
+    + minutesBefore: `10` (optional, number) Get result relative to request time
+    + minutesAfter: `60` (optional, number) Get result relative to request time
+    + orderBySchedule: `false` (optional, boolean) Order by schedule, not by real delays
+    + showAllRoutesFirst: `false` (optional, boolean) Sort by routes first
     + limit: 10 (optional, number) - Limits number of retrieved items
 
 ### GET Departure Board [GET]
@@ -1895,16 +1903,43 @@ Cleaning Frequency:
 
 ## Departure Board (object)
 
-+ delay_minutes: 0 (number, required)
-+ is_delay_available: false (boolean, required)
-+ arrival_time: `7:37:45` (string, required)
-+ departure_time: `7:38:05` (string, required)
-+ arrival_datetime: `2019-05-27T05:37:45.000Z` (string, required)
-+ departure_datetime: `2019-05-27T05:38:05.000Z` (string, required)
-+ arrival_datetime_real: `2019-05-27T05:37:45.000Z` (string, required)
-+ route_short_name: `A` (string, required)
-+ `trip_id`: `991_1151_190107` (string, required)
-+ service_id: `1111100-1` (string, required)
++ delay: (Departure Board Delay)
++ arrival_timestamp: (Departure Board Stop Time)
++ departure_timestamp: (Departure Board Stop Time)
++ route: (Departure Board Route)
++ stop: (Departure Board Stop)
++ trip: (Departure Board Trip)
+
+## Departure Board Trip (object)
+
++ headsign: `991_1151_190107` (string, required)
++ id: `140_224_200302` (string, required)
++ is_canceled: `false` (boolean, required)
++ is_wheelchair_accessible: `1` (number, required)
+
+## Departure Board Stop (object)
+
++ name: `Prosecká` (string, required)
++ id: `U754Z1P` (string, required)
++ platform_code: `A` (string, required)
++ is_wheelchair_accessible: `1` (number, required)
+
+## Departure Board Delay (object)
+
++ is_available: `false` (boolean, required)
++ minutes: `3` (string, optional)
++ seconds: `176` (string, optional)
+
+## Departure Board Stop Time (object)
+
++ predicted: `Prosecká` (string, required)
++ scheduled: `U754Z1P` (string, required)
+
+## Departure Board Route (object)
+
++ name: `140` (string, required)
++ type: `3` (string, required)
+
 
 ## Garden (object)
 

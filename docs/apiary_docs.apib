@@ -1190,7 +1190,7 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Departure Boards [/departureboards/{?id,cisId,aswId,minutesBefore,minutesAfter,orderBySchedule,limit}]
+## Departure Boards [/departureboards/{?id,cisId,aswId,minutesBefore,minutesAfter,orderBySchedule,showAllRoutesFirst,limit}]
 
 You can also use multiple stops request by `ids[]=STOP1&ids[]=STOP2`, same for `aswIds[]` and `cisIds[]`.
 
@@ -1903,12 +1903,12 @@ Cleaning Frequency:
 
 ## Departure Board (object)
 
-+ delay: (Departure Board Delay)
-+ arrival_timestamp: (Departure Board Stop Time)
-+ departure_timestamp: (Departure Board Stop Time)
-+ route: (Departure Board Route)
-+ stop: (Departure Board Stop)
-+ trip: (Departure Board Trip)
++ delay (Departure Board Delay)
++ arrival_timestamp (Departure Board Stop Time)
++ departure_timestamp (Departure Board Stop Time)
++ route (Departure Board Route)
++ stop (Departure Board Stop)
++ trip (Departure Board Trip)
 
 ## Departure Board Trip (object)
 

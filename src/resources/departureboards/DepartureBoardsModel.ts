@@ -32,7 +32,7 @@ export class DepartureBoardsModel {
         const stopsToInclude = await models.GTFSStopModel.GetAll({
             aswIds: options.aswIds,
             cisIds: options.cisIds,
-            ids: options.gtfsIds,
+            gtfsIds: options.gtfsIds,
         });
 
         if (stopsToInclude.features.length === 0) {

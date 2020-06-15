@@ -50,13 +50,14 @@ export class GTFSStopModel extends SequelizeModel {
         lat?: number,
         lng?: number,
         range?: number,
-        ids?: string[],
+        names?: string[],
+        gtfsIds?: string[],
         aswIds?: string[],
         cisIds?: number[],
     } = {}): Promise<any> => {
-        const { limit, offset, lat, lng, range, ids, aswIds, cisIds } = options;
+        const { limit, offset, lat, lng, range, names, gtfsIds, aswIds, cisIds } = options;
         try {
-            const gtfsIds: string[] = [];
+            const allGtfsIds: string[] = [];
             const order: any = [];
             const attributes: any = this.outputAttributes;
             let where: any = {};
@@ -91,19 +92,23 @@ export class GTFSStopModel extends SequelizeModel {
                     },
                 });
                 stops.forEach((stop) => {
-                    gtfsIds.push("U" + stop.id.replace("/", "Z") + "%");
+                    allGtfsIds.push("U" + stop.id.replace("/", "Z") + "%");
                 });
             }
 
-            ids?.forEach((stop) => {
-                gtfsIds.push(stop);
+            gtfsIds?.forEach((stop) => {
+                allGtfsIds.push(stop);
             });
 
             where.stop_id = {
-                [Sequelize.Op.or]: gtfsIds.map((id) => {
+                [Sequelize.Op.or]: allGtfsIds.map((id) => {
                     return Sequelize.where(Sequelize.col("stop_id"), "LIKE", id + "%");
                 }),
             };
+
+            if (names && names?.length > 0) {
+                where.stop_name = names;
+            }
 
             order.push([["stop_id", "asc"]]);
 

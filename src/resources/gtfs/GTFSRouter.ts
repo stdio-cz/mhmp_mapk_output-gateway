@@ -148,12 +148,25 @@ export class GTFSRouter extends BaseRouter {
     }
 
     public GetAllStops = async (req: Request, res: Response, next: NextFunction) => {
+        const names: string[] = this.ConvertToArray(req.query.names || []);
+        if (req.query.name) { names.push(req.query.name); }
+        const aswIds: string[] = this.ConvertToArray(req.query.aswIds || []);
+        if (req.query.aswId) { aswIds.push(req.query.aswId); }
+        const cisIds: number[] = this.ConvertToArray(req.query.cisIds || []);
+        if (req.query.cisId) { cisIds.push(req.query.cisId); }
+        const gtfsIds: string[] = this.ConvertToArray(req.query.ids || []);
+        if (req.query.id) { gtfsIds.push(req.query.id); }
+
         try {
             const coords = await parseCoordinates(req.query.latlng, req.query.range);
             const data = await this.stopModel.GetAll({
+                aswIds,
+                cisIds,
+                gtfsIds,
                 lat: coords.lat,
                 limit: req.query.limit,
                 lng: coords.lng,
+                names,
                 offset: req.query.offset,
                 range: coords.range,
             });

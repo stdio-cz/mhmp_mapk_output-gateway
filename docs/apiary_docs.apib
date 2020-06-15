@@ -1916,33 +1916,33 @@ Cleaning Frequency:
 
 ## Departure Board Trip (object)
 
-+ headsign: `991_1151_190107` (string, required)
-+ id: `140_224_200302` (string, required)
-+ is_canceled: `false` (boolean, required)
-+ is_wheelchair_accessible: `1` (number, required)
++ headsign: `Chodov` (string, required) - Trip headsign.
++ id: `140_224_200302` (string, required) - GTFS trip id.
++ is_canceled: `false` (boolean, required) - If the trip is canceled.
++ is_wheelchair_accessible: `1` (number, required) - If the vehicle is wheelchair accessible.
 
 ## Departure Board Stop (object)
 
-+ name: `Prosecká` (string, required)
-+ id: `U754Z1P` (string, required)
-+ platform_code: `A` (string, required)
-+ is_wheelchair_accessible: `1` (number, required)
++ name: `Prosecká` (string, required) - Name of station.
++ id: `U754Z1P` (string, required) - GTFS station id.
++ platform_code: `A` (string, required) - Station platform.
++ is_wheelchair_accessible: `1` (number, required) - 1 for wheelchair accessible stop.
 
 ## Departure Board Delay (object)
 
-+ is_available: `false` (boolean, required) - If true, 
-+ minutes: `3` (string, optional) - 
-+ seconds: `176` (string, optional)
++ is_available: `false` (boolean, required) - If true, is avalable information about trip's realtime delay.
++ minutes: `3` (string, optional) - Delay rounded to minutes.
++ seconds: `176` (string, optional) - Delay in seconds.
 
 ## Departure Board Stop Time (object)
 
-+ predicted: `Prosecká` (string, required)
-+ scheduled: `U754Z1P` (string, required)
++ predicted: `2019-05-18T07:38:20.000Z` (string, required) - Time of arrival/departure including realtime delay in ISO String (UTC).
++ scheduled: `2019-05-18T07:38:00.000Z` (string, required) - Time of arrival/departure in ISO String (UTC).
 
 ## Departure Board Route (object)
 
-+ name: `140` (string, required)
-+ type: `3` (string, required)
++ name: `140` (string, required) - Route short name.
++ type: `3` (string, required) - Type of route.
 
 
 ## Garden (object)

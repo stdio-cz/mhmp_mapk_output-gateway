@@ -57,7 +57,7 @@ export class GTFSStopModel extends SequelizeModel {
     } = {}): Promise<any> => {
         const { limit, offset, lat, lng, range, names, gtfsIds, aswIds, cisIds } = options;
         try {
-            const derivatedGtfsIds: string[] = [];
+            const allGtfsIds: string[] = [];
             const order: any = [];
             const attributes: any = this.outputAttributes;
             let where: any = {};
@@ -75,8 +75,8 @@ export class GTFSStopModel extends SequelizeModel {
             if (aswIds || cisIds) {
                 const ors: any[] = [];
                 if (aswIds && aswIds?.length > 0) {
-                    ors.push({
-                        id: aswIds.map((d) => d.replace("_", "/")),
+                    aswIds.forEach((d) => {
+                        ors.push(Sequelize.where(Sequelize.col("id"), "LIKE", d.replace("_", "/") + "%"));
                     });
                 }
                 if (cisIds && cisIds?.length > 0) {
@@ -92,18 +92,18 @@ export class GTFSStopModel extends SequelizeModel {
                     },
                 });
                 stops.forEach((stop) => {
-                    derivatedGtfsIds.push("U" + stop.id.replace("/", "Z") + "%");
+                    allGtfsIds.push("U" + stop.id.replace("/", "Z") + "%");
                 });
             }
 
+            gtfsIds?.forEach((stop) => {
+                allGtfsIds.push(stop);
+            });
+
             where.stop_id = {
-                [Sequelize.Op.or]: derivatedGtfsIds
-                    .map((id) => {
-                        return Sequelize.where(Sequelize.col("stop_id"), "LIKE", id + "%");
-                    })
-                    .concat(gtfsIds ? gtfsIds.map((id) => {
-                        return Sequelize.where(Sequelize.col("stop_id"), "LIKE", id);
-                    }) : []),
+                [Sequelize.Op.or]: allGtfsIds.map((id) => {
+                    return Sequelize.where(Sequelize.col("stop_id"), "LIKE", id);
+                }),
             };
 
             if (names && names?.length > 0) {

@@ -60,37 +60,37 @@ export class DepartureBoardsRouter extends BaseRouter {
     private transformResponseData = (x: IDeparture): any => {
         return {
             arrival_timestamp: {
-                predicted: x.arrival_datetime_real, // připočtené zpoždění
-                scheduled: x.arrival_datetime, // současné arrival_datetime
+                predicted: x.arrival_datetime_real, // with added delay
+                scheduled: x.arrival_datetime, // according to trip plan
             },
             delay: {
-              is_available: x.is_delay_available, // současně is_delay_available
-              minutes: x.delay_minutes,
-              seconds: x.delay_seconds, // přidat v sekundách
+              is_available: x.is_delay_available,
+              minutes: x.delay_minutes, // TBD - now it could be negative!
+              seconds: x.delay_seconds, // TBD - now it could be negative!
             },
             departure_timestamp: {
-                predicted: x.departure_datetime, // připočtené zpoždění
-                scheduled: x.departure_datetime, // současné departure_datetime
+                predicted: x.departure_datetime, // with added delay
+                scheduled: x.departure_datetime, // according to trip plan
             },
             // last_stop: {
-            //     id: null, // nově
-            //     name: null, // nově
+            //     id: null, // TBD
+            //     name: null, // TBD
             // },
             route: {
                 short_name: x.route_short_name,
                 type: x.route_type, // nově typ dopravy metro/tram/...
             },
             stop: {
-                id: x.stop_id, // nově
-                name: x.stop_name, // nově
-                platform_code: x.platform_code, // nově
-                wheelchair_boarding: x.wheelchair_boarding, // nově
+                id: x.stop_id,
+                name: x.stop_name,
+                platform_code: x.platform_code,
+                wheelchair_boarding: x.wheelchair_boarding, // enum 0,1,2 see GTFS specs
             },
             trip: {
                 headsign: x.trip_headsign,
                 id: x.trip_id,
-                is_canceled: x.is_canceled, // nově budeme vůbec chít uvádět zrušené spoje?
-                is_wheelchair_accessible: x.wheelchair_accessible, // nově
+                is_canceled: x.is_canceled,
+                is_wheelchair_accessible: x.wheelchair_accessible, // enum 0,1,2 see GTFS specs
             },
         };
     }

@@ -149,13 +149,9 @@ export class GTFSRouter extends BaseRouter {
 
     public GetAllStops = async (req: Request, res: Response, next: NextFunction) => {
         const names: string[] = this.ConvertToArray(req.query.names || []);
-        if (req.query.name) { names.push(req.query.name); }
         const aswIds: string[] = this.ConvertToArray(req.query.aswIds || []);
-        if (req.query.aswId) { aswIds.push(req.query.aswId); }
         const cisIds: number[] = this.ConvertToArray(req.query.cisIds || []);
-        if (req.query.cisId) { cisIds.push(req.query.cisId); }
         const gtfsIds: string[] = this.ConvertToArray(req.query.ids || []);
-        if (req.query.id) { gtfsIds.push(req.query.id); }
 
         try {
             const coords = await parseCoordinates(req.query.latlng, req.query.range);
@@ -313,6 +309,12 @@ export class GTFSRouter extends BaseRouter {
             [
                 query("latlng").optional().isLatLong(),
                 query("range").optional().isNumeric(),
+                query("ids").optional().isArray(),
+                query("aswIds").optional().isArray(),
+                query("cisIds").optional().isArray(),
+                query("ids.*").optional().isString(),
+                query("aswIds.*").optional().isString(),
+                query("cisIds.*").optional().isInt(),
             ],
             pagination,
             checkErrors,

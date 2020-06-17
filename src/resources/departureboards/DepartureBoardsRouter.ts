@@ -5,9 +5,8 @@
  * Handles web logic (http request, response). Sets response headers, handles error responses.
  */
 
-import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
-import { oneOf, query  } from "express-validator/check";
+import { oneOf, query } from "express-validator/check";
 import { IDeparture } from ".";
 import { useCacheMiddleware } from "../../core/redis";
 import { BaseRouter } from "../../core/routes/BaseRouter";
@@ -33,11 +32,8 @@ export class DepartureBoardsRouter extends BaseRouter {
 
     public GetDepartureBoard = async (req: Request, res: Response, next: NextFunction) => {
         const aswIds: string[] = this.ConvertToArray(req.query.aswIds || []);
-        if (req.query.aswId) { aswIds.push(req.query.aswId); }
         const cisIds: number[] = this.ConvertToArray(req.query.cisIds || []);
-        if (req.query.cisId) { cisIds.push(req.query.cisId); }
         const gtfsIds: string[] = this.ConvertToArray(req.query.ids || []);
-        if (req.query.id) { gtfsIds.push(req.query.id); }
 
         try {
             const data = await this.departureBoardsModel
@@ -48,6 +44,7 @@ export class DepartureBoardsRouter extends BaseRouter {
                     limit: req.query.limit,
                     minutesAfter: parseInt(req.query.minutesAfter || 60, 10),
                     minutesBefore: parseInt(req.query.minutesBefore || 10, 10),
+                    offset: req.query.offset,
                     orderBySchedule: (req.query.orderBySchedule === "true") ? true : false,
                     showAllRoutesFirst: (req.query.showAllRoutesFirst === "true") ? true : false,
                 });
@@ -108,13 +105,14 @@ export class DepartureBoardsRouter extends BaseRouter {
     private initDepartureBoardsEndpoints = (expire?: number | string): void => {
         this.router.get("/",
             [
-                query("ids").optional().isArray(),
-                query("awsIds").optional().isArray(),
-                query("cisIds").optional().isArray(),
+                oneOf([
+                    query("ids").exists().isArray(),
+                    query("aswIds").exists().isArray(),
+                    query("cisIds").exists().isArray(),
+                ]),
+                query("ids.*").optional().isString(),
+                query("aswIds.*").optional().isString(),
                 query("cisIds.*").optional().isInt(),
-                query("id").optional().isString(),
-                query("awsId").optional().isString(),
-                query("cisId").optional().isInt(),
                 query("minutesBefore").optional().isInt(),
                 query("minutesAfter").optional().isInt(),
                 query("orderBySchedule").optional().isBoolean(),

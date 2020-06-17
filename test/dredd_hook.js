@@ -157,3 +157,8 @@ hooks.before('Public Transport > GTFS Shape > GET GTFS Shape', (transaction) => 
     transaction.request.uri = transaction.request.uri.replace('L991V2', storage["shape_id"]);
     transaction.fullPath = transaction.fullPath.replace('L991V2', storage["shape_id"]);
 });
+
+hooks.before('Public Transport > Departure Boards > GET Departure Board', (transaction) => {
+    transaction.request.uri = `${transaction.request.uri}?ids[]=U476Z103P`;
+    transaction.fullPath = `${transaction.fullPath}?ids[]=U476Z103P`;
+});

@@ -1,8 +1,6 @@
 import { CustomError } from "@golemio/errors";
 import config from "../../config/config";
 import { sequelizeConnection } from "../../core/database";
-import { IGeoJSONFeature } from "../../core/Geo";
-import { log } from "../../core/Logger";
 import { models } from "../../resources/gtfs/models/";
 
 /**
@@ -23,6 +21,7 @@ export class DepartureBoardsModel {
         cisIds?: number[],
         gtfsIds?: string[],
         limit?: number,
+        offset?: number,
         orderBySchedule?: boolean,
         minutesBefore: number,
         minutesAfter: number,
@@ -75,13 +74,15 @@ export class DepartureBoardsModel {
                 ORDER BY ` + (options.orderBySchedule ? `"arrival_datetime" ASC` : `"arrival_datetime_real" ASC`) + `
                 ) AS "t"
                 WHERE "t"."arrival_datetime_real" BETWEEN ((NOW()- INTERVAL :minutesBefore) AT TIME zone 'Etc/UTC') AND ((NOW() + INTERVAL :minutesAfter) AT TIME zone 'Etc/UTC')
-                LIMIT :limit`
+                LIMIT :limit
+                OFFSET :offset`
             /* tslint:enable */
             , {
                 replacements: {
                     limit: options.limit ? options.limit : config.pagination_max_limit,
                     minutesAfter: options.minutesAfter + " min",
                     minutesBefore: options.minutesBefore + " min",
+                    offset: options.offset ? options.offset : 0,
                     stopId: stopsToInclude.features.map((stop: any) => stop.properties.stop_id),
                 },
             }).then(([results, metadata]) => {

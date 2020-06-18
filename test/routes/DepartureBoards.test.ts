@@ -42,28 +42,27 @@ describe("DepartureBoards Router", () => {
         });
     });
 
-    it("should respond with list of stop times of specific stop /departureboards/{id}", (done) => {
+    it("should respond with list of stop times of specific stop /departureboards?ids", (done) => {
         request(app)
-            .get(`/departureboards/${id}`).end((err: any, res: any) => {
+            .get(`/departureboards?ids[]=${id}`).end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an("array");
                 done();
             });
     });
 
-    it("should respond with an empty array /departureboards/{id}", (done) => {
+    it("should respond with 404 to non-existant stop /departureboards?ids", (done) => {
         request(app)
-            .get("/departureboards/U476Z103P").end((err: any, res: any) => {
-                expect(res.statusCode).to.be.equal(200);
-                expect(res.body).that.eql([]);
+            .get("/departureboards?ids[]=kovfefe").end((err: any, res: any) => {
+                expect(res.statusCode).to.be.equal(404);
                 done();
             });
     });
 
-    it("should respond with 404 to non-existant stop /departureboards/{id}", (done) => {
+    it("should respond with 400 to unspecified ids (one of ids,cisIds,aswIds must be set)", (done) => {
         request(app)
-            .get("/departureboards/kovfefe").end((err: any, res: any) => {
-                expect(res.statusCode).to.be.equal(404);
+            .get("/departureboards").end((err: any, res: any) => {
+                expect(res.statusCode).to.be.equal(400);
                 done();
             });
     });

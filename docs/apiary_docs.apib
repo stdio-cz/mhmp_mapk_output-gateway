@@ -986,9 +986,13 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## GTFS Stops [/gtfs/stops{?limit,offset}]
+## GTFS Stops [/gtfs/stops{?names,ids,aswIds,cisIds,limit,offset}]
 
 + Parameters
+    + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
+    + ids: `U476Z103P` (optional, string) - Get stops by stop_id. Use with square brackets `ids[]`.
+    + aswIds: `1833_12` (optional, string) - Get stops by ASW, use `_` instead of `/` or encode the slash sign with `%2F`. Use with square brackets `aswId[]`.
+    + cisIds: `12345` (optional, number) - Get stops by CIS Id. Use with square brackets `cisId[]`.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 
@@ -1058,7 +1062,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Parameters
     + `id`: `L991` (string, required)
 
-### GET GTFS Stop [GET]
+### GET GTFS Route [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1190,12 +1194,21 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Departure Boards [/departureboards/{stopId}/{?limit}]
+## Departure Boards [/departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,orderBySchedule,showAllRoutesFirst,limit,offset}]
+
+You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3`. And one of these params is required.
 
 + Parameters
 
-    + stopId: `U476Z103P` (string, required) Get result by stop_id (GTFS, id of specific stop, not station)
+    + ids: `U476Z103P` (optional, string) - Get result by stop_id (GTFS, id of specific stop)
+    + aswIds: `1833_12` (optional, string) - Get result by ASW, use `_` instead of `/` or encode the slash sign with `%2F`
+    + cisIds: `12345` (optional, number) - Get result by CIS Id
+    + minutesBefore: `10` (optional, number) - Get departures relative before to request time, default 10 minutes before
+    + minutesAfter: `60` (optional, number) - Get departures relative after the request time, default 60 minutes after
+    + orderBySchedule: `false` (optional, boolean) - Order by schedule, not by real delays
+    + showAllRoutesFirst: `false` (optional, boolean) - Sort by all distinct route - trip headsign first and then by arrival time.
     + limit: 10 (optional, number) - Limits number of retrieved items
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
 
 ### GET Departure Board [GET]
 
@@ -1895,16 +1908,43 @@ Cleaning Frequency:
 
 ## Departure Board (object)
 
-+ delay_minutes: 0 (number, required)
-+ is_delay_available: false (boolean, required)
-+ arrival_time: `7:37:45` (string, required)
-+ departure_time: `7:38:05` (string, required)
-+ arrival_datetime: `2019-05-27T05:37:45.000Z` (string, required)
-+ departure_datetime: `2019-05-27T05:38:05.000Z` (string, required)
-+ arrival_datetime_real: `2019-05-27T05:37:45.000Z` (string, required)
-+ route_short_name: `A` (string, required)
-+ `trip_id`: `991_1151_190107` (string, required)
-+ service_id: `1111100-1` (string, required)
++ delay (Departure Board Delay)
++ arrival_timestamp (Departure Board Stop Time)
++ departure_timestamp (Departure Board Stop Time)
++ route (Departure Board Route)
++ stop (Departure Board Stop)
++ trip (Departure Board Trip)
+
+## Departure Board Trip (object)
+
++ headsign: `Chodov` (string, required) - Trip headsign.
++ id: `140_224_200302` (string, required) - GTFS trip id.
++ is_canceled: `false` (boolean, required) - If the trip is canceled.
++ is_wheelchair_accessible: `1` (number, required) - If the vehicle is wheelchair accessible.
+
+## Departure Board Stop (object)
+
++ name: `Prosecká` (string, required) - Name of station.
++ id: `U754Z1P` (string, required) - GTFS station id.
++ platform_code: `A` (string, required) - Station platform.
++ is_wheelchair_accessible: `1` (number, required) - 1 for wheelchair accessible stop.
+
+## Departure Board Delay (object)
+
++ is_available: `false` (boolean, required) - If true, is avalable information about trip's realtime delay.
++ minutes: `3` (string, optional) - Delay rounded to minutes.
++ seconds: `176` (string, optional) - Delay in seconds.
+
+## Departure Board Stop Time (object)
+
++ predicted: `2019-05-18T07:38:20.000Z` (string, required) - Time of arrival/departure including realtime delay in ISO String (UTC).
++ scheduled: `2019-05-18T07:38:00.000Z` (string, required) - Time of arrival/departure in ISO String (UTC).
+
+## Departure Board Route (object)
+
++ name: `140` (string, required) - Route short name.
++ type: `3` (string, required) - Type of route.
+
 
 ## Garden (object)
 
@@ -2409,7 +2449,7 @@ Cleaning Frequency:
     + `real`: `OAD KO Kolín` (string, required) - Agency name that normally operates the trip
     + `scheduled`: `OAD KO Kolín` (string, required) - Agency name that currently operates the trip (normally identical to planned_agency_name)
 + `cis` (object) - All properties that come from nation central information system
-    + `line_id`: `100381` (string, required) - Full line licence number (nation-wide unique, always 6 digits) <!-- This is BIGINT in database, which is not supported by JavaScript. Thus returned as string to prevent precision loss. -->
+    + `line_id`: `100381` (string, required) - Full line number
     + `trip_number`: 29 (number, required) - Trip number (unique within specific cis_line_id)
 + `sequence_id`: 1 (number, required) - Identifier of trip sequence operated by a single vehicle
 + `origin_route_name`: 381 (string, required) - Name of the route from which the vehicle originates

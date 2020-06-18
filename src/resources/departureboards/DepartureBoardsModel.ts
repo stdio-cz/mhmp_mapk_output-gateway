@@ -74,12 +74,7 @@ export class DepartureBoardsModel {
                     ) = 1 THEN 1 ELSE 2 END) AS "route_order", "t".*
                 FROM (
                     SELECT 
-                        "t"."delay_seconds",
-                        "t"."delay_minutes",
-                        "t"."is_delay_available",
-                        "t"."arrival_datetime",
-                        "t"."departure_datetime",
-                        "t"."arrival_datetime_real",
+                        *,
                         (
                             "t"."departure_datetime" + GREATEST(
                                 MAKE_INTERVAL(0,0,0,0,0,0,-60),
@@ -88,18 +83,7 @@ export class DepartureBoardsModel {
                                     ELSE MAKE_INTERVAL(0,0,0,0,0,0,"t"."delay_seconds")
                                 END
                             )
-                        )  AS "departure_datetime_real",
-                        "t"."stop_id",
-                        "t"."stop_name",
-                        "t"."platform_code",
-                        "t"."wheelchair_boarding",
-                        "t"."route_short_name",
-                        "t"."route_type",
-                        "t"."trip_id",
-                        "t"."trip_headsign",
-                        "t"."wheelchair_accessible",
-                        "t"."is_canceled",
-                        "t"."service_id"
+                        )  AS "departure_datetime_real"
                     FROM (
                         SELECT
                             "t6"."delay" AS "delay_seconds",

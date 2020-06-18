@@ -43,7 +43,7 @@ export class DepartureBoardsModel {
             return sequelizeConnection.query(
 
             /*
-                What does do this query?
+                Little departure board fairy tale...
                 ===
 
                 It first selects "ropidgtfs_stop_times".
@@ -55,6 +55,11 @@ export class DepartureBoardsModel {
 
                 All results we rank first by routes and their headsign and after that by arrival time.
                 If param showAllRoutesFirst is true we order first by unique route - headsign and then by arrival time (thru the rank)
+
+                Real departure time is not that easy too :-)
+                We add delay to real arrival time and we also want to add it to departure time.
+                But the trip can dwell some time on the stop, so we need subtract the delay with the dwell time.
+                If the trip is with negative delay (too fast), departure time is not less than 60s ahead, rules for the drivers speak that way!
 
                 Limit and offset is aplied too.
 
@@ -68,16 +73,48 @@ export class DepartureBoardsModel {
                         ORDER BY ` + orderBySchedule + `)
                     ) = 1 THEN 1 ELSE 2 END) AS "route_order", "t".*
                 FROM (
-                    SELECT *
+                    SELECT 
+                        "t"."delay_seconds",
+                        "t"."delay_minutes",
+                        "t"."is_delay_available",
+                        "t"."arrival_datetime",
+                        "t"."departure_datetime",
+                        "t"."arrival_datetime_real",
+                        (
+                            "t"."departure_datetime" + GREATEST(
+                                MAKE_INTERVAL(0,0,0,0,0,0,-60),
+                                CASE WHEN ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL > '00:00'::INTERVAL
+                                    THEN GREATEST('00:00'::INTERVAL, MAKE_INTERVAL(0,0,0,0,0,0,"t"."delay_seconds")) - ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL
+                                    ELSE MAKE_INTERVAL(0,0,0,0,0,0,"t"."delay_seconds")
+                                END
+                            )
+                        )  AS "departure_datetime_real",
+                        "t"."stop_id",
+                        "t"."stop_name",
+                        "t"."platform_code",
+                        "t"."wheelchair_boarding",
+                        "t"."route_short_name",
+                        "t"."route_type",
+                        "t"."trip_id",
+                        "t"."trip_headsign",
+                        "t"."wheelchair_accessible",
+                        "t"."is_canceled",
+                        "t"."service_id"
                     FROM (
                         SELECT
                             "t6"."delay" AS "delay_seconds",
-                            (CASE WHEN "t6"."delay" IS NOT NULL THEN ROUND("t6"."delay"/60) ELSE NULL END)::INT AS "delay_minutes",
+                            (CASE WHEN "t6"."delay" IS NOT NULL THEN ROUND("t6"."delay"::DECIMAL/60) ELSE NULL END)::INT AS "delay_minutes",
                             (CASE WHEN "t6"."delay" IS NULL THEN FALSE ELSE TRUE END) AS "is_delay_available",
                             "t1"."arrival_time", "t1"."departure_time",
                             (("t7"."date" + "t1"."arrival_time"::INTERVAL) AT TIME zone 'Europe/Prague' AT TIME zone 'Etc/UTC')::TIMESTAMPTZ AS "arrival_datetime",
                             (("t7"."date" + "t1"."departure_time"::INTERVAL) AT TIME zone 'Europe/Prague' AT TIME zone 'Etc/UTC')::TIMESTAMPTZ AS "departure_datetime",
-                            ((("t7"."date" + "t1"."arrival_time"::INTERVAL + MAKE_INTERVAL(0,0,0,0,0,(CASE WHEN "t6"."delay" >= 0 THEN ROUND("t6"."delay"/60) ELSE 0 END)::INT))) AT TIME zone 'Europe/Prague' AT TIME zone 'Etc/UTC')::TIMESTAMPTZ AS "arrival_datetime_real",
+                            (
+                                (
+                                    ("t7"."date" + "t1"."arrival_time"::INTERVAL + MAKE_INTERVAL(
+                                        0,0,0,0,0,0,(CASE WHEN "t6"."delay" IS NOT NULL THEN "t6"."delay" ELSE 0 END)
+                                    ))
+                                ) AT TIME zone 'Europe/Prague' AT TIME zone 'Etc/UTC'
+                            )::TIMESTAMPTZ AS "arrival_datetime_real",
                             "t0"."stop_id",
                             "t0"."stop_name",
                             "t0"."platform_code",

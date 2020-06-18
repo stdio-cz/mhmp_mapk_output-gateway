@@ -10,6 +10,7 @@ export interface IDeparture {
     arrival_datetime: string;
     departure_datetime: string;
     arrival_datetime_real: string;
+    departure_datetime_real: string;
     route_short_name: string;
     trip_id: string;
     trip_headsign: string;

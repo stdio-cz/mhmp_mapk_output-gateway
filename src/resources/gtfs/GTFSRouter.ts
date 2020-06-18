@@ -309,9 +309,11 @@ export class GTFSRouter extends BaseRouter {
             [
                 query("latlng").optional().isLatLong(),
                 query("range").optional().isNumeric(),
+                query("names").optional().isArray(),
                 query("ids").optional().isArray(),
                 query("aswIds").optional().isArray(),
                 query("cisIds").optional().isArray(),
+                query("names.*").optional().isString(),
                 query("ids.*").optional().isString(),
                 query("aswIds.*").optional().isString(),
                 query("cisIds.*").optional().isInt(),

@@ -986,10 +986,10 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## GTFS Stops [/gtfs/stops{?name,ids,aswIds,cisIds,limit,offset}]
+## GTFS Stops [/gtfs/stops{?names,ids,aswIds,cisIds,limit,offset}]
 
 + Parameters
-    + name: `Prosecká` (optional, string) - Name of station. It is possible use plural `names[]=NAME1&names[]=NAME2` to get multiple results.
+    + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
     + ids: `U476Z103P` (optional, string) - Get stops by stop_id. Use with square brackets `ids[]`.
     + aswIds: `1833_12` (optional, string) - Get stops by ASW, use `_` instead of `/` or encode the slash sign with `%2F`. Use with square brackets `aswId[]`.
     + cisIds: `12345` (optional, number) - Get stops by CIS Id. Use with square brackets `cisId[]`.

@@ -1,11 +1,13 @@
 import { CustomError } from "@golemio/errors";
 import { RopidGTFS } from "@golemio/schema-definitions";
 import * as Sequelize from "sequelize";
+import { sequelizeConnection } from "../../../core/database";
 import { buildGeojsonFeature, buildGeojsonFeatureCollection } from "../../../core/Geo";
 import { SequelizeModel } from "../../../core/models";
 
 export class GTFSStopModel extends SequelizeModel {
     protected outputAttributes: string[] = [];
+    protected cisStopsModel: Sequelize.Model<any, any>;
 
     public constructor() {
         super(RopidGTFS.stops.name, RopidGTFS.stops.pgTableName,
@@ -26,6 +28,10 @@ export class GTFSStopModel extends SequelizeModel {
             this.outputAttributes.splice(this.outputAttributes.indexOf(column), 1);
         });
 
+        this.cisStopsModel = sequelizeConnection.define(
+            RopidGTFS.cis_stops.pgTableName,
+            RopidGTFS.cis_stops.outputSequelizeAttributes,
+        );
     }
 
     /** Retrieves all gtfs stops
@@ -44,9 +50,14 @@ export class GTFSStopModel extends SequelizeModel {
         lat?: number,
         lng?: number,
         range?: number,
+        names?: string[],
+        gtfsIds?: string[],
+        aswIds?: string[],
+        cisIds?: number[],
     } = {}): Promise<any> => {
-        const { limit, offset, lat, lng, range } = options;
+        const { limit, offset, lat, lng, range, names, gtfsIds, aswIds, cisIds } = options;
         try {
+            const allGtfsIds: string[] = [];
             const order: any = [];
             const attributes: any = this.outputAttributes;
             let where: any = {};
@@ -61,6 +72,44 @@ export class GTFSStopModel extends SequelizeModel {
                 }
             }
 
+            if (aswIds || cisIds) {
+                const ors: any[] = [];
+                if (aswIds && aswIds?.length > 0) {
+                    aswIds.forEach((d) => {
+                        ors.push(Sequelize.where(Sequelize.col("id"), "LIKE", d.replace("_", "/") + "%"));
+                    });
+                }
+                if (cisIds && cisIds?.length > 0) {
+                    ors.push({
+                        cis: cisIds,
+                    });
+                }
+
+                const stops = await this.cisStopsModel.findAll({
+                    raw: true,
+                    where: {
+                        [Sequelize.Op.or]: ors,
+                    },
+                });
+                stops.forEach((stop) => {
+                    allGtfsIds.push("U" + stop.id.replace("/", "Z") + "%");
+                });
+            }
+
+            gtfsIds?.forEach((stop) => {
+                allGtfsIds.push(stop);
+            });
+
+            where.stop_id = {
+                [Sequelize.Op.or]: allGtfsIds.map((id) => {
+                    return Sequelize.where(Sequelize.col("stop_id"), "LIKE", id);
+                }),
+            };
+
+            if (names && names?.length > 0) {
+                where.stop_name = names;
+            }
+
             order.push([["stop_id", "asc"]]);
 
             const data = await this.sequelizeModel.findAll({
@@ -68,8 +117,10 @@ export class GTFSStopModel extends SequelizeModel {
                 limit,
                 offset,
                 order,
+                raw: true,
                 where,
             });
+
             return buildGeojsonFeatureCollection(data, "stop_lon", "stop_lat", true);
         } catch (err) {
             throw new CustomError("Database error", true, "GTFSStopModel", 500, err);

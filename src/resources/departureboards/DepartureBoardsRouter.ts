@@ -69,7 +69,7 @@ export class DepartureBoardsRouter extends BaseRouter {
               seconds: x.delay_seconds, // TBD - now it could be negative!
             },
             departure_timestamp: {
-                predicted: x.departure_datetime, // with added delay
+                predicted: x.departure_datetime_real, // with added delay
                 scheduled: x.departure_datetime, // according to trip plan
             },
             // last_stop: {

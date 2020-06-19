@@ -76,7 +76,11 @@ export class GTFSStopModel extends SequelizeModel {
                 const ors: any[] = [];
                 if (aswIds && aswIds?.length > 0) {
                     aswIds.forEach((d) => {
-                        ors.push(Sequelize.where(Sequelize.col("id"), "LIKE", d.replace("_", "/") + "%"));
+                        ors.push(Sequelize.where(
+                            Sequelize.col("id"),
+                            "LIKE",
+                            d.replace("_", "/") + ((d.indexOf("/") < 0) ? "/%" : ""),
+                        ));
                     });
                 }
                 if (cisIds && cisIds?.length > 0) {

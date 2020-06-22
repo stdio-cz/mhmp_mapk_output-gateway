@@ -76,11 +76,13 @@ export class GTFSStopModel extends SequelizeModel {
                 const ors: any[] = [];
                 if (aswIds && aswIds?.length > 0) {
                     aswIds.forEach((d) => {
-                        ors.push(Sequelize.where(
-                            Sequelize.col("id"),
-                            "LIKE",
-                            d.replace("_", "/") + ((d.indexOf("/") < 0) ? "/%" : ""),
-                        ));
+                        // user can pass "/" sign encoded, or it could be passed as "_"
+                        let aswIdLike = d.replace("_", "/");
+                        // user can pass only the first part of ASW ID, i.e. 85 for stops 85/1, 85/2, but not 856/1.
+                        if (aswIdLike.indexOf("/") < 0) {
+                            aswIdLike += "/%";
+                        }
+                        ors.push(Sequelize.where(Sequelize.col("id"), "LIKE", aswIdLike));
                     });
                 }
                 if (cisIds && cisIds?.length > 0) {
@@ -95,6 +97,8 @@ export class GTFSStopModel extends SequelizeModel {
                         [Sequelize.Op.or]: ors,
                     },
                 });
+                // after all stops by other than GTFS ids are collected, we create proper GTFS ids with % like sign.
+                // GTFS stops must be split into more ids due to more tarriff zones even if it is one physical stop.
                 stops.forEach((stop) => {
                     allGtfsIds.push("U" + stop.id.replace("/", "Z") + "%");
                 });

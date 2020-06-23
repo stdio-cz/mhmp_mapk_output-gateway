@@ -34,5 +34,5 @@ export default {
     redis_enable: process.env.REDIS_ENABLE === "true" || false,
     redis_ttl: process.env.REDIS_DEFAULT_TTL,
     sentry_dsn: process.env.SENTRY_DSN,
-    sentry_enable: process.env.SENTRY_ENABLE || false,
+    sentry_enable: process.env.SENTRY_ENABLE === "true" || false,
 };

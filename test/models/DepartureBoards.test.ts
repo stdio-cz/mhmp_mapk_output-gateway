@@ -32,7 +32,11 @@ describe("DepartureBoardsModel", () => {
     });
 
     it("should return array of valid stop times objects", async () => {
-        const result = await departureBoardsModel.GetOne({ stopId: id });
+        const result = await departureBoardsModel.GetAll({
+            gtfsIds: [id],
+            minutesAfter: 24 * 60,
+            minutesBefore: 24 * 60,
+        });
         expect(result).to.be.an.instanceOf(Array);
         expect(result[0]).to.be.an.instanceOf(Object);
         expect(result[0]).to.haveOwnProperty("delay_minutes");
@@ -47,7 +51,11 @@ describe("DepartureBoardsModel", () => {
     });
 
     it("should return 404 to non-existant stop_id", async () => {
-        const resultPromise = departureBoardsModel.GetOne({ stopId: "kovfefe" });
+        const resultPromise = departureBoardsModel.GetAll({
+            gtfsIds: ["kovfefe"],
+            minutesAfter: 60,
+            minutesBefore: 10,
+        });
         await expect(resultPromise).to.be.rejected;
     });
 });

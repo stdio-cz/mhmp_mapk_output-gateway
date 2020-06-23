@@ -13,7 +13,6 @@ describe("BicycleCountersTemperaturesModel", () => {
 
   let bicycleCountersTemperaturesModel: BicycleCountersTemperaturesModel;
 
-
   before(() => {
     bicycleCountersTemperaturesModel = new BicycleCountersTemperaturesModel();
   });
@@ -33,7 +32,7 @@ describe("BicycleCountersTemperaturesModel", () => {
     describe("When called with id param", () => {
       it("should return correct subset of items", async () => {
         const result = await bicycleCountersTemperaturesModel.GetAll({
-          id: ["camea-BC_ZA-KLBO"]
+          id: ["camea-BC_ZA-KLBO"],
         });
         expect(result).to.be.an.instanceOf(Array);
         expect(result.length).to.eql(16);
@@ -58,13 +57,13 @@ describe("BicycleCountersTemperaturesModel", () => {
         expect(result).to.be.an.instanceOf(Array);
         expect(result.length).to.eql(6);
 
-        result.forEach((element:any) => {
+        result.forEach((element: any) => {
           expect(element.measured_from).to.satisfy((measuredFrom: number) => {
             return measuredFrom <= isoDateTo.getTime();
           });
         });
 
-        result.forEach((element:any) => {
+        result.forEach((element: any) => {
           expect(element.measured_from).to.satisfy((measuredFrom: number) => {
             return measuredFrom >= isoDateFrom.getTime();
           });

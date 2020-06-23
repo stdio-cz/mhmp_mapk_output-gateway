@@ -37,13 +37,16 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      * @param {string} [options.routeId] Filter trips by specific route id
      * @param {string} [options.routeShortName] Filter trips by specific route short name
      * @param {string} [options.tripId] Filter trips by specific trip id
+     * @param {boolean} [options.includeNotTracking] Should include not tracking vehicle positions (those off a trip)
      * @param {boolean} [options.includePositions] Should include all vehicle positions
      * @returns Array of the retrieved records
      */
     public GetAll = async (options: {
+        cisTripNumber?: number,
         routeId?: string,
         routeShortName?: string,
         tripId?: string,
+        includeNotTracking?: boolean,
         includePositions?: boolean,
         limit?: number,
         offset?: number,
@@ -63,6 +66,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                     offset,
                     where: {
                         gtfs_trip_id: { [sequelizeConnection.Sequelize.Op.ne]: null },
+                        ...(options.cisTripNumber && { cis_trip_number: options.cisTripNumber }),
                         ...(options.routeId && { gtfs_route_id: options.routeId }),
                         ...(options.routeShortName && { gtfs_route_short_name: options.routeShortName }),
                         ...(options.tripId && { gtfs_trip_id: options.tripId }),
@@ -152,6 +156,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 origin_timestamp: last_position.origin_timestamp,
                 shape_dist_traveled: last_position.shape_dist_traveled,
                 speed: last_position.speed,
+                tracking: (last_position.tracking === 2) ? true : false,
             },
             trip: {
                 agency_name: {
@@ -224,6 +229,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      * @returns Array of inclusions
      */
     private ComposeIncludes = (options: {
+        includeNotTracking?: boolean,
         includePositions?: boolean,
         updatedSince?: any,
     }): Array<Model<any, any> | IncludeOptions> => {
@@ -231,7 +237,9 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             as: "last_position",
             model: sequelizeConnection.models.v_vehiclepositions_last_position,
             where: {
-                tracking: 2,
+                ...(!options.includeNotTracking && {
+                    tracking: 2,
+                }),
                 ...(options.updatedSince && {
                     updated_at: {
                         [sequelizeConnection.Sequelize.Op.gt]: options.updatedSince.getTime(),

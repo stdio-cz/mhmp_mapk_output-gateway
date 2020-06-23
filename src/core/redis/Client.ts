@@ -47,6 +47,24 @@ class RedisClient {
         return this.middleware(expire);
     }
 
+    public hget(hash: string, key: string): Promise<any> {
+        if (!this.redisClient) {
+            this.redisClient = redis.createClient(
+                config.redis_connection || "",
+            ).on("message", (message: string) => log.info(message))
+                .on("error", (error: any) => log.warn(error))
+                .on("connect", () => log.info("Connected to Redis!"));
+        }
+        return new Promise((resolve, reject) => {
+            this.redisClient.hget(hash, key, (err, data) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(data);
+            });
+        });
+    }
+
     private middleware = (expire?: number | string) => {
         return (req: Request, res: Response, next: NextFunction) => {
             if (!this.isNoCacheHeader(req, res) && config.redis_enable) {
@@ -61,5 +79,6 @@ class RedisClient {
 
 const client = new RedisClient();
 const useCacheMiddleware = (expire?: number | string) => client.getMiddleware(expire);
+const hget = client.hget;
 
-export { useCacheMiddleware };
+export { hget, useCacheMiddleware };

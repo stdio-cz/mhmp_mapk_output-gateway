@@ -12,6 +12,7 @@ import { log } from "../../src/core/Logger";
 import { vehiclepositionsRouter } from "../../src/resources/vehiclepositions/VehiclePositionsRouter";
 
 chai.use(chaiAsPromised);
+const fs = require("fs");
 
 describe("VehiclePositions Router", () => {
     // Create clean express instance
@@ -44,5 +45,46 @@ describe("VehiclePositions Router", () => {
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200, done);
+    });
+
+    it("should respond with protobuffer to GET /vehiclepositions/gtfsrt/trip_updates.pb", (done) => {
+        request(app)
+            .get("/vehiclepositions/gtfsrt/trip_updates.pb")
+            .set("Accept", "application/octet-stream")
+            .expect("Content-Type", /octet-stream/)
+            .expect(200)
+            .end((err, data) => {
+                if (err) {
+                    return done(err);
+                }
+                fs.readFile("./db/example/trip_updates.pb", (readerr: Error, rawdata: any) => {
+                    if (readerr) {
+                        return done(readerr);
+                    }
+                    chai.expect(data.body).to.deep.equal(rawdata);
+                    done();
+                });
+            });
+    });
+
+    it("should respond with protobuffer to GET /vehiclepositions/gtfsrt/vehicle_positions.pb", (done) => {
+        request(app)
+            .get("/vehiclepositions/gtfsrt/vehicle_positions.pb")
+            .set("Accept", "application/octet-stream")
+            .expect("Content-Type", /octet-stream/)
+            .expect(200)
+            .end((err, data) => {
+                if (err) {
+                    return done(err);
+                }
+                fs.readFile("./db/example/vehicle_positions.pb", (readerr: Error, rawdata: any) => {
+                    if (readerr) {
+                        return done(readerr);
+                    }
+                    chai.expect(data.body).to.deep.equal(rawdata);
+                    done();
+                });
+            });
+
     });
 });

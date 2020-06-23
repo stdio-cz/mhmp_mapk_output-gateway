@@ -35,6 +35,7 @@ export class VehiclePositionsRouter {
 
         try {
             const result = await this.model.GetAll({
+                cisTripNumber: req.query.cisTripNumber,
                 includeNotTracking: req.query.includeNotTracking || false,
                 includePositions: req.query.includePositions || false,
                 limit: req.query.limit,
@@ -188,6 +189,7 @@ export class VehiclePositionsRouter {
     private initRoutes = (expire?: number | string): void => {
         this.router.get("/",
             [
+                query("cisTripNumber").optional().isNumeric(),
                 query("routeId").optional(),
                 query("routeShortName").optional(),
                 query("includePositions").optional().isBoolean(),

@@ -42,6 +42,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
      * @returns Array of the retrieved records
      */
     public GetAll = async (options: {
+        cisTripNumber?: number,
         routeId?: string,
         routeShortName?: string,
         tripId?: string,
@@ -65,6 +66,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                     offset,
                     where: {
                         gtfs_trip_id: { [sequelizeConnection.Sequelize.Op.ne]: null },
+                        ...(options.cisTripNumber && { cis_trip_number: options.cisTripNumber }),
                         ...(options.routeId && { gtfs_route_id: options.routeId }),
                         ...(options.routeShortName && { gtfs_route_short_name: options.routeShortName }),
                         ...(options.tripId && { gtfs_trip_id: options.tripId }),

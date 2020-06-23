@@ -79,8 +79,12 @@ export class DepartureBoardsModel {
                             "t"."departure_datetime" + GREATEST(
                                 MAKE_INTERVAL(0,0,0,0,0,0,-60),
                                 CASE WHEN ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL > '00:00'::INTERVAL
-                                    THEN GREATEST('00:00'::INTERVAL, MAKE_INTERVAL(0,0,0,0,0,0,"t"."delay_seconds")) - ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL
-                                    ELSE MAKE_INTERVAL(0,0,0,0,0,0,"t"."delay_seconds")
+                                    THEN GREATEST(
+                                        '00:00'::INTERVAL, 
+                                        MAKE_INTERVAL(0,0,0,0,0,0,  (CASE WHEN "t"."delay_seconds" IS NULL THEN 0 ELSE "t"."delay_seconds" END))
+                                             - ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL
+                                    )
+                                    ELSE MAKE_INTERVAL(0,0,0,0,0,0,(CASE WHEN "t"."delay_seconds" IS NULL THEN 0 ELSE "t"."delay_seconds" END))
                                 END
                             )
                         )  AS "departure_datetime_real"

@@ -880,6 +880,63 @@ Data from the city public space.
     + Attributes (403 Error)
 
 
+## Municipal Libraries [/municipallibraries/{?latlng,range,districts,limit,offset,updatedSince}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
+
+### GET All Municipal Libraries [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Municipal Library)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## Municipal Library [/municipallibraries/{id}]
+
++ Parameters
+
+    + id: 2 (number) - Identifier of the library.
+
+### GET Municipal Library [GET]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Municipal Library)
+
++ Response 404
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
 # Group Public Transport
 GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules. We refresh data from ROPID every day. Transit data are always valid for next 14 days, but can change every day. More on https://pid.cz/o-systemu/opendata/.
 
@@ -2136,6 +2193,33 @@ Cleaning Frequency:
 + number_of_person_in_queue: 0 (number, required)
 + number_of_serving_counters: 5 (number, required)
 
+## Municipal Library (object)
+
++ address (Address)
++ district: `praha-1` (string)
++ id: 2 (number, required)
++ email: `knihovna@mlp.cz` (string, required)
++ name: `Barrandov` (string, required)
++ opening_hours (array[Opening Hours])
++ sections_and_departments (array[Municipal Library Section])
++ services (array[Municipal Library Service])
++ telephone: `+420 770 130 262` (string, required)
++ updated_at: `2020-06-30T14:16:45.891Z` (string, required)
++ web: `https://www.mlp.cz/cz/pobocky/barrandov/` (string, required)
+
+## Municipal Library Section
+
+id: `code-8` (string, required)
+name: `Oddělení pro děti a mládež` (string, required)
+type: `tag` (string, optional, nullable)
+url (string, optional, nullable)
+
+## Municipal Library Service
+
+description: `Bezbariérový přístup pro vozíčkáře i rodiče s kočárky` (string, optional, nullable)
+id: 3 (number, required)
+name: `Bezbariérový přístup` (string, required)
+
 ## Municipal Police Station (object)
 
 + cadastral_area: `Staré Město` (string, required)
@@ -2150,7 +2234,10 @@ Cleaning Frequency:
 + closes: `12:00` (string)
 + day_of_week: `Monday` (string)
 + description (string)
++ is_default (boolean)
 + opens: `08:00` (string)
++ valid_from: `2020-06-30T22:00:00.000Z` (string, optional, nullable)
++ valid_through: `2020-08-30T22:00:00.000Z` (string, optional, nullable)
 
 ## Parking (object)
 

@@ -7,6 +7,7 @@ import {
     AirQualityStations,
     BicycleParkings,
     Meteosensors,
+    MunicipalLibraries,
     MunicipalPoliceStations,
     Parkings,
     PublicToilets,
@@ -89,6 +90,11 @@ export const generalRoutes = [
         collectionName: BicycleParkings.mongoCollectionName,
         name: BicycleParkings.name,
         schema: BicycleParkings.outputMongooseSchemaObject,
+    },
+    {
+        collectionName: MunicipalLibraries.mongoCollectionName,
+        name: MunicipalLibraries.name,
+        schema: MunicipalLibraries.outputMongooseSchemaObject,
     },
 ];
 

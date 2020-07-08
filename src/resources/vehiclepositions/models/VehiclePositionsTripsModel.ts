@@ -95,7 +95,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     /** Retrieves specific vehicle trip
      * @param {string} id Id of the trip
      * @param {object} [options] Options object with params
-     * @param {string} [options.startDate] Returns trip on specifix start date
+     * @param {string} [options.includeNotTracking] Returns last known trip even if it is not tracked at time
      * @param {boolean} [options.includePositions] Should include all vehicle positions
      * @returns Object of the retrieved record or null
      */

@@ -1196,11 +1196,12 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
     + Attributes (403 Error)
 
 
-## Vehicle Position [/vehiclepositions/{gtfsTripId}{?includePositions}]
+## Vehicle Position [/vehiclepositions/{gtfsTripId}{?includeNotTracking,includePositions}]
 
 + Parameters
 
     + gtfsTripId: `115_107_180501` (string, required) Filter result by trip id (gtfs_trip_id)
+    + includeNotTracking: false (optional, boolean) - Enrich result dataset with not tracking trip (last tracked vehicle after its trip)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
 
 ### GET Vehicle Position [GET]

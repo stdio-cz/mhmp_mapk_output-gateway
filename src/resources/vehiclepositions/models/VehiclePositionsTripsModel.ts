@@ -95,10 +95,12 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     /** Retrieves specific vehicle trip
      * @param {string} id Id of the trip
      * @param {object} [options] Options object with params
+     * @param {string} [options.includeNotTracking] Returns last known trip even if it is not tracked at time
      * @param {boolean} [options.includePositions] Should include all vehicle positions
      * @returns Object of the retrieved record or null
      */
     public GetOne = async (id: string, options: {
+        includeNotTracking?: boolean,
         includePositions?: boolean,
     } = {}): Promise<object | null> => {
         try {
@@ -106,6 +108,9 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             const data = await this.sequelizeModel
                 .findOne({
                     include,
+                    order: [
+                        [ "created_at", "DESC" ],
+                    ],
                     where: {
                         gtfs_trip_id: id,
                     },

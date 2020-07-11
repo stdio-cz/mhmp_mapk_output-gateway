@@ -230,7 +230,9 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
 
     /** Prepare orm query with selected params
      * @param {object} options Options object with params
+     * @param {boolean} [options.includeNotTracking] Should include all vehicles, even not tracked
      * @param {boolean} [options.includePositions] Should include all vehicle positions
+     * @param {boolean} [options.updatedSince] Should include all newer positions than updatedSince
      * @returns Array of inclusions
      */
     private ComposeIncludes = (options: {

@@ -109,7 +109,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 .findOne({
                     include,
                     order: [
-                        [ "created_at", "DESC" ],
+                        [ "start_timestamp", "DESC" ],
                     ],
                     where: {
                         gtfs_trip_id: id,

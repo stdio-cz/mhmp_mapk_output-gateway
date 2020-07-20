@@ -1,6 +1,9 @@
 image: docker:stable
 
 variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+
+variables:
   POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test-pass
@@ -16,6 +19,9 @@ stages:
   - build
   - deploy
 
+services:
+  - docker:dind
+
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -25,6 +31,7 @@ run_tests:
   stage: build
   image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
   services:
+    - docker:dind
     - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/12.3:postgis3
       alias: postgres
     - mongo:4.0.5
@@ -39,26 +46,45 @@ run_tests:
     - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
     - export SENTRY_ENABLE=false
     - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
-    - PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql
+    - >
+      PGPASSWORD=$POSTGRES_PASSWORD
+      psql
+      -h $POSTGRES_HOST 
+      -U $POSTGRES_USER 
+      -d $POSTGRES_DB 
+      -f db/example/sql_dump.sql
     - export REDIS_CONN=redis://redis/
     - redis-cli -h redis -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
     - redis-cli -h redis -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin
     - NODE_ENV=production yarn run code-coverage
     - dredd
+  tags:
+    - docker
 
 build_image_v2:
   stage: build
   script:
     - echo $CI_COMMIT_SHA > commitsha
-    - docker build -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest .
+    - >
+      docker build 
+      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
+      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest 
+      .
+  tags:
+    - docker
 
 registry_deployment_v2:
   stage: deploy
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID && docker push $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest
+    - >
+      docker push 
+      $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
+      && docker push $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest
   rules:
     - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"
+  tags:
+    - docker
 
 #APIARY
 include:
@@ -76,3 +102,5 @@ pages:
     - public
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+  tags:
+    - docker

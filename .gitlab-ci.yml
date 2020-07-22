@@ -64,18 +64,19 @@ run_tests:
 build_image_v2:
   stage: build
   script:
-    - echo $CI_COMMIT_SHA > commitsha
-    - >
-      docker build 
-      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
-      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest 
-      .
+    - docker build $CI_COMMIT_REF_SLUG .
   tags:
     - docker
 
 registry_deployment_v2:
   stage: deploy
   script:
+    - echo $CI_COMMIT_SHA > commitsha
+    - >
+      docker build 
+      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID 
+      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest 
+      .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - >
       docker push 

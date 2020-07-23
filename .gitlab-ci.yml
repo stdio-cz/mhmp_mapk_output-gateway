@@ -60,6 +60,8 @@ run_tests:
     - dredd
   tags:
     - docker
+  rules:
+    - when: always
 
 build_image_v2:
   stage: build

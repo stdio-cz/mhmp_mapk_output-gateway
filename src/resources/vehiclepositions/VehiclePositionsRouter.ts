@@ -68,6 +68,7 @@ export class VehiclePositionsRouter {
         const id: string = req.params.id;
         try {
             const data: any = await this.model.GetOne(id, {
+                includeNotTracking: req.query.includeNotTracking || false,
                 includePositions: req.query.includePositions || false,
             },
             );

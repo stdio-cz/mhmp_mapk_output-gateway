@@ -33,6 +33,8 @@ export class VehiclePositionsRouter {
 
     public GetAll = async (req: Request, res: Response, next: NextFunction) => {
 
+        const preferredTimezone: string = this.setTargetTimezone(req.query.preferredTimezone);
+
         try {
             const result = await this.model.GetAll({
                 cisTripNumber: req.query.cisTripNumber,
@@ -52,7 +54,7 @@ export class VehiclePositionsRouter {
                 features: result.data.features.map((x: any) => {
                     return {
                         ...x,
-                        properties: this.mapPositionItemToISOString(x.properties),
+                        properties: this.mapPositionItemToISOString(x.properties, preferredTimezone),
                     };
                 }),
             };
@@ -66,6 +68,8 @@ export class VehiclePositionsRouter {
 
     public GetOne = async (req: Request, res: Response, next: NextFunction) => {
         const id: string = req.params.id;
+        const preferredTimezone: string = this.setTargetTimezone(req.query.preferredTimezone);
+
         try {
             const data: any = await this.model.GetOne(id, {
                 includeNotTracking: req.query.includeNotTracking || false,
@@ -77,7 +81,7 @@ export class VehiclePositionsRouter {
             }
             const response = {
                 ...data,
-                properties: this.mapPositionItemToISOString(data.properties),
+                properties: this.mapPositionItemToISOString(data.properties, preferredTimezone),
             };
             res.status(200).send(response);
         } catch (err) {
@@ -111,7 +115,7 @@ export class VehiclePositionsRouter {
         }
     }
 
-    private mapPositionItemToISOString(x: any) {
+    private mapPositionItemToISOString(x: any, preferredTimezone: string) {
         const defaultFeatureObject: IGeoJSONFeatureCollection = {
             features: [],
             type: "FeatureCollection",
@@ -128,23 +132,27 @@ export class VehiclePositionsRouter {
                             last_stop: {
                                 ...y.properties.last_stop,
                                 arrival_time: y.properties.last_stop.arrival_time != null ?
-                                    moment(parseInt(y.properties.last_stop.arrival_time, 10)).toISOString() :
+                                    this.formatTimestamp(
+                                        parseInt(y.properties.last_stop.arrival_time, 10), preferredTimezone) :
                                     null,
                                 departure_time: y.properties.last_stop.departure_time != null ?
-                                    moment(parseInt(y.properties.last_stop.departure_time, 10)).toISOString() :
+                                    this.formatTimestamp(
+                                        parseInt(y.properties.last_stop.departure_time, 10), preferredTimezone) :
                                     null,
                             },
                             next_stop: {
                                 ...y.properties.next_stop,
                                 arrival_time: y.properties.next_stop.arrival_time != null ?
-                                    moment(parseInt(x.last_position.next_stop.arrival_time, 10)).toISOString() :
+                                    this.formatTimestamp(
+                                        parseInt(x.last_position.next_stop.arrival_time, 10), preferredTimezone) :
                                     null,
                                 departure_time: y.properties.next_stop.departure_time != null ?
-                                    moment(parseInt(y.properties.next_stop.departure_time, 10)).toISOString() :
+                                    this.formatTimestamp(
+                                        parseInt(y.properties.next_stop.departure_time, 10), preferredTimezone) :
                                     null,
                             },
                             origin_timestamp: y.properties.origin_timestamp != null ?
-                                moment(parseInt(y.properties.origin_timestamp, 10)).toISOString() :
+                                this.formatTimestamp(parseInt(y.properties.origin_timestamp, 10), preferredTimezone) :
                                 null,
                         },
                     };
@@ -155,32 +163,58 @@ export class VehiclePositionsRouter {
                 last_stop: {
                     ...x.last_position.last_stop,
                     arrival_time: x.last_position.last_stop.arrival_time != null ?
-                        moment(parseInt(x.last_position.last_stop.arrival_time, 10)).toISOString() :
+                        this.formatTimestamp(
+                            parseInt(x.last_position.last_stop.arrival_time, 10), preferredTimezone) :
                         null,
                     departure_time: x.last_position.last_stop.departure_time != null ?
-                        moment(parseInt(x.last_position.last_stop.departure_time, 10)).toISOString() :
+                        this.formatTimestamp(
+                            parseInt(x.last_position.last_stop.departure_time, 10), preferredTimezone) :
                         null,
                 },
                 next_stop: {
                     ...x.last_position.next_stop,
                     arrival_time: x.last_position.next_stop.arrival_time != null ?
-                        moment(parseInt(x.last_position.next_stop.arrival_time, 10)).toISOString() :
+                        this.formatTimestamp(
+                            parseInt(x.last_position.next_stop.arrival_time, 10), preferredTimezone) :
                         null,
                     departure_time: x.last_position.next_stop.departure_time != null ?
-                        moment(parseInt(x.last_position.next_stop.departure_time, 10)).toISOString() :
+                        this.formatTimestamp(
+                            parseInt(x.last_position.next_stop.departure_time, 10), preferredTimezone) :
                         null,
                 },
                 origin_timestamp: x.last_position.origin_timestamp != null ?
-                    moment(parseInt(x.last_position.origin_timestamp, 10)).toISOString() :
+                    this.formatTimestamp(
+                        parseInt(x.last_position.origin_timestamp, 10), preferredTimezone) :
                     null,
             } : defaultFeatureObject,
             trip: x.trip != null ? {
                 ...x.trip,
                 start_timestamp: x.trip.start_timestamp != null ?
-                    moment(parseInt(x.trip.start_timestamp, 10)).toISOString() :
+                    this.formatTimestamp(
+                        parseInt(x.trip.start_timestamp, 10), preferredTimezone) :
                     null,
             } : defaultFeatureObject,
         };
+    }
+
+    /**
+     * Sets preferred timezone if exists in library (possible to use _ sign instead of URL encoded / sign)
+     * default is UTC zulu format
+     */
+    private setTargetTimezone = (preferredTimezone: any): string => {
+        if (preferredTimezone && moment.tz.names().includes(preferredTimezone.replace(/_/g, "/"))) {
+            return preferredTimezone;
+        } else {
+            return "UTC";
+        }
+    }
+
+    /**
+     * Formats tu Zulu format or to preferred timezone by query
+     */
+    private formatTimestamp = (datetime: number, preferredTimezone: string): string => {
+        return preferredTimezone === "UTC" ?
+            moment(datetime).toISOString() : moment(datetime).tz(preferredTimezone).toISOString(true);
     }
 
     /**
@@ -195,6 +229,7 @@ export class VehiclePositionsRouter {
                 query("routeShortName").optional(),
                 query("includePositions").optional().isBoolean(),
                 query("updatedSince").optional().isISO8601(),
+                query("preferredTimezone").optional().isString(),
             ],
             pagination,
             checkErrors,
@@ -206,6 +241,7 @@ export class VehiclePositionsRouter {
             [
                 param("id").exists(),
                 query("includePositions").optional().isBoolean(),
+                query("preferredTimezone").optional().isString(),
             ],
             checkErrors,
             useCacheMiddleware(expire),

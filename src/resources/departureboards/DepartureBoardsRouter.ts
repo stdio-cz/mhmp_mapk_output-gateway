@@ -7,6 +7,7 @@
 
 import { NextFunction, Request, Response, Router } from "express";
 import { oneOf, query } from "express-validator/check";
+import * as moment from "moment-timezone";
 import { IDeparture } from ".";
 import { useCacheMiddleware } from "../../core/redis";
 import { BaseRouter } from "../../core/routes/BaseRouter";
@@ -34,21 +35,31 @@ export class DepartureBoardsRouter extends BaseRouter {
         const aswIds: string[] = this.ConvertToArray(req.query.aswIds || []);
         const cisIds: number[] = this.ConvertToArray(req.query.cisIds || []);
         const gtfsIds: string[] = this.ConvertToArray(req.query.ids || []);
+        const names: string[] = this.ConvertToArray(req.query.names || []);
+
+        // set preferred timezone if exists in library (possible to use _ sign instead of URL encoded / sign)
+        // default is UTC zulu format
+        let preferredTimezone = "UTC";
+        if (req.query.preferredTimezone && moment.tz.names().includes(req.query.preferredTimezone.replace(/_/g, "/"))) {
+            preferredTimezone = req.query.preferredTimezone;
+        }
 
         try {
+
             const data = await this.departureBoardsModel
                 .GetAll({
                     aswIds,
                     cisIds,
                     gtfsIds,
-                    limit: req.query.limit,
-                    minutesAfter: parseInt(req.query.minutesAfter || 60, 10),
-                    minutesBefore: parseInt(req.query.minutesBefore || 10, 10),
+                    limit: parseInt(req.query.limit || 20, 10),
+                    minutesAfter: parseInt(req.query.minutesAfter || 180, 10),
+                    minutesBefore: parseInt(req.query.minutesBefore || 0, 10),
+                    names,
                     offset: req.query.offset,
                     orderBySchedule: (req.query.orderBySchedule === "true") ? true : false,
                     showAllRoutesFirst: (req.query.showAllRoutesFirst === "true") ? true : false,
                 });
-            res.status(200).send(data.map((d: IDeparture) => this.transformResponseData(d)));
+            res.status(200).send(data.map((d: IDeparture) => this.transformResponseData(d, preferredTimezone)));
         } catch (err) {
             next(err);
         }
@@ -57,11 +68,13 @@ export class DepartureBoardsRouter extends BaseRouter {
     /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
-    private transformResponseData = (x: IDeparture): any => {
+    private transformResponseData = (x: IDeparture, preferredTimezone: string): any => {
         return {
             arrival_timestamp: {
-                predicted: x.arrival_datetime_real, // with added delay
-                scheduled: x.arrival_datetime, // according to trip plan
+                // with added delay
+                predicted: this.formatDatetime(x.arrival_datetime_real, preferredTimezone),
+                // according to trip plan
+                scheduled: this.formatDatetime(x.arrival_datetime, preferredTimezone),
             },
             delay: {
               is_available: x.is_delay_available,
@@ -69,8 +82,10 @@ export class DepartureBoardsRouter extends BaseRouter {
               seconds: x.delay_seconds, // TBD - now it could be negative!
             },
             departure_timestamp: {
-                predicted: x.departure_datetime_real, // with added delay
-                scheduled: x.departure_datetime, // according to trip plan
+                // with added delay
+                predicted: this.formatDatetime(x.departure_datetime_real, preferredTimezone),
+                // according to trip plan
+                scheduled: this.formatDatetime(x.departure_datetime, preferredTimezone),
             },
             // last_stop: {
             //     id: null, // TBD
@@ -96,6 +111,13 @@ export class DepartureBoardsRouter extends BaseRouter {
     }
 
     /**
+     * Formats datetime value to Zulu format or to preferred timezone by given query parameter
+     */
+    private formatDatetime = (datetime: string, preferredTimezone: string): string => {
+        return preferredTimezone === "UTC" ? datetime : moment(datetime).tz(preferredTimezone).toISOString(true);
+    }
+
+    /**
      * Initiates all routes. Should respond with correct data to a HTTP requests to all routes.
      */
     private initRoutes = (): void => {
@@ -112,13 +134,17 @@ export class DepartureBoardsRouter extends BaseRouter {
                     query("ids").exists().isString(),
                     query("aswIds").exists().isString(),
                     query("cisIds").exists().isString(),
+                    query("names").exists().isArray(),
+                    query("names").exists().isString(),
                 ]),
                 query("ids.*").optional().isString(),
                 query("aswIds.*").optional().isString(),
                 query("cisIds.*").optional().isInt(),
+                query("names.*").optional().isString(),
                 query("minutesBefore").optional().isInt(),
                 query("minutesAfter").optional().isInt(),
                 query("orderBySchedule").optional().isBoolean(),
+                query("preferredTimezone").optional().isString(),
                 query("showAllRoutesFirst").optional().isBoolean(),
             ],
             pagination,

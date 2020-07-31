@@ -20,6 +20,7 @@ export class DepartureBoardsModel {
         aswIds?: string[],
         cisIds?: number[],
         gtfsIds?: string[],
+        names?: string[],
         limit?: number,
         offset?: number,
         orderBySchedule?: boolean,
@@ -32,10 +33,15 @@ export class DepartureBoardsModel {
             aswIds: options.aswIds,
             cisIds: options.cisIds,
             gtfsIds: options.gtfsIds,
+            limit: 101,
+            names: options.names,
         });
 
         if (stopsToInclude.features.length === 0) {
-            throw new CustomError("Stop not found", true, "DepartureBoardsRouter", 404, null);
+            throw new CustomError("No stops found", true, "DepartureBoardsRouter", 404, null);
+        }
+        if (stopsToInclude.features.length > 100) {
+            throw new CustomError("Too many stops, try lower number or split requests. The maximum is 100 stops.", true, "DepartureBoardsRouter", 413, null);
         }
         try {
             const orderBySchedule = options.orderBySchedule ? `"arrival_datetime" ASC` : `"arrival_datetime_real" ASC`;

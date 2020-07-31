@@ -7,7 +7,7 @@
 
 import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
-import { param, query } from "express-validator/check";
+import { oneOf, param, query } from "express-validator/check";
 import * as moment from "moment";
 import config from "../../config/config";
 import { parseCoordinates } from "../../core/Geo";
@@ -309,12 +309,23 @@ export class GTFSRouter extends BaseRouter {
             [
                 query("latlng").optional().isLatLong(),
                 query("range").optional().isNumeric(),
-                query("names").optional().isArray(),
-                query("ids").optional().isArray(),
-                query("aswIds").optional().isArray(),
-                query("cisIds").optional().isArray(),
+                oneOf([
+                    query("names").optional().isArray(),
+                    query("names").optional().isString(),
+                ]),
+                oneOf([
+                    query("aswIds").optional().isArray(),
+                    query("aswIds").optional().isString(),
+                ]),
+                oneOf([
+                    query("cisIds").optional().isArray(),
+                    query("cisIds").optional().isString(),
+                ]),
+                oneOf([
+                    query("ids").optional().isArray(),
+                    query("ids").optional().isString(),
+                ]),
                 query("names.*").optional().isString(),
-                query("ids.*").optional().isString(),
                 query("aswIds.*").optional().isString(),
                 query("cisIds.*").optional().isInt(),
             ],

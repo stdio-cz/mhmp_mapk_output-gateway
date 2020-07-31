@@ -21,7 +21,7 @@ describe("DepartureBoards Router", () => {
     const app = express();
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
-    const id = "U953Z102P";
+    const id = "U118Z102P";
 
     beforeEach(() => {
         sandbox = sinon.createSandbox();
@@ -54,6 +54,14 @@ describe("DepartureBoards Router", () => {
     it("should respond with 404 to non-existant stop /departureboards?ids", (done) => {
         request(app)
             .get("/departureboards?ids[]=kovfefe").end((err: any, res: any) => {
+                expect(res.statusCode).to.be.equal(404);
+                done();
+            });
+    });
+
+    it("should respond with 404 to non-existant ASW stop /departureboards?aswIds", (done) => {
+        request(app)
+            .get("/departureboards?aswIds[]=85_12389").end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(404);
                 done();
             });

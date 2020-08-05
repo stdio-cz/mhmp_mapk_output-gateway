@@ -102,6 +102,14 @@ export class GTFSStopModel extends SequelizeModel {
                 stops.forEach((stop) => {
                     allGtfsIds.push("U" + stop.id.replace("/", "Z") + "%");
                 });
+
+                // If aswIds and cisIds are not belong to any GTFS ids and no other gtfsIds or names are given,
+                // then return empty stops array
+                if (ors.length > 0 && allGtfsIds.length === 0 &&
+                    (gtfsIds === undefined || gtfsIds?.length === 0) &&
+                    (names === undefined || names.length === 0)) {
+                    return buildGeojsonFeatureCollection([], "stop_lon", "stop_lat", true);
+                }
             }
 
             gtfsIds?.forEach((stop) => {

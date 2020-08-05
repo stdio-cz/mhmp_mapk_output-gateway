@@ -1160,7 +1160,7 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Vehicle Positions [/vehiclepositions{?limit,offset,includeNotTracking,includePositions,cisTripNumber,routeId,routeShortName,updatedSince}]
+## Vehicle Positions [/vehiclepositions{?limit,offset,includeNotTracking,includePositions,cisTripNumber,preferredTimezone,routeId,routeShortName,updatedSince}]
 
 This endpoint returns special header `X-Last-Modified` which coresponds with the latest resource update timestamp.
 It is posible to use it as `?updatedSince` query parameter value to obtain only newer data than this timestamp.
@@ -1172,6 +1172,7 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
     + includeNotTracking: true (optional, boolean) - Enrich result dataset with not tracking trip (those trips not being on track - before and after trip)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
     + cisTripNumber: 1020 (number, optional) Filter result by CIS trip number
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use `_` sign)
     + routeId: L301 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
     + updatedSince: `2020-04-07T06:32:29.000Z` (string, optional) Limit results to the ones updated after (timestamp greater than)
@@ -1196,13 +1197,14 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
     + Attributes (403 Error)
 
 
-## Vehicle Position [/vehiclepositions/{gtfsTripId}{?includeNotTracking,includePositions}]
+## Vehicle Position [/vehiclepositions/{gtfsTripId}{?includeNotTracking,includePositions,preferredTimezone}]
 
 + Parameters
 
     + gtfsTripId: `115_107_180501` (string, required) Filter result by trip id (gtfs_trip_id)
     + includeNotTracking: false (optional, boolean) - Enrich result dataset with not tracking trip (last tracked vehicle after its trip)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign by %2F or use _ sign)
 
 ### GET Vehicle Position [GET]
 
@@ -1253,20 +1255,22 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Departure Boards [/departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,orderBySchedule,showAllRoutesFirst,limit,offset}]
+## Departure Boards [/departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,names,preferredTimezone,orderBySchedule,showAllRoutesFirst,limit,offset}]
 
-You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3`. And one of these params is required.
+You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3`. And one of these params is required. The maximum is 100 stops combined for one request.
 
 + Parameters
 
     + ids: `U476Z103P` (optional, string) - Get result by stop_id (GTFS, id of specific stop)
     + aswIds: `1833_12` (optional, string) - Get result by ASW, use `_` instead of `/` or encode the slash sign with `%2F`
     + cisIds: `12345` (optional, number) - Get result by CIS Id
-    + minutesBefore: `10` (optional, number) - Get departures relative before to request time, default 10 minutes before
-    + minutesAfter: `60` (optional, number) - Get departures relative after the request time, default 60 minutes after
+    + minutesBefore: `10` (optional, number) - Get departures relative before to request time. Default is set to 0.
+    + minutesAfter: `60` (optional, number) - Get departures relative after the request time. Default is set to 180.
+    + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use _ sign)
     + orderBySchedule: `false` (optional, boolean) - Order by schedule, not by real delays
     + showAllRoutesFirst: `false` (optional, boolean) - Sort by all distinct route - trip headsign first and then by arrival time.
-    + limit: 10 (optional, number) - Limits number of retrieved items
+    + limit: 20 (optional, number) - Limits number of retrieved items. Default is set to 20 (The maximum is 1000)
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 
 ### GET Departure Board [GET]

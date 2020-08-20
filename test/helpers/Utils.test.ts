@@ -16,6 +16,10 @@ describe("Utils functions", () => {
         expect(parseBooleanQueryParam(undefined)).to.be.false;
     });
 
+    it("should return false for some string", () => {
+        expect(parseBooleanQueryParam("some string")).to.be.false;
+    });
+
     it("should return false for false", () => {
         expect(parseBooleanQueryParam("false")).to.be.false;
     });
@@ -26,5 +30,9 @@ describe("Utils functions", () => {
 
     it("should return true for True case insensitive", () => {
         expect(parseBooleanQueryParam("True")).to.be.true;
+    });
+
+    it("should return false for False case insensitive", () => {
+        expect(parseBooleanQueryParam("False")).to.be.false;
     });
 });

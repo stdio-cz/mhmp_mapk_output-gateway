@@ -7,10 +7,11 @@
 import { CustomError } from "@golemio/errors";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
-import * as moment from "moment";
+import * as moment from "moment-timezone";
 import config from "../../config/config";
 import { IGeoJSONFeature, IGeoJSONFeatureCollection } from "../../core/Geo";
 import { hget, useCacheMiddleware } from "../../core/redis";
+import { parseBooleanQueryParam } from "../../core/Utils";
 import {
     checkErrors,
     checkPaginationLimitMiddleware,
@@ -38,8 +39,8 @@ export class VehiclePositionsRouter {
         try {
             const result = await this.model.GetAll({
                 cisTripNumber: req.query.cisTripNumber,
-                includeNotTracking: req.query.includeNotTracking || false,
-                includePositions: req.query.includePositions || false,
+                includeNotTracking: parseBooleanQueryParam(req.query.includeNotTracking),
+                includePositions: parseBooleanQueryParam(req.query.includePositions),
                 limit: req.query.limit,
                 offset: req.query.offset,
                 routeId: req.query.routeId,
@@ -72,8 +73,8 @@ export class VehiclePositionsRouter {
 
         try {
             const data: any = await this.model.GetOne(id, {
-                includeNotTracking: req.query.includeNotTracking || false,
-                includePositions: req.query.includePositions || false,
+                includeNotTracking: parseBooleanQueryParam(req.query.includeNotTracking),
+                includePositions: parseBooleanQueryParam(req.query.includePositions),
             },
             );
             if (!data) {
@@ -227,6 +228,7 @@ export class VehiclePositionsRouter {
                 query("cisTripNumber").optional().isNumeric(),
                 query("routeId").optional(),
                 query("routeShortName").optional(),
+                query("includeNotTracking").optional().isBoolean(),
                 query("includePositions").optional().isBoolean(),
                 query("updatedSince").optional().isISO8601(),
                 query("preferredTimezone").optional().isString(),
@@ -240,6 +242,7 @@ export class VehiclePositionsRouter {
         this.router.get("/:id",
             [
                 param("id").exists(),
+                query("includeNotTracking").optional().isBoolean(),
                 query("includePositions").optional().isBoolean(),
                 query("preferredTimezone").optional().isString(),
             ],

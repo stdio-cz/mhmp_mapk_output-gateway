@@ -1479,7 +1479,7 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicylecounters [/bicyclecounters/{?latlng,range,limit,offset}]
+## Bicyclecounters [/bicyclecounters/{?latlng,range,limit,offset}]
 
 Data are collected every 5 minutes from Camea bicyclecounters and every 15 minutes from EcoCounter bicyclecounters. These times are also intervals of vendors measurements aggregation. Data for previous day (only for Camea) are validated every day at 5:00 (UTC), detections and temperatures data can change then. EcoCounter bicyclecounters do not provide temperature measurement.
 
@@ -1490,7 +1490,7 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 
-### GET All Bicylecounters [GET]
+### GET All Bicyclecounters [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1512,7 +1512,7 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
 + Response 400
     + Attributes (Error)
 
-### GET Bicylecounters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
+### GET Bicyclecounters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
     + limit: 10 (optional, number) - Limits number of retrieved items.
@@ -1542,7 +1542,7 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
     + Attributes (Error)
 
 
-### GET Bicylecounters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
+### GET Bicyclecounters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
     + limit: 10 (optional, number) - Limits number of retrieved items.

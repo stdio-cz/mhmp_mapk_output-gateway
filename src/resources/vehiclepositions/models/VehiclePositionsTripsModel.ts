@@ -244,9 +244,10 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             as: "last_position",
             model: sequelizeConnection.models.v_vehiclepositions_last_position,
             where: {
-                ...(!options.includeNotTracking && {
-                    tracking: 2,
-                }),
+                ...(options.includeNotTracking ?
+                    { tracking: { [sequelizeConnection.Sequelize.Op.gte]: 0 } } :
+                    { tracking: 2 }
+                ),
                 ...(options.updatedSince && {
                     updated_at: {
                         [sequelizeConnection.Sequelize.Op.gt]: options.updatedSince.getTime(),
@@ -262,6 +263,9 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             include.push({
                 as: "all_positions",
                 model: sequelizeConnection.models[VehiclePositions.positions.pgTableName],
+                where: {
+                    tracking: { [sequelizeConnection.Sequelize.Op.gte]: 0 },
+                },
             });
         }
         return include;

@@ -2,16 +2,21 @@ FORMAT: 1A
 
 # Golemio API
 
-**Dokumentace Golemio API, přístup lze získat na [api.golemio.cz/api-keys](https://api.golemio.cz/api-keys). Veškeré dotazy prosím směřujte na [golemio@operatorict.cz](mailto:golemio@operatorict.cz?subject=golemioapiv1)**
+<img src="https://storage.golemio.cz/golemiocz/images/golemioapi_logos.png" alt="Logos" />
 
-Open RESTful API gateway for Golemio.cz Prague Data plafrorm.
-Gathers, enriches and caches data from various sources and provides a single access point to the data.
+**Toto je dokumentace REST API projektu pražské datové platformy Golemio.**
 
-Returns (mostly) data in GeoJSON http://geojson.org/ format specification. You can browse the data for example at http://geojson.io
+Veškeré dotazy prosím směřujte na [golemio@operatorict.cz](mailto:golemio@operatorict.cz?subject=golemioapiv1)
 
-Developed by https://operatorict.cz
+Dokumentace je v anglickém jazyce. Více informací o projektu naleznete na [www.golemio.cz](https://www.golemio.cz/).
 
-About project Golemio on https://golemio.cz
+## Description
+
+**This is documentation of RESTful API of Golemio Prague Data Plaform project.**
+
+Support is avalailable via [golemio@operatorict.cz](mailto:golemio@operatorict.cz?subject=golemioapiv1)
+
+More about project Golemio at [www.golemio.cz](https://www.golemio.cz/).
 
 ## Versions
 
@@ -19,93 +24,90 @@ About project Golemio on https://golemio.cz
 
 ## General info
 
+### Authorization
+
+Generate your own token at [api.golemio.cz/api-keys](https://api.golemio.cz/api-keys).
+
+**Use the token as value of `X-Access-Token` header.**
+
+### Usage
+
+#### Pagination
+
+**The API returns maximum count of 10000 objects / rows for one request. You can specify lower number by adding `?limit` URL parameter.**
+
+This may vary depending on the specific route, read the description of the parameters for each route.
+You can only get more data using multiple reqeusts with `?limit&offset` parameters, read examples below.
+
+#### Requests rate
+
+**By default, each API key has a rate-limit set of 10000 requests per 10 seconds.**
+
+#### Open Data
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+This badge means it is available for public use as Open Data.
+
 ### General responses
 
-All routes can return `403: Forbidden` if you (your API-Key) don't have the necessary rights to the specific route (or specific route+parameters combination). Permissions are explicitly granted for each API-key per route. API can also return `403` to a call with invalid parameters (for example, you can have permission to view only `route/?type=1` and try to call `route/?type=2`, you can get a `403`)
+| Response code | Description |
+| - | - |
+| `403: Forbidden` | Your API-Key don't have the necessary rights to the specific route (or specific route+parameters combination). Permissions are explicitly granted for each API-key per route. |
+| | API can also return `403` to a call with invalid parameters (for example, you can have permission to view only `route/?type=1` and try to call `route/?type=2`, you can get a `403`)
+| `404`: Not found | Non-existing routes or not-found resource returns. |
+| `429: Too Many Requests` | API can also return  if you exceed you rate-limit (again, rate-limits are explicitly granted for each API-key individually). |
+| `200`: Success | Otherwise success responses |
 
-Non-existing routes or not-found resource returns `404`.
+### General Parameters
 
-API can also return `429: Too Many Requests` if you exceed you rate-limit (again, rate-limits are explicitly granted for each API-key individually).
+Following parameters are applicaple for most of the resoures/routes. All parameters are optional. Don't copy-paste example API calls with all parameters if you don't need them.
 
-Otherwise success responses return `200`.
-
-### General Parameters:
-
-Following parameters are applicaple for most of the resoures/routes. Their meaning is explained here. All parameters are optional. Don't copy-paste example API calls with all parameters if you don't need them.
-
-- `latlng`
-   - location, API performs geo-spatial search to retrieve data close to the location (sorts data by proximity); Latitude and Longitude separated by comma, latitude first
-
-- `range`
-   - filters the results by their distance from provided latlng in meters (range query); is ignored when latlng is not specified
-
-- `districts`
-   - filters by Prague city districts (in array format - eg. `districts[]=praha7&districts[]=praha6`)
-
-- `limit`
-   - pagination - limits number of retrieved items (kNN query)
-
-- `offset`
-   - pagination - mumber of the first items that are skipped
-
-- `updatedSince`
-   - filters all results with older `updated_at` than this parameter, in ISO8601 format
-
-- `ids`
-   - filters by individual entity IDs (in array format - eg. `ids[]=1&ids[]=3`)
+| Parameter | Description |
+| - | - |
+| `latlng` | location, API performs geo-spatial search to retrieve data close to the location (sorts data by proximity); Latitude and Longitude separated by comma, latitude first |
+| `range` | filters the results by their distance from provided latlng in meters (range query); is ignored when latlng is not specified |
+| `districts` | filters by Prague city districts (in array format - eg. `districts[]=praha7&districts[]=praha6`) |
+| `limit` | pagination - limits number of retrieved items (kNN query) |
+| `offset` | pagination - mumber of the first items that are skipped |
+| `updatedSince` | filters all results with lower `updated_at` than this parameter, in ISO8601 format |
+| `ids` | filters by individual entity IDs (in array format - eg. `ids[]=1&ids[]=3`) |
 
 All parameters are optional and are evaluated at the same time as AND (only results meeting all the conditions at the same time are returned).
 
 Multiple values of the same parameter of type array are evaluated as OR (results meeting at least one condition are returned). Eg. `districts` or `ids`.
 
-### Possible headers:
+### Possible headers
 
-- `X-Access-Token`
-    - Token (API key) for authorization/authentication
-    - Request or generate your API key
-
-- `Cache-Control`
-    - Server-side caching is used by default
-    - If this request header value is set to `no-cache`, always fresh data are served and the cache is not used. The server processes the whole request and queries the database/data source.
-    - You should not need this as the time-to-live values are set very low for all the data; the main purpose is to save database load for concurrent requests.
-
-- `If-None-Match`
-    - Weak E-Tag implementation is used for additional caching
-    - API returns `ETag` response header, example: W/"21cf-vMBh8gdzFfYJ4qSGaPA6/dooVV0"
-    - If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed. This may save data traffic (as the same unchanged data are not sent) but is not faster on the server side. You should not need this unless you're repeatedly querying the same data and trying to save network traffic.
+| header | description |
+| - | - |
+| `Cache-Control` | Server-side caching is used by default. If this request header value is set to `no-cache`, always fresh data are served and the cache is not used. |
+| `If-None-Match` | Weak E-Tag implementation is used for additional caching. | API returns `ETag` response header, example: W/"21cf-vMBh8gdzFfYJ4qSGaPA6/dooVV0" | If the `If-None-Match` request header value matches the current `ETag`, 304 response (cached) is sent. ETag value changes everytime data are changed. This may save data traffic (as the same unchanged data are not sent) but is not faster on the server side. You should not need this unless you're repeatedly querying the same data and trying to save network traffic. |
 
 ## Example requests
 
-- get all parkings (without any parameters - all parameters are optional)
-    - `{baseurl}/parkings/`
+| URL | description |
+| - | - |
+| `/parkings/?limit=10&offset=10` | get 10th - 20th record (2nd page of 10 elements each when paginating) (using `limit` and `offset` parameters) |
 
-- get all parkings in 300m range around location 50.11548,14.437327 (using `latlng` and `range` parameters)
-    - `{baseurl}/parkings/?latlng=50.11548,14.437327&range=300`
+👉 More examples at [operator-ict.gitlab.io/golemio/documentation/en/tutorials/golemioapi](https://operator-ict.gitlab.io/golemio/documentation/en/tutorials/golemioapi/)
 
-- get all parkings in Prague 7 (using `districts` array parameter - works also for single value)
-    - `{baseurl}/parkings/?districts[]=praha7`
+# Group Air Quality 🌦
 
-- get 10th - 20th record (2nd page of 10 elements each when paginating) (using `limit` and `offset` parameters)
-    - `{baseurl}/parkings/?limit=10&offset=10`
+## Air Quality Stations CHMI [/airqualitystations]
 
-- get 10th - 20th record (2nd page of 10 elements each when paginating) of parkings in Prague 7 or Prague 8, which are in 3000m range from location 50.11548,14.437327. All parameters are evaluated at the same time (AND condition), but multiple values of the same array parameter `districts` are taken as OR. All filtering parameters are evaluated first, pagination (`limit` and `offset`) at the end on already filtered results.
-    - `{baseurl}/parkings/?latlng=50.11548,14.437327&range=300&districts[]=praha7&districts[]=praha8&limit=10&offset=10`
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
-# Group Air Quality
-Data from air quality stations
-
-## Air Quality Stations CHMI [/airqualitystations/{?latlng,range,districts,limit,offset,updatedSince}]
+### GET All Air Quality CHMI Stations [GET /airqualitystations/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Air Quality CHMI Stations [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -124,17 +126,15 @@ Data from air quality stations
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Air Quality Stations CHMI History [/airqualitystations/history/{?from,to,limit,offset,sensorId}]
+### GET Air Quality Stations CHMI History [GET /airqualitystations/history/{?from,to,limit,offset,sensorId}]
 
 + Parameters
 
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
     + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
-
-### GET Air Quality Stations CHMI History [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -150,18 +150,20 @@ Data from air quality stations
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Meteosensors TSK [/meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
+## Meteosensors TSK [/meteosensors]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Meteosensors TSK [GET /meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters out all results with older updated_at than this parameter
-
-### GET All Meteosensors TSK [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -180,13 +182,11 @@ Data from air quality stations
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Meteosensor TSK [/meteosensors/{id}]
+### GET Meteosensor TSK [GET /meteosensors/{id}]
 
 + Parameters
 
     + id: 531801 (number) - Identifier of the meteosensor.
-
-### GET Meteosensor TSK [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -206,25 +206,27 @@ Data from air quality stations
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-# Group Parking
-Data about parking.
+# Group Parking 🅿️
 
-## Parking Lots [/parkings/{?latlng,range,districts,limit,offset,updatedSince}]
+## Parking Lots [/parkings]
 
-Parking type enum:
-- 1 P+R parkoviště
-- 2 placené parkoviště
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+| Enum value | Parking type description (cs) | Parking type description (en) |
+| - | - | - |
+| 1 | P+R parkoviště | P+R parking |
+| 2 | placené parkoviště | paid private parking |
+
+### GET All Parking Lots [GET /parkings/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parametervvvv
-
-### GET All Parking Lots [GET]
+    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
 
 + Request (application/json; charset=utf-8)
 
@@ -243,18 +245,15 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parking Lots History [/parkings/history/{?from,to,limit,offset,sensorId}]
+### GET Parking Lots History [GET /parkings/history/{?from,to,limit,offset,sensorId}]
 
 + Parameters
 
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
     + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id (parameter `id` of the parking)
-
-
-### GET Parking Lots History [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -270,13 +269,11 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parking Lot [/parkings/{id}]
+### GET Parking Lot [GET /parkings/{id}]
 
 + Parameters
 
     + id: 534017 (number) - Identifier of the parking.
-
-### GET Parking Lot [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -295,24 +292,29 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parking Zones [/parkingzones/{?latlng,range,districts,limit,offset,updatedSince}]
+## Parking Zones [/parkingzones]
 
-"Category" definition:
-- RES - residential area (blue)
-- VIS - visitor area (orange)
-- MIX - mixed area (purple)
-- KOM - area only with ZTP or forbidden (grey)
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+GeoJSON format of all polygons for on-street parking zones. Tariffs for each zone with valid prices per hour in CZK.
+
+| Category code | Category description (cs) | Category description (en) |
+| - | - | - |
+| RES | rezidentní zóna (modrá) | residential area (blue) |
+| VIS | návštěvnická zóna area (oranžová) | visitor area (orange) |
+| MIX | smížená zóna area (fialová) | mixed area (purple) |
+| KOM | zóna pro ZTP (šedá) | area only with ZTP or forbidden (grey) |
+
+### GET All Parking Zones [GET /parkingzones/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Parking Zones [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -331,28 +333,11 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Parking Zones Tariffs [/parkingzones/tariffs]
-
-### GET Parking Zones Tariffs [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
-
-+ Response 200 (application/json; charset=utf-8)
-
-       + Attributes (array)
-        + (Parking Zone Tariff)
-
-## Parking Zone [/parkingzones/{parkingzoneCode}]
+### GET Parking Zone [GET /parkingzones/{parkingzoneCode}]
 
 + Parameters
 
     + parkingzoneCode: `P1-0101` (string) - Identifier of the parking zone.
-
-### GET Parking Zone [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -371,21 +356,35 @@ Parking type enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-# Group Public Space
-Data from the city public space.
+### GET Parking Zones Tariffs [GET /parkingzones/tariffs]
 
-## Gardens [/gardens/{?latlng,range,districts,limit,offset,updatedSince}]
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-api-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
+
++ Response 200 (application/json; charset=utf-8)
+
+       + Attributes (array)
+        + (Parking Zone Tariff)
+
+# Group Public Space 🏡
+
+## Gardens [/gardens]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Gardens [GET /gardens/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Gardens [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -404,14 +403,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Garden [/gardens/{id}]
+### GET Garden [GET /gardens/{id}]
 
 + Parameters
 
     + id: `frantiskanska-zahrada` (string) - Identifier of the garden.
-
-### GET Garden [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -430,9 +426,7 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Gardens Properties [/gardens/properties]
-
-### GET All Gardens Properties [GET]
+### GET All Gardens Properties [GET /gardens/properties]
 
 + Request (application/json; charset=utf-8)
 
@@ -440,13 +434,16 @@ Data from the city public space.
 
             x-access-token: YOUR_ACCESS_TOKEN
 
-
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (array)
         + (Garden Property)
 
-## Medical Institutions [/medicalinstitutions/{?latlng,range,district,group,limit,offset,updatedSince}]
+## Medical Institutions [/medicalinstitutions]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Medical Institutions [GET /medicalinstitutions/{?latlng,range,district,group,limit,offset,updatedSince}]
 
 + Parameters
 
@@ -457,11 +454,9 @@ Data from the city public space.
         + Members
             + `pharmacies`
             + `health_care`
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Medical Institutions [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -480,14 +475,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Medical Institution [/medicalinstitutions/{id}]
+### GET Medical Institution [GET /medicalinstitutions/{id}]
 
 + Parameters
 
     + id: `2526713200064203-fakultni-nemocnice-v-motole` (string) - Identifier of the medical institution.
-
-### GET Medical Institution [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -506,10 +498,7 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Medical Institutions Types [/medicalinstitutions/types]
-
-### GET All Medical Institution Types [GET]
+### GET All Medical Institution Types [GET /medicalinstitutions/types]
 
 + Request (application/json; charset=utf-8)
 
@@ -553,7 +542,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Municipal Authorities [/municipalauthorities/{?latlng,range,district,type,limit,offset,updatedSince}]
+## Municipal Authorities [/municipalauthorities]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Municipal Authorities [GET /municipalauthorities/{?latlng,range,district,type,limit,offset,updatedSince}]
 
 + Parameters
 
@@ -564,11 +557,9 @@ Data from the city public space.
         + Members
             + `municipality`
             + `city-hall`
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Municipal Authorities [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -587,14 +578,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Municipal Authority [/municipalauthorities/{id}]
+### GET Municipal Authority [GET /municipalauthorities/{id}]
 
 + Parameters
 
     + id: `urad-mestske-casti-praha-10` (string) - Identifier of the municipality.
-
-### GET Municipal Authority [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -613,15 +601,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-
-## Municipal Authority Waiting Queues [/municipalauthorities/{id}/queues]
+### GET All Municipal Authority Waiting Queues [GET /municipalauthorities/{id}/queues]
 
 + Parameters
 
     + id: `skoduv-palac` (string) - Identifier of the municipality.
-
-### GET All Municipal Authority Waiting Queues [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -636,19 +620,20 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+## Municipal Police Stations [/municipalpolicestations]
 
-## Municipal Police Stations [/municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Municipal Police Stations [GET /municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Municipal Police Stations [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -667,14 +652,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Municipal Police Station [/municipalpolicestations/{id}]
+### GET Municipal Police Station [GET /municipalpolicestations/{id}]
 
 + Parameters
 
     + id: 72 (number) - Identifier of the police station.
-
-### GET Municipal Police Station [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -693,18 +675,20 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Playgrounds [/playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
+## Playgrounds [/playgrounds]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Playgrounds [GET /playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Playgrounds [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -723,14 +707,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Playground [/playgrounds/{id}]
+### GET Playground [GET /playgrounds/{id}]
 
 + Parameters
 
     + id: 72 (number) - Identifier of the playground.
-
-### GET Playground [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -749,9 +730,7 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Playgrounds Properties [/playgrounds/properties]
-
-### GET All Playgrounds Properties [GET]
+### GET All Playgrounds Properties [GET /playgrounds/properties]
 
 + Request (application/json; charset=utf-8)
 
@@ -767,18 +746,20 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Prague City Districts [/citydistricts/{?latlng,range,limit,offset,updatedSince}]
+## Prague City Districts [/citydistricts]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Districts [GET /citydistricts/{?latlng,range,limit,offset,updatedSince}]
 
 + Parameters
 
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Districts [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -797,13 +778,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Prague City District [/citydistricts/{id}]
+### GET District [GET /citydistricts/{id}]
 
 + Parameters
 
     + id: `praha-1` (string) - Identifier or slug of the city district.
-
-### GET District [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -823,18 +802,20 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Public Toilets [/publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
+## Public Toilets [/publictoilets]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Public Toilets [GET /publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Public Toilets [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -854,13 +835,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Public Toilet [/publictoilets/{id}]
+### GET Public Toilet [GET /publictoilets/{id}]
 
 + Parameters
 
     + id: 72 (number) - Identifier of the public toilet.
-
-### GET Public Toilet[GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -879,19 +858,20 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+## Municipal Libraries [/municipallibraries]
 
-## Municipal Libraries [/municipallibraries/{?latlng,range,districts,limit,offset,updatedSince}]
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Municipal Libraries [GET /municipallibraries/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Municipal Libraries [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -910,14 +890,11 @@ Data from the city public space.
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Municipal Library [/municipallibraries/{id}]
+### GET Municipal Library [GET /municipallibraries/{id}]
 
 + Parameters
 
     + id: 2 (number) - Identifier of the library.
-
-### GET Municipal Library [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -937,19 +914,86 @@ Data from the city public space.
     + Attributes (403 Error)
 
 
-# Group Public Transport
-GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city's public transit data and schedules. We refresh data from ROPID every day. Transit data are always valid for next 14 days, but can change every day. More on https://pid.cz/o-systemu/opendata/.
+# Group Public Transport 🚋
 
-## GTFS Trips [/gtfs/trips{?limit,offset,stopId,date}]
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+GTFS ([General Transit Feed Specification](//gtfs.org)) data about the city's public transportation schedules in form of an API.
+Publisher of the data is ROPID. Schedules are valid for upcoming ~12 days, but can change as they are updated every day.
+
+More about at [pid.cz/o-systemu/opendata](//pid.cz/o-systemu/opendata/).
+
+## GTFS Services [/gtfs/services]
+
+### GET GTFS Services [GET /gtfs/services{?limit,offset,date}]
+
++ Parameters
+    + date: `2019-01-01` (optional, string) - Filter services by specific date in format (YYYY-MM-DD).
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Service])
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Routes [/gtfs/routes]
+
+### GET All GTFS Routes [GET /gtfs/routes/{?limit,offset}]
+
++ Parameters
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Route])
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+### GET GTFS Route [GET /gtfs/routes/{id}]
+
++ Parameters
+    + `id`: `L991` (string, required)
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (GTFS Route)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Trips [/gtfs/trips]
+
+### GET All GTFS Trips [GET /gtfs/trips/{?limit,offset,stopId,date}]
 
 + Parameters
 
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + stopId: U953Z102P (optional, string) - Filter trips that include specific stop.
     + date: `2018-01-01` (optional, string) - Filter trips by specific date.
-
-### GET All GTFS Trips [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -965,18 +1009,16 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## GTFS Trip [/gtfs/trips/{id}{?includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
+### GET GTFS Trip [GET /gtfs/trips/{id}{?includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
 
 + Parameters
-    + `id`: `991_30_190107` (string, required)
+    + `id`: `991_1151_190107` (string, required)
     + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
     + includeStops: true (optional, boolean) - Enrich trip response object with stops.
     + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
     + includeService: true (optional, boolean) - Enrich trip response object with service.
     + includeRoute: true (optional, boolean) - Enrich trip response object with routes.
     + date: `2019-01-01` (optional, string) - Filter trips by specific date in format (YYYY-MM-DD).
-
-### GET GTFS Trip [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -997,34 +1039,12 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## GTFS Services [/gtfs/services{?limit,offset,date}]
-
-+ Parameters
-    + date: `2019-01-01` (optional, string) - Filter services by specific date in format (YYYY-MM-DD).
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET GTFS Services [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array[GTFS Service])
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
 ## GTFS Shapes [/gtfs/shapes/{id}]
+
+### GET GTFS Shape [GET]
 
 + Parameters
     + `id`: `L991V2` (string, required) - GTFS shapes_id to filter shapes by GTFS trip
-
-### GET GTFS Shape [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1043,17 +1063,17 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## GTFS Stops [/gtfs/stops{?names,ids,aswIds,cisIds,limit,offset}]
+## GTFS Stops [/gtfs/stops]
+
+### GET All GTFS Stops [GET /gtfs/stops/{?names,ids,aswIds,cisIds,limit,offset}]
 
 + Parameters
     + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
     + ids: `U476Z103P` (optional, string) - Get stops by stop_id. Use with square brackets `ids[]`.
     + aswIds: `1833_12` (optional, string) - Get stops by ASW, use `_` instead of `/` or encode the slash sign with `%2F`. Use with square brackets `aswId[]`.
     + cisIds: `12345` (optional, number) - Get stops by CIS Id. Use with square brackets `cisId[]`.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET All GTFS Stops [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1072,12 +1092,10 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## GTFS Stop [/gtfs/stops/{id}]
+### GET GTFS Stop [GET /gtfs/stops/{id}]
 
 + Parameters
-    + `id`: `U118Z101P` (string, required)
-
-### GET GTFS Stop [GET]
+    + `id`: `U476Z104P` (string, required)
 
 + Request (application/json; charset=utf-8)
 
@@ -1093,59 +1111,18 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## GTFS Routes [/gtfs/routes{?limit,offset}]
+## GTFS Stop times [/gtfs/stoptimes]
 
-+ Parameters
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET All GTFS Routes [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array[GTFS Route])
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Route [/gtfs/routes/{id}]
-
-+ Parameters
-    + `id`: `L991` (string, required)
-
-### GET GTFS Route [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (GTFS Route)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## GTFS Stops times [/gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
+### GET GTFS Stop times [GET /gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
 
 + Parameters
     + `id`: `U118Z101P` (string, required)
     + date: `2019-01-01` (optional, string) - Filter stop times by specific date in format (YYYY-MM-DD).
     + from: `07:12:33` (optional, string) - Filter stop times by time departure in format (H:mm:ss).
     + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + includeStop: true (optional, boolean) - Enrich stop times response object with stop.
-
-### GET GTFS Stop times [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1160,14 +1137,16 @@ GTFS (General Transit Feed Specification, https://gtfs.org/) data about the city
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Vehicle Positions [/vehiclepositions{?limit,offset,includeNotTracking,includePositions,cisTripNumber,preferredTimezone,routeId,routeShortName,updatedSince}]
+## RealTime Vehicle Positions [/vehiclepositions]
 
-This endpoint returns special header `X-Last-Modified` which coresponds with the latest resource update timestamp.
-It is posible to use it as `?updatedSince` query parameter value to obtain only newer data than this timestamp.
+💡 Response comes with special header `X-Last-Modified` with timestamp value of the latest resource update.
+When you use it as `?updatedSince` query parameter you will obtain only newer data than this value.
+
+### GET All Vehicle Positions [GET /vehiclepositions{?limit,offset,includeNotTracking,includePositions,cisTripNumber,preferredTimezone,routeId,routeShortName,updatedSince}]
 
 + Parameters
 
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + includeNotTracking: true (optional, boolean) - Enrich result dataset with not tracking trip (those trips not being on track - before and after trip)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
@@ -1176,8 +1155,6 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
     + routeId: L301 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
     + updatedSince: `2020-04-07T06:32:29.000Z` (string, optional) Limit results to the ones updated after (timestamp greater than)
-
-### GET All Vehicle Positions [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1196,17 +1173,14 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Vehicle Position [/vehiclepositions/{gtfsTripId}{?includeNotTracking,includePositions,preferredTimezone}]
+### GET Vehicle Position [GET /vehiclepositions/{gtfsTripId}{?includeNotTracking,includePositions,preferredTimezone}]
 
 + Parameters
 
     + gtfsTripId: `115_107_180501` (string, required) Filter result by trip id (gtfs_trip_id)
-    + includeNotTracking: false (optional, boolean) - Enrich result dataset with not tracking trip (last tracked vehicle after its trip)
+    + includeNotTracking: true (optional, boolean) - Enrich result dataset with not tracking trip (last tracked vehicle after its trip)
     + includePositions: true (optional, boolean) - Enrich result dataset with positions
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign by %2F or use _ sign)
-
-### GET Vehicle Position [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1225,24 +1199,9 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Vehicle Positions GTFS RealTime Trip Updates [/vehiclepositions/gtfsrt/trip_updates.pb]
+## GTFS RealTime Vehicle Positions [/vehiclepositions/gtfsrt]
 
-### GET GTFS RealTime Trip Updates Protocol Buffer [GET]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/octet-stream)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Vehicle Positions GTFS RealTime Vehicle Positions [/vehiclepositions/gtfsrt/vehicle_positions.pb]
-
-### GET GTFS RealTime Vehicle Positions Protocol Buffer [GET]
+### GET GTFS RealTime Trip Updates Protocol Buffer [GET /vehiclepositions/gtfsrt/trip_updates.pb]
 
 + Request (application/json; charset=utf-8)
 
@@ -1255,9 +1214,24 @@ It is posible to use it as `?updatedSince` query parameter value to obtain only 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Departure Boards [/departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,names,preferredTimezone,orderBySchedule,showAllRoutesFirst,limit,offset}]
+### GET GTFS RealTime Vehicle Positions Protocol Buffer [GET /vehiclepositions/gtfsrt/vehicle_positions.pb]
 
-You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3`. And one of these params is required. The maximum is 100 stops combined for one request.
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/octet-stream)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Departure Boards [/departureboards]
+
+You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3` when **at least one of these ids is required**. The maximum is 100 stops combined for one request.
+
+### GET Departure Board [GET /departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,names,preferredTimezone,orderBySchedule,showAllRoutesFirst,limit,offset}]
 
 + Parameters
 
@@ -1270,10 +1244,8 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use _ sign)
     + orderBySchedule: `false` (optional, boolean) - Order by schedule, not by real delays
     + showAllRoutesFirst: `false` (optional, boolean) - Sort by all distinct route - trip headsign first and then by arrival time.
-    + limit: 20 (optional, number) - Limits number of retrieved items. Default is set to 20 (The maximum is 1000)
+    + limit: 20 (optional, number) - Limits number of retrieved items. The maximum is 1000 (default value is 20).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET Departure Board [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1293,34 +1265,37 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-# Group Traffic
-Online traffic data from Prague.
+# Group Traffic 🚘
 
-## Shared Cars [/sharedcars/{?latlng,range,limit,offset,updatedSince}]
+## Shared Cars  [/sharedcars]
 
-Fuel enum:
-- 1 benzin
-- 2 nafta
-- 3 LPG
-- 4 elektřina
-- 5 hybrid
-- 6 CNG
-- 7 jiný
-- 0 neznámý
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
-Availability enum:
-- 1 ihned
-- 2 dle domluvy s provozovatelem
+| Enum value | Fuel description (cs) | Fuel description (en) |
+|- |- |- |
+| 1 | benzin | gas |
+| 2 | nafta | diesel |
+| 3 | LPG | LPG |
+| 4 | elektřina | electric |
+| 5 | hybrid | hybrid |
+| 6 | CNG |CNG  |
+| 7 | jiný | other |
+| 0 | neznámý | unknown |
+
+| Enum value | Availability description (cs) | Availability description (en) |
+|- |- |- |
+| 1 | ihned | now |
+| 2 | dle domluvy s provozovatelem | upon the agreement with provider |
+
+### GET All Shared Cars [GET /sharedcars/{?latlng,range,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Shared Cars [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1339,13 +1314,11 @@ Availability enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Shared Car [/sharedcars/{id}]
+### GET Shared Car [GET /sharedcars/{id}]
 
 + Parameters
 
     + id: `1BF8210` (string) - Identifier of the car.
-
-### GET Shared Car [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1365,23 +1338,26 @@ Availability enum:
     + Attributes (403 Error)
 
 
-## Shared Bikes [/sharedbikes/{?latlng,range,limit,offset,updatedSince,companyName}]
+## Shared Bikes [/sharedbikes]
 
-Types enum:
-- 1 bike
-- 2 ebike
-- 3 scooter
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+| Enum value | Type description (cs) | Type description (en) |
+|- |- |- |
+| 1 | kolo | bike |
+| 2 | elektrokolo | ebike |
+| 3 | skútr | scooter |
+
+### GET All Shared Bikes [GET /sharedbikes/{?latlng,range,limit,offset,updatedSince,companyName}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
     + companyName: HOMEPORT (optional, string) - Filters all results with company.name property by this parameter.
-
-### GET All Shared Bikes [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1400,13 +1376,11 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Shared Bike [/sharedbikes/{id}]
+### GET Shared Bike [GET /sharedbikes/{id}]
 
 + Parameters
 
     + id: `homeport-0076` (string) - Identifier of the bike.
-
-### GET Shared Bike [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1425,17 +1399,19 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicycle Parkings [/bicycleparkings/{?latlng,range,limit,offset,updatedSince}]
+## Bicycle Parkings [/bicycleparkings]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Bicycle Parkings [GET /bicycleparkings/{?latlng,range,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Bicycle Parkings [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1454,13 +1430,11 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicycle Parking [/bicycleparkings/{id}]
+### GET Bicycle Parking [GET /bicycleparkings/{id}]
 
 + Parameters
 
     + id: `282743091` (number) - Identifier of the bicycle parking.
-
-### GET Bicycle Parking [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1479,18 +1453,25 @@ Types enum:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicyclecounters [/bicyclecounters/{?latlng,range,limit,offset}]
+## Bicyclecounters [/bicyclecounters]
 
-Data are collected every 5 minutes from Camea bicyclecounters and every 15 minutes from EcoCounter bicyclecounters. These times are also intervals of vendors measurements aggregation. Data for previous day (only for Camea) are validated every day at 5:00 (UTC), detections and temperatures data can change then. EcoCounter bicyclecounters do not provide temperature measurement.
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+| Vendor | Vendor id prefix | Measurement time aggregation | Temperature availability |
+| - | - | - | - |
+| Camea | `camea-` | 5 minutes | available |
+| EcoCounter | `ecoCounter-` | 15 minutes | not available |
+
+⚠️ Measurements of vendor Camea are every day at 5:00am (UTC) validated and recalculated and can change then.
+
+### GET All Bicyclecounters [GET /bicyclecounters/{?latlng,range,limit,offset}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-### GET All Bicyclecounters [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1515,7 +1496,7 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
 ### GET Bicyclecounters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
@@ -1545,7 +1526,7 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
 ### GET Bicyclecounters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
@@ -1569,18 +1550,20 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
 + Response 400
     + Attributes (Error)
 
-## Traffic Cameras [/trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
+## Traffic Cameras [/trafficcameras]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Traffic Cameras [GET /trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Traffic Cameras [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1599,13 +1582,11 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Traffic Camera [/trafficcameras/{id}]
+### GET Traffic Camera [GET /trafficcameras/{id}]
 
 + Parameters
 
     + id: 404032 (number) - Identifier of the camera.
-
-### GET Traffic Camera [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1625,45 +1606,63 @@ Data are collected every 5 minutes from Camea bicyclecounters and every 15 minut
     + Attributes (403 Error)
 
 
-# Group Waste
-Waste information.
+# Group Waste ♻️
 
-## Sorted Waste Stations [/sortedwastestations/{?latlng,range,district,accessibility,limit,offset,onlyMonitored}]
+## Sorted Waste Stations [/sortedwastestations/]
 
-Station accessibility enum:
-- 1 volně
-- 2 obyvatelům domu
-- 3 neznámá dostupnost
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
-Trash types enum:
-- 1 Barevné sklo
-- 2 Elektrozařízení
-- 3 Kovy
-- 4 Nápojové kartóny
-- 5 Papír
-- 6 Plast
-- 7 Čiré sklo
-- 8 Textil
+💡 About 400 containers are equiped with IoT sensors that measure their fullness. Use `?onlyMonitored` parameter to retrieve only these monitored containers.
+More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu).
 
-Container types:
-- 1100 NPU Okřínek SV
-- 1100 mini H SV
-- 1100 normální HV
-- 120 normální HV
-- 1500 M 1,5 SV
-- 2000 NPU Okřínek SV
-- 2150 MEVA SV
-- 240 normální HV
-- 2500 Reflex SV
-- 3000 Podzemní SV
-- 3200 Reflex SV
-- 3200 Schaffer SV
-- 3300 GFA DUO SV
-- 3350 Atomium Reflex SV
-- 4000 Podzemní SV
+**Station accessibility**
 
-Cleaning Frequency:
-- četnost vývozu (1.hodnota = délka období, 2.hodnota = četnost vývozu, např.13 = 3x za 1 týden, 61 = 1x za 6 týdnů)
+| Enum value | Description (cs) | Description (en) |
+| - | - | - |
+| 1 | volně | accessible |
+| 2 | obyvatelům domu | only for house residents |
+| 3 | neznámá dostupnost | unknown |
+
+**Trash type**
+| Enum value | Description (cs) | Description (en) |
+| - | - | - |
+| 1 | Barevné sklo | Tinted glass |
+| 2 | Elektrozařízení | Electric waste |
+| 3 | Kovy | Metals |
+| 4 | Nápojové kartóny | Beverage cartons |
+| 5 | Papír | Paper |
+| 6 | Plast | Plastics |
+| 7 | Čiré sklo | Clear glass |
+| 8 | Textil | Textiles |
+
+**Container types**
+
+| Values |
+| - |
+| 1100 NPU Okřínek SV |
+| 1100 mini H SV |
+| 1100 normální HV |
+| 120 normální HV |
+| 1500 M 1,5 SV |
+| 2000 NPU Okřínek SV |
+| 2150 MEVA SV |
+| 240 normální HV |
+| 2500 Reflex SV |
+| 3000 Podzemní SV |
+| 3200 Reflex SV |
+| 3200 Schaffer SV |
+| 3300 GFA DUO SV |
+| 3350 Atomium Reflex SV |
+| 4000 Podzemní SV |
+
+**Cleaning Frequency**
+
+| Value | 1st digit - period duration | 2nd digit - frequency | Description |
+| - | - | - | - |
+| `13` | `1` | `3` | 3 times per 1 week |
+| `61` | `6` | `1` | Once per 6 weeks |
+
+### GET All Sorted Waste Stations [GET /sortedwastestations/{?latlng,range,district,accessibility,limit,offset,onlyMonitored}]
 
 + Parameters
 
@@ -1671,11 +1670,9 @@ Cleaning Frequency:
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + accessibility: 1 (optional, string) - Filter by accessibility id.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + onlyMonitored: true (optional, boolean) - Filter only stations with at least one "smart" container with sensor for measurements and pickups
-
-### GET All Sorted Waste Stations [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1694,14 +1691,11 @@ Cleaning Frequency:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Sorted Waste Station [/sortedwastestations/{id}]
+### GET Sorted Waste Station [GET /sortedwastestations/{id}]
 
 + Parameters
 
     + id: 1521 (number) - Identifier of the station.
-
-### GET Sorted Waste Station [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1720,17 +1714,22 @@ Cleaning Frequency:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Sorted Waste Measurements [/sortedwastestations/measurements/{?containerId,limit,offset,from,to}]
+## Sorted Waste Fullness Sensors Data [/sortedwastestations]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+💡 About 400 containers are equipped with IoT sensors that measure their fullness. Use these endpoints to get measurements from these devices.
+More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu).
+
+### GET All Sorted Waste Measurements [GET /sortedwastestations/measurements/{?containerId,limit,offset,from,to}]
 
 + Parameters
 
     + containerId: 30162 (optional, number) - Lists only measurements from container with this sensor ID
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-
-### GET All Sorted Waste Measurements [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1743,17 +1742,15 @@ Cleaning Frequency:
     + Attributes (array)
         + (Sorted Waste Measurement)
 
-## Sorted Waste Picks [/sortedwastestations/picks/{?containerId,limit,offset,from,to}]
+### GET All Sorted Waste Picks [GET /sortedwastestations/picks/{?containerId,limit,offset,from,to}]
 
 + Parameters
 
     + containerId: 30162 (optional, number) - Lists only picks from container with this sensor ID
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
     + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-
-### GET All Sorted Waste Picks [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1769,18 +1766,20 @@ Cleaning Frequency:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Waste Collection Yards [/wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
+## Waste Collection Yards [/wastecollectionyards]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET All Waste Collection Yards [GET /wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-### GET All Waste Collection Yards [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1799,14 +1798,11 @@ Cleaning Frequency:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-
-## Waste Collection Yard [/wastecollectionyards/{id}]
+### GET Waste Collection Yard [GET /wastecollectionyards/{id}]
 
 + Parameters
 
     + id: 1 (number) - Identifier of the Waste Collection Yard.
-
-### GET Waste Collection Yard [GET]
 
 + Request (application/json; charset=utf-8)
 
@@ -1825,9 +1821,7 @@ Cleaning Frequency:
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Waste Collection Yards Properties [/wastecollectionyards/properties]
-
-### GET All Waste Collection Yards Properties [GET]
+### GET All Waste Collection Yards Properties [GET /wastecollectionyards/properties]
 
 + Request (application/json; charset=utf-8)
 
@@ -1842,6 +1836,7 @@ Cleaning Frequency:
 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
+
 
 # Data structure
 
@@ -2257,6 +2252,8 @@ Cleaning Frequency:
 + district: `praha-10` (string)
 + address (Address)
 + last_updated: 1556868553000 (number)
++ payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=143` (string, optional, nullable)
++ payment_shortname: `143` (string, optional, nullable)
 
 ## Parkings History (object)
 

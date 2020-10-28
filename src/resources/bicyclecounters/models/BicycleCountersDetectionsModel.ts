@@ -44,7 +44,11 @@ export class BicycleCountersDetectionsModel extends SequelizeModel {
     } = {}): Promise<IDetection[]> => {
         const { limit, offset, isoDateFrom, isoDateTo, id, aggregate } = options;
         try {
-            const order: string[][] = [["directions_id", "desc"]];
+            const order: string[][] = [
+              ["directions_id", "desc"],
+              ["locations_id", "desc"],
+              ["measured_from", "desc"]
+            ];
             const attributes: any[] =  [["directions_id", "id"]];
 
             let group: string[] | undefined;

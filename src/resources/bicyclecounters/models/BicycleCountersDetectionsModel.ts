@@ -47,7 +47,7 @@ export class BicycleCountersDetectionsModel extends SequelizeModel {
             const order: string[][] = [
               ["directions_id", "desc"],
               ["locations_id", "desc"],
-              ["measured_from", "desc"]
+              ["measured_from", "desc"],
             ];
             const attributes: any[] =  [["directions_id", "id"]];
 

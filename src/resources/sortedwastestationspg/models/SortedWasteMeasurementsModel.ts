@@ -3,20 +3,6 @@ import { SortedWasteStations } from "@golemio/schema-definitions";
 import * as Sequelize from "sequelize";
 import { SequelizeModel } from "./../../../core/models/";
 
-export interface IContainer {
-    id: string;
-    container_id: string;
-    code: string;
-    percent_calculated: number;
-    upturned: number;
-    temperature: number;
-    battery_status: number;
-    measured_at_utc: string;
-    prediction_utc: string;
-    firealarm: number;
-    updated_at: number;
-}
-
 export class SortedWasteMeasurementsModel extends SequelizeModel {
 
     public constructor() {

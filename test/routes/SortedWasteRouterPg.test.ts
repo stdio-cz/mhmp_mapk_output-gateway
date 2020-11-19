@@ -9,7 +9,7 @@ import "mocha";
 import * as sinon from "sinon";
 import * as request from "supertest";
 import { log } from "../../src/core/Logger";
-import { sortedWasteRouter } from "../../src/resources/sortedwastestations/SortedWasteRouter";
+import { sortedWasteRouterPg } from "../../src/resources/sortedwastestationspg/SortedWasteRouter";
 
 chai.use(chaiAsPromised);
 
@@ -29,7 +29,7 @@ describe("SortedWaste Router", () => {
 
     before(() => {
         // Mount the tested router to the express instance
-        app.use("/sortedwastestations", sortedWasteRouter);
+        app.use("/sortedwastestationspg", sortedWasteRouterPg);
         app.use((err: any, req: Request, res: Response, next: NextFunction) => {
             const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err);
             log.silly("Error caught by the router error handler.");
@@ -40,7 +40,7 @@ describe("SortedWaste Router", () => {
 
     it("should respond with json to GET /sortedwastestations", (done) => {
         request(app)
-            .get("/sortedwastestations")
+            .get("/sortedwastestationspg?limit=10")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200, done);
@@ -48,15 +48,15 @@ describe("SortedWaste Router", () => {
 
     it("should respond with json to GET /sortedwastestations/measurements", (done) => {
         request(app)
-            .get("/sortedwastestations/measurements")
+            .get("/sortedwastestationspg/measurements?limit=10")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200, done);
     });
 
-    it("should respond with json to GET /sortedwastestations/picks", (done) => {
+    it("should respond with json to GET /sortedwastestations/picks?limit=10", (done) => {
         request(app)
-            .get("/sortedwastestations/picks")
+            .get("/sortedwastestationspg/picks")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200, done);

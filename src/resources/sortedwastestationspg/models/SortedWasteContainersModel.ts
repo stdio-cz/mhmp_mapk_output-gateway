@@ -13,7 +13,7 @@ export interface ILastPick {
     pick_at_utc: number | string;
 }
 
-export interface IContainer {
+interface IContainer {
     cleaning_frequency: number;
     company: string;
     container_type: string;

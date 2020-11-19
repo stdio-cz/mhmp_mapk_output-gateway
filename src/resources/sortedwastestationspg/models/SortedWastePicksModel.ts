@@ -3,19 +3,6 @@ import { SortedWasteStations } from "@golemio/schema-definitions";
 import * as Sequelize from "sequelize";
 import { SequelizeModel } from "./../../../core/models/";
 
-export interface IContainer {
-    "id": number;
-    "container_id": number;
-    "pick_minfilllevel": number;
-    "decrease": number;
-    "code": string;
-    "pick_at_utc": string;
-    "percent_before": number;
-    "percent_now": number;
-    "event_driven": boolean;
-    "updated_at": number;
-}
-
 export class SortedWastePicksModel extends SequelizeModel {
 
     public constructor() {

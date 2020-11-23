@@ -1,6 +1,6 @@
 import { CustomError } from "@golemio/errors";
 import { VehiclePositions } from "@golemio/schema-definitions";
-import { IncludeOptions, Model } from "sequelize";
+import { col, fn, IncludeOptions, Model, Op, where } from "sequelize";
 import { IVehiclePositionsModels } from ".";
 import { sequelizeConnection } from "../../../core/database";
 import { buildGeojsonFeatureCollection, buildGeojsonFeatureLatLng, IGeoJSONFeature } from "../../../core/Geo";
@@ -234,21 +234,22 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     private ComposeIncludes = (options: {
         includeNotTracking?: boolean,
         includePositions?: boolean,
-        updatedSince?: any,
+        updatedSince?: Date | null,
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
             as: "last_position",
             model: sequelizeConnection.models.v_vehiclepositions_last_position,
             where: {
                 ...(options.includeNotTracking ?
-                    { tracking: { [sequelizeConnection.Sequelize.Op.gte]: 0 } } :
+                    { tracking: { [Op.gte]: 0 } } :
                     { tracking: 2 }
                 ),
-                ...(options.updatedSince && {
-                    updated_at: {
-                        [sequelizeConnection.Sequelize.Op.gt]: options.updatedSince.getTime(),
+                ...(options.updatedSince && [where(
+                    fn("date_trunc", "millisecond", col("last_position.updated_at")),
+                    {
+                        [Op.gt]: options.updatedSince.toISOString(),
                     },
-                }),
+                )]),
             },
         },
         {
@@ -260,7 +261,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 as: "all_positions",
                 model: sequelizeConnection.models[VehiclePositions.positions.pgTableName],
                 where: {
-                    tracking: { [sequelizeConnection.Sequelize.Op.gte]: 0 },
+                    tracking: { [Op.gte]: 0 },
                 },
             });
         }

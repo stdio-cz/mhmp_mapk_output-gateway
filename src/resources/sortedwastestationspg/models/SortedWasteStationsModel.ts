@@ -169,7 +169,7 @@ export class SortedWasteStationsModelPg {
                 type: "FeatureCollection",
             });
         } catch (err) {
-            throw new CustomError("Database error", true, "DepartureBoardsModel", 500, err);
+            throw new CustomError("Database error", true, "SortedWasteStationsModelPg", 500, err);
         }
     }
 

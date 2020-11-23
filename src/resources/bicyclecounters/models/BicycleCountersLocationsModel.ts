@@ -87,5 +87,4 @@ export class BicycleCountersLocationsModel extends SequelizeModel {
     public GetOne = async (id: number): Promise<object | null> => {
         return null;
     }
-
 }

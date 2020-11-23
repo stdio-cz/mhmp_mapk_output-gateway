@@ -52,10 +52,6 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         offset?: number,
         updatedSince?: Date | null,
     } = {}): Promise<any> => {
-
-        // console.log(await this.sequelizeModel
-        //     .findAll({}));
-
         try {
             const { limit, offset } = options;
             const include = this.ComposeIncludes(options);

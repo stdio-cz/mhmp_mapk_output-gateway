@@ -55,6 +55,78 @@ describe("GTFSStopModel", () => {
         expect(stop).to.have.property("type", "Feature");
     });
 
+    it("should return proper item for aswId[] 286_1", async () => {
+        const stops: any = await stopModel.GetAll({
+            aswIds: [ "286_1" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(1);
+        expect(stops.features[0].properties).to.have.property("stop_id", "U286Z1P");
+    });
+
+    it("should return proper item for aswId[] 286_101", async () => {
+        const stops: any = await stopModel.GetAll({
+            aswIds: [ "286_101" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(1);
+        expect(stops.features[0].properties).to.have.property("stop_id", "U286Z101P");
+    });
+
+    it("should return all 9 items for aswId[] 286", async () => {
+        const stops: any = await stopModel.GetAll({
+            aswIds: [ "286" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(9);
+    });
+
+    it("should return all 9 items for aswId[] 286_", async () => {
+        const stops: any = await stopModel.GetAll({
+            aswIds: [ "286_" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(9);
+    });
+
+    it("should return all 9 items for cisId[] 55083", async () => {
+        const stops: any = await stopModel.GetAll({
+            cisIds: [ 55083 ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(9);
+    });
+
+    it("should return 2 items for aswId[] 286_101 and 286_102", async () => {
+        const stops: any = await stopModel.GetAll({
+            aswIds: [ "286_101", "286_102" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(2);
+        expect(stops.features[0].properties).to.have.property("stop_id", "U286Z101P");
+        expect(stops.features[1].properties).to.have.property("stop_id", "U286Z102P");
+    });
+
+    it("should return proper item for ids[] U286Z4", async () => {
+        const stops: any = await stopModel.GetAll({
+            gtfsIds: [ "U286Z4" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(1);
+        expect(stops.features[0].properties).to.have.property("stop_id", "U286Z4");
+    });
+
+    it("should return 9 items for names[] Háje", async () => {
+        const stops: any = await stopModel.GetAll({
+            names: [ "Háje" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(9);
+        for (const feature of stops.features) {
+            expect(feature.properties).to.have.property("stop_name", "Háje");
+        }
+    });
+
     // This test will fail if PostGIS is not installed
     // it("should return all stops close to the point", async () => {
     //     const result: any = await stopModel.GetAll({

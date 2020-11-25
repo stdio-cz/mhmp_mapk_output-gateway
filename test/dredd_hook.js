@@ -162,3 +162,8 @@ hooks.before('Public Transport 🚋 > Departure Boards > GET Departure Board', (
     transaction.request.uri = `${transaction.request.uri}?ids[]=U476Z103P`;
     transaction.fullPath = `${transaction.fullPath}?ids[]=U476Z103P`;
 });
+
+hooks.before('Public Transport 🚋 > PID Departure Boards > GET Departure Board', (transaction) => {
+    transaction.request.uri = `${transaction.request.uri}?ids[]=U476Z103P`;
+    transaction.fullPath = `${transaction.fullPath}?ids[]=U476Z103P`;
+});

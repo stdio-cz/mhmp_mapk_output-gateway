@@ -1265,6 +1265,46 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+
+## PID Departure Boards [/pid]
+
+![golemioapi-version-badge](https://img.shields.io/badge/in%20beta-version-blue)
+
+You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3` when **at least one of these ids is required**. The maximum is 100 stops combined for one request.
+
+### GET Departure Board [GET /pid/departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,names,preferredTimezone,orderBySchedule,showAllRoutesFirst,limit,offset}]
+
++ Parameters
+
+    + ids: `U476Z103P` (optional, string) - Get result by stop_id (GTFS, id of specific stop)
+    + aswIds: `1833_12` (optional, string) - Get result by ASW, use `_` instead of `/` or encode the slash sign with `%2F`
+    + cisIds: `12345` (optional, number) - Get result by CIS Id
+    + minutesBefore: `10` (optional, number) - Get departures relative before to request time. Default is set to 0.
+    + minutesAfter: `60` (optional, number) - Get departures relative after the request time. Default is set to 180.
+    + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use _ sign)
+    + orderBySchedule: `false` (optional, boolean) - Order by schedule, not by real delays
+    + showAllRoutesFirst: `false` (optional, boolean) - Sort by all distinct route - trip headsign first and then by arrival time.
+    + limit: 20 (optional, number) - Limits number of retrieved items. The maximum is 1000 (default value is 20).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+    can return empty data in departures property (empty array []) if no departures were found
+    + Attributes (PID Departure Board)
+
++ Response 404 (application/json; charset=utf-8)
+    returns 404 if no stop was not found (by the stop_id) at all
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
 # Group Traffic 🚘
 
 ## Shared Cars  [/sharedcars]
@@ -2003,6 +2043,75 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + name: `140` (string, required) - Route short name.
 + type: `3` (string, required) - Type of route.
 
+## PID Departure Board (object)
+
++ departures (array) - All departures.
+    + (PID Departure Board Departure)
++ infotexts (array) - All valid infotexts for selected stops.
+    + (PID Departure Board Infotext)
++ stops (object) - All known stops with their properties
+    + type: FeatureCollection (string, required)
+    + features (array)
+        + (PID Departure Board Stop Feature Point)
+
+## PID Departure Board Departure (object)
+
++ delay (PID Departure Board Delay)
++ arrival_timestamp (PID Departure Board Stop Time)
++ departure_timestamp (PID Departure Board Stop Time)
++ route (PID Departure Board Route)
++ stop (PID Departure Board Stop Reference)
++ last_stop (PID Departure Board Last Stop)
++ trip (PID Departure Board Trip)
+
+
+## PID Departure Board Infotext (object)
+
++ valid_from: `2019-05-18T07:38:00.000Z` (string, required) - Start time of validity in ISO String (UTC).
++ valid_to: `2019-05-19T07:38:00.000Z` (string, required) - End time of validity in ISO String (UTC).
++ text: `Prosecká` (string, required) - Information text.
++ related_stops (array)
+    + `U118S1` (string) - GTFS station id.
+
+## PID Departure Board Trip (object)
+
++ headsign: `Chodov` (string, required) - Trip headsign.
++ id: `140_224_200302` (string, required) - GTFS trip id.
++ is_canceled: `false` (boolean, required) - If the trip is canceled.
++ is_wheelchair_accessible: `false` (boolean, required) - true for wheelchair accessible stop.
+
+## PID Departure Board Last Stop (object)
+
++ name: `Prosecká` (string, required) - Name of station.
++ id: `U754Z1P` (string, required) - GTFS station id.
+
+## PID Departure Board Stop Feature Point (object)
+
++ geometry (required)
+    + type: Point (string, required)
+    + coordinates (Point, required)
++ properties (GTFS Stop, required)
++ type: Feature (string, required)
+
+## PID Departure Board Stop Reference (object)
+
++ id: `U754Z1P` (string, required) - GTFS station id.
+
+## PID Departure Board Delay (object)
+
++ is_available: `false` (boolean, required) - If true, is avalable information about trip's realtime delay.
++ minutes: `3` (string, optional) - Delay rounded to minutes.
++ seconds: `176` (string, optional) - Delay in seconds.
+
+## PID Departure Board Stop Time (object)
+
++ predicted: `2019-05-18T07:38:20.000Z` (string, required) - Time of arrival/departure including realtime delay in ISO String (UTC).
++ scheduled: `2019-05-18T07:38:00.000Z` (string, required) - Time of arrival/departure in ISO String (UTC).
+
+## PID Departure Board Route (object)
+
++ name: `140` (string, required) - Route short name.
++ type: `3` (string, required) - Type of route.
 
 ## Garden (object)
 

@@ -443,13 +443,13 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
-### GET All Medical Institutions [GET /medicalinstitutions/{?latlng,range,district,group,limit,offset,updatedSince}]
+### GET All Medical Institutions [GET /medicalinstitutions/{?latlng,range,districts,group,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + districts: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + group: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
         + Members
             + `pharmacies`
@@ -546,13 +546,13 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
-### GET All Municipal Authorities [GET /municipalauthorities/{?latlng,range,district,type,limit,offset,updatedSince}]
+### GET All Municipal Authorities [GET /municipalauthorities/{?latlng,range,districts,type,limit,offset,updatedSince}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + districts: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
         + Members
             + `municipality`
@@ -1702,13 +1702,13 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 | `13` | `1` | `3` | 3 times per 1 week |
 | `61` | `6` | `1` | Once per 6 weeks |
 
-### GET All Sorted Waste Stations [GET /sortedwastestations/{?latlng,range,district,accessibility,limit,offset,onlyMonitored}]
+### GET All Sorted Waste Stations [GET /sortedwastestations/{?latlng,range,districts,accessibility,limit,offset,onlyMonitored}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + district: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
+    + districts: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
     + accessibility: 1 (optional, string) - Filter by accessibility id.
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
@@ -1899,7 +1899,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + (Polygon, optional) - Next ones are cut out areas
 
 ## Error (object)
-+ error_message: `Route Not Found` (required, string)
++ error_message: `Not Found` (required, string)
 + error_status: 404 (required, number)
 
 ## 403 Error (object)
@@ -2043,16 +2043,20 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + name: `140` (string, required) - Route short name.
 + type: `3` (string, required) - Type of route.
 
+
+## ASW id (object)
+
++ `node`: 100 (number, required)
++ `stop`: 2 (number, required)
+
 ## PID Departure Board (object)
 
 + departures (array) - All departures.
     + (PID Departure Board Departure)
 + infotexts (array) - All valid infotexts for selected stops.
     + (PID Departure Board Infotext)
-+ stops (object) - All known stops with their properties
-    + type: FeatureCollection (string, required)
-    + features (array)
-        + (PID Departure Board Stop Feature Point)
++ stops (array) - All known stops with their properties
+    + (PID Departure Board Stop)
 
 ## PID Departure Board Departure (object)
 
@@ -2067,9 +2071,11 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## PID Departure Board Infotext (object)
 
-+ valid_from: `2019-05-18T07:38:00.000Z` (string, required) - Start time of validity in ISO String (UTC).
-+ valid_to: `2019-05-19T07:38:00.000Z` (string, required) - End time of validity in ISO String (UTC).
-+ text: `Prosecká` (string, required) - Information text.
++ valid_from: `2019-05-18T07:38:00.000Z` (string, required, nullable) - Start time of validity in ISO String (UTC).
++ valid_to: `2019-05-19T07:38:00.000Z` (string, required, nullable) - End time of validity in ISO String (UTC).
++ text: `Nehoda na trase, odklon linek mimo tuto stanici.` (string, required) - Information text.
++ text_en: `Trips are cancelled due to accident on route.` (string, required, nullable) - Information text in english.
++ display_type: `inline` (string, required) - Type of display on board by priority. Enumerating `inline`, `general`, `general-alternate`.
 + related_stops (array)
     + `U118S1` (string) - GTFS station id.
 
@@ -2085,13 +2091,18 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + name: `Prosecká` (string, required) - Name of station.
 + id: `U754Z1P` (string, required) - GTFS station id.
 
-## PID Departure Board Stop Feature Point (object)
+## PID Departure Board Stop (object)
 
-+ geometry (required)
-    + type: Point (string, required)
-    + coordinates (Point, required)
-+ properties (GTFS Stop, required)
-+ type: Feature (string, required)
++ `location_type`: 0 (number, required)
++ `parent_station`: U118S1 (string, required)
++ `platform_code`: A (string, required)
++ `stop_lat`: 50.4 (number, required)
++ `stop_lon`: 14.4 (number, required)
++ `asw_id` (ASW id, required, nullable)
++ `stop_id`: U118Z101P (string, required)
++ `stop_name`: Flora (string, required)
++ `wheelchair_boarding`: 2 (number, required)
++ `zone_id`: P (string, required)
 
 ## PID Departure Board Stop Reference (object)
 
@@ -2157,7 +2168,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + `platform_code`: A (string, required)
 + `stop_id`: U118Z101P (string, required)
 + `stop_name`: Flora (string, required)
-+ `stop_url`: ` ` (string, optional)
 + `wheelchair_boarding`: 2 (number, required)
 + `zone_id`: P (string, required)
 
@@ -2538,7 +2548,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + accessibility (Sorted Waste Station Accessibility)
 + containers (array[Sorted Waste Station Container])
-+ districts: `praha-13` (string)
++ district: `praha-13` (string)
 + id: 11 (number, required)
 + name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
 + station_number: `SDHMP` (string)

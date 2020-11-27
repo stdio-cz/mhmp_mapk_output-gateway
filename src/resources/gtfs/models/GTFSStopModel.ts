@@ -15,6 +15,17 @@ export class GTFSStopModel extends SequelizeModel {
 
         this.outputAttributes = Object.keys(RopidGTFS.stops.outputSequelizeAttributes);
 
+        const notUsedColumns = [
+            "stop_code",
+            "stop_desc",
+            "stop_url",
+            "stop_timezone",
+        ];
+        notUsedColumns.forEach((column) => {
+            this.sequelizeModel.removeAttribute(column);
+            this.outputAttributes.splice(this.outputAttributes.indexOf(column), 1);
+        });
+
         const auditColumns = [
             "created_by",
             "update_batch_id",
@@ -54,8 +65,10 @@ export class GTFSStopModel extends SequelizeModel {
         gtfsIds?: string[],
         aswIds?: string[],
         cisIds?: number[],
+        appendAswId?: boolean,
+        returnRaw?: boolean,
     } = {}): Promise<any> => {
-        const { limit, offset, lat, lng, range, names, gtfsIds, aswIds, cisIds } = options;
+        const { limit, offset, lat, lng, range, names, gtfsIds, aswIds, cisIds, appendAswId, returnRaw } = options;
         try {
             const allGtfsIds: string[] = [];
             const order: any = [];
@@ -109,7 +122,7 @@ export class GTFSStopModel extends SequelizeModel {
                 // after all stops by other than GTFS ids are collected, we create proper GTFS ids with % like sign.
                 // GTFS stops must be split into more ids due to more tarriff zones even if it is one physical stop.
                 stops.forEach((stop) => {
-                    allGtfsIds.push("U" + stop.id.replace("/", "Z") + "(P|N)?");
+                    allGtfsIds.push("U" + stop.id.replace("/", "Z") + "(P|N)?(_\\d+)?");
                 });
 
                 // If aswIds and cisIds are not belong to any GTFS ids and no other gtfsIds or names are given,
@@ -117,7 +130,7 @@ export class GTFSStopModel extends SequelizeModel {
                 if (ors.length > 0 && allGtfsIds.length === 0 &&
                     (gtfsIds === undefined || gtfsIds?.length === 0) &&
                     (names === undefined || names.length === 0)) {
-                    return buildGeojsonFeatureCollection([], "stop_lon", "stop_lat", true);
+                    return returnRaw ? [] : buildGeojsonFeatureCollection([], "stop_lon", "stop_lat", true);
                 }
             }
 
@@ -137,7 +150,7 @@ export class GTFSStopModel extends SequelizeModel {
 
             order.push([["stop_id", "asc"]]);
 
-            const data = await this.sequelizeModel.findAll({
+            let data = await this.sequelizeModel.findAll({
                 attributes,
                 limit,
                 offset,
@@ -146,7 +159,14 @@ export class GTFSStopModel extends SequelizeModel {
                 where,
             });
 
-            return buildGeojsonFeatureCollection(data, "stop_lon", "stop_lat", true);
+            if (appendAswId) {
+                data = data.map((row) => {
+                    row.asw_id = this.parseAswId(row.stop_id);
+                    return row;
+                });
+            }
+
+            return returnRaw ? data : buildGeojsonFeatureCollection(data, "stop_lon", "stop_lat", true);
         } catch (err) {
             throw new CustomError("Database error", true, "GTFSStopModel", 500, err);
         }
@@ -165,4 +185,23 @@ export class GTFSStopModel extends SequelizeModel {
             }
             return null;
         })
+
+    /** Parses stop ASW id from GTFS id
+     * @param {string} id Id of the stop
+     * @returns {string} id ASW id of the stop
+     */
+    public parseAswId = (gtfsId: string): {
+        node: number,
+        stop: number,
+    } | null => {
+        const matches = gtfsId.match(/U(\d+)Z(\d+)/);
+        if (matches) {
+            return {
+                node: parseInt(matches[1], 10),
+                stop: parseInt(matches[2], 10),
+            };
+        } else {
+            return null;
+        }
+    }
 }

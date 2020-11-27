@@ -47,7 +47,7 @@ describe("PIDDepartureBoards Router", () => {
             .get(`/pid/departureboards?ids[]=${id}`).end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body.departures).to.be.an("array");
-                expect(res.body.stops.features).to.be.an("array");
+                expect(res.body.stops).to.be.an("array");
                 expect(res.body.infotexts).to.be.an("array");
                 done();
             });

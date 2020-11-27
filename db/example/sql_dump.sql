@@ -207,3 +207,20 @@ INSERT INTO "ropidgtfs_cis_stops" ("altIdosName", "cis", "id", "jtskX", "jtskY",
 ('Háje',	55083,	'286/102',	-736114.75,	-1050289.25,	50.03081,	14.5276747,	'M2',	'2020-11-20 12:30:11.942+01',	'possible',	'P',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL);
 
 -- <<<
+
+
+-- >>> SPECIAL CASE WITH RENAMING STOPS
+-- first origin, second with suffix _DATE in stop_id with changed attribute, i.e. stop_name
+
+INSERT INTO "ropidgtfs_cis_stops" ("altIdosName", "cis", "id", "jtskX", "jtskY", "lat", "lon", "platform", "created_at", "wheelchairAccess", "zone", "create_batch_id", "created_by", "update_batch_id", "updated_at", "updated_by") VALUES
+('Fučíkova',	27878,	'115/101',	-741166.3,	-1040788.06,	50.1092949,	14.4397736,	'M1',	'2020-11-26 12:30:18.675+01',	'possible',	'P',	NULL,	NULL,	NULL,	'2020-11-26 12:30:18.675+01',	NULL),
+('Fučíkova',	27878,	'115/102',	-741135.438,	-1040877.69,	50.1085358,	14.4403725,	'M2',	'2020-11-26 12:30:18.675+01',	'possible',	'P',	NULL,	NULL,	NULL,	'2020-11-26 12:30:18.675+01',	NULL);
+
+INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
+(0,	'U115S1',	'1',	'U115Z101P',	50.10896,	14.44016,	'Fučíkova',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
+(0,	'U115S1',	'2',	'U115Z102P',	50.10892,	14.44002,	'Fučíkova',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
+(0,	'U115S1',	'1',	'U115Z101P_22021990',	50.10896,	14.44016,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
+(0,	'U115S1',	'2',	'U115Z102P_22021990',	50.10892,	14.44002,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL);
+
+-- <<<
+

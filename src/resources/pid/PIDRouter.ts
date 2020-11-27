@@ -66,9 +66,11 @@ export class PIDRouter extends BaseRouter {
                     showAllRoutesFirst: (req.query.showAllRoutesFirst === "true") ? true : false,
                 });
             res.status(200).send({
+                // tslint:disable:object-literal-sort-keys
+                stops: data.stops,
                 departures: data.departures.map((d: IDeparture) => this.transformResponseData(d, preferredTimezone)),
                 infotexts: data.infotexts,
-                stops: data.stops,
+                // tslint:enable:object-literal-sort-keys
             });
         } catch (err) {
             next(err);

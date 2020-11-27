@@ -127,6 +127,44 @@ describe("GTFSStopModel", () => {
         }
     });
 
+    it("should return both origin and new stop for aswIds[] 115/101", async () => {
+        const stops: any = await stopModel.GetAll({
+            aswIds: [ "115/101" ],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(2);
+        expect(stops.features[0].properties).to.have.property("stop_id", "U115Z101P");
+        expect(stops.features[1].properties).to.have.property("stop_id", "U115Z101P_22021990");
+    });
+
+    it("should properly parse ASW id from GTFS id", async () => {
+        const parsedId: any = await stopModel.parseAswId("U115Z101P");
+        expect(parsedId.node).to.be.equal(115);
+        expect(parsedId.stop).to.be.equal(101);
+    });
+
+    it("should properly parse ASW id from GTFS id without P", async () => {
+        const parsedId: any = await stopModel.parseAswId("U115Z101");
+        expect(parsedId.node).to.be.equal(115);
+        expect(parsedId.stop).to.be.equal(101);
+    });
+
+    it("should properly parse ASW id from GTFS id with suffix", async () => {
+        const parsedId: any = await stopModel.parseAswId("U115Z101P_22021990");
+        expect(parsedId.node).to.be.equal(115);
+        expect(parsedId.stop).to.be.equal(101);
+    });
+
+    it("should return null for not valid input", async () => {
+        const parsedId: any = await stopModel.parseAswId("U115Z");
+        expect(parsedId).to.be.null;
+    });
+
+    it("should return null for not valid input", async () => {
+        const parsedId: any = await stopModel.parseAswId("U115");
+        expect(parsedId).to.be.null;
+    });
+
     // This test will fail if PostGIS is not installed
     // it("should return all stops close to the point", async () => {
     //     const result: any = await stopModel.GetAll({

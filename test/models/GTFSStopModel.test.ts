@@ -134,7 +134,7 @@ describe("GTFSStopModel", () => {
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(2);
         expect(stops.features[0].properties).to.have.property("stop_id", "U115Z101P");
-        expect(stops.features[1].properties).to.have.property("stop_id", "U115Z101P_22021990");
+        expect(stops.features[1].properties).to.have.property("stop_id", "U115Z101P_900222");
     });
 
     it("should properly parse ASW id from GTFS id", async () => {

@@ -219,8 +219,8 @@ INSERT INTO "ropidgtfs_cis_stops" ("altIdosName", "cis", "id", "jtskX", "jtskY",
 INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
 (0,	'U115S1',	'1',	'U115Z101P',	50.10896,	14.44016,	'Fučíkova',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
 (0,	'U115S1',	'2',	'U115Z102P',	50.10892,	14.44002,	'Fučíkova',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
-(0,	'U115S1',	'1',	'U115Z101P_22021990',	50.10896,	14.44016,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
-(0,	'U115S1',	'2',	'U115Z102P_22021990',	50.10892,	14.44002,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL);
+(0,	'U115S1',	'1',	'U115Z101P_900222',	50.10896,	14.44016,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
+(0,	'U115S1',	'2',	'U115Z102P_900222',	50.10892,	14.44002,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL);
 
 -- <<<
 

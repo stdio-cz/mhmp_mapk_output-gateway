@@ -289,7 +289,7 @@ export class SortedWasteStationsModelPg {
                     container_type: container.container_type,
                     pick_dates: (picksDates[0] || []).map((pick: any) => moment(pick.pick_date).format("YYYY-MM-DD")),
                     trash_type: {
-                        description: this.getTrashTypeById(++container.trash_type),
+                        description: this.getTrashTypeById(+container.trash_type),
                         id: container.trash_type,
                     },
                     // tslint:disable-next-line: object-literal-sort-keys

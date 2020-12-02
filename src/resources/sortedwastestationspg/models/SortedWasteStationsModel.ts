@@ -230,6 +230,7 @@ export class SortedWasteStationsModelPg {
                 cc.source,
                 cc.station_code,
                 cc.id,
+                cc.knsko_id,
                 measurements.measured_at_utc,
                 measurements.prediction_utc,
                 measurements.percent_calculated,
@@ -302,6 +303,7 @@ export class SortedWasteStationsModelPg {
                     sensor_code: container.code,
                     sensor_container_id: container.id,
                     sensor_supplier: container.source,
+                    knsko_id: container.knsko_id ? container.knsko_id : undefined,
                 });
             } else {
                 log.warn(`station not found for container in getStationsData: ${JSON.stringify(container)}`);

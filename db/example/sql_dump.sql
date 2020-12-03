@@ -180,3 +180,47 @@ INSERT INTO "bicyclecounters_temperatures" ("locations_id", "measured_from", "me
 ('camea-BC_ZA-KLBO',	1584182700000,	1584183000000,	10,	-1,	'2020-03-14 10:55:07.679932+00',	'integration-engine',	-1,	'2020-03-15 04:00:21.740315+00',	'integration-engine'),
 ('camea-BC_ZA-KLBO',	1584183000000,	1584183300000,	11,	-1,	'2020-03-14 11:00:27.87918+00',	'integration-engine',	-1,	'2020-03-15 04:00:21.740315+00',	'integration-engine'),
 ('camea-BC_ZA-KLBO',	1584183300000,	1584183600000,	11,	-1,	'2020-03-14 11:05:07.83522+00',	'integration-engine',	-1,	'2020-03-15 04:00:21.740315+00',	'integration-engine');
+
+
+-- >>> FOR STOPS ASW & CIS PARAMS TESTS
+
+INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
+(0,	'',	'A',	'U286Z1P',	50.03046,	14.52744,	'Háje',	'',	0,	'P',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL),
+(0,	'',	'B',	'U286Z2P',	50.03045,	14.527,	'Háje',	'',	0,	'P',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL),
+(0,	'',	'C',	'U286Z3P',	50.03038,	14.52585,	'Háje',	'',	0,	'P',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL),
+(0,	'',	'D',	'U286Z4',	50.03036,	14.52538,	'Háje',	'',	0,	'0',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL),
+(0,	'',	'E',	'U286Z5P',	50.03028,	14.52752,	'Háje',	'',	0,	'P',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL),
+(0,	'',	'C',	'U286Z13P',	50.03038,	14.52585,	'Háje',	'',	0,	'P',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL),
+(0,	'',	'B',	'U286Z72',	50.03045,	14.527,	'Háje',	'',	0,	'0',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL),
+(0,	'U286S1',	'1',	'U286Z101P',	50.03083,	14.52696,	'Háje',	'',	1,	'P',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'U286L2',	NULL,	NULL,	NULL),
+(0,	'U286S1',	'2',	'U286Z102P',	50.03074,	14.52698,	'Háje',	'',	1,	'P',	-1,	'2020-11-19 12:30:36.671771+01',	'integration-engine',	NULL,	NULL,	NULL,	'U286L2',	NULL,	NULL,	NULL);
+
+INSERT INTO "ropidgtfs_cis_stops" ("altIdosName", "cis", "id", "jtskX", "jtskY", "lat", "lon", "platform", "created_at", "wheelchairAccess", "zone", "create_batch_id", "created_by", "update_batch_id", "updated_at", "updated_by") VALUES
+('Háje (ul. Opatovská)',	55083,	'286/1',	-736136.5,	-1050325.75,	50.03046,	14.527442,	'A',	'2020-11-20 12:30:11.942+01',	'unknown',	'P',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje',	55083,	'286/2',	-736168.4,	-1050322.63,	50.03045,	14.5269957,	'B',	'2020-11-20 12:30:11.942+01',	'unknown',	'P,0',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje',	55083,	'286/3',	-736250.9,	-1050318.63,	50.0303841,	14.5258474,	'C',	'2020-11-20 12:30:11.942+01',	'unknown',	'P',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje',	55083,	'286/4',	-736284.5,	-1050316.5,	50.03036,	14.5253782,	'D',	'2020-11-20 12:30:11.942+01',	'unknown',	'P,0',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje (ul. Opatovská)',	55083,	'286/5',	-736133.438,	-1050346.13,	50.03028,	14.527523,	'E',	'2020-11-20 12:30:11.942+01',	'unknown',	'P,0',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje',	55083,	'286/13',	-736250.9,	-1050318.63,	50.0303841,	14.5258474,	'C',	'2020-11-20 12:30:11.942+01',	'unknown',	'P',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje',	55083,	'286/72',	-736168.4,	-1050322.63,	50.03045,	14.5269957,	'B',	'2020-11-20 12:30:11.942+01',	'unknown',	'0',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje',	55083,	'286/101',	-736215.063,	-1050281.63,	50.0307579,	14.5262728,	'M1',	'2020-11-20 12:30:11.942+01',	'possible',	'P',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL),
+('Háje',	55083,	'286/102',	-736114.75,	-1050289.25,	50.03081,	14.5276747,	'M2',	'2020-11-20 12:30:11.942+01',	'possible',	'P',	NULL,	NULL,	NULL,	'2020-11-20 12:30:11.942+01',	NULL);
+
+-- <<<
+
+
+-- >>> SPECIAL CASE WITH RENAMING STOPS
+-- first origin, second with suffix _DATE in stop_id with changed attribute, i.e. stop_name
+
+INSERT INTO "ropidgtfs_cis_stops" ("altIdosName", "cis", "id", "jtskX", "jtskY", "lat", "lon", "platform", "created_at", "wheelchairAccess", "zone", "create_batch_id", "created_by", "update_batch_id", "updated_at", "updated_by") VALUES
+('Fučíkova',	27878,	'115/101',	-741166.3,	-1040788.06,	50.1092949,	14.4397736,	'M1',	'2020-11-26 12:30:18.675+01',	'possible',	'P',	NULL,	NULL,	NULL,	'2020-11-26 12:30:18.675+01',	NULL),
+('Fučíkova',	27878,	'115/102',	-741135.438,	-1040877.69,	50.1085358,	14.4403725,	'M2',	'2020-11-26 12:30:18.675+01',	'possible',	'P',	NULL,	NULL,	NULL,	'2020-11-26 12:30:18.675+01',	NULL);
+
+INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code", "stop_id", "stop_lat", "stop_lon", "stop_name", "stop_url", "wheelchair_boarding", "zone_id", "create_batch_id", "created_at", "created_by", "update_batch_id", "updated_at", "updated_by", "level_id", "stop_code", "stop_desc", "stop_timezone") VALUES
+(0,	'U115S1',	'1',	'U115Z101P',	50.10896,	14.44016,	'Fučíkova',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
+(0,	'U115S1',	'2',	'U115Z102P',	50.10892,	14.44002,	'Fučíkova',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
+(0,	'U115S1',	'1',	'U115Z101P_900222',	50.10896,	14.44016,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL),
+(0,	'U115S1',	'2',	'U115Z102P_900222',	50.10892,	14.44002,	'Nádraží Holešovice',	'',	1,	'P',	-1,	'2020-11-24 12:30:42.560064+01',	'integration-engine',	NULL,	NULL,	NULL,	'U115L1',	NULL,	NULL,	NULL);
+
+-- <<<
+

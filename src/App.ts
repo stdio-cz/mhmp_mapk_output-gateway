@@ -32,9 +32,11 @@ import { gtfsRouter } from "./resources/gtfs";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
 import { municipalAuthoritiesRouter } from "./resources/municipalauthorities";
 import { parkingZonesRouter } from "./resources/parkingzones";
+import { pidRouter } from "./resources/pid";
 import { playgroundsRouter } from "./resources/playgrounds";
 import { sharedBikesRouter } from "./resources/sharedbikes";
 import { sortedWasteRouter } from "./resources/sortedwastestations";
+import { sortedWasteRouterPg } from "./resources/sortedwastestationspg";
 import { vehiclepositionsRouter } from "./resources/vehiclepositions";
 import { wasteCollectionYardsRouter } from "./resources/wastecollectionyards";
 
@@ -207,11 +209,13 @@ export default class App {
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);
+        this.express.use("/sortedwastestationspg", sortedWasteRouterPg);
         this.express.use("/vehiclepositions", vehiclepositionsRouter);
         this.express.use("/gardens", gardensRouter);
         this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
         this.express.use("/playgrounds", playgroundsRouter);
         this.express.use("/sharedbikes", sharedBikesRouter);
+        this.express.use("/pid", pidRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

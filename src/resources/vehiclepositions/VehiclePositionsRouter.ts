@@ -9,7 +9,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { param, query } from "express-validator/check";
 import * as moment from "moment-timezone";
 import config from "../../config/config";
-import { IGeoJSONFeature, IGeoJSONFeatureCollection } from "../../core/Geo";
+import {  IGeoJSONFeatureCollection } from "../../core/Geo";
 import { hget, useCacheMiddleware } from "../../core/redis";
 import { parseBooleanQueryParam } from "../../core/Utils";
 import {
@@ -111,6 +111,38 @@ export class VehiclePositionsRouter {
             }
             res.setHeader("Content-Type", "application/octet-stream");
             res.status(200).send(Buffer.from(file, "hex"));
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    /**
+     * Debug endpoint
+     */
+    public GetGtfsRtTripUpdatesJSON = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const file = await hget("files", "trip_updates.json");
+            if (!file) {
+                throw new CustomError("not_found", true, "VehiclePositionsRouter", 404, null);
+            }
+            res.setHeader("Content-Type", "application/json");
+            res.status(200).send(file);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    /**
+     * Debug endpoint
+     */
+    public GetGtfsRtVehiclePositionsJSON = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const file = await hget("files", "vehicle_positions.json");
+            if (!file) {
+                throw new CustomError("not_found", true, "VehiclePositionsRouter", 404, null);
+            }
+            res.setHeader("Content-Type", "application/json");
+            res.status(200).send(file);
         } catch (err) {
             next(err);
         }
@@ -255,6 +287,12 @@ export class VehiclePositionsRouter {
         );
         this.router.get("/gtfsrt/vehicle_positions.pb",
             this.GetGtfsRtVehiclePositions,
+        );
+        this.router.get("/gtfsrt/trip_updates.json",
+            this.GetGtfsRtTripUpdatesJSON,
+        );
+        this.router.get("/gtfsrt/vehicle_positions.json",
+            this.GetGtfsRtVehiclePositionsJSON,
         );
     }
 }

@@ -76,4 +76,76 @@ describe("PIDDepartureBoards Router", () => {
                 done();
             });
     });
+
+    it("should respond with 8 departures", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U953Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=departures")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(8);
+                done();
+            });
+    });
+
+    it("should respond with ZERO departures for first stop when mode arrivals", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U953Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=arrivals")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(0);
+                done();
+            });
+    });
+
+    it("should respond with ZERO departures for stop with dropoff_type 1 when mode arrivals", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U921Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=arrivals")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(0);
+                done();
+            });
+    });
+
+    it("should respond with 8 departures for stop with dropoff_type 1 when mode departures", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U921Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=departures")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(8);
+                done();
+            });
+    });
+
+    it("should respond with ZERO departures for stop with pickup_type 1 when mode departures", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U118Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=departures")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(0);
+                done();
+            });
+    });
+
+    it("should respond with 8 departures for stop with pickup_type 1 when mode arrivals", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U118Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=arrivals")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(8);
+                done();
+            });
+    });
+
+    it("should respond with ZERO departures for LAST stop of trip when mode departures", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U306Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=departures")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(0);
+                done();
+            });
+    });
+
+    it("should respond with 8 departures for LAST stop of trip when mode arrivals", (done) => {
+        request(app)
+            .get("/pid/departureboards?ids[]=U306Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=arrivals")
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(8);
+                done();
+            });
+    });
 });

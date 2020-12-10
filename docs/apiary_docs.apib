@@ -1272,7 +1272,7 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
 
 You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3` when **at least one of these ids is required**. The maximum is 100 stops combined for one request.
 
-### GET Departure Board [GET /pid/departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,names,preferredTimezone,orderBySchedule,showAllRoutesFirst,limit,offset}]
+### GET Departure Board [GET /pid/departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,names,preferredTimezone,orderBySchedule,showAllRoutesFirst,mode,limit,offset}]
 
 + Parameters
 
@@ -1285,6 +1285,7 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use _ sign)
     + orderBySchedule: `false` (optional, boolean) - Order by schedule, not by real delays
     + showAllRoutesFirst: `false` (optional, boolean) - Sort by all distinct route - trip headsign first and then by arrival time.
+    + mode: `departures` (optional, string) - Select mode to show only `departures`/`arrivals`/`mixed` results.
     + limit: 20 (optional, number) - Limits number of retrieved items. The maximum is 1000 (default value is 20).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 

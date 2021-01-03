@@ -6,7 +6,7 @@ import { log } from "../Logger";
 /**
  * Class for connection to PostgreSQL database. Using sequelize https://www.npmjs.com/package/sequelize
  */
-export class PostgresDatabase {
+class PostgresDatabase {
 
     // TODO: TSLint strictPropertyInitialization fails here - is it really wrong that the property is not initialized??
     private sequelize: Sequelize.Sequelize;
@@ -17,12 +17,12 @@ export class PostgresDatabase {
     }
 
     /** Connects to db */
-    public connect = () => {
+    public connect = (connectionString?: string) => {
         try {
             if (this.sequelize) {
                 return this.sequelize;
             }
-            this.sequelize = new Sequelize(this.connectionString, {
+            this.sequelize = new Sequelize(connectionString || this.connectionString, {
                 define: {
                     freezeTableName: true,
                     timestamps: false,
@@ -46,6 +46,10 @@ export class PostgresDatabase {
     }
 }
 
-const sequelizeConnection = new PostgresDatabase().connect();
+const sequelizeConnection = new PostgresDatabase().connect(config.postgres_connection || "");
+const sequelizeReadOnlyConnection = new PostgresDatabase().connect(config.postgres_read_only_connection || "");
 
-export { sequelizeConnection };
+export {
+    sequelizeConnection,
+    sequelizeReadOnlyConnection,
+};

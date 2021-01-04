@@ -27,6 +27,7 @@ import { RouterBuilder } from "./core/routes/";
 import { bicycleCountersRouter } from "./resources/bicyclecounters";
 import { cityDistrictsRouter } from "./resources/citydistricts";
 import { departureBoardsRouter } from "./resources/departureboards";
+import { exportingModuleRouter } from "./resources/exportingmodule";
 import { gardensRouter } from "./resources/gardens";
 import { gtfsRouter } from "./resources/gtfs";
 import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
@@ -204,6 +205,7 @@ export default class App {
         this.express.use("/bicyclecounters", bicycleCountersRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
         this.express.use("/departureboards", departureBoardsRouter);
+        this.express.use("/export", exportingModuleRouter);
         this.express.use("/gtfs", gtfsRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
@@ -260,7 +262,7 @@ export default class App {
         return new Promise<string>((resolve, reject) => {
             fs.readFile(path.join(__dirname, "..", "commitsha"), (err: NodeJS.ErrnoException | null, data: Buffer) => {
                 if (err) {
-                    return resolve(undefined);
+                    return resolve("");
                 }
                 return resolve(data.toString());
             });

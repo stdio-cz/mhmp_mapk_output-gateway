@@ -80,14 +80,14 @@ export class DepartureBoardsModel {
                         ORDER BY ` + orderBySchedule + `)
                     ) = 1 THEN 1 ELSE 2 END) AS "route_order", "t".*
                 FROM (
-                    SELECT 
+                    SELECT
                         *,
                         (
                             "t"."departure_datetime" + GREATEST(
                                 MAKE_INTERVAL(0,0,0,0,0,0,-60),
                                 CASE WHEN ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL > '00:00'::INTERVAL
                                     THEN GREATEST(
-                                        '00:00'::INTERVAL, 
+                                        '00:00'::INTERVAL,
                                         MAKE_INTERVAL(0,0,0,0,0,0,  (CASE WHEN "t"."delay_seconds" IS NULL THEN 0 ELSE "t"."delay_seconds" END))
                                              - ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL
                                     )
@@ -128,7 +128,7 @@ export class DepartureBoardsModel {
                         LEFT JOIN "ropidgtfs_routes" AS "t4" ON "t2"."route_id" = "t4"."route_id"
                         INNER JOIN "v_ropidgtfs_services_first14days" AS "t7" ON "t2"."service_id" = "t7"."service_id"
                         LEFT JOIN (
-                                SELECT *, TO_TIMESTAMP("start_timestamp"/1000)::DATE AS "start_date" FROM "vehiclepositions_trips" 
+                                SELECT *, TO_TIMESTAMP("start_timestamp"/1000)::DATE AS "start_date" FROM "vehiclepositions_trips"
                                 WHERE TO_TIMESTAMP("start_timestamp"/1000)::DATE BETWEEN (NOW() AT TIME zone 'utc' - INTERVAL '1 day')::DATE AND (NOW() AT TIME zone 'utc')::DATE
                             ) AS "t5"
                             ON "t1"."trip_id" = "t5"."gtfs_trip_id" AND "t7"."date" = "t5"."start_date"

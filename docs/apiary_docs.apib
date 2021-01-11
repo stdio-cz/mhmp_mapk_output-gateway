@@ -1272,7 +1272,7 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
 
 You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array format - eg. `ids[]=1&ids[]=3`. **At least one of these IDs is required.** The maximum is 100 stops combined in one request.
 
-### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,preferredTimezone,orderBySchedule,showAllRoutesFirst,limit,offset}]
+### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,preferredTimezone,orderBySchedule,showAllRoutesFirst,mode,limit,offset}]
 
 + Parameters
 
@@ -1283,8 +1283,9 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request, negative numbers set the start in the future (use to compensate for walking distance to a stop). Default is set to 0.
     + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset as defined in IANA Time zone database in the form of Country/City (use encoded slash sign with `%2F` or use _ sign)
-    + orderBySchedule: `false` (optional, boolean) - Order results by scheduled time, not by predicted time. 
+    + orderBySchedule: `false` (optional, boolean) - Order results by scheduled time, not by predicted time.
     + showAllRoutesFirst: `false` (optional, boolean) - First return departures for every distinct route and headsign, then fill the rest ordered by departure time.
+    + mode: `departures` (optional, string) - Select mode to show only `departures`/`arrivals`/`mixed` results.
     + limit: 20 (optional, number) - Limits the number of retrieved items. The maximum is 1000 (default value is 20).
     + offset: 0 (optional, number) - Number of the initial departures that are skipped. Useful for multi-page displays.
 
@@ -2102,7 +2103,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + `asw_id` (ASW id, required, nullable) - ASW ID of the stop.
 + `stop_id`: U118Z101P (string, required) - GTFS ID of the stop.
 + `stop_name`: Flora (string, required) - Name of the stop.
-+ `wheelchair_boarding`: 2 (number, required) - Indicates accessibility of the stop by wheelchairs. `0` – unknown, `1` – accessible, `2` – inaccessible 
++ `wheelchair_boarding`: 2 (number, required) - Indicates accessibility of the stop by wheelchairs. `0` – unknown, `1` – accessible, `2` – inaccessible
 + `zone_id`: P (string, required) - PID fare zone. Multiple zones are separated by a comma.
 
 ## PID Departure Board Stop Reference (object)
@@ -2123,7 +2124,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 ## PID Departure Board Route (object)
 
 + short_name: `140` (string, required) - Route designation used by PID.
-+ type: `3` (string, required) - GTFS route type. `0` – tram, `1` – metro, `2` – train, `3` – bus, `4` – ferry, `7` – funicular, `11` – trolleybus 
++ type: `3` (string, required) - GTFS route type. `0` – tram, `1` – metro, `2` – train, `3` – bus, `4` – ferry, `7` – funicular, `11` – trolleybus
 
 ## Garden (object)
 

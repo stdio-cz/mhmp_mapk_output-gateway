@@ -2,8 +2,6 @@ image: docker:stable
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
-
-variables:
   POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test-pass

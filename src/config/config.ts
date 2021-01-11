@@ -30,6 +30,7 @@ export default {
     pagination_max_limit: getPaginationMaxLimit(),
     port: process.env.PORT,
     postgres_connection: process.env.POSTGRES_CONN,
+    postgres_read_only_connection: process.env.POSTGRES_RO_CONN || process.env.POSTGRES_CONN, // to discuss
     redis_connection: process.env.REDIS_CONN,
     redis_enable: process.env.REDIS_ENABLE === "true" || false,
     redis_ttl: process.env.REDIS_DEFAULT_TTL,

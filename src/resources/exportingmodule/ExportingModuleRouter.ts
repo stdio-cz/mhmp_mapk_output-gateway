@@ -40,7 +40,7 @@ export interface IRequestBody {
     offset: number;
     order: Array<{
         direction: string;
-        collumn: string;
+        column: string;
     }>;
 }
 
@@ -78,7 +78,7 @@ export class ExportingModuleRouter extends BaseRouter {
 
         } catch (err) {
             log.error(err);
-            return res.status(400).send("Unable to process request");
+            return res.status(400).send(err.message);
         }
 
         try {
@@ -88,7 +88,7 @@ export class ExportingModuleRouter extends BaseRouter {
             };
 
             // maybe should be stream - we'll see
-            const data = JSON.stringify(await this.getData({
+            const data = await this.getData({
                 builderQuery: body.builderQuery,
                 columns: body.columns,
                 groupBy: body.groupBy,
@@ -96,14 +96,18 @@ export class ExportingModuleRouter extends BaseRouter {
                 offset: body.offset,
                 order: body.order,
                 table: req.params.resource,
-            }));
+            });
 
             res.set("Content-Type", "application/octet-stream");
             res.attachment(`${req.params.resource}.csv`);
 
-            dataStream.pipe(transformStream).pipe(res);
+            if (Array.isArray(data) && data.length > 0) {
+                dataStream.pipe(transformStream).pipe(res);
+                dataStream.push(JSON.stringify(data));
+            } else {
+                dataStream.pipe(transformStream).pipe(res);
+            }
 
-            dataStream.push(data);
             dataStream.push(null);
         } catch (err) {
             log.error(err);
@@ -137,7 +141,7 @@ export class ExportingModuleRouter extends BaseRouter {
 
         } catch (err) {
             log.error(err);
-            return res.status(400).send("Unable to process request");
+            return res.status(400).send(err.message);
         }
 
         try {
@@ -150,8 +154,15 @@ export class ExportingModuleRouter extends BaseRouter {
                 order: body.order,
                 table: req.params.resource,
             });
+
             res.setHeader("content-type", "text/plain; charset=utf-8");
-            return res.status(200).send(parse(data));
+
+            if (Array.isArray(data) && data.length > 0) {
+                return res.status(200).send(parse(data));
+            } else {
+                return res.status(200).send("");
+            }
+
         } catch (err) {
             log.error(err);
             return res.status(400).send(err.message);
@@ -159,19 +170,38 @@ export class ExportingModuleRouter extends BaseRouter {
     }
 
     private checkBody = (body: any) => {
-        if (!(body && body.builderQuery)) {
-            throw new Error("builderQuery is required");
+        if (body) {
+            if (!body.builderQuery) {
+                throw new Error("builderQuery parameter is required");
+            }
+            if (!body.columns) {
+                throw new Error("columns parameter is required");
+            }
         }
     }
+
+    private catchJsonError = (
+        error: any,
+        req: any,
+        res: any,
+        next: any) => {
+        if (error instanceof SyntaxError) {
+            return res.status(400).send(`Invalid input: ${error}`);
+        } else {
+          next();
+        }
+      }
 
     private initRoutes = (expire?: number | string): void => {
         this.router.post("/:resource/preview",
             bodyParser.json(),
+            this.catchJsonError,
             this.getPreview,
         );
 
         this.router.post("/:resource/data",
             bodyParser.json(),
+            this.catchJsonError,
             this.getAll,
         );
 

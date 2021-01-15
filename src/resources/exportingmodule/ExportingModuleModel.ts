@@ -23,14 +23,14 @@ export interface IQuerySchema {
     groupBy?: string[];
     limit?: number;
     offset?: number;
-    order?: Array<{ direction: string; collumn: string; }>;
+    order?: Array<{ direction: string; column: string; }>;
     table: string;
 }
 
 export class ExportingModuleModel {
 
     public async getData(options: IQuerySchema): Promise<any> {
-        const query = this.getQuery(options);
+        const query = await this.getQuery(options);
         return (await sequelizeReadOnlyConnection.query(
             query.query,
             {
@@ -50,17 +50,43 @@ export class ExportingModuleModel {
         ))[0] || [];
     }
 
-    private getQuery = ( options: IQuerySchema ): {
+    private quoteColumns(rules: any[]): void {
+        rules.forEach((rule: any) => {
+            if (rule.field) {
+                rule.field = `"${rule.field}"`;
+            } else if (rule.rules && Array.isArray(rule.rules)) {
+                this.quoteColumns(rule.rules);
+            }
+        });
+    }
+
+    private async getQuery( options: IQuerySchema ): Promise<{
         query: string;
         params: string[];
-    }   => {
-        const reactQuery = formatQuery(options.builderQuery, "parameterized") as {
+    }> {
+        let reactQuery: {
             sql: string;
             params: string[];
         };
 
+        if (Array.isArray(options.builderQuery?.rules)) {
+            this.quoteColumns(options.builderQuery.rules);
+
+            reactQuery = formatQuery(options.builderQuery, "parameterized") as {
+                sql: string;
+                params: string[];
+            };
+        } else {
+            reactQuery = {
+                params: [],
+                sql: "",
+            };
+        }
+
         let query = `SELECT
-            ${((options.columns || []).length > 0 ? options.columns : ["*"]).join(",")}
+            ${((options.columns || []).length > 0 ? options.columns : ["*"]).map((col: string) => {
+                return (col !== "*"  && col.indexOf(" as ") < 0) ? `"${col}"` : `${col}`;
+            }).join(" , ")}
         FROM ${options.table} `;
 
         let i = 0;
@@ -73,23 +99,32 @@ export class ExportingModuleModel {
             });
         }
 
-        if (options.groupBy) {
+        if (options.groupBy && Array.isArray(options.groupBy)) {
             query += `
-            GROUP BY ${options.groupBy.join(",")}
+            GROUP BY ${options.groupBy.map((group: string) => {
+                return `"${group}"`;
+            }).join(" , ")}
             `;
         }
 
-        if (options.order) {
+        if (options.order && Array.isArray(options.order)) {
             const orders: string[] = [];
             options.order.forEach((order: {
                 direction: string;
-                collumn: string;
+                column: string;
             }) => {
-               orders.push(`${order.collumn} ${order.direction}`);
+                if (order.column) {
+                    orders.push(`"${order.column}" ${order.direction}`);
+                }
             });
-            query += `
-            ORDER BY ${orders.join(",")}
-            `;
+
+            const ordersJoined = orders.join(" , ");
+
+            if (ordersJoined) {
+                query += `
+                ORDER BY ${ordersJoined}
+                `;
+            }
         }
 
         if (options.limit) {

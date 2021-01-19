@@ -75,23 +75,23 @@ describe("ExportingModuleRouter", () => {
                   "order": [
                      {
                         "direction": "asc",
-                        "collumn": "locations_id"
+                        "column": "locations_id"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "directions_id"
+                        "column": "directions_id"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "measured_from"
+                        "column": "measured_from"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "measured_to"
+                        "column": "measured_to"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "value"
+                        "column": "value"
                      },
                   ],
                   "offset": 1,
@@ -152,23 +152,23 @@ describe("ExportingModuleRouter", () => {
                   "order": [
                      {
                         "direction": "asc",
-                        "collumn": "locations_id"
+                        "column": "locations_id"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "directions_id"
+                        "column": "directions_id"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "measured_from"
+                        "column": "measured_from"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "measured_to"
+                        "column": "measured_to"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "value"
+                        "column": "value"
                      },
                   ],
 
@@ -237,11 +237,11 @@ describe("ExportingModuleRouter", () => {
                "order": [
                      {
                         "direction": "asc",
-                        "collumn": "measured_from"
+                        "column": "measured_from"
                      },
                      {
                         "direction": "asc",
-                        "collumn": "value"
+                        "column": "value"
                      },
                   ],
                "groupBy": ["measured_from","value"],

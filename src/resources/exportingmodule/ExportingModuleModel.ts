@@ -69,6 +69,19 @@ export class ExportingModuleModel {
             params: string[];
         };
 
+        const tableCols = (await this.getTableMetadata(options.table))
+        .map((data: any) => data.column_name)
+        .sort((a, b) => b.length - a.length);
+
+        options.columns.forEach((col: string, index: number) => {
+            for (const tableCol of tableCols) {
+                if (col.indexOf(" as ") > -1 && (col.indexOf(tableCol) > -1 )) {
+                    options.columns[index] = col.replace(new RegExp(tableCol, "g"), `"${tableCol}"`);
+                    break;
+                }
+            }
+        });
+
         if (Array.isArray(options.builderQuery?.rules)) {
             this.quoteColumns(options.builderQuery.rules);
 

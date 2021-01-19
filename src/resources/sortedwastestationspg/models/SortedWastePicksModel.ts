@@ -91,11 +91,11 @@ export class SortedWastePicksModel extends SequelizeModel {
                     // tslint:disable-next-line: object-literal-sort-keys
                     container_id: container.container_id,
                     code: container.container_code,
-                    pick_minfilllevel: container.pick_minfilllevel,
-                    decrease: container.decrease,
+                    pick_minfilllevel: +container.pick_minfilllevel  || null,
+                    decrease: +container.decrease || null,
                     pick_at_utc: container.pick_at_utc,
-                    percent_now: container.percent_now,
-                    percent_before: container.percent_before,
+                    percent_now: +container.percent_now || null,
+                    percent_before: +container.percent_before || null,
                     event_driven: container.event_driven,
                     updated_at: container.updated_at ?
                         new Date(container.updated_at).getTime() : container.created_at ?

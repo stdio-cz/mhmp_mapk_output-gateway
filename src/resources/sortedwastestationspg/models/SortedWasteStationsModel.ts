@@ -300,9 +300,9 @@ export class SortedWasteStationsModelPg {
                         prediction_utc: container.prediction_at_utc || null,
                     },
                     last_pick: container.recent_pick || null,
-                    sensor_code: container.code,
-                    sensor_container_id: container.id,
-                    sensor_supplier: container.source,
+                    sensor_code: container.measured_at_utc ? container.code : null,
+                    sensor_container_id: container.measured_at_utc ? container.id : null,
+                    sensor_supplier: container.measured_at_utc ? container.source : null,
                     knsko_id: container.knsko_id ? container.knsko_id : null,
                 });
             } else {

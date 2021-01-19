@@ -92,13 +92,13 @@ export class SortedWasteMeasurementsModel extends SequelizeModel {
                     // tslint:disable-next-line: object-literal-sort-keys
                     container_id: container.container_id,
                     code: container.container_code,
-                    percent_calculated: container.percent_calculated,
-                    upturned: container.upturned,
-                    temperature: container.temperature,
-                    battery_status: container.battery_status,
+                    percent_calculated: +container.percent_calculated || null,
+                    upturned: +container.upturned || null,
+                    temperature: +container.temperature || null,
+                    battery_status: +container.battery_status || null,
                     measured_at_utc: container.measured_at_utc,
                     prediction_utc: container.prediction_utc,
-                    firealarm: container.firealarm,
+                    firealarm: +container.firealarm || null,
                     updated_at: container.updated_at ?
                     new Date(container.updated_at).getTime() : container.created_at ?
                         new Date(container.created_at).getTime() : 0,

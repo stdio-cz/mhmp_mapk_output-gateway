@@ -11,7 +11,7 @@ export enum GeoCoordinatesType {
 }
 
 export interface IGeoCoordinatesPoint {
-    coordinates: number[];
+    coordinates: Array<number|null>;
     type: GeoCoordinatesType.Point;
 }
 

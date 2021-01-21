@@ -7,19 +7,19 @@ import { log } from "../../../core/Logger";
 import * as moment from "moment";
 
 export interface ILastMeasurement {
-    measured_at_utc: number | string;
-    percent_calculated: number;
-    prediction_utc: number | string;
+    measured_at_utc: number | string | null;
+    percent_calculated: number | null;
+    prediction_utc: number | string | null;
 }
 
 export interface ILastPick {
-    pick_at_utc: number | string;
+    pick_at_utc: number | string | null;
 }
 
 export interface IContainer {
     cleaning_frequency: {
-        duration: string,
-        frequency: number,
+        duration: string | null,
+        frequency: number | null,
         id: number,
       };
     pick_dates: string[];
@@ -283,7 +283,7 @@ export class SortedWasteStationsModelPg {
                 stationsByCode[container.station_code].containers.push({
                     cleaning_frequency: {
                         duration: `P${container.cleaning_frequency_interval}W`,
-                        frequency: container.cleaning_frequency_frequency,
+                        frequency: +container.cleaning_frequency_frequency || null,
                         // tslint:disable-next-line: max-line-length
                         id: ((+container.cleaning_frequency_interval || 0) * 10) + (+container.cleaning_frequency_frequency || 0),
                     },
@@ -291,19 +291,19 @@ export class SortedWasteStationsModelPg {
                     pick_dates: (picksDates[0] || []).map((pick: any) => moment(pick.pick_date).format("YYYY-MM-DD")),
                     trash_type: {
                         description: this.getTrashTypeById(+container.trash_type),
-                        id: container.trash_type,
+                        id: +container.trash_type || null,
                     },
                     // tslint:disable-next-line: object-literal-sort-keys
                     last_measurement : {
-                        measured_at_utc: container.measured_at_utc,
-                        percent_calculated: container.percent_calculated,
-                        prediction_utc: container.prediction_at_utc,
+                        measured_at_utc: container.measured_at_utc || null,
+                        percent_calculated: container.percent_calculated || null,
+                        prediction_utc: container.prediction_at_utc || null,
                     },
-                    last_pick: container.recent_pick,
-                    sensor_code: container.code,
-                    sensor_container_id: container.id,
-                    sensor_supplier: container.source,
-                    knsko_id: container.knsko_id ? container.knsko_id : undefined,
+                    last_pick: container.recent_pick || null,
+                    sensor_code: container.measured_at_utc ? container.code : null,
+                    sensor_container_id: container.measured_at_utc ? container.id : null,
+                    sensor_supplier: container.measured_at_utc ? container.source : null,
+                    knsko_id: container.knsko_id ? container.knsko_id : null,
                 });
             } else {
                 log.warn(`station not found for container in getStationsData: ${JSON.stringify(container)}`);
@@ -314,8 +314,8 @@ export class SortedWasteStationsModelPg {
             data.features.push({
                 geometry: {
                     coordinates: [
-                        stationsByCode[station].longitude,
-                        stationsByCode[station].latitude,
+                        +stationsByCode[station].longitude || null,
+                        +stationsByCode[station].latitude || null,
                    ],
                    type: GeoCoordinatesType.Point,
                 },
@@ -328,7 +328,7 @@ export class SortedWasteStationsModelPg {
                    district: stationsByCode[station].district,
                    id: stationsByCode[station].id,
                    is_monitored: !!stationsByCode[station].measured_at_utc,
-                   name: stationsByCode[station].address,
+                   name: stationsByCode[station].address || "",
                    station_number: station,
                    updated_at: stationsByCode[station].created_at ||
                         stationsByCode[station].updated_at,

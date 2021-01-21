@@ -24,6 +24,7 @@ export class DepartureBoardsModel {
         names?: string[],
         limit?: number,
         offset?: number,
+        mode?: string,
         orderBySchedule?: boolean,
         minutesBefore: number,
         minutesAfter: number,
@@ -47,6 +48,22 @@ export class DepartureBoardsModel {
             throw new CustomError(`Too many stops, try lower number or split requests. The maximum is ${this.stopsMaxCount} stops.`, true, "DepartureBoardsRouter", 413, null);
         }
         try {
+            // default value
+            const mode = options.mode || "departures";
+            let modeCondition = ``;
+            switch (mode) {
+                case "arrivals":
+                    modeCondition = ` AND "t1"."drop_off_type" != '1' AND "t1"."stop_sequence" != "t9"."min_stop_sequence" `;
+                    break;
+                case "mixed":
+                    modeCondition = ` AND "t1"."pickup_type" != '1' `;
+                    break;
+                default:
+                    // departures are default value
+                    modeCondition = ` AND "t1"."pickup_type" != '1' AND "t1"."stop_sequence" != "t9"."max_stop_sequence" `;
+                    break;
+            }
+
             const orderBySchedule = options.orderBySchedule ? `"arrival_datetime" ASC` : `"arrival_datetime_real" ASC`;
             const showAllRoutesFirst = options.showAllRoutesFirst ? `"route_order" ASC, ` : ``;
             return sequelizeConnection.query(
@@ -125,9 +142,13 @@ export class DepartureBoardsModel {
                             "t6"."is_canceled",
                             "t6"."last_stop_id",
                             "t8"."stop_name" AS "last_stop_name",
-                            "t3"."service_id"
+                            "t3"."service_id",
+                            "t1"."stop_sequence",
+                            "t9"."min_stop_sequence",
+                            "t9"."max_stop_sequence"
                         FROM "ropidgtfs_stop_times" AS "t1"
                         LEFT JOIN "ropidgtfs_stops" AS "t0" ON "t1"."stop_id" = "t0"."stop_id"
+                        LEFT JOIN "v_ropidgtfs_trips_minmaxsequences" AS "t9" ON "t1"."trip_id" = "t9"."trip_id"
                         LEFT JOIN "ropidgtfs_trips" AS "t2" ON "t1"."trip_id" = "t2"."trip_id"
                         LEFT JOIN "ropidgtfs_calendar" AS "t3" ON "t2"."service_id" = "t3"."service_id"
                         LEFT JOIN "ropidgtfs_routes" AS "t4" ON "t2"."route_id" = "t4"."route_id"
@@ -139,7 +160,7 @@ export class DepartureBoardsModel {
                             ON "t1"."trip_id" = "t5"."gtfs_trip_id" AND "t7"."date" = "t5"."start_date"
                         LEFT JOIN (SELECT * FROM "v_vehiclepositions_last_position" WHERE "tracking" = 2) AS "t6" ON "t5"."id" = "t6"."trips_id"
                         LEFT JOIN "ropidgtfs_stops" AS "t8" ON "t6"."last_stop_id" = "t8"."stop_id"
-                        WHERE "t1"."stop_id" IN(:stopId) AND "t1"."pickup_type" != '1' AND "t1"."drop_off_type" != '1'
+                        WHERE "t1"."stop_id" IN(:stopId) ` + modeCondition + `
                         ORDER BY ` + orderBySchedule + `
                     ) AS "t"
                     WHERE "t"."arrival_datetime_real" BETWEEN ((NOW()- INTERVAL :minutesBefore) AT TIME zone 'Etc/UTC') AND ((NOW() + INTERVAL :minutesAfter) AT TIME zone 'Etc/UTC')

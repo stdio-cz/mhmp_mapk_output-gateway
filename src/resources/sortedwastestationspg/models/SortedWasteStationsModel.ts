@@ -164,10 +164,15 @@ export class SortedWasteStationsModelPg {
                 replacements,
             });
 
-            return  this.getStationsData((data || [])[0] || {
+            return  this.getStationsData(
+                (data || [])[0] || {
                 features: [],
                 type: "FeatureCollection",
-            });
+                },
+                where === " where 1 = 1 " &&
+                !options?.limit &&
+                !options?.offset ? true : false,
+            );
         } catch (err) {
             throw new CustomError("Database error", true, "SortedWasteStationsModelPg", 500, err);
         }
@@ -200,7 +205,7 @@ export class SortedWasteStationsModelPg {
         }
     }
 
-    private async getStationsData(stations: any): Promise<ISortedWasteStationFeatures> {
+    private async getStationsData(stations: any, full = false): Promise<ISortedWasteStationFeatures> {
         const data: ISortedWasteStationFeatures = {
             features: [] as ISortedWasteStationFeature[],
             type: "FeatureCollection",
@@ -218,57 +223,101 @@ export class SortedWasteStationsModelPg {
             stationCodes.push(station.code);
         });
 
-        const sqlData = await sequelizeConnection.query(
-            /* tslint:disable */
-            `
-            select
-                cc.cleaning_frequency_interval,
-                cc.cleaning_frequency_frequency,
-                cc.container_type,
-                cc.trash_type,
-                cc.code,
-                cc.source,
-                cc.station_code,
-                cc.id,
-                cc.knsko_id,
-                measurements.measured_at_utc,
-                measurements.prediction_utc,
-                measurements.percent_calculated,
-                measurements.recent_pick
-                from containers_containers as cc
-                left join (
+        let stationCodesJoined = "";
 
-                    select
-                            cm.station_code as station_code,
-                            cm.container_code as container_code,
-                            cm.prediction_utc as prediction_utc,
-                            cm.measured_at_utc as measured_at_utc,
-                            cm.percent_calculated as percent_calculated,
-                            cpm.recent_pick as recent_pick
-                        from
-                            (select
-                                container_code,
-                                max(measured_at_utc) as recent_measurement
-                            from containers_measurement
-                            group by container_code
-                            ) as cmm
-                        inner join containers_measurement as cm
-                        on
-                        cmm.recent_measurement = cm.measured_at_utc and cmm.container_code = cm.container_code
-                        left join
-                            (select
-                                container_code,
-                                max(pick_at_utc) as recent_pick
-                            from containers_picks
-                            group by container_code
-                            ) as cpm
-                        on cpm.container_code = cm.container_code
-                )  as measurements
-                on measurements.container_code = cc.code
-                where cc.station_code in ('${stationCodes.join("','")}')
-                `
-                 /* tslint:enable */
-            );
+        if (!full) {
+            stationCodesJoined = stationCodes.join("','");
+        }
+
+        let query =
+        /* tslint:disable */
+        `
+        select
+            cc.cleaning_frequency_interval,
+            cc.cleaning_frequency_frequency,
+            cc.container_type,
+            cc.trash_type,
+            cc.code,
+            cc.source,
+            cc.station_code,
+            cc.id,
+            cc.knsko_id,
+            measurements.measured_at_utc,
+            measurements.prediction_utc,
+            measurements.percent_calculated,
+            measurements.recent_pick
+            from containers_containers as cc
+            left join (
+
+                select
+                        cm.station_code as station_code,
+                        cm.container_code as container_code,
+                        cm.prediction_utc as prediction_utc,
+                        cm.measured_at_utc as measured_at_utc,
+                        cm.percent_calculated as percent_calculated,
+                        cpm.recent_pick as recent_pick
+                    from
+                        (select
+                            container_code,
+                            max(measured_at_utc) as recent_measurement
+                        from containers_measurement
+                        group by container_code
+                        ) as cmm
+                    inner join containers_measurement as cm
+                    on
+                    cmm.recent_measurement = cm.measured_at_utc and cmm.container_code = cm.container_code
+                    left join
+                        (select
+                            container_code,
+                            max(pick_at_utc) as recent_pick
+                        from containers_picks
+                        group by container_code
+                        ) as cpm
+                    on cpm.container_code = cm.container_code
+            )  as measurements
+            on measurements.container_code = cc.code
+        `
+        /* tslint:enable */
+
+        if (!full) {
+            query += ` where cc.station_code in ('${stationCodesJoined}')`;
+        }
+
+        const sqlData = await sequelizeConnection.query(query);
+
+        const containerIds = [];
+
+        if (!full) {
+            for (const container of (sqlData[0] || []))  {
+            containerIds.push(container.id);
+            }
+        }
+
+        query = `select
+        pick_date, container_id
+        from containers_picks_dates
+        where pick_date >= '${moment().format("YYYY-MM-DD 12:00:00")}'`;
+
+        if (!full) {
+            query += ` and container_id in ('${containerIds.join("','")}') `;
+        }
+
+        query +=  "  order by pick_date ";
+
+        const picksDates: any = await sequelizeConnection.query(query);
+
+        const pickDatesByContainer: any = {};
+
+        for (const containerPickDates of (picksDates[0] || []))  {
+            if (!pickDatesByContainer[containerPickDates.container_id]) {
+                pickDatesByContainer[containerPickDates.container_id] = [];
+            }
+
+            if (pickDatesByContainer[containerPickDates.container_id].length < 15) {
+                pickDatesByContainer[containerPickDates.container_id].
+                push(moment(containerPickDates.pick_date).format("YYYY-MM-DD"));
+            }
+        }
 
         for (const container of (sqlData[0] || []))  {
             if (stationsByCode[container.station_code]) {
@@ -276,37 +325,44 @@ export class SortedWasteStationsModelPg {
                     stationsByCode[container.station_code].containers = [];
                 }
 
-                const picksDates = await sequelizeConnection.query(`select pick_date from containers_picks_dates
-                where pick_date >= '${moment().format("YYYY-MM-DD 12:00:00")}'
-                and container_id = '${container.id}' order by pick_date limit 30`);
-
                 stationsByCode[container.station_code].containers.push({
                     cleaning_frequency: {
-                        duration: `P${container.cleaning_frequency_interval}W`,
-                        frequency: +container.cleaning_frequency_frequency || null,
+                        duration: container.cleaning_frequency_frequency ?
+                            `P${container.cleaning_frequency_interval}W` : "",
+                        frequency: +container.cleaning_frequency_frequency || 0,
                         // tslint:disable-next-line: max-line-length
-                        id: ((+container.cleaning_frequency_interval || 0) * 10) + (+container.cleaning_frequency_frequency || 0),
+                        id: container.cleaning_frequency_frequency ?
+                            ((+container.cleaning_frequency_interval || 0) * 10) +
+                            (+container.cleaning_frequency_frequency || 0) :
+                            0,
                     },
                     container_type: container.container_type,
-                    pick_dates: (picksDates[0] || []).map((pick: any) => moment(pick.pick_date).format("YYYY-MM-DD")),
+                    pick_dates: pickDatesByContainer[container.id] || [],
                     trash_type: {
                         description: this.getTrashTypeById(+container.trash_type),
                         id: +container.trash_type || null,
                     },
+
+                });
+
+                if (container.knsko_id) {
+                    container.knsko_id = container.knsko_id;
+                }
+                if (container.measured_at_utc) {
                     // tslint:disable-next-line: object-literal-sort-keys
-                    last_measurement : {
+                    container.last_measurement = {
                         measured_at_utc: container.measured_at_utc || null,
                         percent_calculated: container.percent_calculated || null,
                         prediction_utc: container.prediction_at_utc || null,
-                    },
-                    last_pick: container.recent_pick || null,
-                    sensor_code: container.measured_at_utc ? container.code : null,
-                    sensor_container_id: container.measured_at_utc ? container.id : null,
-                    sensor_supplier: container.measured_at_utc ? container.source : null,
-                    knsko_id: container.knsko_id ? container.knsko_id : null,
-                });
+                    };
+                    container.last_pick = container.recent_pick || null;
+                    container.sensor_code = container.code || null;
+                    container.sensor_container_id = container.id || null;
+                    container.sensor_supplier = container.source || null;
+                }
+
             } else {
-                log.warn(`station not found for container in getStationsData: ${JSON.stringify(container)}`);
+                log.debug(`station not found for container in getStationsData: ${JSON.stringify(container)}`);
             }
         }
 
@@ -334,8 +390,8 @@ export class SortedWasteStationsModelPg {
                         stationsByCode[station].updated_at,
                 },
                 type: "Feature",
-             });
-          }
+            });
+        }
 
         return data;
     }

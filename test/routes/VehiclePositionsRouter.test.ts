@@ -1,18 +1,14 @@
-"use strict";
-
-import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as express from "express";
-import { NextFunction, Request, Response } from "express";
-import "mocha";
-import * as sinon from "sinon";
-import * as request from "supertest";
-import { log } from "../../src/core/Logger";
-import { vehiclepositionsRouter } from "../../src/resources/vehiclepositions/VehiclePositionsRouter";
+import sinon from "sinon";
+import request from "supertest";
+import chai from "chai";
+import chaiAsPromised from "chai-as-promised";
+import fs from "fs";
+import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
+import { log } from "@golemio/core/dist/output-gateway/Logger";
+import { vehiclepositionsRouter } from "@golemio/vehicle-positions/dist/output-gateway/VehiclePositionsRouter";
 
 chai.use(chaiAsPromised);
-const fs = require("fs");
 
 describe("VehiclePositions Router", () => {
     // Create clean express instance
@@ -40,11 +36,7 @@ describe("VehiclePositions Router", () => {
     });
 
     it("should respond with json to GET /vehiclepositions", (done) => {
-        request(app)
-            .get("/vehiclepositions")
-            .set("Accept", "application/json")
-            .expect("Content-Type", /json/)
-            .expect(200, done);
+        request(app).get("/vehiclepositions").set("Accept", "application/json").expect("Content-Type", /json/).expect(200, done);
     });
 
     it("should respond with protobuffer to GET /vehiclepositions/gtfsrt/trip_updates.pb", (done) => {
@@ -57,7 +49,7 @@ describe("VehiclePositions Router", () => {
                 if (err) {
                     return done(err);
                 }
-                fs.readFile("./db/example/trip_updates.pb", (readerr: Error, rawdata: any) => {
+                fs.readFile("./db/example/trip_updates.pb", (readerr: any, rawdata: any) => {
                     if (readerr) {
                         return done(readerr);
                     }
@@ -77,7 +69,7 @@ describe("VehiclePositions Router", () => {
                 if (err) {
                     return done(err);
                 }
-                fs.readFile("./db/example/vehicle_positions.pb", (readerr: Error, rawdata: any) => {
+                fs.readFile("./db/example/vehicle_positions.pb", (readerr: any, rawdata: any) => {
                     if (readerr) {
                         return done(readerr);
                     }
@@ -85,6 +77,5 @@ describe("VehiclePositions Router", () => {
                     done();
                 });
             });
-
     });
 });

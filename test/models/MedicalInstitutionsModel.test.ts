@@ -1,17 +1,11 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { MedicalInstitutionsModel } from "../../src/resources/medicalinstitutions/MedicalInstitutionsModel";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { MedicalInstitutionsModel } from "@golemio/medical-institutions/dist/output-gateway/MedicalInstitutionsModel";
 
 chai.use(chaiAsPromised);
 
 describe("MedicalInstitutionsModel", () => {
-
     let medicalInstitutionsModel: MedicalInstitutionsModel;
 
     // Basic configuration: create a sinon sandbox for testing

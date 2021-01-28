@@ -1,18 +1,12 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { models } from "../../src/resources/gtfs/models";
-import { GTFSCalendarModel } from "../../src/resources/gtfs/models/GTFSCalendarModel";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { models } from "@golemio/ropid-gtfs/dist/output-gateway/models";
+import { GTFSCalendarModel } from "@golemio/ropid-gtfs/dist/output-gateway/models/GTFSCalendarModel";
 
 chai.use(chaiAsPromised);
 
 describe("GTFSCalendarModel", () => {
-
     const serviceModel: GTFSCalendarModel = models.GTFSCalendarModel;
 
     // Basic configuration: create a sinon sandbox for testing

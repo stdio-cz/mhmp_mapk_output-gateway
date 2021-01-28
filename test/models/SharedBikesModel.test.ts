@@ -1,17 +1,11 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { SharedBikesModel } from "../../src/resources/sharedbikes/SharedBikesModel";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { SharedBikesModel } from "@golemio/shared-bikes/dist/output-gateway/SharedBikesModel";
 
 chai.use(chaiAsPromised);
 
 describe("SharedBikesModel", () => {
-
     let sharedBikesModel: SharedBikesModel;
 
     // Basic configuration: create a sinon sandbox for testing

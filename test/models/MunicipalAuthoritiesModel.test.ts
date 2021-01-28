@@ -1,17 +1,11 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { MunicipalAuthoritiesModel } from "../../src/resources/municipalauthorities";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { MunicipalAuthoritiesModel } from "@golemio/municipal-authorities/dist/output-gateway/models/MunicipalAuthoritiesModel";
 
 chai.use(chaiAsPromised);
 
 describe("MunicipalAuthoritiesModel", () => {
-
     let municipalAuthoritiesModel: MunicipalAuthoritiesModel;
 
     // Basic configuration: create a sinon sandbox for testing

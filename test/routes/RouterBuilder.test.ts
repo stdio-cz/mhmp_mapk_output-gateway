@@ -1,20 +1,14 @@
-"use strict";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as express from "express";
-import "mocha";
-import * as sinon from "sinon";
-import * as request from "supertest";
-import { generalRoutes } from "../../src/App";
-import { log } from "../../src/core/Logger";
-import { RouterBuilder } from "../../src/core/routes/RouterBuilder";
+import sinon from "sinon";
+import request from "supertest";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import express from "@golemio/core/dist/shared/express";
+import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
+import { generalRoutes } from "../../src/generalRoutes";
 
 chai.use(chaiAsPromised);
 
 describe("RouterBuilder", () => {
-
     const app: express.Application = express();
     const defaultRouter = express.Router();
 
@@ -66,11 +60,7 @@ describe("RouterBuilder", () => {
     it("should respond with json to GET for all generic routes", async () => {
         const promises: request.Test[] = generalRoutes.map((x) => {
             const endpoint = "/" + x.name.toLowerCase();
-            return request(app)
-                .get(endpoint)
-                .set("Accept", "application/json")
-                .expect("Content-Type", /json/)
-                .expect(200);
+            return request(app).get(endpoint).set("Accept", "application/json").expect("Content-Type", /json/).expect(200);
         });
         await Promise.all(promises);
     });

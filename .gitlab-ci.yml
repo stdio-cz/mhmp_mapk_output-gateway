@@ -1,89 +1,94 @@
 image: docker:stable
 
 variables:
-  DOCKER_TLS_CERTDIR: "/certs"
-  DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG"
-  POSTGRES_HOST: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: test-pass
-  POSTGRES_DB: testdb
-  MONGO_CONN: "mongodb://mongo:27017/dataplatform"
-  MONGO_TIMEOUT: 60000
-  APIARY_NAME: 'golemioapi'
-  APIARY_NAME_DEV: 'outputgatewaydev'
-  HOST_URL: 'https://api.golemio.cz/v2'
-  HOST_URL_DEV: 'http://rabin.golemio.cz/v2'
-  K8S_PROJECT_NAME: "golemio"
-  K8S_DEPLOY_NAMESPACE: "golemio"
-  K8S_DEPLOYMENT_NAME: output-gateway
-  K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
-
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG"
+    POSTGRES_HOST: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: test-pass
+    POSTGRES_DB: testdb
+    MONGO_CONN: "mongodb://mongo:27017/dataplatform"
+    MONGO_TIMEOUT: 60000
+    APIARY_NAME: "golemioapi"
+    APIARY_NAME_DEV: "outputgatewaydev"
+    HOST_URL: "https://api.golemio.cz/v2"
+    HOST_URL_DEV: "http://rabin.golemio.cz/v2"
+    K8S_PROJECT_NAME: "golemio"
+    K8S_DEPLOY_NAMESPACE: "golemio"
+    K8S_DEPLOYMENT_NAME: output-gateway
+    K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 stages:
-  - build
-  - release
-  - deploy
+    - build
+    - release
+    - deploy
 
 include:
-  - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
-  - project: 'operator-ict/devops/gitlab-ci-pipeline'
-    file:
-      - '/docker/simple-build.yml'
-      - '/k8s-golemio/helm-golemio-deploy.yml'
-      - '/apiary/blueprint.yml'
+    - template: "Workflows/Branch-Pipelines.gitlab-ci.yml"
+    - project: "operator-ict/devops/gitlab-ci-pipeline"
+      file:
+          - "/docker/simple-build.yml"
+          - "/k8s-golemio/helm-golemio-deploy.yml"
+          - "/apiary/blueprint.yml"
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-  - node_modules/
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - node_modules/
 
 run_tests:
-  stage: build
-  image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
-  services:
-    - docker:dind
-    - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/12.3:postgis3
-      alias: postgres
-    - mongo:4.0.5
-    - redis:6.0-alpine
-  script:
-    - yarn
-    - yarn run tslint
-    - yarn run build
-    - export LOG_LEVEL=INFO
-    - export MONGO_CONN=$MONGO_CONN
-    - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
-    - export SENTRY_ENABLE=false
-    - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
-    - mongorestore --uri=$MONGO_CONN -d dataplatform ./db/example/mongo_data/dataplatform
-    - >
-      PGPASSWORD=$POSTGRES_PASSWORD
-      psql
-      -h $POSTGRES_HOST
-      -U $POSTGRES_USER
-      -d $POSTGRES_DB
-      -f db/example/sql_dump.sql
-    - export REDIS_CONN=redis://redis/
-    - redis-cli -h redis -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
-    - redis-cli -h redis -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin
-    - NODE_ENV=production yarn run code-coverage
-    - dredd
-  tags:
-    - docker
-  rules:
-    - when: always
+    stage: build
+    image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
+    services:
+        - docker:dind
+        - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/12.3:postgis3
+          alias: postgres
+        - mongo:4.0.5
+        - redis:6.0-alpine
+    script:
+        - yarn
+        - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
+        # 1 for INFO
+        # 2 for LOW
+        # 4 for MODERATE
+        # 8 for HIGH
+        # 16 for CRITICAL
+        - yarn lint
+        - yarn build
+        - export LOG_LEVEL=INFO
+        - export MONGO_CONN=$MONGO_CONN
+        - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
+        - export SENTRY_ENABLE=false
+        - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
+        - mongorestore --uri=$MONGO_CONN -d dataplatform ./db/example/mongo_data/dataplatform
+        - >
+            PGPASSWORD=$POSTGRES_PASSWORD
+            psql
+            -h $POSTGRES_HOST
+            -U $POSTGRES_USER
+            -d $POSTGRES_DB
+            -f db/example/sql_dump.sql
+        - export REDIS_CONN=redis://redis/
+        - redis-cli -h redis -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
+        - redis-cli -h redis -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin
+        - NODE_ENV=production yarn code-coverage
+        - yarn dredd
+    tags:
+        - docker
+    rules:
+        - when: always
 
 pages:
-  stage: deploy
-  image: node:12
-  script:
-  - yarn
-  - npm run generate-docs
-  - mv docs/typedoc/* public
-  artifacts:
-    paths:
-    - public
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master"
-  tags:
-    - docker
+    stage: deploy
+    image: node:12
+    script:
+        - yarn
+        - npm run generate-docs
+        - mv docs/typedoc/* public
+    artifacts:
+        paths:
+            - public
+    rules:
+        - if: $CI_COMMIT_BRANCH == "master"
+    tags:
+        - docker

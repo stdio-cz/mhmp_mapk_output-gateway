@@ -1,19 +1,12 @@
-"use strict";
-
-import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import { expect } from "chai";
-import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as express from "express";
-import { NextFunction, Request, Response } from "express";
-import "mocha";
-import * as moment from "moment-timezone";
-import * as sinon from "sinon";
-import * as request from "supertest";
-import { log } from "../../src/core/Logger";
-import { pidRouter } from "../../src/resources/pid/PIDRouter";
-
-const config = require("../../src/config/config");
+import sinon from "sinon";
+import request from "supertest";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import moment from "@golemio/core/dist/shared/moment-timezone";
+import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
+import { log } from "@golemio/core/dist/output-gateway/Logger";
+import { pidRouter } from "@golemio/pid/dist/output-gateway/PIDRouter";
 
 chai.use(chaiAsPromised);
 
@@ -46,7 +39,8 @@ describe("PIDDepartureBoards Router", () => {
 
     it("should respond with list of stop times of specific stop /departureboards?ids", (done) => {
         request(app)
-            .get(`/pid/departureboards?ids[]=${id}`).end((err: any, res: any) => {
+            .get(`/pid/departureboards?ids[]=${id}`)
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body.departures).to.be.an("array");
                 expect(res.body.stops).to.be.an("array");
@@ -57,7 +51,8 @@ describe("PIDDepartureBoards Router", () => {
 
     it("should respond with 404 to non-existant stop /departureboards?ids", (done) => {
         request(app)
-            .get("/pid/departureboards?ids[]=kovfefe").end((err: any, res: any) => {
+            .get("/pid/departureboards?ids[]=kovfefe")
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(404);
                 done();
             });
@@ -65,7 +60,8 @@ describe("PIDDepartureBoards Router", () => {
 
     it("should respond with 404 to non-existant ASW stop /departureboards?aswIds", (done) => {
         request(app)
-            .get("/pid/departureboards?aswIds[]=85_12389").end((err: any, res: any) => {
+            .get("/pid/departureboards?aswIds[]=85_12389")
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(404);
                 done();
             });
@@ -73,7 +69,8 @@ describe("PIDDepartureBoards Router", () => {
 
     it("should respond with 400 to unspecified ids (one of ids,cisIds,aswIds must be set)", (done) => {
         request(app)
-            .get("/pid/departureboards").end((err: any, res: any) => {
+            .get("/pid/departureboards")
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(400);
                 done();
             });

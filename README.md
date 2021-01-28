@@ -1,7 +1,6 @@
 [![pipeline status](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/pipeline.svg)](https://gitlab.com/operator-ict/golemio/code/output-gateway/commits/master)
 [![coverage report](https://gitlab.com/operator-ict/golemio/code/output-gateway/badges/master/coverage.svg)](https://gitlab.com/operator-ict/golemio/code/output-gateway/commits/master)
 
-
 # Golemio Data Platform Output Gateway
 
 Output Gateway for the Golemio data platform system. Provides unified REST API for the data stored in Golemio data platform.
@@ -17,11 +16,12 @@ Developed by http://operatorict.cz
 ## Docker instalation
 
 ### Prerequisites
-- Docker Engine (https://docs.docker.com/)
-- Mongo (https://www.mongodb.com)
-- Postgres (https://www.postgresql.org/)
-- PostGIS (https://postgis.net/)
-- Golemio Schema Definitions
+
+-   Docker Engine (https://docs.docker.com/)
+-   Mongo (https://www.mongodb.com)
+-   Postgres (https://www.postgresql.org/)
+-   PostGIS (https://postgis.net/)
+-   Golemio Schema Definitions
 
 ### Instalation & run
 
@@ -42,19 +42,20 @@ docker run --rm \
 
 ### Prerequisites
 
-- node.js (https://nodejs.org)
-- Mongo (https://www.mongodb.com)
-- Postgres (https://www.postgresql.org/)
-- PostGIS (https://postgis.net/)
-- yarn (https://yarnpkg.com)
-- TypeScript (https://www.typescriptlang.org/)
-- Golemio Schema Definitions
+-   node.js (https://nodejs.org)
+-   Mongo (https://www.mongodb.com)
+-   Postgres (https://www.postgresql.org/)
+-   PostGIS (https://postgis.net/)
+-   yarn (https://yarnpkg.com)
+-   TypeScript (https://www.typescriptlang.org/)
+-   Golemio Schema Definitions
 
 ### Installation
 
 Install all prerequisites
 
 Install all dependencies using command:
+
 ```
 yarn install
 ```
@@ -66,9 +67,11 @@ from the application's root directory.
 #### Production
 
 To compile typescript code into js one-time (production build):
+
 ```
 npm run build
 ```
+
 To run the app:
 
 ```
@@ -76,11 +79,15 @@ npm start
 ```
 
 #### Dev/debug
+
 Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
+
 ```
 npm run dev-start
 ```
+
 or run with a debugger:
+
 ```
 npm run dev-start-debug
 ```
@@ -100,15 +107,19 @@ For importing example data run `mongorestore -d $MONGO_DB_NAME ./db/example/mong
 ## Tests
 
 To run all test defined in /test directory simply run this command:
+
 ```
 npm test
 ```
+
 from the application's root directory. All tests should pass with the correct data. Test data are in the `db/example` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
 
 You can also test the API against the Apiary documentation using `dredd` (https://dredd.org). To run the tests, make sure the app will be run on port 3004 (setting ENV variable or leaving the default) and run
+
 ```
 dredd
 ```
+
 from the application's root directory.
 
 ## Logging
@@ -123,7 +134,7 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
-More documentation in `docs/`. Mainly `new_dataset_integration.md` for description on how to add a new dataset and create new API routes.
+More documentation in `docs/`. If you want to add a new dataset or create new API routes, check out our existing [modules](https://gitlab.com/operator-ict/golemio/code/modules).
 
 ### API documentation
 

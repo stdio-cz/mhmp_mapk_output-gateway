@@ -325,7 +325,7 @@ export class SortedWasteStationsModelPg {
                     stationsByCode[container.station_code].containers = [];
                 }
 
-                stationsByCode[container.station_code].containers.push({
+                const outputContainer: any = {
                     cleaning_frequency: {
                         duration: container.cleaning_frequency_frequency ?
                             `P${container.cleaning_frequency_interval}W` : "",
@@ -343,24 +343,26 @@ export class SortedWasteStationsModelPg {
                         id: +container.trash_type || null,
                     },
 
-                });
+                };
 
                 if (container.knsko_id) {
-                    container.knsko_id = container.knsko_id;
+                    outputContainer.knsko_id = container.knsko_id;
                 }
+
                 if (container.measured_at_utc) {
                     // tslint:disable-next-line: object-literal-sort-keys
-                    container.last_measurement = {
+                    outputContainer.last_measurement = {
                         measured_at_utc: container.measured_at_utc || null,
                         percent_calculated: container.percent_calculated || null,
                         prediction_utc: container.prediction_at_utc || null,
                     };
-                    container.last_pick = container.recent_pick || null;
-                    container.sensor_code = container.code || null;
-                    container.sensor_container_id = container.id || null;
-                    container.sensor_supplier = container.source || null;
+                    outputContainer.last_pick = container.recent_pick || null;
+                    outputContainer.sensor_code = container.code || null;
+                    outputContainer.sensor_container_id = container.id || null;
+                    outputContainer.sensor_supplier = container.source || null;
                 }
 
+                stationsByCode[container.station_code].containers.push(outputContainer);
             } else {
                 log.debug(`station not found for container in getStationsData: ${JSON.stringify(container)}`);
             }

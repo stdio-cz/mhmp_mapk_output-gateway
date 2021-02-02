@@ -2,6 +2,7 @@ image: docker:stable
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_IMAGE_NAME: "$CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG"
   POSTGRES_HOST: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: test-pass
@@ -15,10 +16,16 @@ variables:
 
 stages:
   - build
+  - release
   - deploy
 
-services:
-  - docker:dind
+include:
+  - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
+  - project: 'operator-ict/devops/gitlab-ci-pipeline'
+    file:
+      - '/docker/simple-build.yml'
+      - '/k8s-golemio/helm-golemio-deploy.yml'
+      - '/apiary/blueprint.yml'
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -33,7 +40,7 @@ run_tests:
     - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/12.3:postgis3
       alias: postgres
     - mongo:4.0.5
-    - redis:5.0-alpine
+    - redis:6.0-alpine
   script:
     - yarn
     - yarn run tslint
@@ -60,37 +67,6 @@ run_tests:
     - docker
   rules:
     - when: always
-
-build_image_v2:
-  stage: build
-  script:
-    - docker build -t $CI_COMMIT_REF_SLUG .
-  rules:
-    - if: $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "development"
-  tags:
-    - docker
-
-registry_deployment_v2:
-  stage: deploy
-  script:
-    - echo $CI_COMMIT_SHA > commitsha
-    - >
-      docker build
-      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID
-      -t $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest
-      .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - >
-      docker push $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:$CI_PIPELINE_ID &&
-      docker push $CI_REGISTRY_IMAGE/v2/$CI_COMMIT_REF_SLUG:latest
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "development"
-  tags:
-    - docker
-
-#APIARY
-include:
-  - remote: 'https://gitlab.com/operator-ict/golemio/devops/gitlab-ci-pipelines/raw/master/apiary.yml'
 
 pages:
   stage: deploy

@@ -21,7 +21,7 @@ stages:
 
 include:
   - template: 'Workflows/Branch-Pipelines.gitlab-ci.yml'
-  - project: 'operator-ict/golemio/devops/gitlab-ci-pipelines'
+  - project: 'operator-ict/devops/gitlab-ci-pipeline'
     file:
       - '/docker/simple-build.yml'
       - '/k8s-golemio/helm-golemio-deploy.yml'

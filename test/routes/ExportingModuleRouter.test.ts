@@ -27,43 +27,50 @@ describe("ExportingModuleRouter", () => {
         });
     });
 
-    it("should respond with correctly to GET /bicyclecounters_detections/meta", (done) => {
-        request(app)
+    it("should respond with correctly to GET /bicyclecounters_detections/meta", () => {
+        return request(app)
             .get("/export/bicyclecounters_detections/meta")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
-            .expect(200, [
-               {
-                 name: 'locations_id',
-                 label: 'locations_id',
-                 valueEditorType: 'text',
-                 inputType: 'text'
-               },
-               {
-                 name: 'directions_id',
-                 label: 'directions_id',
-                 valueEditorType: 'text',
-                 inputType: 'text'
-               },
-               {
-                 name: 'measured_from',
-                 label: 'measured_from',
-                 valueEditorType: 'text',
-                 inputType: 'number'
-               },
-               {
-                 name: 'measured_to',
-                 label: 'measured_to',
-                 valueEditorType: 'text',
-                 inputType: 'number'
-               },
-               {
-                 name: 'value',
-                 label: 'value',
-                 valueEditorType: 'text',
-                 inputType: 'number'
-               }
-             ], done);
+            .expect(200)
+            .then((response) => {
+               chai.expect(response.body.sort(
+                  (a: any, b: any) => a.name > b.name ? 1 : -1
+               )).to.be.deep.equal(
+                  [
+                     {
+                     name: 'locations_id',
+                     label: 'locations_id',
+                     valueEditorType: 'text',
+                     inputType: 'text'
+                     },
+                     {
+                     name: 'directions_id',
+                     label: 'directions_id',
+                     valueEditorType: 'text',
+                     inputType: 'text'
+                     },
+                     {
+                     name: 'measured_from',
+                     label: 'measured_from',
+                     valueEditorType: 'text',
+                     inputType: 'number'
+                     },
+                     {
+                     name: 'measured_to',
+                     label: 'measured_to',
+                     valueEditorType: 'text',
+                     inputType: 'number'
+                     },
+                     {
+                     name: 'value',
+                     label: 'value',
+                     valueEditorType: 'text',
+                     inputType: 'number'
+                     }
+                  ].sort((a: any, b: any) => a.name > b.name ? 1 : -1))
+               });
+
     });
 
     it("should respond correctly to GET /export/bicyclecounters_detections/preview", (done) => {

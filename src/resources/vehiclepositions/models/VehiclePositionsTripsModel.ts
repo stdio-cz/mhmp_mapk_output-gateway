@@ -55,8 +55,8 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
         try {
             const { limit, offset } = options;
             const include = this.ComposeIncludes(options);
-            const {rows, count} = await this.sequelizeModel
-                .findAndCountAll({
+            const rows = await this.sequelizeModel
+                .findAll({
                     include,
                     limit,
                     offset,
@@ -69,7 +69,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                     },
                 });
 
-            if (count === 0) {
+            if (rows.length === 0) {
                 return {
                     data: buildGeojsonFeatureCollection([]),
                     metadata: {

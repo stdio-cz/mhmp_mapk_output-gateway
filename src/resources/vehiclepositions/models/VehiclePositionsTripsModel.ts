@@ -171,6 +171,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
                 gtfs: {
                     route_id: trip.gtfs_route_id,
                     route_short_name: trip.gtfs_route_short_name,
+                    route_type: trip.gtfs_route_type,
                     trip_headsign: trip.gtfs_trip_headsign,
                     trip_id: trip.gtfs_trip_id,
                 },

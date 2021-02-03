@@ -165,6 +165,16 @@ describe("GTFSStopModel", () => {
         expect(parsedId).to.be.null;
     });
 
+    it("should return only one Nemocnice Motol stop with location_type == 0", async () => {
+        const stops: any = await stopModel.GetAll({
+            locationType: 0,
+            names: ["Nemocnice Motol"],
+        });
+        expect(stops).not.to.be.empty;
+        expect(stops.features.length).to.be.equal(1);
+        expect(stops.features[0].properties).to.have.property("stop_id", "U306Z102P");
+    });
+
     // This test will fail if PostGIS is not installed
     // it("should return all stops close to the point", async () => {
     //     const result: any = await stopModel.GetAll({

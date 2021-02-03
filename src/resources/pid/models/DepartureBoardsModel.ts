@@ -1,4 +1,5 @@
 import { CustomError } from "@golemio/errors";
+import * as moment from "moment-timezone";
 import config from "../../../config/config";
 import { sequelizeConnection } from "../../../core/database";
 import { models } from "../../gtfs/models";
@@ -28,6 +29,7 @@ export class DepartureBoardsModel {
         orderBySchedule?: boolean,
         minutesBefore: number,
         minutesAfter: number,
+        timeFrom?: string,
         showAllRoutesFirst?: boolean,
     }): Promise<any> => {
 
@@ -37,6 +39,7 @@ export class DepartureBoardsModel {
             cisIds: options.cisIds,
             gtfsIds: options.gtfsIds,
             limit: this.stopsMaxCount +  1,
+            locationType: 0,
             names: options.names,
             returnRaw: true,
         });
@@ -63,6 +66,9 @@ export class DepartureBoardsModel {
                     modeCondition = ` AND "t1"."pickup_type" != '1' AND "t1"."stop_sequence" != "t9"."max_stop_sequence" `;
                     break;
             }
+
+            const minutesOffset = (options.timeFrom && moment(options.timeFrom).isValid()) ?
+                moment(options.timeFrom).diff(moment(), "minutes") : 0;
 
             const orderBySchedule = options.orderBySchedule ? `"arrival_datetime" ASC` : `"arrival_datetime_real" ASC`;
             const showAllRoutesFirst = options.showAllRoutesFirst ? `"route_order" ASC, ` : ``;
@@ -103,7 +109,7 @@ export class DepartureBoardsModel {
                         *,
                         (
                             "t"."departure_datetime" + GREATEST(
-                                MAKE_INTERVAL(0,0,0,0,0,0,-60),
+                                MAKE_INTERVAL(0,0,0,0,0,0,0),
                                 CASE WHEN ("t"."departure_datetime" - "t"."arrival_datetime")::INTERVAL > '00:00'::INTERVAL
                                     THEN GREATEST(
                                         '00:00'::INTERVAL,
@@ -117,7 +123,7 @@ export class DepartureBoardsModel {
                     FROM (
                         SELECT
                             "t6"."delay" AS "delay_seconds",
-                            (CASE WHEN "t6"."delay" IS NOT NULL THEN ROUND("t6"."delay"::DECIMAL/60) ELSE NULL END)::INT AS "delay_minutes",
+                            (CASE WHEN "t6"."delay" IS NOT NULL THEN TRUNC("t6"."delay"::DECIMAL/60, 0) ELSE NULL END)::INT AS "delay_minutes",
                             (CASE WHEN "t6"."delay" IS NULL THEN FALSE ELSE TRUE END) AS "is_delay_available",
                             "t1"."arrival_time", "t1"."departure_time",
                             (("t7"."date" + "t1"."arrival_time"::INTERVAL) AT TIME zone 'Europe/Prague' AT TIME zone 'Etc/UTC')::TIMESTAMPTZ AS "arrival_datetime",
@@ -133,8 +139,9 @@ export class DepartureBoardsModel {
                             "t0"."stop_name",
                             "t0"."platform_code",
                             "t0"."wheelchair_boarding",
-                            "t4"."route_short_name",
-                            "t4"."route_type",
+                            "t5"."gtfs_route_short_name" AS "route_short_name",
+                            "t5"."gtfs_route_type" AS "route_type",
+                            "t5"."vehicle_type_id" AS "mpv_type",
                             "t2"."trip_id",
                             "t2"."trip_headsign",
                             "t2"."trip_short_name",
@@ -151,7 +158,6 @@ export class DepartureBoardsModel {
                         LEFT JOIN "v_ropidgtfs_trips_minmaxsequences" AS "t9" ON "t1"."trip_id" = "t9"."trip_id"
                         LEFT JOIN "ropidgtfs_trips" AS "t2" ON "t1"."trip_id" = "t2"."trip_id"
                         LEFT JOIN "ropidgtfs_calendar" AS "t3" ON "t2"."service_id" = "t3"."service_id"
-                        LEFT JOIN "ropidgtfs_routes" AS "t4" ON "t2"."route_id" = "t4"."route_id"
                         INNER JOIN "v_ropidgtfs_services_first14days" AS "t7" ON "t2"."service_id" = "t7"."service_id"
                         LEFT JOIN (
                                 SELECT *, TO_TIMESTAMP("start_timestamp"/1000)::DATE AS "start_date" FROM "vehiclepositions_trips"
@@ -163,7 +169,9 @@ export class DepartureBoardsModel {
                         WHERE "t1"."stop_id" IN(:stopId) ` + modeCondition + `
                         ORDER BY ` + orderBySchedule + `
                     ) AS "t"
-                    WHERE "t"."arrival_datetime_real" BETWEEN ((NOW()- INTERVAL :minutesBefore) AT TIME zone 'Etc/UTC') AND ((NOW() + INTERVAL :minutesAfter) AT TIME zone 'Etc/UTC')
+                    WHERE "t"."arrival_datetime_real" BETWEEN 
+                      ((NOW() + INTERVAL :minutesOffset - INTERVAL :minutesBefore) AT TIME zone 'Etc/UTC') 
+                      AND ((NOW() + INTERVAL :minutesOffset + INTERVAL :minutesAfter) AT TIME zone 'Etc/UTC')
                 ) AS "t"
                 ORDER BY ` + showAllRoutesFirst + orderBySchedule + `
                 LIMIT :limit
@@ -175,6 +183,7 @@ export class DepartureBoardsModel {
                     limit: options.limit ? options.limit : config.pagination_max_limit,
                     minutesAfter: options.minutesAfter + " min",
                     minutesBefore: options.minutesBefore + " min",
+                    minutesOffset: minutesOffset + " min",
                     offset: options.offset ? options.offset : 0,
                     stopId: stopsToInclude.map((stop: any) => stop.stop_id),
                 },

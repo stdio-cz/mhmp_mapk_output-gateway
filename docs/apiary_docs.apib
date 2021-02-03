@@ -1272,7 +1272,7 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
 
 You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array format - eg. `ids[]=1&ids[]=3`. **At least one of these IDs is required.** The maximum is 100 stops combined in one request.
 
-### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,preferredTimezone,orderBySchedule,showAllRoutesFirst,mode,limit,offset}]
+### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,timeFrom,preferredTimezone,orderBySchedule,showAllRoutesFirst,mode,limit,offset}]
 
 + Parameters
 
@@ -1280,8 +1280,9 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + aswIds: `458_101` (optional, string) - Get result by ASW ID. First part of the number represents the whole node. Usually it groups the stops of the same name or all stops associated with a metro station. The second part of the number represents individual stops in the node. Use `_` instead of `/` as a separator or encode the slash sign with `%2F`. A list of ASW IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
     + cisIds: `28004` (optional, number) - Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
     + names: `Smíchovské nádraží` (optional, string) - Get results by exact name of stop (case and whitespace sensitive). May return stops of the same name in different towns.
-    + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request, negative numbers set the start in the future (use to compensate for walking distance to a stop). Default is set to 0.
-    + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
+    + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request or `?timeFrom` timestamp, negative numbers set the start in the future (use to compensate for walking distance to a stop). Default is set to 0.
+    + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or `?timeFrom` timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
+    + timeFrom: `2021-01-21T06:00:00Z` (string, optional) - Set initial timestamp for time interval given by `?minutesBefore&minutesAfter`. Use ISO8601 time format (use encoded signs: `%3A` as `:`, `%2B` as `.`, `%2F` as `+`). Timezone offset example `Z` for UTC, `+02:00` for CEST.
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset as defined in IANA Time zone database in the form of Country/City (use encoded slash sign with `%2F` or use _ sign)
     + orderBySchedule: `false` (optional, boolean) - Order results by scheduled time, not by predicted time.
     + showAllRoutesFirst: `false` (optional, boolean) - First return departures for every distinct route and headsign, then fill the rest ordered by departure time.
@@ -2042,7 +2043,8 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 ## Departure Board Route (object)
 
 + name: `140` (string, required) - Route short name.
-+ type: `3` (string, required) - Type of route.
++ type: `3` (number, required) - Identifier of the route type in the GTFS static feed.
++ `mpv_type`: `1` (number, required) - Identifier of the vehicle type in the MPVNet.
 
 
 ## ASW id (object)
@@ -2125,6 +2127,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + short_name: `140` (string, required) - Route designation used by PID.
 + type: `3` (string, required) - GTFS route type. `0` – tram, `1` – metro, `2` – train, `3` – bus, `4` – ferry, `7` – funicular, `11` – trolleybus
++ mpv_type: `3` (string, required) - MPVNet vehicle type. From `0` to `18`
 
 ## Garden (object)
 
@@ -2667,6 +2670,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + `gtfs` (object) - All properties tied with GTFS data format
     + `route_id`: L381 (string, required) - Identifier of the owner route in the GTFS static feed
     + `route_short_name`: 381 (string, required) - Identification of the line used for the public
+    + `route_type`: `1` (number, required) - Identifier of the route type in the GTFS static feed
     + `trip_id`: `381_51_180728` (string, required) - Identifier of the trip in the GTFS static feed
     + `trip_headsign`: `Sídliště Modřany` (string, optional, nullable) - Heading of the trip (identical to what is shown on the bus)
 + `start_timestamp`: `2019-03-18T11:00:00.000Z` (string, required) - Timestamp of arrival time in first stop (UTC)

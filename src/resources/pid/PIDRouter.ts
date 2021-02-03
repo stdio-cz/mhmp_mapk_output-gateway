@@ -65,6 +65,7 @@ export class PIDRouter extends BaseRouter {
                     offset: req.query.offset,
                     orderBySchedule: (req.query.orderBySchedule === "true") ? true : false,
                     showAllRoutesFirst: (req.query.showAllRoutesFirst === "true") ? true : false,
+                    timeFrom: req.query.timeFrom || null,
                 });
             res.status(200).send({
                 // tslint:disable:object-literal-sort-keys
@@ -105,6 +106,7 @@ export class PIDRouter extends BaseRouter {
                 name: x.last_stop_name,
             },
             route: {
+                mpv_type: x.mpv_type,
                 short_name: x.route_short_name,
                 type: x.route_type, // nově typ dopravy metro/tram/...
             },

@@ -22,6 +22,7 @@ export interface IDeparture {
     last_stop_name: string;
     platform_code: string;
     route_type: number;
+    mpv_type: number;
     wheelchair_boarding: number;
     wheelchair_accessible: number;
     is_canceled: boolean;

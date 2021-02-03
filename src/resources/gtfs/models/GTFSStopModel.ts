@@ -65,10 +65,13 @@ export class GTFSStopModel extends SequelizeModel {
         gtfsIds?: string[],
         aswIds?: string[],
         cisIds?: number[],
+        locationType?: number,
         appendAswId?: boolean,
         returnRaw?: boolean,
     } = {}): Promise<any> => {
-        const { limit, offset, lat, lng, range, names, gtfsIds, aswIds, cisIds, appendAswId, returnRaw } = options;
+        const { limit, offset, lat, lng, range,
+            names, gtfsIds, aswIds, cisIds,
+            locationType, appendAswId, returnRaw } = options;
         try {
             const allGtfsIds: string[] = [];
             const order: any = [];
@@ -146,6 +149,10 @@ export class GTFSStopModel extends SequelizeModel {
 
             if (names && names?.length > 0) {
                 where.stop_name = names;
+            }
+
+            if (locationType !== undefined) {
+                where.location_type = locationType;
             }
 
             order.push([["stop_id", "asc"]]);

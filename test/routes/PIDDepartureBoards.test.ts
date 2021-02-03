@@ -7,6 +7,7 @@ import * as chaiAsPromised from "chai-as-promised";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import "mocha";
+import * as moment from "moment-timezone";
 import * as sinon from "sinon";
 import * as request from "supertest";
 import { log } from "../../src/core/Logger";
@@ -22,6 +23,7 @@ describe("PIDDepartureBoards Router", () => {
     // Basic configuration: create a sinon sandbox for testing
     let sandbox: any = null;
     const id = "U118Z102P";
+    const todayYMD = moment().format("YYYY-MM-DD");
 
     beforeEach(() => {
         sandbox = sinon.createSandbox();
@@ -145,6 +147,24 @@ describe("PIDDepartureBoards Router", () => {
             .get("/pid/departureboards?ids[]=U306Z102P&minutesBefore=1000000&minutesAfter=1000000&mode=arrivals")
             .end((err: any, res: any) => {
                 expect(res.body.departures).to.have.lengthOf(8);
+                done();
+            });
+    });
+
+    it("should respond with 1 departure with timeFrom used", (done) => {
+        request(app)
+            .get(`/pid/departureboards?ids[]=U713Z102P&minutesBefore=10&minutesAfter=30&timeFrom=${todayYMD}T06:00:00Z`)
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(1);
+                done();
+            });
+    });
+
+    it("should respond with no departures with timeFrom used outside of scheduled departures", (done) => {
+        request(app)
+            .get(`/pid/departureboards?ids[]=U713Z102P&minutesBefore=10&minutesAfter=30&timeFrom=${todayYMD}T08:00:00Z`)
+            .end((err: any, res: any) => {
+                expect(res.body.departures).to.have.lengthOf(0);
                 done();
             });
     });

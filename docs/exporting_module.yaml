@@ -1,0 +1,204 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Exporting Module
+host: api.golemio.cz
+basePath: /v2/export
+schemes:
+  - https
+  - http
+parameters:
+  x-access-token:
+    name: x-access-token
+    type: string
+    in: header
+    required: true
+paths:
+  '/{tableName}/meta':
+    get:
+      tags:
+        - Meta
+      summary: Get table metadata
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/x-access-token'
+        - name: tableName
+          in: path
+          description: name of the table or view
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/meta'
+        '404':
+          description: Table not found
+
+  '/{tableName}/preview':
+    post:
+      tags:
+        - Data
+      summary: Get table metadata
+      produces:
+        - text/plain
+      parameters:
+        - $ref: '#/parameters/x-access-token'
+        - name: tableName
+          in: path
+          description: name of the table or view
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: query object
+          required: true
+          schema:
+            $ref: '#/definitions/query'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+            example:  >
+                      "measured_from","value"\n
+                      "1514764800000","1"\n
+                      "1514764800000","1"\n
+                      "1514764800000","0"\n
+                      "1514765100000","50"\n
+                      "1514765100000","1"\n
+                      "1514765100000","0"\n
+                      "1514765400000","50"\n
+                      "1514765400000","1"\n
+        '400':
+          description: Bad request
+          schema:
+            type: string
+            example: column "measured_fromX" does not exist
+        '404':
+          description: Table not found
+
+  '/{tableName}/data':
+    post:
+      tags:
+        - Data
+      summary: Get table metadata
+      produces:
+        - text/plain
+      parameters:
+        - $ref: '#/parameters/x-access-token'
+        - name: tableName
+          in: path
+          description: name of the table or view
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: query object
+          required: true
+          schema:
+            $ref: '#/definitions/query'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: string
+            example:  >
+                      "measured_from","value"\n
+                      "1514764800000","1"\n
+                      "1514764800000","1"\n
+                      "1514764800000","0"\n
+                      "1514765100000","50"\n
+                      "1514765100000","1"\n
+                      "1514765100000","0"\n
+                      "1514765400000","50"\n
+                      "1514765400000","1"\n
+        '400':
+          description: Bad request
+          schema:
+            type: string
+            example: column "measured_fromX" does not exist
+        '404':
+          description: Table not found
+
+
+definitions:
+  meta:
+    type: array
+    items:
+      type: object
+      properties:
+          name:
+            type: string
+            example: id
+          label:
+            type: string
+            example: ID
+          valueEditorType:
+            type: string
+            example: text
+          inputType:
+            type: string
+            example: text
+
+  query:
+    type: object
+    properties:
+      columns:
+        type: array
+        items:
+          type: string
+          example:
+          - measured_from
+          - count(value) as value
+
+
+      order:
+        type: array
+        items:
+          type: object
+          properties:
+            direction:
+              type: string
+              example: asc
+            collumn:
+              type: string
+              example: measured_from
+      groupBy:
+        type: array
+        items:
+          type: string
+          example:
+          - measured_from
+          - value
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      offset:
+        type: integer
+        format: int32
+        example: 1
+      builderQuery:
+        type: object
+        properties:
+          combinator:
+            type: string
+            example: and
+          not:
+            type: boolean
+          rules:
+            type: array
+            items:
+              type: object
+              properties:
+                field:
+                  type: string
+                  example: measured_from
+                operator:
+                  type: string
+                  example: >
+                value:
+                  type: string
+                  example: 1

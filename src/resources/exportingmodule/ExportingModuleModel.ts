@@ -41,12 +41,14 @@ export class ExportingModuleModel {
     }
 
     public async getTableMetadata(tableName: string): Promise<ITableSchema[]> {
+        const schema = await this.getDefaultSchema();
+
         return (await sequelizeReadOnlyConnection.query(`SELECT
-            table_catalog, table_schema, column_name, is_nullable, data_type, data_type
+            table_catalog, table_schema, column_name, is_nullable, data_type, data_type, table_schema
         FROM
             information_schema.columns
         WHERE
-            table_name = '${tableName}';`,
+            table_name = '${tableName}' ${schema ? ` and table_schema = '${schema}' ` : "" };`,
         ))[0] || [];
     }
 
@@ -58,6 +60,15 @@ export class ExportingModuleModel {
                 this.quoteColumns(rule.rules);
             }
         });
+    }
+
+    private async getDefaultSchema(): Promise<string> {
+        return (await sequelizeReadOnlyConnection.query(
+            "select current_schema()",
+            {
+                type: QueryTypes.SELECT,
+            },
+        ))[0]?.current_schema || "";
     }
 
     private async getQuery( options: IQuerySchema ): Promise<{
@@ -72,6 +83,8 @@ export class ExportingModuleModel {
         const tableCols = (await this.getTableMetadata(options.table))
         .map((data: any) => data.column_name)
         .sort((a, b) => b.length - a.length);
+
+        const schema = await this.getDefaultSchema();
 
         options.columns.forEach((col: string, index: number) => {
             for (const tableCol of tableCols) {
@@ -100,7 +113,7 @@ export class ExportingModuleModel {
             ${((options.columns || []).length > 0 ? options.columns : ["*"]).map((col: string) => {
                 return (col !== "*"  && col.indexOf(" as ") < 0) ? `"${col}"` : `${col}`;
             }).join(" , ")}
-        FROM ${options.table} `;
+        FROM ${schema ? `${schema}.` : ""}${options.table} `;
 
         let i = 0;
 

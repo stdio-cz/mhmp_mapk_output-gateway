@@ -52,12 +52,14 @@ export class BicycleCountersDetectionsModel extends SequelizeModel {
 
             if (aggregate) {
                 attributes.push([Sequelize.fn("sum", Sequelize.col("value")), "value"]);
+                attributes.push([Sequelize.literal("STRING_AGG(locations_id,', ')"), "locations_id"]);
                 attributes.push([Sequelize.fn("count", Sequelize.col("directions_id")), "measurement_count"]);
                 group = ["directions_id"];
             } else {
                 attributes.push("value");
                 attributes.push("measured_from");
                 attributes.push("measured_to");
+                attributes.push("locations_id");
                 order.push(["locations_id", "desc"]);
                 order.push(["measured_from", "desc"]);
             }

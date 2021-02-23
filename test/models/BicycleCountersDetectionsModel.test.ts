@@ -85,6 +85,10 @@ describe("BicycleCountersDetectionsModel", () => {
             return ["camea-BC_ZA-KL", "camea-BC_VK-UP", "camea-BC_ZA-BO", "camea-BC_VK-HR"].includes(id);
           });
 
+          expect(element.locations_id).to.satisfy((lid: string) => {
+            return [3, 6, 17].includes(lid.split(",").length);
+          });
+
           expect(element.value).to.satisfy((value: string) => {
             return ["85", "13", "24", "10"].includes(value);
           });

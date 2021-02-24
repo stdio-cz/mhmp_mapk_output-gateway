@@ -15,13 +15,6 @@ export class VehiclePositionsVehicleTypesModel {
         );
     }
 
-    public Associate = (m: IVehiclePositionsModels) => {
-        // this.sequelizeModel.belongsTo(m.VehiclePositionsTripsModel.sequelizeModel, {
-        //     as: "vehicle_type",
-        //     foreignKey: "vehicle_type_id",
-        // });
-    }
-
     public GetAll = async (): Promise<any> => {
         return null;
     }

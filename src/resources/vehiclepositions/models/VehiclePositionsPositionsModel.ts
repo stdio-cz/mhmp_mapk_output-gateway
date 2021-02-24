@@ -24,10 +24,14 @@ export class VehiclePositionsPositionsModel {
     }
 
     public Associate = (m: IVehiclePositionsModels) => {
-        this.sequelizeModel.belongsTo(m.VehiclePositionsTripsModel.sequelizeModel, {
-            as: "all_positions",
-            foreignKey: "trips_id",
-        });
+        // this.sequelizeModel.belongsTo(m.VehiclePositionsTripsModel.sequelizeModel, {
+        //     as: "all_positions",
+        //     foreignKey: "trips_id",
+        // });
+        // this.sequelizeModel.hasOne(m.VehiclePositionsTripsModel.sequelizeModel, {
+        //     as: "last_position",
+        //     foreignKey: "last_position_id",
+        // });
     }
 
     public GetAll = async (): Promise<any> => {

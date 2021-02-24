@@ -139,8 +139,8 @@ export class DepartureBoardsModel {
                             "t0"."stop_name",
                             "t0"."platform_code",
                             "t0"."wheelchair_boarding",
-                            "t5"."gtfs_route_short_name" AS "route_short_name",
-                            "t5"."gtfs_route_type" AS "route_type",
+                            "t10"."route_short_name",
+                            "t10"."route_type",
                             "t5"."vehicle_type_id" AS "mpv_type",
                             "t2"."trip_id",
                             "t2"."trip_headsign",
@@ -160,12 +160,13 @@ export class DepartureBoardsModel {
                         LEFT JOIN "ropidgtfs_calendar" AS "t3" ON "t2"."service_id" = "t3"."service_id"
                         INNER JOIN "v_ropidgtfs_services_first14days" AS "t7" ON "t2"."service_id" = "t7"."service_id"
                         LEFT JOIN (
-                                SELECT *, TO_TIMESTAMP("start_timestamp"/1000)::DATE AS "start_date" FROM "vehiclepositions_trips"
-                                WHERE TO_TIMESTAMP("start_timestamp"/1000)::DATE BETWEEN (NOW() AT TIME zone 'utc' - INTERVAL '1 day')::DATE AND (NOW() AT TIME zone 'utc')::DATE
+                            SELECT *, TO_TIMESTAMP("start_timestamp"/1000)::DATE AS "start_date" FROM "vehiclepositions_trips"
+                            WHERE TO_TIMESTAMP("start_timestamp"/1000)::DATE BETWEEN (NOW() AT TIME zone 'utc' - INTERVAL '1 day')::DATE AND (NOW() AT TIME zone 'utc')::DATE
                             ) AS "t5"
                             ON "t1"."trip_id" = "t5"."gtfs_trip_id" AND "t7"."date" = "t5"."start_date"
                         LEFT JOIN (SELECT * FROM "v_vehiclepositions_last_position" WHERE "tracking" = 2) AS "t6" ON "t5"."id" = "t6"."trips_id"
                         LEFT JOIN "ropidgtfs_stops" AS "t8" ON "t6"."last_stop_id" = "t8"."stop_id"
+                        LEFT JOIN "ropidgtfs_routes" AS "t10" ON "t2"."route_id" = "t10"."route_id"
                         WHERE "t1"."stop_id" IN(:stopId) ` + modeCondition + `
                         ORDER BY ` + orderBySchedule + `
                     ) AS "t"

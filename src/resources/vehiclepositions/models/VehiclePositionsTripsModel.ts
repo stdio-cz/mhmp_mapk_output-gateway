@@ -19,9 +19,9 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
             foreignKey: "trips_id",
         });
 
-        this.sequelizeModel.hasOne(m.VehiclePositionsLastPositionModel.sequelizeModel, {
+        this.sequelizeModel.belongsTo(m.VehiclePositionsPositionsModel.sequelizeModel, {
             as: "last_position",
-            foreignKey: "trips_id",
+            foreignKey: "last_position_id",
         });
 
         this.sequelizeModel.belongsTo(m.VehiclePositionsVehicleTypesModel.sequelizeModel, {
@@ -135,6 +135,8 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
 
         const tripObject = {
             last_position: {
+                // TODO: status is at stop, or on route
+                // status: last_position.this_stop_id ? 'at_stop' : 'on_route/before_route/after_route',
                 bearing: last_position.bearing,
                 delay: {
                     actual: last_position.delay,
@@ -239,7 +241,7 @@ export class VehiclePositionsTripsModel extends SequelizeModel {
     }): Array<Model<any, any> | IncludeOptions> => {
         const include: Array<Model<any, any> | IncludeOptions> = [{
             as: "last_position",
-            model: sequelizeConnection.models.v_vehiclepositions_last_position,
+            model: sequelizeConnection.models[VehiclePositions.positions.pgTableName],
             where: {
                 ...(options.includeNotTracking ?
                     { tracking: { [Op.gte]: 0 } } :

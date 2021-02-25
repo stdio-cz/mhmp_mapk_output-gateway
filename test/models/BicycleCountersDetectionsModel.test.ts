@@ -92,6 +92,10 @@ describe("BicycleCountersDetectionsModel", () => {
           expect(element.value).to.satisfy((value: string) => {
             return ["85", "13", "24", "10"].includes(value);
           });
+
+          expect(element.value_pedestrians).to.satisfy((value: string) => {
+            return ["32", "17", "7", "1"].includes(value);
+          });
         });
       });
     });

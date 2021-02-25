@@ -1495,7 +1495,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicyclecounters [/bicyclecounters]
+## Bicycle Counters [/bicyclecounters]
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
@@ -1506,7 +1506,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
 
 ⚠️ Measurements of vendor Camea are every day at 5:00am (UTC) validated and recalculated and can change then.
 
-### GET All Bicyclecounters [GET /bicyclecounters/{?latlng,range,limit,offset}]
+### GET All Bicycle Counters [GET /bicyclecounters/{?latlng,range,limit,offset}]
 
 + Parameters
 
@@ -1535,7 +1535,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
 + Response 400
     + Attributes (Error)
 
-### GET Bicyclecounters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
+### GET Bicycle Counters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
@@ -1565,7 +1565,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + Attributes (Error)
 
 
-### GET Bicyclecounters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
+### GET Bicycle Counters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
@@ -1970,6 +1970,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + id: `camea-BC_ZA-BO` (string) - direcrion_id
 + value: 3 (number)
++ value_pedestrians: 7 (number)
 + locations_id: `camea-BC_PN-VYBR` (string)
 + measured_from: `2019-05-18T07:38:37.000Z` (string)
 + measured_to: `2019-05-18T07:38:37.000Z` (string)

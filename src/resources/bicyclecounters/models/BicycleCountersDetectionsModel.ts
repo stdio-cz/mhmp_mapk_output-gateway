@@ -2,7 +2,7 @@ import { BicycleCounters } from "@golemio/schema-definitions";
 import { IBicycleCountersModels, IDetection } from ".";
 
 import { CustomError } from "@golemio/errors";
-import { SequelizeModel } from "./../../../core/models/";
+import { SequelizeModel } from "../../../core/models";
 
 import * as Sequelize from "sequelize";
 
@@ -52,11 +52,13 @@ export class BicycleCountersDetectionsModel extends SequelizeModel {
 
             if (aggregate) {
                 attributes.push([Sequelize.fn("sum", Sequelize.col("value")), "value"]);
+                attributes.push([Sequelize.fn("sum", Sequelize.col("value_pedestrians")), "value_pedestrians"]);
                 attributes.push([Sequelize.literal("STRING_AGG(locations_id,', ')"), "locations_id"]);
                 attributes.push([Sequelize.fn("count", Sequelize.col("directions_id")), "measurement_count"]);
                 group = ["directions_id"];
             } else {
                 attributes.push("value");
+                attributes.push("value_pedestrians");
                 attributes.push("measured_from");
                 attributes.push("measured_to");
                 attributes.push("locations_id");

@@ -67,6 +67,12 @@ describe("ExportingModuleRouter", () => {
                      label: 'value',
                      valueEditorType: 'text',
                      inputType: 'number'
+                     },
+                     {
+                     name: 'value_pedestrians',
+                     label: 'value_pedestrians',
+                     valueEditorType: 'text',
+                     inputType: 'number'
                      }
                   ].sort((a: any, b: any) => a.name > b.name ? 1 : -1))
                });

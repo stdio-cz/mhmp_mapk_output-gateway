@@ -100,6 +100,7 @@ describe("bicycleCountersRouter", () => {
                     measured_to: "2020-03-14T10:50:00.000Z",
                     measurement_count: 1,
                     value: 10,
+                    value_pedestrians: 2,
                 },
                 {
                     id: "camea-BC_ZA-KL",
@@ -108,6 +109,7 @@ describe("bicycleCountersRouter", () => {
                     measured_to: "2020-03-14T10:45:00.000Z",
                     measurement_count: 1,
                     value: 3,
+                    value_pedestrians: 1,
                 },
               ], done);
     });

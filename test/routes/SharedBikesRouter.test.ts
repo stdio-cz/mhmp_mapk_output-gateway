@@ -1,18 +1,11 @@
-"use strict";
-
-import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import { expect } from "chai";
-import * as express from "express";
-import { NextFunction, Request, Response } from "express";
-import "mocha";
-
-import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as request from "supertest";
-import { log } from "../../src/core/Logger";
-
-import * as sinon from "sinon";
-import { sharedBikesRouter } from "../../src/resources/sharedbikes/SharedBikesRouter";
+import sinon from "sinon";
+import request from "supertest";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
+import { log } from "@golemio/core/dist/output-gateway/Logger";
+import { sharedBikesRouter } from "@golemio/shared-bikes/dist/output-gateway/SharedBikesRouter";
 
 chai.use(chaiAsPromised);
 
@@ -42,22 +35,20 @@ describe("SharedBikes Router", () => {
     });
 
     it("should respond with json to GET /sharedbikes", (done) => {
-        request(app)
-            .get("/sharedbikes")
-            .set("Accept", "application/json")
-            .expect("Content-Type", /json/)
-            .expect(200, done);
+        request(app).get("/sharedbikes").set("Accept", "application/json").expect("Content-Type", /json/).expect(200, done);
     });
 
     it("GET /sharedbikes?companyName=HOMEPORT should only return HOMEPORT bikes", (done) => {
         request(app)
-            .get("/sharedbikes?companyName=HOMEPORT").end((err: any, res: any) => {
+            .get("/sharedbikes?companyName=HOMEPORT")
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an.instanceOf(Object);
                 expect(res.body.features).to.be.an.instanceOf(Array);
                 expect(res.body.type).to.be.equal("FeatureCollection");
                 const obj = res.body.features;
-                for (const entry of obj) { // todo: make this more efficient
+                for (const entry of obj) {
+                    // todo: make this more efficient
                     expect(entry.properties.company.name).to.be.equal("HOMEPORT");
                 }
                 done();
@@ -66,13 +57,15 @@ describe("SharedBikes Router", () => {
 
     it("GET /sharedbikes?companyName=Rekola should only return Rekola bikes", (done) => {
         request(app)
-            .get("/sharedbikes?companyName=Rekola").end((err: any, res: any) => {
+            .get("/sharedbikes?companyName=Rekola")
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an.instanceOf(Object);
                 expect(res.body.features).to.be.an.instanceOf(Array);
                 expect(res.body.type).to.be.equal("FeatureCollection");
                 const obj = res.body.features;
-                for (const entry of obj) { // todo: make this more efficient
+                for (const entry of obj) {
+                    // todo: make this more efficient
                     expect(entry.properties.company.name).to.be.equal("Rekola");
                 }
                 done();

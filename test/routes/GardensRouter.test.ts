@@ -1,15 +1,11 @@
-"use strict";
-
-import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as express from "express";
-import { NextFunction, Request, Response } from "express";
-import "mocha";
-import * as sinon from "sinon";
-import * as request from "supertest";
-import { log } from "../../src/core/Logger";
-import { gardensRouter } from "../../src/resources/gardens/GardensRouter";
+import sinon from "sinon";
+import request from "supertest";
+import chai from "chai";
+import chaiAsPromised from "chai-as-promised";
+import { HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
+import { log } from "@golemio/core/dist/output-gateway/Logger";
+import { gardensRouter } from "@golemio/gardens/dist/output-gateway/GardensRouter";
 
 chai.use(chaiAsPromised);
 
@@ -39,11 +35,7 @@ describe("Gardens Router", () => {
     });
 
     it("should respond with json to GET /gardens", (done) => {
-        request(app)
-            .get("/gardens")
-            .set("Accept", "application/json")
-            .expect("Content-Type", /json/)
-            .expect(200, done);
+        request(app).get("/gardens").set("Accept", "application/json").expect("Content-Type", /json/).expect(200, done);
     });
 
     it("should respond with json to GET /gardens/properties", (done) => {

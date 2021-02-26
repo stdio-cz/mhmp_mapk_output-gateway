@@ -1,18 +1,12 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { models } from "../../src/resources/gtfs/models";
-import { GTFSStopModel } from "../../src/resources/gtfs/models/GTFSStopModel";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { models } from "@golemio/ropid-gtfs/dist/output-gateway/models";
+import { GTFSStopModel } from "@golemio/ropid-gtfs/dist/output-gateway/models/GTFSStopModel";
 
 chai.use(chaiAsPromised);
 
 describe("GTFSStopModel", () => {
-
     const stopModel: GTFSStopModel = models.GTFSStopModel;
 
     // Basic configuration: create a sinon sandbox for testing
@@ -57,7 +51,7 @@ describe("GTFSStopModel", () => {
 
     it("should return proper item for aswId[] 286_1", async () => {
         const stops: any = await stopModel.GetAll({
-            aswIds: [ "286_1" ],
+            aswIds: ["286_1"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(1);
@@ -66,7 +60,7 @@ describe("GTFSStopModel", () => {
 
     it("should return proper item for aswId[] 286_101", async () => {
         const stops: any = await stopModel.GetAll({
-            aswIds: [ "286_101" ],
+            aswIds: ["286_101"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(1);
@@ -75,7 +69,7 @@ describe("GTFSStopModel", () => {
 
     it("should return all 9 items for aswId[] 286", async () => {
         const stops: any = await stopModel.GetAll({
-            aswIds: [ "286" ],
+            aswIds: ["286"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(9);
@@ -83,7 +77,7 @@ describe("GTFSStopModel", () => {
 
     it("should return all 9 items for aswId[] 286_", async () => {
         const stops: any = await stopModel.GetAll({
-            aswIds: [ "286_" ],
+            aswIds: ["286_"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(9);
@@ -91,7 +85,7 @@ describe("GTFSStopModel", () => {
 
     it("should return all 9 items for cisId[] 55083", async () => {
         const stops: any = await stopModel.GetAll({
-            cisIds: [ 55083 ],
+            cisIds: [55083],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(9);
@@ -99,7 +93,7 @@ describe("GTFSStopModel", () => {
 
     it("should return 2 items for aswId[] 286_101 and 286_102", async () => {
         const stops: any = await stopModel.GetAll({
-            aswIds: [ "286_101", "286_102" ],
+            aswIds: ["286_101", "286_102"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(2);
@@ -109,7 +103,7 @@ describe("GTFSStopModel", () => {
 
     it("should return proper item for ids[] U286Z4", async () => {
         const stops: any = await stopModel.GetAll({
-            gtfsIds: [ "U286Z4" ],
+            gtfsIds: ["U286Z4"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(1);
@@ -118,7 +112,7 @@ describe("GTFSStopModel", () => {
 
     it("should return 9 items for names[] Háje", async () => {
         const stops: any = await stopModel.GetAll({
-            names: [ "Háje" ],
+            names: ["Háje"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(9);
@@ -129,7 +123,7 @@ describe("GTFSStopModel", () => {
 
     it("should return both origin and new stop for aswIds[] 115/101", async () => {
         const stops: any = await stopModel.GetAll({
-            aswIds: [ "115/101" ],
+            aswIds: ["115/101"],
         });
         expect(stops).not.to.be.empty;
         expect(stops.features.length).to.be.equal(2);

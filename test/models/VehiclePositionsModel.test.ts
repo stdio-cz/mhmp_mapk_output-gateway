@@ -1,18 +1,12 @@
-"use strict";
-
-import "mocha";
-import { models } from "../../src/resources/vehiclepositions/models";
-import { VehiclePositionsTripsModel } from "../../src/resources/vehiclepositions/models/VehiclePositionsTripsModel";
-
-import { expect } from "chai";
-import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { models } from "@golemio/vehicle-positions/dist/output-gateway/models";
+import { VehiclePositionsTripsModel } from "@golemio/vehicle-positions/dist/output-gateway/models/VehiclePositionsTripsModel";
 
 chai.use(chaiAsPromised);
 
 describe("VehiclePositionsTripsModel", () => {
-
     const vehiclepositionsModel: VehiclePositionsTripsModel = models.VehiclePositionsTripsModel;
 
     // Basic configuration: create a sinon sandbox for testing

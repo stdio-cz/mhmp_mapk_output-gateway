@@ -1,12 +1,8 @@
-"use strict";
-
-import { expect } from "chai";
-import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as express from "express";
-import "mocha";
-import * as request from "supertest";
-import { parkingZonesRouter } from "../../src/resources/parkingzones/ParkingZonesRouter";
+import request from "supertest";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import express from "@golemio/core/dist/shared/express";
+import { parkingZonesRouter } from "@golemio/parking-zones/dist/output-gateway/ParkingZonesRouter";
 
 chai.use(chaiAsPromised);
 
@@ -20,16 +16,13 @@ describe("ParkingZonesRouter", () => {
     });
 
     it("should respond with json to GET /parkingzones", (done) => {
-        request(app)
-            .get("/parkingzones")
-            .set("Accept", "application/json")
-            .expect("Content-Type", /json/)
-            .expect(200, done);
+        request(app).get("/parkingzones").set("Accept", "application/json").expect("Content-Type", /json/).expect(200, done);
     });
 
     it("should respond with GeoJson FeatureCollection to GET /parkingzones", (done) => {
         request(app)
-            .get("/parkingzones").end((err: any, res: any) => {
+            .get("/parkingzones")
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an.instanceOf(Object);
                 expect(res.body.features).to.be.an.instanceOf(Array);
@@ -40,7 +33,8 @@ describe("ParkingZonesRouter", () => {
 
     it("should respond with Tariffs array to GET /parkingzones/tariffs", (done) => {
         request(app)
-            .get("/parkingzones/tariffs").end((err: any, res: any) => {
+            .get("/parkingzones/tariffs")
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an.instanceOf(Array);
                 done();
@@ -57,7 +51,8 @@ describe("ParkingZonesRouter", () => {
 
     it("should respond with parking zone object to GET /parkingzones/:id ", (done) => {
         request(app)
-            .get("/parkingzones/" + parkingZoneCode).end((err: any, res: any) => {
+            .get("/parkingzones/" + parkingZoneCode)
+            .end((err: any, res: any) => {
                 expect(res.statusCode).to.be.equal(200);
                 expect(res.body).to.be.an("object");
                 expect(res.body.properties.id).to.be.equal(parkingZoneCode);

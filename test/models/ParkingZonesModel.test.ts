@@ -1,18 +1,13 @@
-"use strict";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import "mocha";
-import { mongooseConnection } from "../../src/core/database";
-import { ParkingZonesModel } from "../../src/resources/parkingzones/ParkingZonesModel";
-
-const gJsonTools = require("geojson-tools");
+/// <reference path="./ParkingZonesModel.test.d.ts" />
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import gJsonTools from "geojson-tools";
+import { mongooseConnection } from "@golemio/core/dist/output-gateway/database";
+import { ParkingZonesModel } from "@golemio/parking-zones/dist/output-gateway/ParkingZonesModel";
 
 chai.use(chaiAsPromised);
 
 describe("ParkingZonesModel", () => {
-
     let model: ParkingZonesModel;
     let parkingZoneCode: string;
     let coordinates: number[];
@@ -133,10 +128,7 @@ describe("ParkingZonesModel", () => {
 
         const first = gJsonTools.toArray(firstFeature.geometry);
         const last = gJsonTools.toArray(lastFeature.geometry);
-        const distance = gJsonTools.getDistance([
-            first,
-            last,
-        ], 4) * 1000;
+        const distance = gJsonTools.getDistance([first, last], 4) * 1000;
         expect(distance <= range).to.be.true;
         expect(data.features.length).to.be.equal(1);
     });
@@ -165,5 +157,4 @@ describe("ParkingZonesModel", () => {
         const promise = model.GetTariffsByParkingZoneId("kovfefe");
         await expect(promise).to.be.rejected;
     });
-
 });

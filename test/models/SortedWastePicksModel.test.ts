@@ -1,17 +1,11 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { SortedWastePicksModel } from "../../src/resources/sortedwastestations";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { SortedWastePicksModel } from "@golemio/sorted-waste-stations/dist/output-gateway/sorted-waste-stations/models";
 
 chai.use(chaiAsPromised);
 
 describe("SortedWastePicksModel", () => {
-
     let sortedWastePicksModel: SortedWastePicksModel;
 
     // Basic configuration: create a sinon sandbox for testing

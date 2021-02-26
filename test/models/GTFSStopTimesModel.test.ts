@@ -1,18 +1,12 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { models } from "../../src/resources/gtfs/models";
-import { GTFSStopTimesModel } from "../../src/resources/gtfs/models/GTFSStopTimesModel";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { models } from "@golemio/ropid-gtfs/dist/output-gateway/models";
+import { GTFSStopTimesModel } from "@golemio/ropid-gtfs/dist/output-gateway/models/GTFSStopTimesModel";
 
 chai.use(chaiAsPromised);
 
 describe("GTFSStopTimesModel", () => {
-
     const stopTimesModel: GTFSStopTimesModel = models.GTFSStopTimesModel;
 
     // Basic configuration: create a sinon sandbox for testing

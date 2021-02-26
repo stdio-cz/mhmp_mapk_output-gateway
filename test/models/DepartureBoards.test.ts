@@ -1,17 +1,11 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { DepartureBoardsModel } from "../../src/resources/departureboards";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { DepartureBoardsModel } from "@golemio/departure-boards/dist/output-gateway/DepartureBoardsModel";
 
 chai.use(chaiAsPromised);
 
 describe("DepartureBoardsModel", () => {
-
     let departureBoardsModel: DepartureBoardsModel;
 
     // Basic configuration: create a sinon sandbox for testing

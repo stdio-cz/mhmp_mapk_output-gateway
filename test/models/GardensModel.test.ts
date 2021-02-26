@@ -1,17 +1,11 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { GardensModel } from "../../src/resources/gardens/GardensModel";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { GardensModel } from "@golemio/gardens/dist/output-gateway/GardensModel";
 
 chai.use(chaiAsPromised);
 
 describe("GardensModel", () => {
-
     let gardensModel: GardensModel;
 
     // Basic configuration: create a sinon sandbox for testing

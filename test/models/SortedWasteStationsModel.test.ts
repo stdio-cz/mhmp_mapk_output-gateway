@@ -1,17 +1,11 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { SortedWasteStationsModel } from "../../src/resources/sortedwastestations";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { SortedWasteStationsModel } from "@golemio/sorted-waste-stations/dist/output-gateway/sorted-waste-stations/models";
 
 chai.use(chaiAsPromised);
 
 describe("SortedWasteStationsModel", () => {
-
     let sortedWasteStationsModel: SortedWasteStationsModel;
 
     // Basic configuration: create a sinon sandbox for testing
@@ -38,12 +32,9 @@ describe("SortedWasteStationsModel", () => {
     });
 
     it("should return only monitored items", async () => {
-        const result = await sortedWasteStationsModel.GetAll(
-            {
-                additionalFilters:
-                    { "properties.containers": { $elemMatch: { sensor_container_id: { $exists: true } } } },
-            },
-        );
+        const result = await sortedWasteStationsModel.GetAll({
+            additionalFilters: { "properties.containers": { $elemMatch: { sensor_container_id: { $exists: true } } } },
+        });
         expect(result).to.be.an.instanceOf(Object);
         expect(result.features).to.be.an.instanceOf(Array);
         for (const station of result.features) {

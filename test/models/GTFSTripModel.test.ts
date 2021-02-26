@@ -1,18 +1,12 @@
-"use strict";
-
-import "mocha";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as sinon from "sinon";
-import { models } from "../../src/resources/gtfs/models";
-import { GTFSTripsModel } from "../../src/resources/gtfs/models/GTFSTripsModel";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import sinon from "sinon";
+import { models } from "@golemio/ropid-gtfs/dist/output-gateway/models";
+import { GTFSTripsModel } from "@golemio/ropid-gtfs/dist/output-gateway/models/GTFSTripsModel";
 
 chai.use(chaiAsPromised);
 
 describe("GTFSTripsModel", () => {
-
     const tripModel: GTFSTripsModel = models.GTFSTripsModel;
     let tripId: string;
 
@@ -58,10 +52,8 @@ describe("GTFSTripsModel", () => {
         const result = await tripModel.GetAll({ stopId: "U953Z102P" });
         expect(result).to.be.an.instanceOf(Array);
         expect(result.map((item: any) => item.trip_id))
-            .to.be.an("array").to.include.members(
-                [
-                    "991_1151_190107",
-                ]);
+            .to.be.an("array")
+            .to.include.members(["991_1151_190107"]);
     });
 
     // TODO: Check for format of included data
@@ -125,5 +117,4 @@ describe("GTFSTripsModel", () => {
         expect(trip.shapes.length).to.be.eql(2);
         expect(trip).to.have.property("stop_times").and.be.instanceOf(Array);
     });
-
 });

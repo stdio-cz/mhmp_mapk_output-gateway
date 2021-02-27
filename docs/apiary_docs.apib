@@ -369,27 +369,27 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
        + Attributes (array)
         + (Parking Zone Tariff)
 
-### New Parking Lots [/parking]
+
+### Parking Spaces [/parking]
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
 New parking endpoint, currently to be used for KORID Liberec data only.
 
-#### GET All New Parking Lots [GET /parking/{?latlng,range,source,sourceId,limit,offset}]
+#### GET All Parking Spaces [GET /parking/{?latlng,range,source,sourceId,limit,offset}]
 
 + Parameters
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
     + source: korid (optional, string) - Filter by data provider.
-    + sourceId: 1 (optional, number) - Filter by parking group id. Unique for data provider.
+    + sourceId: 1 (optional, string) - Filter by parking group id. Unique per data provider.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 
 + Request (application/json; charset=utf-8)
 
     + Headers
-
         x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
@@ -398,32 +398,56 @@ New parking endpoint, currently to be used for KORID Liberec data only.
         + type: FeatureCollection (string, required)
         + features (array)
             + (Feature Polygon)
-                + properties (New Parking)
+                + properties (Parking Space)
 
 + Response 403 (application/json; charset=utf-8)
+
     + Attributes (403 Error)
 
-#### GET New Parking Lot [GET /parking/{id}]
+#### GET Parking Space [GET /parking/{id}]
 
 + Parameters
 
-    + id: `103` (number) - Id of parking location.
+    + id: `103` (string) - Id of parking location.
 
 + Request (application/json; charset=utf-8)
 
     + Headers
-
         x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (object)
-        + Attributes (Feature Polygon)
-            + properties (New Parking)
+    + Attributes (Feature Polygon)
+        + properties (Parking Space)
 
 + Response 403 (application/json; charset=utf-8)
+
     + Attributes (403 Error)
 
+#### GET All Parking Spaces Measurements [GET /parking/measurements{?source,sourceId,from,to,limit,offset}]
+
++ Parameters
+
+    + source: korid (optional, string) - Filter by data provider.
+    + sourceId: 1 (optional, string) - Filter by parking group id. Unique per data provider.
+    + from: 2021-02-26T12:01:00.000Z (optional, string) - Date in ISO8601, limits data measured from this datetime.
+    + to: 2021-02-26T12:03:00.000Z (optional, string) - Date in ISO8601, limits data measured up until this datetime.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Parking Measurement)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
 
 # Group Public Space 🏡
 
@@ -2524,9 +2548,9 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + description: `Rezidentní úsek` (string)
 + id: 1 (number, required)
 
-## New Parking (object)
+## Parking Space (object)
 
-+ id: 103 (number, required)
++ id: `103` (string, required)
 + source: `korid` (string, required)
 + sourceId: `33` (string, required)
 + dataProvider: `www.korid.cz` (string, optional, nullable)
@@ -2540,6 +2564,17 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + tarifId: 20 (number, optional, nullable)
 + validFrom: `2020-05-31T00:00:00.000Z` (string, optional, nullable)
 + validTo: `2022-05-31T00:00:00.000Z` (string, optional, nullable)
+
+## Parking Measurement (object)
+
++ id: `10168955` (string, required)
++ source: `korid` (string, required)
++ sourceId: `20` (string, required)
++ availableSpotNumber: 5 (number, required)
++ closedSpotNumber: 0 (number, required)
++ occupiedSpotNumber: 8 (number, required)
++ totalSpotNumber: 13 (number, required)
++ dateModified: `2021-02-26T12:02:46.188Z` (string, required)
 
 ## Playground (object)
 

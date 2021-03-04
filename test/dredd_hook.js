@@ -89,13 +89,24 @@ hooks.before('Public Space 🏡 > Public Toilets > GET Public Toilet', (transact
     transaction.fullPath = transaction.fullPath.replace('72', storage["id"]);
 });
 
-hooks.after('Waste ♻️ > Sorted Waste Stations > GET All Sorted Waste Stations', (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
+hooks.before('Waste ♻️ > Sorted Waste Stations > GET All Sorted Waste Stations', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('sortedwastestations', 'sortedwastestationspg');
+    transaction.fullPath = transaction.fullPath.replace('sortedwastestations', 'sortedwastestationspg');
 });
 
 hooks.before('Waste ♻️ > Sorted Waste Stations > GET Sorted Waste Station', (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace('1521', storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace('1521', storage["id"]);
+    transaction.request.uri = transaction.request.uri.replace('sortedwastestations', 'sortedwastestationspg');
+    transaction.fullPath = transaction.fullPath.replace('sortedwastestations', 'sortedwastestationspg');
+});
+
+hooks.before('Waste ♻️ > Sorted Waste Stations > GET All Sorted Waste Measurements', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('sortedwastestations', 'sortedwastestationspg');
+    transaction.fullPath = transaction.fullPath.replace('sortedwastestations', 'sortedwastestationspg');
+});
+
+hooks.before('Waste ♻️ > Sorted Waste Stations > GET All Sorted Waste Picks', (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace('sortedwastestations', 'sortedwastestationspg');
+    transaction.fullPath = transaction.fullPath.replace('sortedwastestations', 'sortedwastestationspg');
 });
 
 hooks.after('Waste ♻️ > Waste Collection Yards > GET All Waste Collection Yards', (transaction) => {

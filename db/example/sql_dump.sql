@@ -228,3 +228,28 @@ INSERT INTO "ropidgtfs_stops" ("location_type", "parent_station", "platform_code
 
 -- <<<
 
+-- >>> FOR SORTED WASTE STATIONS tests
+
+INSERT INTO public.containers_stations (id, code, knsko_id, accessibility, latitude, longitude, address, district, district_code, "source", last_modify, create_batch_id, created_at, created_by, update_batch_id, updated_at, updated_by) VALUES
+('0a292077-4dbd-501a-ac60-d11c80e889c5', '0001/ 002', 3498, 1, 50.08703701526253, 14.418698026047796, 'Linhartská 136/6', 'praha-1', 500054, 'ksnko', NULL, -1, '2020-11-23 12:45:34.807', 'integration-engine', -1, '2021-03-02 07:37:12.762', 'integration-engine');
+
+INSERT INTO public.containers_containers (id, code, knsko_id, knsko_code, station_code, total_volume, prediction, bin_type, installed_at, network, cleaning_frequency_interval, cleaning_frequency_frequency, company, container_type, trash_type, "source", create_batch_id, created_at, created_by, update_batch_id, updated_at, updated_by, sensor_id, pick_days) VALUES
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', 15292, '0001/ 002C01583', '0001/ 002', 3000, NULL, 'Semi-underground', '2019-01-13 01:00:00.000', 'SIGFOX', NULL, NULL, NULL, NULL, 3, 'sensoneo', -1, '2020-11-23 12:45:48.986', 'integration-engine', -1, '2021-02-15 09:23:16.467', 'integration-engine', 30328, '5'),
+('0a439b85-30c3-5676-8075-81034e1aed61', 'S0001002TSCV2150SV15291', 15291, 'S0001002TSCV2150SV15291', '0001/ 002', NULL, NULL, NULL, NULL, NULL, 2, 1, NULL, '2150 L Reflex - SV', 7, 'ksnko', -1, '2020-11-23 12:45:48.986', 'integration-engine', -1, '2021-03-02 07:37:26.740', 'integration-engine', NULL, '4');
+
+INSERT INTO public.containers_picks (container_id, container_code, station_code, pick_at, pick_at_utc, percent_before, percent_now, event_driven, decrease, pick_minfilllevel, create_batch_id, created_at, created_by, update_batch_id, updated_at, updated_by) VALUES
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', '0001/ 002', '2021-01-19 13:48:24.000', '2021-01-19 13:48:24.000', 98, 0, false, 20, 30, NULL, '2021-01-20 08:15:12.040', NULL, NULL, '2021-01-26 08:15:48.314', NULL),
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', '0001/ 002', '2021-01-22 22:00:55.000', '2021-01-22 22:00:55.000', 21, 0, false, 20, 30, NULL, '2021-01-23 08:15:08.301', NULL, NULL, '2021-01-23 08:15:08.301', NULL),
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', '0001/ 002', '2021-01-24 21:15:43.000', '2021-01-24 21:15:43.000', 26, 0, false, 20, 30, NULL, '2021-01-25 08:15:16.631', NULL, NULL, '2021-01-25 08:15:16.631', NULL),
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', '0001/ 002', '2021-02-02 13:22:05.000', '2021-02-02 13:22:05.000', 49, 0, false, 20, 30, NULL, '2021-02-03 08:15:10.177', NULL, NULL, '2021-02-09 08:16:47.952', NULL),
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', '0001/ 002', '2021-02-04 07:28:38.000', '2021-02-04 07:28:38.000', 30, 1, false, 20, 30, NULL, '2021-02-05 08:15:08.949', NULL, NULL, '2021-02-05 08:15:08.949', NULL);
+
+INSERT INTO public.containers_measurement (container_id, container_code, station_code, percent_calculated, upturned, temperature, battery_status, measured_at, measured_at_utc, prediction, prediction_utc, firealarm, create_batch_id, created_at, created_by, update_batch_id, updated_at, updated_by) VALUES
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', '0001/ 002', 73, 0, 3, 3.5, '2021-02-02 07:21:08.000', '2021-02-02 07:21:08.000', NULL, NULL, 0, NULL, '2021-02-03 08:09:47.464', NULL, NULL, '2021-02-08 09:32:48.187', NULL),
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '0001/ 002C01583', '0001/ 002', 98, 0, 0, 3.4, '2021-02-08 07:17:23.000', '2021-02-08 07:17:23.000', NULL, NULL, 0, NULL, '2021-02-08 08:22:10.290', NULL, NULL, '2021-02-09 08:17:06.562', NULL);
+
+INSERT INTO public.containers_picks_dates (container_id, pick_date, create_batch_id, created_at, created_by, update_batch_id, updated_at, updated_by) VALUES
+('7089c1ba-c2a4-52e9-bd54-9448bfdd7afe', '2121-05-06 14:00:00.000', -1, '2021-03-03 12:23:58.635', 'integration-engine', NULL, NULL, NULL);
+
+--- <<<
+

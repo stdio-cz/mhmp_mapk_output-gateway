@@ -449,6 +449,51 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
     + Attributes (403 Error)
 
+#### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?sourceId,limit,offset}]
+
++ Parameters
+
+    + source: korid (optional, string) - Filter by data provider.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Polygon)
+                + properties (Parking Space Tariff)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET Parking Space Tariff [GET /parking/tariff/{tariffId}]
+
++ Parameters
+
+    + tariffId: `05b58f67796eab3f512df2e6153cb6f754ed33ce` (string) - Id of parking tariff.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Parking Spaces Tariff)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
 # Group Public Space 🏡
 
 ## Gardens [/gardens]
@@ -2575,6 +2620,36 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + occupiedSpotNumber: 8 (number, required)
 + totalSpotNumber: 13 (number, required)
 + dateModified: `2021-02-26T12:02:46.188Z` (string, required)
+
+## Parking Spaces Tariff Charge (object)
++ charge: 20 (number, required)
++ chargeOrderIndex: 0 (number, required)
++ chargeType: `minimum` (string, required)
++ chargeInterval: 1800 (number, required)
++ maxIterationsOfCharge: 1 (number, required)
++ minIterationsOfCharge: 1 (number, required)
++ startTimeOfPeriod: `Mon-Fri 09:00` (string, required)
++ endTimeOfPeriod: `Mon-Sun 14:30` (string, required)
+
+## Parking Spaces Tariff Charge Band (object)
+
++ chargeBandName: `A` (string, required)
++ acceptsPaymentCard: true (boolean, required)
++ acceptsCash: false (boolean, required)
++ acceptsMobilePayment: false (boolean, required)
++ chargeCurrency: `CZK` (string, required)
++ charge: (array[Parking Spaces Tariff Charge])
++ allowedVehicleType: `carSharing, taxi`,
++ allowedFuelType: `electricity, petrol, lpg`,
+
+## Parking Spaces Tariff (object)
+
++ lastUpdated: `2020-10-12T15:19:21+02:00` (string, required),
++ paymentMode: [],
++ paymentAdditionalDescription: `Parkování Liberec`,
++ freeOfCharge: false,
++ urlLinkAddress: `https://parking.liberec.cz/`,
++ chargeBand: (Parking Spaces Tariff Charge Band)
 
 ## Playground (object)
 

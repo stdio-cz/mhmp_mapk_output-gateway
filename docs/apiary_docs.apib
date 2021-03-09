@@ -1736,7 +1736,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + Parameters
 
-    + id: 1521 (number) - Identifier of the station.
+    + id: `0a292077-4dbd-501a-ac60-d11c80e889c5` (string) - Identifier of the station.
 
 + Request (application/json; charset=utf-8)
 
@@ -1766,7 +1766,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + Parameters
 
-    + containerId: 30162 (optional, number) - Lists only measurements from container with this sensor ID
+    + containerId: `7089c1ba-c2a4-52e9-bd54-9448bfdd7afe` (required, string) - Lists only measurements from container with this sensor ID
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
@@ -1787,7 +1787,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + Parameters
 
-    + containerId: 30162 (optional, number) - Lists only picks from container with this sensor ID
+    + containerId: `7089c1ba-c2a4-52e9-bd54-9448bfdd7afe` (required, string) - Lists only picks from container with this knsko_id ID
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
@@ -1843,7 +1843,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + Parameters
 
-    + id: 1 (number) - Identifier of the Waste Collection Yard.
+    + id: `sberny-dvur-hlavniho-mesta-prahy-probostska` (string) - Identifier of the Waste Collection Yard.
 
 + Request (application/json; charset=utf-8)
 
@@ -2551,7 +2551,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + accessibility (Sorted Waste Station Accessibility)
 + containers (array[Sorted Waste Station Container])
 + district: `praha-13` (string)
-+ id: 11 (number, required)
++ id: `dd08a6a7-1241-568a-9b1b-f384d69c358a` (string, required)
 + name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
 + station_number: `SDHMP` (string)
 + updated_at: `2019-05-18T07:38:37.000Z` (string)
@@ -2571,7 +2571,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + trash_type (Sorted Waste Station Container Trash Type)
 + last_measurement (Sorted Waste Station Last Measurement, optional)
 + last_pick (Sorted Waste Station Last Pick, optional)
-+ sensor_container_id: 29907 (number, optional)
++ sensor_container_id: `dc532519-f2bd-5ab2-b049-132bad684dab` (string, optional)
 + sensor_code: `0006/ 016C00214` (string, optional)
 + sensor_supplier: `Sensoneo` (string, optional)
 
@@ -2617,8 +2617,8 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## Sorted Waste Measurement (object)
 
-+ id: 12561706 (number, required)
-+ container_id: 29999 (number, required)
++ id: `19fb006c-b3c3-5876-a7d8-8fa9520cd747` (string, required)
++ container_id: `7089c1ba-c2a4-52e9-bd54-9448bfdd7afe` (string, required)
 + code: `0009/ 157C00353` (string, required)
 + percent_calculated: 67 (number, required)
 + upturned: 0 (number)
@@ -2708,8 +2708,8 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + properties (array[Waste Collection Yard Property])
 + address (Address)
 + contact: `236 04 00 11, 236 04 00 00` (string, required)
-+ id: `sberny-dvur-hlavniho-mesta-prahy-bartunkova` (string, required)
-+ name: `Sběrný dvůr hlavního města Prahy Bartůňkova` (string, required)
++ id: `sberny-dvur-hlavniho-mesta-prahy-probostska` (string, required)
++ name: `Sběrný dvůr hlavního města Prahy Proboštská` (string, required)
 + operating_hours: `Po - Pá 8:30 - 18:00 hod., 8:30 - 17:00 hod. v zimním období, So 8:30 - 15:00 hod.` (string, required)
 + operator: `KOMWAG, a.s.` (string, required)
 + updated_at: `2019-05-18T07:38:37.000Z` (string)

@@ -366,7 +366,7 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 
 + Response 200 (application/json; charset=utf-8)
 
-       + Attributes (array)
+    + Attributes (array)
         + (Parking Zone Tariff)
 
 
@@ -449,13 +449,11 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
     + Attributes (403 Error)
 
-#### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?sourceId,limit,offset}]
+#### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?sourceId}]
 
 + Parameters
 
     + source: korid (optional, string) - Filter by data provider.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
 
 + Request (application/json; charset=utf-8)
 
@@ -464,11 +462,8 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Polygon)
-                + properties (Parking Space Tariff)
+    + Attributes (array)
+        + (Parking Space Tariff)
 
 + Response 403 (application/json; charset=utf-8)
 
@@ -487,8 +482,7 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
 + Response 200 (application/json; charset=utf-8)
 
-    + Attributes (array)
-        + (Parking Spaces Tariff)
+    + Attributes (Parking Space Tariff)
 
 + Response 403 (application/json; charset=utf-8)
 
@@ -2621,35 +2615,33 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + totalSpotNumber: 13 (number, required)
 + dateModified: `2021-02-26T12:02:46.188Z` (string, required)
 
-## Parking Spaces Tariff Charge (object)
+## Parking Space Tariff Charge (object)
 + charge: 20 (number, required)
 + chargeOrderIndex: 0 (number, required)
-+ chargeType: `minimum` (string, required)
++ chargeType: `minimum` (string, nullable)
 + chargeInterval: 1800 (number, required)
-+ maxIterationsOfCharge: 1 (number, required)
-+ minIterationsOfCharge: 1 (number, required)
-+ startTimeOfPeriod: `Mon-Fri 09:00` (string, required)
-+ endTimeOfPeriod: `Mon-Sun 14:30` (string, required)
++ maxIterationsOfCharge: 1 (number, nullable)
++ minIterationsOfCharge: 1 (number, nullable)
++ startTimeOfPeriod: `Mon-Fri 09:00` (string, nullable)
++ endTimeOfPeriod: `Mon-Sun 14:30` (string, nullable)
 
-## Parking Spaces Tariff Charge Band (object)
+## Parking Space Tariff (object)
 
++ tariffId: `05b58f67796eab3f512df2e6153cb6f754ed33ce` (string, required)
++ source: `korid` (string, required)
++ lastUpdated: `2020-10-12T15:19:21+02:00` (string, required)
++ paymentMode: []
++ paymentAdditionalDescription: `Parkování Liberec`
++ freeOfCharge: false
++ urlLinkAddress: `https://parking.liberec.cz/`
 + chargeBandName: `A` (string, required)
-+ acceptsPaymentCard: true (boolean, required)
-+ acceptsCash: false (boolean, required)
-+ acceptsMobilePayment: false (boolean, required)
++ acceptsPaymentCard: true (boolean, nullable)
++ acceptsCash: false (boolean, nullable)
++ acceptsMobilePayment: false (boolean, nullable)
 + chargeCurrency: `CZK` (string, required)
-+ charge: (array[Parking Spaces Tariff Charge])
-+ allowedVehicleType: `carSharing, taxi`,
-+ allowedFuelType: `electricity, petrol, lpg`,
-
-## Parking Spaces Tariff (object)
-
-+ lastUpdated: `2020-10-12T15:19:21+02:00` (string, required),
-+ paymentMode: [],
-+ paymentAdditionalDescription: `Parkování Liberec`,
-+ freeOfCharge: false,
-+ urlLinkAddress: `https://parking.liberec.cz/`,
-+ chargeBand: (Parking Spaces Tariff Charge Band)
++ allowedVehicleType: `carSharing, taxi` (string, nullable)
++ allowedFuelType: `electricity, petrol, lpg` (string, nullable)
++ charge: (array[Parking Space Tariff Charge])
 
 ## Playground (object)
 

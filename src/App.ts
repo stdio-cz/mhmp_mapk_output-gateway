@@ -19,7 +19,7 @@ import {
     gtfsRouter,
     medicalInstitutionsRouter,
     municipalAuthoritiesRouter,
-    parkingRouter,
+    parkingsRouter,
     parkingZonesRouter,
     pidRouter,
     playgroundsRouter,
@@ -147,7 +147,7 @@ export default class App {
         this.express.use("/playgrounds", playgroundsRouter);
         this.express.use("/sharedbikes", sharedBikesRouter);
         this.express.use("/pid", pidRouter);
-        this.express.use("/parking", parkingRouter);
+        this.express.use("/parking", parkingsRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

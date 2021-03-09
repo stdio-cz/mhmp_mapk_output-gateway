@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dataplatform.sharedcars"},{"v":2,"key":{"properties.id":1},"name":"properties.id_1","ns":"dataplatform.sharedcars"},{"v":2,"key":{"geometry":"2dsphere"},"name":"geometry_2dsphere","ns":"dataplatform.sharedcars","2dsphereIndexVersion":3}],"uuid":"2f451d43e2914b7895a8c0ae74c90e7c"}

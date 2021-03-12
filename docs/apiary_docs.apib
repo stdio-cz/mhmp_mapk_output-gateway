@@ -366,8 +366,136 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 
 + Response 200 (application/json; charset=utf-8)
 
-       + Attributes (array)
+    + Attributes (array)
         + (Parking Zone Tariff)
+
+
+### Parking Spaces [/parking]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+New parking endpoint, currently to be used for KORID Liberec data only.
+
+#### GET All Parking Spaces [GET /parking/{?latlng,range,source,sourceId,limit,offset}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + source: korid (optional, string) - Filter by data provider.
+    + sourceId: 1 (optional, string) - Filter by parking group id. Unique per data provider.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Polygon)
+                + properties (Parking Space)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET Parking Space [GET /parking/{id}]
+
++ Parameters
+
+    + id: `6` (string, required) - Id of parking location.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Polygon)
+        + properties (Parking Space)
+
++ Response 404
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET All Parking Spaces Measurements [GET /parking/measurements{?source,sourceId,from,to,limit,offset}]
+
++ Parameters
+
+    + source: korid (optional, string) - Filter by data provider.
+    + sourceId: 1 (optional, string) - Filter by parking group id. Unique per data provider.
+    + from: 2021-02-26T12:01:00.000Z (optional, string) - Date in ISO8601, limits data measured from this datetime.
+    + to: 2021-02-26T12:03:00.000Z (optional, string) - Date in ISO8601, limits data measured up until this datetime.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Parking Measurement)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?sourceId}]
+
++ Parameters
+
+    + source: korid (optional, string) - Filter by data provider.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Parking Space Tariff)
+
++ Response 404
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET Parking Space Tariff [GET /parking/tariffs/{tariffId}]
+
++ Parameters
+
+    + tariffId: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, required) - Id of parking tariff.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Parking Space Tariff)
+
++ Response 404
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
 
 # Group Public Space 🏡
 
@@ -2467,6 +2595,62 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + description: `Rezidentní úsek` (string)
 + id: 1 (number, required)
+
+## Parking Space (object)
+
++ id: `6` (string, required)
++ source: `korid` (string, required)
++ sourceId: `33` (string, required)
++ dataProvider: `www.korid.cz` (string, nullable)
++ name: `Husova (u nemocnice)` (string, required)
++ category: `park_and_ride` (string, nullable)
++ dateModified: `2020-05-18T07:38:37.000Z` (string, required)
++ address: null (string, nullable)
++ areaServed: null (string, nullable)
++ paymentUrl: `https://payment.com/link.html` (string, nullable)
++ totalSpotNumber: 180 (number, required)
++ tariffId: 20 (number, nullable)
++ validFrom: `2020-05-31T00:00:00.000Z` (string, nullable)
++ validTo: `2022-05-31T00:00:00.000Z` (string, nullable)
+
+## Parking Measurement (object)
+
++ id: `10168955` (string, required)
++ source: `korid` (string, required)
++ sourceId: `20` (string, required)
++ availableSpotNumber: 5 (number, required)
++ closedSpotNumber: 0 (number, required)
++ occupiedSpotNumber: 8 (number, required)
++ totalSpotNumber: 13 (number, required)
++ dateModified: `2021-02-26T12:02:46.188Z` (string, required)
+
+## Parking Space Tariff Charge (object)
++ charge: 20 (number, required)
++ chargeOrderIndex: 0 (number, required)
++ chargeType: `minimum` (string, nullable)
++ chargeInterval: 1800 (number, required)
++ maxIterationsOfCharge: 1 (number, nullable)
++ minIterationsOfCharge: 1 (number, nullable)
++ startTimeOfPeriod: `Mon-Fri 09:00` (string, nullable)
++ endTimeOfPeriod: `Mon-Sun 14:30` (string, nullable)
+
+## Parking Space Tariff (object)
+
++ tariffId: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, required)
++ source: `korid` (string, required)
++ lastUpdated: `2020-10-12T15:19:21+02:00` (string, required)
++ paymentMode: `` (string, required)
++ paymentAdditionalDescription: `Parkování Liberec` (string, nullable)
++ freeOfCharge: false (boolean, required)
++ urlLinkAddress: `https://parking.liberec.cz/` (string, required)
++ chargeBandName: `A` (string, required)
++ acceptsPaymentCard: true (boolean, nullable)
++ acceptsCash: false (boolean, nullable)
++ acceptsMobilePayment: false (boolean, nullable)
++ chargeCurrency: `CZK` (string, required)
++ allowedVehicleType: `carSharing, taxi` (string, nullable)
++ allowedFuelType: `electricity, petrol, lpg` (string, nullable)
++ charge: (array[Parking Space Tariff Charge])
 
 ## Playground (object)
 

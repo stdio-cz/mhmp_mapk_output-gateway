@@ -408,7 +408,7 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
 + Parameters
 
-    + id: `103` (string) - Id of parking location.
+    + id: `6` (string, required) - Id of parking location.
 
 + Request (application/json; charset=utf-8)
 
@@ -419,6 +419,9 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
     + Attributes (Feature Polygon)
         + properties (Parking Space)
+
++ Response 404
+    + Attributes (Error)
 
 + Response 403 (application/json; charset=utf-8)
 
@@ -465,15 +468,18 @@ New parking endpoint, currently to be used for KORID Liberec data only.
     + Attributes (array)
         + (Parking Space Tariff)
 
++ Response 404
+    + Attributes (Error)
+
 + Response 403 (application/json; charset=utf-8)
 
     + Attributes (403 Error)
 
-#### GET Parking Space Tariff [GET /parking/tariff/{tariffId}]
+#### GET Parking Space Tariff [GET /parking/tariffs/{tariffId}]
 
 + Parameters
 
-    + tariffId: `05b58f67796eab3f512df2e6153cb6f754ed33ce` (string) - Id of parking tariff.
+    + tariffId: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, required) - Id of parking tariff.
 
 + Request (application/json; charset=utf-8)
 
@@ -483,6 +489,9 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Parking Space Tariff)
+
++ Response 404
+    + Attributes (Error)
 
 + Response 403 (application/json; charset=utf-8)
 
@@ -2589,20 +2598,20 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## Parking Space (object)
 
-+ id: `103` (string, required)
++ id: `6` (string, required)
 + source: `korid` (string, required)
 + sourceId: `33` (string, required)
-+ dataProvider: `www.korid.cz` (string, optional, nullable)
++ dataProvider: `www.korid.cz` (string, nullable)
 + name: `Husova (u nemocnice)` (string, required)
-+ category: `park_and_ride` (string, optional, nullable)
++ category: `park_and_ride` (string, nullable)
 + dateModified: `2020-05-18T07:38:37.000Z` (string, required)
-+ address: null (string, optional, nullable)
-+ areaServed: null (string, optional, nullable)
-+ paymentUrl: `https://payment.com/link.html` (string, optional, nullable)
++ address: null (string, nullable)
++ areaServed: null (string, nullable)
++ paymentUrl: `https://payment.com/link.html` (string, nullable)
 + totalSpotNumber: 180 (number, required)
-+ tarifId: 20 (number, optional, nullable)
-+ validFrom: `2020-05-31T00:00:00.000Z` (string, optional, nullable)
-+ validTo: `2022-05-31T00:00:00.000Z` (string, optional, nullable)
++ tariffId: 20 (number, nullable)
++ validFrom: `2020-05-31T00:00:00.000Z` (string, nullable)
++ validTo: `2022-05-31T00:00:00.000Z` (string, nullable)
 
 ## Parking Measurement (object)
 
@@ -2627,13 +2636,13 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## Parking Space Tariff (object)
 
-+ tariffId: `05b58f67796eab3f512df2e6153cb6f754ed33ce` (string, required)
++ tariffId: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, required)
 + source: `korid` (string, required)
 + lastUpdated: `2020-10-12T15:19:21+02:00` (string, required)
-+ paymentMode: []
-+ paymentAdditionalDescription: `Parkování Liberec`
-+ freeOfCharge: false
-+ urlLinkAddress: `https://parking.liberec.cz/`
++ paymentMode: `` (string, required)
++ paymentAdditionalDescription: `Parkování Liberec` (string, nullable)
++ freeOfCharge: false (boolean, required)
++ urlLinkAddress: `https://parking.liberec.cz/` (string, required)
 + chargeBandName: `A` (string, required)
 + acceptsPaymentCard: true (boolean, nullable)
 + acceptsCash: false (boolean, nullable)

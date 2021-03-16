@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"dataplatform.sortedwastestations_measurements"},{"v":2,"key":{"id":1},"name":"id_1","ns":"dataplatform.sortedwastestations_measurements"},{"v":2,"key":{"measured_at_utc":-1},"name":"measured_at_utc_-1","ns":"dataplatform.sortedwastestations_measurements"}],"uuid":"20e7428fd0e44d0bbbe7f3b9fd1e6f70"}

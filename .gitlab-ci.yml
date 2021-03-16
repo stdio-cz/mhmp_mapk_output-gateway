@@ -47,30 +47,23 @@ run_tests:
         - redis:6.0-alpine
     script:
         - yarn
-        - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
         # 1 for INFO
         # 2 for LOW
         # 4 for MODERATE
         # 8 for HIGH
         # 16 for CRITICAL
+        - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build
         - export LOG_LEVEL=INFO
         - export MONGO_CONN=$MONGO_CONN
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
         - export SENTRY_ENABLE=false
-        - cd node_modules/@golemio/schema-definitions && npm run migrate-db && cd -
-        - mongorestore --uri=$MONGO_CONN -d dataplatform ./db/example/mongo_data/dataplatform
-        - >
-            PGPASSWORD=$POSTGRES_PASSWORD
-            psql
-            -h $POSTGRES_HOST
-            -U $POSTGRES_USER
-            -d $POSTGRES_DB
-            -f db/example/sql_dump.sql
         - export REDIS_CONN=redis://redis/
-        - redis-cli -h redis -x HSET files trip_updates.pb <db/example/trip_updates.pb.bin
-        - redis-cli -h redis -x HSET files vehicle_positions.pb <db/example/vehicle_positions.pb.bin
+        - export SQL_DUMP_FILES=node_modules/@golemio/*/db/example/*.sql
+        - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data
+        - export REDIS_DATA_FILES=node_modules/@golemio/*/db/example/*.pb.bin
+        - cd node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -
         - NODE_ENV=production yarn code-coverage
         - yarn dredd
     tags:

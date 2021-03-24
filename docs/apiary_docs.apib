@@ -382,8 +382,8 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
     + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
     + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + source: korid (optional, string) - Filter by data provider.
-    + sourceId: 1 (optional, string) - Filter by parking group id. Unique per data provider.
+    + source: `korid` (optional, string) - Filter by data provider.
+    + sourceId: `1` (optional, string) - Filter by parking group id. Unique per data provider.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 
@@ -431,10 +431,10 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
 + Parameters
 
-    + source: korid (optional, string) - Filter by data provider.
-    + sourceId: 1 (optional, string) - Filter by parking group id. Unique per data provider.
-    + from: 2021-02-26T12:01:00.000Z (optional, string) - Date in ISO8601, limits data measured from this datetime.
-    + to: 2021-02-26T12:03:00.000Z (optional, string) - Date in ISO8601, limits data measured up until this datetime.
+    + source: `korid` (optional, string) - Filter by data provider.
+    + sourceId: `1` (optional, string) - Filter by parking group id. Unique per data provider.
+    + from: `2021-02-26T12:01:00.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime.
+    + to: `2021-02-26T12:03:00.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime.
     + limit: 10 (optional, number) - Limits number of retrieved items.
     + offset: 0 (optional, number) - Number of the first items that are skipped.
 
@@ -456,7 +456,7 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
 + Parameters
 
-    + source: korid (optional, string) - Filter by data provider.
+    + source: `korid` (optional, string) - Filter by data provider.
 
 + Request (application/json; charset=utf-8)
 

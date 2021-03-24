@@ -38,7 +38,7 @@ cache:
 
 run_tests:
     stage: build
-    image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env:latest
+    image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest
     services:
         - docker:dind
         - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/12.3:postgis3

@@ -15,7 +15,7 @@ variables:
     HOST_URL_DEV: "http://rabin.golemio.cz/v2"
     K8S_PROJECT_NAME: "golemio"
     K8S_DEPLOY_NAMESPACE: "golemio"
-    K8S_DEPLOYMENT_NAME: output-gateway
+    K8S_DEPLOYMENT_NAME: output-gateway-v2
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 stages:

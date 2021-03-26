@@ -532,10 +532,10 @@
     "@golemio/city-districts" "1.0.0-dev.270549917"
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.0-dev.270936015":
-  version "1.0.0-dev.270936015"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.0-dev.270936015.tgz#bbdd1d6c93b94434e43dd1ee373eea759a225a83"
-  integrity sha512-MM+emEF76IknD4kzYfQJ6iNAQudiPPcQYEypiL4z4oBR+8kMD5qpez1Hr6NM3VXKLwqrlExRn6uqI9dPXxFnww==
+"@golemio/municipal-authorities@1.0.0-dev.276925440":
+  version "1.0.0-dev.276925440"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.0-dev.276925440.tgz#389d5c6de376030f4fea27fbfa0dcc62b80bf2b5"
+  integrity sha512-adty/r6QViCucaE5+ILKVOSQVVCLvmViW0/wcYB9/8L5l0zHc4jhQuY5LuPopzr6+SWFj4KRVxdNXmMy4jiv1g==
   dependencies:
     lodash "^4.17.19"
 

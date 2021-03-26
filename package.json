@@ -63,7 +63,7 @@
         "@golemio/gardens": "1.0.0-dev.270744961",
         "@golemio/medical-institutions": "1.0.0-dev.270761076",
         "@golemio/meteosensors": "1.0.0-dev.270905130",
-        "@golemio/municipal-authorities": "1.0.0-dev.270936015",
+        "@golemio/municipal-authorities": "1.0.0-dev.276925440",
         "@golemio/municipal-libraries": "1.0.0-dev.271124594",
         "@golemio/municipal-police-stations": "1.0.0-dev.270910809",
         "@golemio/parking-zones": "1.0.0-dev.270844711",

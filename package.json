@@ -68,7 +68,7 @@
         "@golemio/municipal-police-stations": "1.0.0-dev.270910809",
         "@golemio/parking-zones": "1.0.0-dev.270844711",
         "@golemio/parkings": "1.0.0-dev.270914149",
-        "@golemio/pid": "1.0.0-dev.276439571",
+        "@golemio/pid": "1.0.0-dev.277191671",
         "@golemio/playgrounds": "1.0.0-dev.270869103",
         "@golemio/public-toilets": "1.0.0-dev.270912750",
         "@golemio/ropid-gtfs": "1.0.0-dev.274965649",
@@ -77,7 +77,7 @@
         "@golemio/shared-cars": "1.0.0-dev.270898176",
         "@golemio/sorted-waste-stations": "1.0.0-dev.270885952",
         "@golemio/traffic-cameras": "1.0.0-dev.270907854",
-        "@golemio/vehicle-positions": "1.0.0-dev.276439876",
+        "@golemio/vehicle-positions": "1.0.0-dev.277187349",
         "@golemio/waste-collection-yards": "1.0.0-dev.270923841",
         "@sentry/node": "5.15.4",
         "dotenv": "^6.1.0"

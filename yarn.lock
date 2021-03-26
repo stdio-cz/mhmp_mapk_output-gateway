@@ -571,10 +571,10 @@
     "@golemio/city-districts" "1.0.0-dev.262011736"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@1.0.0-dev.276439571":
-  version "1.0.0-dev.276439571"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-1.0.0-dev.276439571.tgz#7b7b797a73cca107e08c6ba19783f515f16007a3"
-  integrity sha512-BwqlTzP60Sw3jNYLYgYMuWl5jE+hTXLy+DMBfPVr2uf4ABxdSxbm4iVz7payb1HazCyq7+lKOARBvl1h1HxiAQ==
+"@golemio/pid@1.0.0-dev.277191671":
+  version "1.0.0-dev.277191671"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-1.0.0-dev.277191671.tgz#b820406ce51413d26b9ad5bb62a79be1d100f431"
+  integrity sha512-4mcrWrX5GQB2heNBgBXDzfoLVqnrZUOXpUnOpxA7MfUdGt3jD7vOT0tVjxMrKBHjFzxU3xtgfx9gkSXFQp3NhQ==
   dependencies:
     "@golemio/ropid-gtfs" "1.0.0-dev.274965649"
     lodash "^4.17.19"
@@ -667,10 +667,10 @@
     mongoose "^5.6.7"
     winston "^3.2.1"
 
-"@golemio/vehicle-positions@1.0.0-dev.276439876":
-  version "1.0.0-dev.276439876"
-  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.0-dev.276439876.tgz#8a4375e2b46fccf6848fc1d53e396cf94b1f4a04"
-  integrity sha512-aCAoMfEhhtx1D1Wnr/8u/4Dtolyty1iBytWuxqR74sqWJXI8lrW2pYij1lzU/TziBwtUyeytLdsM7ylFqlpW7g==
+"@golemio/vehicle-positions@1.0.0-dev.277187349":
+  version "1.0.0-dev.277187349"
+  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.0-dev.277187349.tgz#449447641722e1bc9e68224ad93658724a4b104d"
+  integrity sha512-sLFusGf/eSkUZ+Q/AhvxvlibKQEPKr7QlwANNWb6BPGqqP94BWVbIwvdCtFCLtkYhLJQm5AE7uMdiuMTwl+c/Q==
   dependencies:
     "@golemio/ropid-gtfs" "1.0.0-dev.274965649"
     "@turf/turf" "^5.1.6"

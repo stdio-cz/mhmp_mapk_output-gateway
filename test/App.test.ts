@@ -1,20 +1,14 @@
-"use strict";
-
-import * as express from "express";
-import "mocha";
-import * as sinon from "sinon";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+import request from "supertest";
+import sinon from "sinon";
+import express from "@golemio/core/dist/shared/express";
+import { config } from "@golemio/core/dist/output-gateway/config";
 import App from "../src/App";
-import config from "../src/config/config";
-
-import * as chai from "chai";
-import { expect } from "chai";
-import * as chaiAsPromised from "chai-as-promised";
-import * as request from "supertest";
 
 chai.use(chaiAsPromised);
 
 describe("App", () => {
-
     let expressApp: express.Application;
     let app: App;
     let sandbox: any;
@@ -45,11 +39,7 @@ describe("App", () => {
     });
 
     it("should have health check on /", (done) => {
-        request(expressApp)
-            .get("/")
-            .set("Accept", "application/json")
-            .expect("Content-Type", /json/)
-            .expect(200, done);
+        request(expressApp).get("/").set("Accept", "application/json").expect("Content-Type", /json/).expect(200, done);
     });
 
     it("should have health check on /health-check", (done) => {
@@ -69,8 +59,6 @@ describe("App", () => {
     });
 
     it("should respond with 400 BAD REQUEST to GET /parkings/?latlng&range with bad parameters", (done) => {
-        request(expressApp)
-            .get("/parkings/?latlng=50.032074,14.492015&range=asd")
-            .expect(400, done);
+        request(expressApp).get("/parkings/?latlng=50.032074,14.492015&range=asd").expect(400, done);
     });
 });

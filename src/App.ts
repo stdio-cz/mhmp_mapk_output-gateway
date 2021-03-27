@@ -1,105 +1,34 @@
-"use strict";
-/* app/server.ts */
-
 // Import everything from express and assign it to the express variable
-import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/errors";
-import {
-    AirQualityStations,
-    BicycleParkings,
-    Meteosensors,
-    MunicipalLibraries,
-    MunicipalPoliceStations,
-    Parkings,
-    PublicToilets,
-    SharedCars,
-    TrafficCameras,
-} from "@golemio/schema-definitions";
+import fs from "fs";
+import http from "http";
+import path from "path";
 import * as Sentry from "@sentry/node";
-import * as express from "express";
-import { NextFunction, Request, Response } from "express";
-import * as fs from "fs";
-import * as http from "http";
-import * as path from "path";
-import config from "./config/config";
-import { mongooseConnection, sequelizeConnection } from "./core/database";
-import { getRequestLogger, log } from "./core/Logger";
-import { RouterBuilder } from "./core/routes/";
-import { bicycleCountersRouter } from "./resources/bicyclecounters";
-import { cityDistrictsRouter } from "./resources/citydistricts";
-import { departureBoardsRouter } from "./resources/departureboards";
-import { exportingModuleRouter } from "./resources/exportingmodule";
-import { gardensRouter } from "./resources/gardens";
-import { gtfsRouter } from "./resources/gtfs";
-import { medicalInstitutionsRouter } from "./resources/medicalinstitutions";
-import { municipalAuthoritiesRouter } from "./resources/municipalauthorities";
-import { parkingZonesRouter } from "./resources/parkingzones";
-import { pidRouter } from "./resources/pid";
-import { playgroundsRouter } from "./resources/playgrounds";
-import { sharedBikesRouter } from "./resources/sharedbikes";
-import { sortedWasteRouter } from "./resources/sortedwastestations";
-import { sortedWasteRouterPg } from "./resources/sortedwastestationspg";
-import { vehiclepositionsRouter } from "./resources/vehiclepositions";
-import { wasteCollectionYardsRouter } from "./resources/wastecollectionyards";
-
-// Configuration of the routes to be dynamically created by RouterBuilder
-export const generalRoutes = [
-    {
-        collectionName: SharedCars.mongoCollectionName,
-        expire: 30000,
-        name: SharedCars.name,
-        schema: SharedCars.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: AirQualityStations.mongoCollectionName,
-        history: {
-            collectionName: AirQualityStations.history.mongoCollectionName,
-            name: AirQualityStations.history.name,
-            schema: AirQualityStations.history.outputMongooseSchemaObject,
-        },
-        name: AirQualityStations.name,
-        schema: AirQualityStations.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: Meteosensors.mongoCollectionName,
-        name: Meteosensors.name,
-        schema: Meteosensors.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: TrafficCameras.mongoCollectionName,
-        name: TrafficCameras.name,
-        schema: TrafficCameras.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: MunicipalPoliceStations.mongoCollectionName,
-        name: MunicipalPoliceStations.name,
-        schema: MunicipalPoliceStations.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: PublicToilets.mongoCollectionName,
-        name: PublicToilets.name,
-        schema: PublicToilets.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: Parkings.mongoCollectionName,
-        history: {
-            collectionName: Parkings.history.mongoCollectionName,
-            name: Parkings.history.name,
-            schema: Parkings.history.outputMongooseSchemaObject,
-        },
-        name: Parkings.name,
-        schema: Parkings.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: BicycleParkings.mongoCollectionName,
-        name: BicycleParkings.name,
-        schema: BicycleParkings.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: MunicipalLibraries.mongoCollectionName,
-        name: MunicipalLibraries.name,
-        schema: MunicipalLibraries.outputMongooseSchemaObject,
-    },
-];
+import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
+import { config } from "@golemio/core/dist/output-gateway/config";
+import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
+import { getRequestLogger, log } from "@golemio/core/dist/output-gateway/Logger";
+import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
+import { generalRoutes } from "./generalRoutes";
+import {
+    bicycleCountersRouter,
+    cityDistrictsRouter,
+    departureBoardsRouter,
+    exportingModuleRouter,
+    gardensRouter,
+    gtfsRouter,
+    medicalInstitutionsRouter,
+    municipalAuthoritiesRouter,
+    parkingsRouter,
+    parkingZonesRouter,
+    pidRouter,
+    playgroundsRouter,
+    sharedBikesRouter,
+    sortedWasteRouter,
+    sortedWasteRouterPg,
+    vehiclepositionsRouter,
+    wasteCollectionYardsRouter,
+} from "./routers";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -110,9 +39,9 @@ export default class App {
     // The port the express app will listen on
     public port: number = parseInt(config.port || "3004", 10);
 
-    private server: http.Server;
+    private server!: http.Server;
 
-    private commitSHA: string;
+    private commitSHA!: string;
 
     /**
      * Runs configuration methods on the Express instance
@@ -160,30 +89,30 @@ export default class App {
             Sentry.captureException(err);
             ErrorHandler.handle(err);
         }
-    }
+    };
 
     public stop = async (): Promise<void> => {
         this.server.close();
-    }
+    };
 
     private setHeaders = (req: Request, res: Response, next: NextFunction): void => {
         res.setHeader("x-powered-by", "shem");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         next();
-    }
+    };
 
     private database = async (): Promise<void> => {
         const mongoUri: string = config.mongo_connection || "";
-        await sequelizeConnection.authenticate();
+        await sequelizeConnection?.authenticate();
         await mongooseConnection;
-    }
+    };
 
     private middleware = (): void => {
         this.express.use(getRequestLogger);
         this.express.use(this.setHeaders);
         this.express.use(express.static("public"));
-    }
+    };
 
     private routes = (): void => {
         const defaultRouter: express.Router = express.Router();
@@ -218,19 +147,20 @@ export default class App {
         this.express.use("/playgrounds", playgroundsRouter);
         this.express.use("/sharedbikes", sharedBikesRouter);
         this.express.use("/pid", pidRouter);
+        this.express.use("/parking", parkingsRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);
         builder.BuildAllRoutes();
 
-        this.express.use(Sentry.Handlers.errorHandler(
-            {
+        this.express.use(
+            Sentry.Handlers.errorHandler({
                 shouldHandleError(error: any): boolean {
                     return true;
                 },
-            },
-            ) as express.ErrorRequestHandler);
+            }) as express.ErrorRequestHandler
+        );
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {
@@ -240,18 +170,12 @@ export default class App {
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
             const warnCodes = [400, 404];
-            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(
-                err,
-                (warnCodes.includes(err.code) ? "warn" : "error"),
-            );
+            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err, warnCodes.includes(err.code) ? "warn" : "error");
             log.silly("Error caught by the router error handler.");
-            res.setHeader(
-                "Content-Type",
-                "application/json; charset=utf-8",
-            );
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
             res.status(errObject.error_status || 500).send(errObject);
         });
-    }
+    };
 
     /**
      * Load the Commit SHA of the current build
@@ -267,5 +191,5 @@ export default class App {
                 return resolve(data.toString());
             });
         });
-    }
+    };
 }

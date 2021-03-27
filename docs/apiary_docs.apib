@@ -366,8 +366,136 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 
 + Response 200 (application/json; charset=utf-8)
 
-       + Attributes (array)
+    + Attributes (array)
         + (Parking Zone Tariff)
+
+
+### Parking Spaces [/parking]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+New parking endpoint, currently to be used for KORID Liberec data only.
+
+#### GET All Parking Spaces [GET /parking/{?latlng,range,source,sourceId,limit,offset}]
+
++ Parameters
+
+    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
+    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
+    + source: `korid` (optional, string) - Filter by data provider.
+    + sourceId: `1` (optional, string) - Filter by parking group id. Unique per data provider.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Polygon)
+                + properties (Parking Space)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET Parking Space [GET /parking/{id}]
+
++ Parameters
+
+    + id: `6` (string, required) - Id of parking location.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Polygon)
+        + properties (Parking Space)
+
++ Response 404
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET All Parking Spaces Measurements [GET /parking/measurements{?source,sourceId,from,to,limit,offset}]
+
++ Parameters
+
+    + source: `korid` (optional, string) - Filter by data provider.
+    + sourceId: `1` (optional, string) - Filter by parking group id. Unique per data provider.
+    + from: `2021-02-26T12:01:00.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime.
+    + to: `2021-02-26T12:03:00.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime.
+    + limit: 10 (optional, number) - Limits number of retrieved items.
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Parking Measurement)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?sourceId}]
+
++ Parameters
+
+    + source: `korid` (optional, string) - Filter by data provider.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Parking Space Tariff)
+
++ Response 404
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
+
+#### GET Parking Space Tariff [GET /parking/tariffs/{tariffId}]
+
++ Parameters
+
+    + tariffId: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, required) - Id of parking tariff.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+        x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Parking Space Tariff)
+
++ Response 404
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+
+    + Attributes (403 Error)
 
 # Group Public Space 🏡
 
@@ -1272,7 +1400,7 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
 
 You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array format - eg. `ids[]=1&ids[]=3`. **At least one of these IDs is required.** The maximum is 100 stops combined in one request.
 
-### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,preferredTimezone,orderBySchedule,showAllRoutesFirst,mode,limit,offset}]
+### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,timeFrom,preferredTimezone,orderBySchedule,showAllRoutesFirst,mode,limit,offset}]
 
 + Parameters
 
@@ -1280,8 +1408,9 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + aswIds: `458_101` (optional, string) - Get result by ASW ID. First part of the number represents the whole node. Usually it groups the stops of the same name or all stops associated with a metro station. The second part of the number represents individual stops in the node. Use `_` instead of `/` as a separator or encode the slash sign with `%2F`. A list of ASW IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
     + cisIds: `28004` (optional, number) - Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
     + names: `Smíchovské nádraží` (optional, string) - Get results by exact name of stop (case and whitespace sensitive). May return stops of the same name in different towns.
-    + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request, negative numbers set the start in the future (use to compensate for walking distance to a stop). Default is set to 0.
-    + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
+    + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request or `?timeFrom` timestamp, negative numbers set the start in the future (use to compensate for walking distance to a stop). Default is set to 0.
+    + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or `?timeFrom` timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
+    + timeFrom: `2021-01-21T06:00:00Z` (string, optional) - Set initial timestamp for time interval given by `?minutesBefore&minutesAfter`. Use ISO8601 time format (use encoded signs: `%3A` as `:`, `%2B` as `.`, `%2F` as `+`). Timezone offset example `Z` for UTC, `+02:00` for CEST.
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset as defined in IANA Time zone database in the form of Country/City (use encoded slash sign with `%2F` or use _ sign)
     + orderBySchedule: `false` (optional, boolean) - Order results by scheduled time, not by predicted time.
     + showAllRoutesFirst: `false` (optional, boolean) - First return departures for every distinct route and headsign, then fill the rest ordered by departure time.
@@ -1494,7 +1623,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-## Bicyclecounters [/bicyclecounters]
+## Bicycle Counters [/bicyclecounters]
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
@@ -1505,7 +1634,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
 
 ⚠️ Measurements of vendor Camea are every day at 5:00am (UTC) validated and recalculated and can change then.
 
-### GET All Bicyclecounters [GET /bicyclecounters/{?latlng,range,limit,offset}]
+### GET All Bicycle Counters [GET /bicyclecounters/{?latlng,range,limit,offset}]
 
 + Parameters
 
@@ -1534,7 +1663,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
 + Response 400
     + Attributes (Error)
 
-### GET Bicyclecounters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
+### GET Bicycle Counters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
@@ -1564,7 +1693,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + Attributes (Error)
 
 
-### GET Bicyclecounters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
+### GET Bicycle Counters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
 
 + Parameters
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
@@ -1969,6 +2098,8 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + id: `camea-BC_ZA-BO` (string) - direcrion_id
 + value: 3 (number)
++ value_pedestrians: 7 (number)
++ locations_id: `camea-BC_PN-VYBR` (string)
 + measured_from: `2019-05-18T07:38:37.000Z` (string)
 + measured_to: `2019-05-18T07:38:37.000Z` (string)
 + measurement_count: `1` (number)
@@ -2042,7 +2173,8 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 ## Departure Board Route (object)
 
 + name: `140` (string, required) - Route short name.
-+ type: `3` (string, required) - Type of route.
++ type: `3` (number, required) - Identifier of the route type in the GTFS static feed.
++ `mpv_type`: `1` (number, required) - Identifier of the vehicle type in the MPVNet.
 
 
 ## ASW id (object)
@@ -2463,6 +2595,62 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + description: `Rezidentní úsek` (string)
 + id: 1 (number, required)
 
+## Parking Space (object)
+
++ id: `6` (string, required)
++ source: `korid` (string, required)
++ sourceId: `33` (string, required)
++ dataProvider: `www.korid.cz` (string, nullable)
++ name: `Husova (u nemocnice)` (string, required)
++ category: `park_and_ride` (string, nullable)
++ dateModified: `2020-05-18T07:38:37.000Z` (string, required)
++ address: null (string, nullable)
++ areaServed: null (string, nullable)
++ paymentUrl: `https://payment.com/link.html` (string, nullable)
++ totalSpotNumber: 180 (number, required)
++ tariffId: 20 (number, nullable)
++ validFrom: `2020-05-31T00:00:00.000Z` (string, nullable)
++ validTo: `2022-05-31T00:00:00.000Z` (string, nullable)
+
+## Parking Measurement (object)
+
++ id: `10168955` (string, required)
++ source: `korid` (string, required)
++ sourceId: `20` (string, required)
++ availableSpotNumber: 5 (number, required)
++ closedSpotNumber: 0 (number, required)
++ occupiedSpotNumber: 8 (number, required)
++ totalSpotNumber: 13 (number, required)
++ dateModified: `2021-02-26T12:02:46.188Z` (string, required)
+
+## Parking Space Tariff Charge (object)
++ charge: 20 (number, required)
++ chargeOrderIndex: 0 (number, required)
++ chargeType: `minimum` (string, nullable)
++ chargeInterval: 1800 (number, required)
++ maxIterationsOfCharge: 1 (number, nullable)
++ minIterationsOfCharge: 1 (number, nullable)
++ startTimeOfPeriod: `Mon-Fri 09:00` (string, nullable)
++ endTimeOfPeriod: `Mon-Sun 14:30` (string, nullable)
+
+## Parking Space Tariff (object)
+
++ tariffId: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, required)
++ source: `korid` (string, required)
++ lastUpdated: `2020-10-12T15:19:21+02:00` (string, required)
++ paymentMode: `` (string, required)
++ paymentAdditionalDescription: `Parkování Liberec` (string, nullable)
++ freeOfCharge: false (boolean, required)
++ urlLinkAddress: `https://parking.liberec.cz/` (string, required)
++ chargeBandName: `A` (string, required)
++ acceptsPaymentCard: true (boolean, nullable)
++ acceptsCash: false (boolean, nullable)
++ acceptsMobilePayment: false (boolean, nullable)
++ chargeCurrency: `CZK` (string, required)
++ allowedVehicleType: `carSharing, taxi` (string, nullable)
++ allowedFuelType: `electricity, petrol, lpg` (string, nullable)
++ charge: (array[Parking Space Tariff Charge])
+
 ## Playground (object)
 
 + image (Playground Image)
@@ -2667,6 +2855,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + `gtfs` (object) - All properties tied with GTFS data format
     + `route_id`: L381 (string, required) - Identifier of the owner route in the GTFS static feed
     + `route_short_name`: 381 (string, required) - Identification of the line used for the public
+    + `route_type`: `1` (number, required) - Identifier of the route type in the GTFS static feed
     + `trip_id`: `381_51_180728` (string, required) - Identifier of the trip in the GTFS static feed
     + `trip_headsign`: `Sídliště Modřany` (string, optional, nullable) - Heading of the trip (identical to what is shown on the bus)
 + `start_timestamp`: `2019-03-18T11:00:00.000Z` (string, required) - Timestamp of arrival time in first stop (UTC)

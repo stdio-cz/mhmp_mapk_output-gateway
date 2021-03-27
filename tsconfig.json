@@ -1,18 +1,15 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "strict": true,
-    "sourceMap": true,
-    "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports": true
-  },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "strict": true,
+        "declaration": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "outDir": "./dist"
+    },
+    "include": ["src/**/*.ts"]
 }

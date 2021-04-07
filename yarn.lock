@@ -564,12 +564,12 @@
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-1.0.0.tgz#2fb5cfc2b740662bdd0dca231f69b7168b5bc230"
-  integrity sha512-BcWo1kVH4TEc513uR/y0r6SLD30hE9gtzKV3HS2AkAmMReY7/qmZ/jrgh/SLEfHo5nXSVM+BEoYwtEwq9X7Qhg==
+"@golemio/pid@1.0.1-dev.282146110":
+  version "1.0.1-dev.282146110"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-1.0.1-dev.282146110.tgz#5cf9955bffe46207510bd26ee2cfedf167a57a64"
+  integrity sha512-hXeHz8eORyVH3/r/hP8nEomlJHhPbbaW2znAI6JsDzA+7kpq4lSZC5o4goTvYvpihpstw4LVO+prycyTxhSbJA==
   dependencies:
-    "@golemio/ropid-gtfs" "1.0.0"
+    "@golemio/ropid-gtfs" "1.0.1-dev.282123935"
     lodash "^4.17.19"
 
 "@golemio/playgrounds@1.0.0":
@@ -596,10 +596,20 @@
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/schema-definitions@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.0.tgz#9cf896f4d1c8eccd93d7549b89d0a7b6256f4f59"
-  integrity sha512-SeVeApn9BTYPJYDW+Xp+mSbVbK+9OrhJYyuuQtRS4zkViQA4qd0yveYpy3OuwBd0abrJFJ9PCq7cN06W9wEB/Q==
+"@golemio/ropid-gtfs@1.0.1-dev.282123935":
+  version "1.0.1-dev.282123935"
+  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.1-dev.282123935.tgz#e0a359d2f1ec91aac7eda916535e4f3b2356d148"
+  integrity sha512-VA9zMQKoWoH16w9GczPXZskOAzyA7h/CaoRHM/dl5MmXkAscB1MtHdHzSnAYrNFaX7DobMB92z1AYbESEayDWw==
+  dependencies:
+    csv-parser "^3.0.0"
+    csv-stringify "^5.6.2"
+    lodash "^4.17.19"
+    pg-copy-streams "^5.1.1"
+
+"@golemio/schema-definitions@2.0.1-dev.282085590":
+  version "2.0.1-dev.282085590"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.1-dev.282085590.tgz#e0e03ac40bc26c478335712b758b85a2304cd9a1"
+  integrity sha512-8zfgebPjONMD3QmTHEhWHf9GsetKXfVCSmiXYq3ZwRpZGDyXLcPJ5gBj2B20ahheF7HUXw/1fvUovjt0NQlBBA==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"

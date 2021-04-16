@@ -1412,9 +1412,11 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or `?timeFrom` timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
     + timeFrom: `2021-01-21T06:00:00Z` (string, optional) - Set initial timestamp for time interval given by `?minutesBefore&minutesAfter`. Use ISO8601 time format (use encoded signs: `%3A` as `:`, `%2B` as `.`, `%2F` as `+`). Timezone offset example `Z` for UTC, `+02:00` for CEST.
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset as defined in IANA Time zone database in the form of Country/City (use encoded slash sign with `%2F` or use _ sign)
-    + orderBySchedule: `false` (optional, boolean) - Order results by scheduled time, not by predicted time.
-    + showAllRoutesFirst: `false` (optional, boolean) - First return departures for every distinct route and headsign, then fill the rest ordered by departure time.
     + mode: `departures` (optional, string) - Select mode to show only `departures`/`arrivals`/`mixed` results.
+    + order: `real` (optional, string) - Valid entries: `real` (default), `timetable`. Order results by predicted time from trip delay or timetable time.
+    + filter: `routeOnce` (optional, string) - Valid entries: `none` (default), `routeOnce`, `routeOnceFill`, `routeHeadingOnce`, `routeHeadingOnceFill`. `routeOnce`/`routeHeadingOnce` return only distinct `route_id`/`route_id + trip_headsing` combination trips' departures. `...Fill` attribute will fill number of returned departures up to `total/limit`.
+    + skip: `cancelled` (optional, string) - Valid entries: `cancelled`, `atStop`, `untracked`. Skips trips with these attributes. Use multiple rules with `&skip[]=cancelled&skip[]=atStop` query parameter array form.
+    + total: 20 (optional, number) - Total number of departures in final order process. The maximum is 1000 (default value is 20).
     + limit: 20 (optional, number) - Limits the number of retrieved items. The maximum is 1000 (default value is 20).
     + offset: 0 (optional, number) - Number of the initial departures that are skipped. Useful for multi-page displays.
 

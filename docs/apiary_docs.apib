@@ -1415,7 +1415,7 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + mode: `departures` (optional, string) - Select mode to show only `departures`/`arrivals`/`mixed` results.
     + order: `real` (optional, string) - Valid entries: `real` (default), `timetable`. Order results by predicted time from trip delay or timetable time.
     + filter: `routeOnce` (optional, string) - Valid entries: `none` (default), `routeOnce`, `routeOnceFill`, `routeHeadingOnce`, `routeHeadingOnceFill`. `routeOnce`/`routeHeadingOnce` return only distinct `route_id`/`route_id + trip_headsing` combination trips' departures. `...Fill` attribute will fill number of returned departures up to `total/limit`.
-    + skip: `cancelled` (optional, string) - Valid entries: `cancelled`, `atStop`, `untracked`. Skips trips with these attributes. Use multiple rules with `&skip[]=cancelled&skip[]=atStop` query parameter array form.
+    + skip: `canceled` (optional, string) - Valid entries: `canceled`, `atStop`, `untracked`. Skips trips with these attributes. Use multiple rules with `&skip[]=cancelled&skip[]=atStop` query parameter array form.
     + total: 20 (optional, number) - Total number of departures in final order process. The maximum is 1000 (default value is 20).
     + limit: 20 (optional, number) - Limits the number of retrieved items. The maximum is 1000 (default value is 20).
     + offset: 0 (optional, number) - Number of the initial departures that are skipped. Useful for multi-page displays.

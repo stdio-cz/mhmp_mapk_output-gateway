@@ -390,7 +390,8 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 + Request (application/json; charset=utf-8)
 
     + Headers
-        x-access-token: YOUR_ACCESS_TOKEN
+
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -413,7 +414,8 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 + Request (application/json; charset=utf-8)
 
     + Headers
-        x-access-token: YOUR_ACCESS_TOKEN
+
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -427,7 +429,7 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 
     + Attributes (403 Error)
 
-#### GET All Parking Spaces Measurements [GET /parking/measurements{?source,sourceId,from,to,limit,offset}]
+#### GET All Parking Spaces Measurements [GET /parking/measurements{?sourceId,from,to,limit,offset,source}]
 
 + Parameters
 
@@ -441,7 +443,8 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 + Request (application/json; charset=utf-8)
 
     + Headers
-        x-access-token: YOUR_ACCESS_TOKEN
+
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -461,7 +464,8 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 + Request (application/json; charset=utf-8)
 
     + Headers
-        x-access-token: YOUR_ACCESS_TOKEN
+
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -484,7 +488,8 @@ New parking endpoint, currently to be used for KORID Liberec data only.
 + Request (application/json; charset=utf-8)
 
     + Headers
-        x-access-token: YOUR_ACCESS_TOKEN
+
+            x-access-token: YOUR_ACCESS_TOKEN
 
 + Response 200 (application/json; charset=utf-8)
 
@@ -1861,11 +1866,12 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-### GET Sorted Waste Station [GET /sortedwastestations/{id}]
+### GET Sorted Waste Station [GET /sortedwastestations/station{?id,knskoId}]
 
 + Parameters
 
-    + id: `0a292077-4dbd-501a-ac60-d11c80e889c5` (string) - Identifier of the station.
+    + id: `26146616-0037-5bdf-beb3-5992c32b035a` (optional, string) - Main identifier of the station.
+    + knskoId: `3939` (optional, string) - KNSKO identifier of the station.
 
 + Request (application/json; charset=utf-8)
 
@@ -1891,11 +1897,12 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 💡 About 400 containers are equipped with IoT sensors that measure their fullness. Use these endpoints to get measurements from these devices.
 More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu).
 
-### GET All Sorted Waste Measurements [GET /sortedwastestations/measurements/{?containerId,limit,offset,from,to}]
+### GET All Sorted Waste Measurements [GET /sortedwastestations/measurements/{?containerId,limit,offset,from,to,knskoId}]
 
 + Parameters
 
-    + containerId: `7089c1ba-c2a4-52e9-bd54-9448bfdd7afe` (required, string) - Lists only measurements from container with this sensor ID
+    + containerId: `1a90b0e0-fabb-5e2e-8cb5-101bee0353dc` (optional, string) - Lists only measurements from container with this ID
+    + knskoId: `19196` (optional, string) - Lists only measurements from container with this KNSKO ID.
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
@@ -1912,11 +1919,12 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
     + Attributes (array)
         + (Sorted Waste Measurement)
 
-### GET All Sorted Waste Picks [GET /sortedwastestations/picks/{?containerId,limit,offset,from,to}]
+### GET All Sorted Waste Picks [GET /sortedwastestations/picks/{?containerId,limit,offset,from,to,knskoId}]
 
 + Parameters
 
-    + containerId: `7089c1ba-c2a4-52e9-bd54-9448bfdd7afe` (required, string) - Lists only picks from container with this knsko_id ID
+    + containerId: `1a90b0e0-fabb-5e2e-8cb5-101bee0353dc` (optional, string) - Lists only picks from container with this ID
+    + knskoId: `19196` (optional, string) - Lists only picks from container with this KNSKO ID.
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
@@ -2743,9 +2751,10 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + district: `praha-13` (string)
 + id: `dd08a6a7-1241-568a-9b1b-f384d69c358a` (string, required)
 + name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
-+ station_number: `SDHMP` (string)
++ station_number: `0001/ 001` (string)
 + updated_at: `2019-05-18T07:38:37.000Z` (string)
 + is_monitored: true (boolean, optional) - contains at least one container which is monitored with sensor
++ knsko_id: 3497 (number)
 
 ## Sorted Waste Station Accessibility (object)
 
@@ -2756,12 +2765,13 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + cleaning_frequency (Sorted Waste Station Container Cleaning Frequency)
 + company (Sorted Waste Station Container Company)
-+ container_type (string)
++ container_type: 3000 L Podzemní - SV (string)
 + description (string)
 + trash_type (Sorted Waste Station Container Trash Type)
 + last_measurement (Sorted Waste Station Last Measurement, optional)
 + last_pick (Sorted Waste Station Last Pick, optional)
-+ sensor_container_id: `dc532519-f2bd-5ab2-b049-132bad684dab` (string, optional)
++ knsko_id: 15288 (number)
++ container_id: `dc532519-f2bd-5ab2-b049-132bad684dab` (string, optional)
 + sensor_code: `0006/ 016C00214` (string, optional)
 + sensor_supplier: `Sensoneo` (string, optional)
 

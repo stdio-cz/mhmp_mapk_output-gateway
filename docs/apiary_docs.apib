@@ -1837,7 +1837,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 | `13` | `1` | `3` | 3 times per 1 week |
 | `61` | `6` | `1` | Once per 6 weeks |
 
-### GET All Sorted Waste Stations [GET /sortedwastestations/{?latlng,range,districts,accessibility,limit,offset,onlyMonitored}]
+### GET All Sorted Waste Stations [GET /sortedwastestations/{?latlng,range,districts,accessibility,limit,offset,onlyMonitored,id,knskoId}]
 
 + Parameters
 
@@ -1848,7 +1848,9 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
     + onlyMonitored: true (optional, boolean) - Filter only stations with at least one "smart" container with sensor for measurements and pickups
-
+    + id: `0a292077-4dbd-501a-ac60-d11c80e889c5` (optional, string) - Main identifier of the station.
+    + knskoId: `15288` (optional, string) - KNSKO identifier of the station.
+    
 + Request (application/json; charset=utf-8)
 
     + Headers
@@ -1866,29 +1868,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
-### GET Sorted Waste Station [GET /sortedwastestations/station/{?id}]
-
-+ Parameters
-
-    + id: `0a292077-4dbd-501a-ac60-d11c80e889c5` (optional, string) - Main identifier of the station.
-    + knskoId: `15288` (optional, string) - KNSKO identifier of the station.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Sorted Waste Station)
-
-+ Response 404
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
 
 ## Sorted Waste Fullness Sensors Data [/sortedwastestations]
 

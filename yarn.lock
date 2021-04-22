@@ -564,12 +564,12 @@
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@1.0.1-dev.284840737":
-  version "1.0.1-dev.284840737"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-1.0.1-dev.284840737.tgz#8968ec55d2d83bf79475cbba16c7f290263c175a"
-  integrity sha512-lS80kd12xm8RQLfTAAFJJR1HEBfs3tR4S0XbjGJiU30/7qeJDXq9LWhFGVfYSz+0y2bsg3pQ+cIR9giFy1CUVA==
+"@golemio/pid@1.0.1-dev.290376873":
+  version "1.0.1-dev.290376873"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-1.0.1-dev.290376873.tgz#d84323e4c809295f692b4c174b34728f26fa7355"
+  integrity sha512-1/fuImtFD+ph0KKQwlE7er60+6Uc9exnUO8yPDLt6R5lrSFb04fcFbLLdXxD11eh8MLZBiyTFMtjNaYLifzIOw==
   dependencies:
-    "@golemio/ropid-gtfs" "1.0.1-dev.282123935"
+    "@golemio/ropid-gtfs" "1.0.1-dev.289111839"
     lodash "^4.17.19"
 
 "@golemio/playgrounds@1.0.0":
@@ -596,10 +596,10 @@
     lodash "^4.17.19"
     pg-copy-streams "^5.1.1"
 
-"@golemio/ropid-gtfs@1.0.1-dev.282123935":
-  version "1.0.1-dev.282123935"
-  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.1-dev.282123935.tgz#e0a359d2f1ec91aac7eda916535e4f3b2356d148"
-  integrity sha512-VA9zMQKoWoH16w9GczPXZskOAzyA7h/CaoRHM/dl5MmXkAscB1MtHdHzSnAYrNFaX7DobMB92z1AYbESEayDWw==
+"@golemio/ropid-gtfs@1.0.1-dev.289111839":
+  version "1.0.1-dev.289111839"
+  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.1-dev.289111839.tgz#e060613143821f52d469d463c8f79b3136f7393b"
+  integrity sha512-05n9HtqMbbR7v3Tz849ePn/ZTtCiPmXCGHb9Cl6lg3PeXLxJBE9uCPgIGXiLPGY/0gS9pTBt8I5n2BZm5+fbaQ==
   dependencies:
     csv-parser "^3.0.0"
     csv-stringify "^5.6.2"

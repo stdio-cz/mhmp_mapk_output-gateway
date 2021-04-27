@@ -1421,20 +1421,20 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
 
 + Parameters
 
-    + ids: `U458Z101P` (optional, string) - Get result by GTFS stop_id. Can be used to retrive individual stops and to separate departures of Prague and intercity routes, even if they depart from the same physical stop. A list of GTFS stops can be found in `stops.txt` file of [GTFS feed](//opendata.praha.eu/dataset/jizdni-rady-pid).
-    + aswIds: `458_101` (optional, string) - Get result by ASW ID. First part of the number represents the whole node. Usually it groups the stops of the same name or all stops associated with a metro station. The second part of the number represents individual stops in the node. Use `_` instead of `/` as a separator or encode the slash sign with `%2F`. A list of ASW IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
+    + ids: `U458Z101P` (optional, string) - Get result by GTFS stop_id. Can be used to retrive individual stops and to separate departures of Prague and intercity routes, even if they depart from the same physical stop. A list of GTFS stops can be found in `stops.txt` file of the [GTFS feed](//opendata.praha.eu/dataset/jizdni-rady-pid).
+    + aswIds: `458_101` (optional, string) - Get result by ASW ID. First part of the number represents the whole node. Usually it groups the stops of the same name or all stops associated with a metro station. Also returns related train stations in the node. The second part of the number is optional and represents individual stops in the node. Use `_` instead of `/` as a separator or encode the slash sign with `%2F`. A list of ASW IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
     + cisIds: `28004` (optional, number) - Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
-    + names: `Smíchovské nádraží` (optional, string) - Get results by exact name of stop (case and whitespace sensitive). May return stops of the same name in different towns.
-    + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request or `?timeFrom` timestamp, negative numbers set the start in the future (use to compensate for walking distance to a stop). Default is set to 0.
-    + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or `?timeFrom` timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
-    + timeFrom: `2021-01-21T06:00:00Z` (string, optional) - Set initial timestamp for time interval given by `?minutesBefore&minutesAfter`. Use ISO8601 time format (use encoded signs: `%3A` as `:`, `%2B` as `.`, `%2F` as `+`). Timezone offset example `Z` for UTC, `+02:00` for CEST. Value without time zone is considered to be in time zone of preferredTimezone parameter.
-    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset as defined in IANA Time zone database in the form of Country/City (use encoded slash sign with `%2F` or use _ sign)
-    + mode: `departures` (optional, string) - Select mode to show only `departures`/`arrivals`/`mixed` results.
-    + order: `real` (optional, string) - Valid entries: `real` (default), `timetable`. Order results by predicted time from trip delay or timetable time.
-    + filter: `routeOnce` (optional, string) - Valid entries: `none` (default), `routeOnce`, `routeOnceFill`, `routeHeadingOnce`, `routeHeadingOnceFill`. `routeOnce`/`routeHeadingOnce` return only distinct `route_id`/`route_id + trip_headsing` combination trips' departures. `...Fill` attribute will fill number of returned departures up to `total/limit`.
+    + names: `Smíchovské nádraží` (optional, string) - Get results by exact name of stop (case and whitespace sensitive). May return stops of the same name from different towns.
+    + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request or `timeFrom` timestamp, negative numbers set the start in the future. Use to compensate for walking distance to a stop. Default is set to 0.
+    + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or `timeFrom` timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
+    + timeFrom: `2021-01-21T06:00:00` (string, optional) - Set initial timestamp for time interval given by `minutesBefore` and `minutesAfter`. Use to simulate query time different from now. Use ISO 8601 time format and URL encoded symbols: `%3A` for `:`, `%2B` for `.`, `%2F` for `+`. Time zone is set according to the `preferredTimezone` parameter. Applicable range is -6 hours +7 days from now.
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset as defined in the IANA Time zone database in the form of Country/City (use an URL encoded slash sign `%2F` or use an underscore _ symbol)
+    + mode: `departures` (optional, string) - Valid entries: `departures` (default), `arrivals`, `mixed`. Set how to handle behaviour in end stops. `departures` (default) returns all connections that depart from selected stops (does not return connections for which it is the final stop). `arrivals` returns all connections that arrive into the stops (does not return connections for which it is the first stop). `mixed` returns everything. Use `arrivals` to create dedicated arrival boards. Use `departures` for all other cases. Using `mixed` is not recomended as departures of adjoined routes will be returned twice.
+    + order: `real` (optional, string) - Valid entries: `real` (default), `timetable`. Order results by predicted time including trip delay or by timetable time.
+    + filter: `routeOnce` (optional, string) - Valid entries: `none` (default), `routeOnce`, `routeOnceFill`, `routeHeadingOnce`, `routeHeadingOnceFill`. Define how should be the list of departures returned. `none` returns all departures within the time and item limit. `routeOnce` returns exactly one occurence of departure for each `route_id`. Works best when querying a single stop. `routeHeadingOnce` returns one entry for each pair of `route_id` and `trip_headsign`, i.e. returns departures for routes that have multiple end stops. Works well when quering one or more stops in a node. `...Fill` attributes will do the same as their namesakes but afterwards will fill the rest of request up to `total/limit` with further departures. Use to ensure both having every line/destination represented and have the display filled with departures.
     + skip: `canceled` (optional, string) - Valid entries: `canceled`, `atStop`, `untracked`. Skips trips with these attributes. Use multiple rules with `&skip[]=cancelled&skip[]=atStop` query parameter array form.
-    + total: 20 (optional, number) - Total number of departures in final order process. The maximum is 1000 (default value is 20).
-    + limit: 20 (optional, number) - Limits the number of retrieved items. The maximum is 1000 (default value is 20).
+    + limit: 20 (optional, number) - Limits the number of items in response. The maximum is 1000 (default value is 20).
+    + total: 20 (optional, number) - Sets the number of items that will be queried. Use in conjunction with `offset`. Up to `total - offset`, but not more than `limit` items will be then returned. If unset, is same as `limit`. The maximum is 1000 (default value is 20).
     + offset: 0 (optional, number) - Number of the initial departures that are skipped. Useful for multi-page displays.
 
 + Request (application/json; charset=utf-8)
@@ -2203,7 +2203,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## PID Departure Board Infotext (object)
 
-+ valid_from: `2019-05-18T07:38:00.000Z` (string, required, nullable) - Intended time of infotext publishing in ISO String (UTC). Does not ahve to represent the time the reported event starts.
++ valid_from: `2019-05-18T07:38:00.000Z` (string, required, nullable) - Intended time of infotext publishing in ISO String (UTC). Does not have to represent the time the reported event starts.
 + valid_to: `2019-05-19T07:38:00.000Z` (string, required, nullable) - Intended time of infotext removal in ISO String (UTC). Does not have to represent the time the reported event ends.
 + text: `Nehoda na trase, odklon linek mimo tuto stanici.` (string, required) - Information text in Czech.
 + text_en: `Trips are cancelled due to accident on route.` (string, required, nullable) - Information text in English.
@@ -2215,8 +2215,10 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + headsign: `Chodov` (string, required) - Trip headsign (usually the final stop).
 + id: `140_224_200302` (string, required) - GTFS trip ID.
++ is_at_stop: `true` (boolean, required) - True if vehicle is physically present in the stop. Applicable only to connections with delay available.
 + is_canceled: `false` (boolean, required) - True if the trip is canceled.
 + is_wheelchair_accessible: `false` (boolean, required) - True if the vehicle is wheelchair accessible.
++ short_name: `Os 9327` (string, required) - The number of a particular train, otherwise `null`.
 
 ## PID Departure Board Last Stop (object)
 
@@ -2227,12 +2229,12 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + `level_id`: U118L2 (string, required) - Level of metro stops.
 + `location_type`: 0 (number, required) - Describes the type of stop, is always `0`.
-+ `parent_station`: U118S1 (string, required)
++ `parent_station`: U118S1 (string, required) - A GTFS identifier of the parent station for metro platforms.
 + `platform_code`: A (string, required) - Human-friendly code used to distinguish a stop inside a node. Multiple GTFS codes can share a platform code.
 + `stop_lat`: 50.4 (number, required) - Latitude of the stop marker or the center of metro or train station platform.
 + `stop_lon`: 14.4 (number, required) - Longitude of the stop marker or the center of metro or train station platform.
 + `asw_id` (ASW id, required, nullable) - ASW ID of the stop.
-+ `stop_id`: U118Z101P (string, required) - GTFS ID of the stop.
++ `stop_id`: U118Z101P (string, required) - GTFS ID of the stop. Stops that will be valid in the future have the date of the start of their validity appended, i.e. `U476Z51P_210401`.
 + `stop_name`: Flora (string, required) - Name of the stop.
 + `wheelchair_boarding`: 2 (number, required) - Indicates accessibility of the stop by wheelchairs. `0` – unknown, `1` – accessible, `2` – inaccessible
 + `zone_id`: P (string, required) - PID fare zone. Multiple zones are separated by a comma.
@@ -2244,18 +2246,21 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 ## PID Departure Board Delay (object)
 
 + is_available: `false` (boolean, required) - True if information about trip's delay is available.
-+ minutes: `3` (string, optional) - Delay rounded to minutes.
++ minutes: `3` (string, optional) - Delay rounded down to minutes.
 + seconds: `176` (string, optional) - Delay in seconds.
 
 ## PID Departure Board Stop Time (object)
 
-+ predicted: `2019-05-18T07:38:20.000Z` (string, required) - Time of arrival/departure including realtime delay in ISO String (UTC).
-+ scheduled: `2019-05-18T07:38:00.000Z` (string, required) - Time of arrival/departure in ISO String (UTC).
++ predicted: `2019-05-18T07:38:20.000Z` (string, required) - Time of arrival/departure including realtime delay as an ISO String (UTC). Is `null` on start/end stops. Is same as scheduled time when no delay is available. Is `null` on first/last stops.
++ scheduled: `2019-05-18T07:38:00.000Z` (string, required) - Time of arrival/departure as ISO string (UTC).
 
 ## PID Departure Board Route (object)
 
 + short_name: `140` (string, required) - Route designation used by PID.
 + type: `3` (string, required) - GTFS route type. `0` – tram, `1` – metro, `2` – train, `3` – bus, `4` – ferry, `7` – funicular, `11` – trolleybus
++ is_night (boolean, required) - True if route is a designated night route.
++ is_regional (boolean, required) - True if route serves areas outside Prague boundaries.
++ is_substitute_transport (boolean, required) - True if route provides substitute service for another route.
 
 ## Garden (object)
 

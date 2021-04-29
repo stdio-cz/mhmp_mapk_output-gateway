@@ -464,14 +464,6 @@
     winston "^3.3.3"
     xml2js-es6-promise "^1.1.1"
 
-"@golemio/departure-boards@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/departure-boards/-/departure-boards-1.0.0.tgz#b7a8fbed99e881e99d78fed1ec2ee3a60351bcc3"
-  integrity sha512-mdg7Ww3hxAHbVVhPfIjytr4SDoM9SK2F1mYWv/qk6bHcHHeBgsKuviEfAK21nFcaY6Nr6tfb4BI/KSlN3oNYnA==
-  dependencies:
-    "@golemio/ropid-gtfs" "1.0.0"
-    lodash "^4.17.19"
-
 "@golemio/errors@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@golemio/errors/-/errors-1.0.0.tgz#5e774dd7be830b06b6039e8957ba95b0dd935b33"
@@ -564,13 +556,18 @@
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-1.0.1.tgz#f93a7e7daa5a20001c88f80227a2d1b184744b61"
-  integrity sha512-8/yHDrCFsQDxirOKq225CIq1JFKX3/lIt6nKZZXyDLRhq9BhBd1bDilcmjp4pB3AEs7e/2fVtETCPNPTS8WG2Q==
+"@golemio/pid@2.0.0-dev.294376389":
+  version "2.0.0-dev.294376389"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.0-dev.294376389.tgz#1740e3edf5ad5bbb09980f7bc6ca4d7e28c6738b"
+  integrity sha512-65wEtYJvMaRj0JRlwcmB9uTLtWnoj9n7l2LDGRYrkwIpaM4I2Ej4N3kmpbOUWiLUIfahDKmdpXfmxWsmGGd8Ug==
   dependencies:
-    "@golemio/ropid-gtfs" "1.0.1"
+    "@turf/turf" "^5.1.6"
+    cheap-ruler "^2.5.1"
+    csv-parser "^3.0.0"
+    csv-stringify "^5.6.2"
+    gtfs-realtime-bindings "^0.0.6"
     lodash "^4.17.19"
+    pg-copy-streams "^5.1.1"
 
 "@golemio/playgrounds@1.0.0":
   version "1.0.0"
@@ -585,26 +582,6 @@
   integrity sha512-mOYacGaH4TXcgzGGlzaQ5AA7XQaNZQUkV14MLUFnM8VjeHfTk8cKi/T2SanmsPlfHGgafcBPcCABaI4xeN1QMg==
   dependencies:
     "@golemio/city-districts" "1.0.0"
-
-"@golemio/ropid-gtfs@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.0.tgz#b216f4b8dc03cb3444fe872eac2fbd8345b069c1"
-  integrity sha512-fqjDlhEe/PgevYI5K0fJbdWrS0LQh6wOKb5u4zE5l+RKMzDeGIUhV8MucfUDveF21vFeGg8I8iimAD1wD4EZAQ==
-  dependencies:
-    csv-parser "^3.0.0"
-    csv-stringify "^5.6.2"
-    lodash "^4.17.19"
-    pg-copy-streams "^5.1.1"
-
-"@golemio/ropid-gtfs@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/ropid-gtfs/-/ropid-gtfs-1.0.1.tgz#7aac88f6b12ec62f91b8c478d41933996e12e624"
-  integrity sha512-LFQARYxuT4+PfPkfFVyfRfRYuxHYXwYv2yAgV+j3RiHCGn4WUCvwnRU6J6M4vk3sTKmwU8uZoK/YpBkdcaRJHw==
-  dependencies:
-    csv-parser "^3.0.0"
-    csv-stringify "^5.6.2"
-    lodash "^4.17.19"
-    pg-copy-streams "^5.1.1"
 
 "@golemio/schema-definitions@2.0.2":
   version "2.0.2"
@@ -669,17 +646,6 @@
     dotenv "^8.0.0"
     mongoose "^5.6.7"
     winston "^3.2.1"
-
-"@golemio/vehicle-positions@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@golemio/vehicle-positions/-/vehicle-positions-1.0.0.tgz#1787b7802c27340abb42b2e18098448f30922c6c"
-  integrity sha512-e9PG+LmWEc1PI9cVZB/0+2c2kRXCj/LjkB3gZK2dqsVwLUXaVhcmzJLSrTocAXGEhMHanudmq/GhFeFOeeensg==
-  dependencies:
-    "@golemio/ropid-gtfs" "1.0.0"
-    "@turf/turf" "^5.1.6"
-    cheap-ruler "^2.5.1"
-    gtfs-realtime-bindings "^0.0.6"
-    lodash "^4.17.19"
 
 "@golemio/waste-collection-yards@1.0.0":
   version "1.0.0"
@@ -7051,9 +7017,9 @@ pluralize@^8.0.0:
   integrity sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==
 
 point-in-polygon@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/point-in-polygon/-/point-in-polygon-1.0.1.tgz#d59b64e8fee41c49458aac82b56718c5957b2af7"
-  integrity sha1-1Ztk6P7kHElFiqyCtWcYxZV7Kvc=
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/point-in-polygon/-/point-in-polygon-1.1.0.tgz#b0af2616c01bdee341cbf2894df643387ca03357"
+  integrity sha512-3ojrFwjnnw8Q9242TzgXuTD+eKiutbzyslcq1ydfu82Db2y+Ogbmyrkpv0Hgj31qwT3lbS9+QAAO/pIQM35XRw==
 
 postgres-array@~1.0.0:
   version "1.0.3"

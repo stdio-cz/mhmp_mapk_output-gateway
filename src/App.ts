@@ -164,13 +164,17 @@ export default class App {
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {
-            next(new CustomError("Not found", true, "App", 404));
+            next(new CustomError("Route not found", true, "App", 404, new Error(`Called ${req.method} ${req.url}`)));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
             const warnCodes = [400, 404];
-            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(err, warnCodes.includes(err.code) ? "warn" : "error");
+            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(
+                err,
+                warnCodes.includes(err.code) ? "warn" : "error",
+                log
+            );
             log.silly("Error caught by the router error handler.");
             res.setHeader("Content-Type", "application/json; charset=utf-8");
             res.status(errObject.error_status || 500).send(errObject);

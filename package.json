@@ -73,7 +73,7 @@
         "@golemio/schema-definitions": "2.0.2",
         "@golemio/shared-bikes": "1.0.0",
         "@golemio/shared-cars": "1.0.0",
-        "@golemio/sorted-waste-stations": "1.1.0",
+        "@golemio/sorted-waste-stations": "1.1.1-dev.298355714",
         "@golemio/traffic-cameras": "1.0.0",
         "@golemio/waste-collection-yards": "1.0.0",
         "@sentry/node": "5.15.4",

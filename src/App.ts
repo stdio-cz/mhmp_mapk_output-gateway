@@ -7,7 +7,7 @@ import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from 
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
 import { config } from "@golemio/core/dist/output-gateway/config";
 import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
-import { getRequestLogger, log } from "@golemio/core/dist/output-gateway/Logger";
+import { requestLogger, log } from "@golemio/core/dist/output-gateway/Logger";
 import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
 import { generalRoutes } from "./generalRoutes";
 import {
@@ -109,7 +109,7 @@ export default class App {
     };
 
     private middleware = (): void => {
-        this.express.use(getRequestLogger);
+        this.express.use(requestLogger);
         this.express.use(this.setHeaders);
         this.express.use(express.static("public"));
     };

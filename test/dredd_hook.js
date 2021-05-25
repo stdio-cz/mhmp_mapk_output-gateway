@@ -1,6 +1,17 @@
 const hooks = require('hooks');
+const fs = require("fs");
+const redis = require("@golemio/core/dist/output-gateway/redis");
 
 var storage = {};
+
+hooks.beforeAll(async function (transactions, done) {
+    const bufferTrips = fs.readFileSync(__dirname + "/../node_modules/@golemio/pid/db/example/trip_updates.pb");
+    const bufferVehicles = fs.readFileSync(__dirname + "/../node_modules/@golemio/pid/db/example/vehicle_positions.pb");
+
+    await redis.hset("files:gtfsRt", "trip_updates.pb", bufferTrips.toString("binary"));
+    await redis.hset("files:gtfsRt", "vehicle_positions.pb", bufferVehicles.toString("binary"));
+    done();
+});
 
 hooks.beforeEach(function (transaction) {
     transaction.request.uri = transaction.request.uri.replace(/\?.*/g, "");

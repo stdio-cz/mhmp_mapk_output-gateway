@@ -57,17 +57,17 @@
         "@golemio/bicycle-counters": "1.0.0",
         "@golemio/bicycle-parkings": "1.0.0",
         "@golemio/city-districts": "1.0.0",
-        "@golemio/core": "1.0.3",
+        "@golemio/core": "1.0.4-dev.307207992",
         "@golemio/exporting-module": "1.0.0",
         "@golemio/gardens": "1.0.0",
-        "@golemio/medical-institutions": "1.0.0",
+        "@golemio/medical-institutions": "1.0.1-dev.308918392",
         "@golemio/meteosensors": "1.0.0",
         "@golemio/municipal-authorities": "1.0.0",
         "@golemio/municipal-libraries": "1.0.1",
         "@golemio/municipal-police-stations": "1.0.0",
         "@golemio/parking-zones": "1.0.0",
-        "@golemio/parkings": "1.0.2",
-        "@golemio/pid": "2.0.0",
+        "@golemio/parkings": "1.0.3-dev.308917968",
+        "@golemio/pid": "2.0.1-dev.308917923",
         "@golemio/playgrounds": "1.0.0",
         "@golemio/public-toilets": "1.0.0",
         "@golemio/schema-definitions": "2.0.4",
@@ -84,6 +84,7 @@
         "dredd/optimist/minimist": "^1.2.3",
         "dredd/gavel/json-pointer": "^0.6.1",
         "hosted-git-info": "^3.0.8",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "nyc/**/browserslist": "^4.16.5"
     }
 }

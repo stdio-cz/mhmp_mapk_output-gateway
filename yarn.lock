@@ -556,10 +556,10 @@
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@2.0.1-dev.308917923":
-  version "2.0.1-dev.308917923"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.1-dev.308917923.tgz#4dfd6a99088f5c09fd1975c117d3657d1c475a48"
-  integrity sha512-urksxXzL2Jwm0XqRnHY7b4QaV3eYqL/5jk3rFeXaS7cf3RxgiAF4+ErFdT7Wuz5rBydIjrsqp2Nke1rzoCFf/A==
+"@golemio/pid@2.0.1-dev.309662564":
+  version "2.0.1-dev.309662564"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.1-dev.309662564.tgz#7dec43616448195bfaf3750de8d901069a8460c2"
+  integrity sha512-sjsn9lrbCOMvfXHy7+dxBolwB6yA7amxCtGlSA9cCc0u9qg/nCNB6Fznc6NLztUqq/uI+QVTmRz6i+Dy5H3KNw==
   dependencies:
     "@turf/turf" "^5.1.6"
     cheap-ruler "^2.5.1"
@@ -583,17 +583,17 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/schema-definitions@2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.4.tgz#2dba2943178cfa0d2ca7c64ada605f80ac8f5853"
-  integrity sha512-WwISl95uM00QSMud1Ry8SeTuTKdgaf6WF+WbqZTdN1sk/mEq9hGusTtyFv16P0BOEYplhKCOROG/zsMH/7Ovmw==
+"@golemio/schema-definitions@2.0.7-dev.306332466":
+  version "2.0.7-dev.306332466"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.7-dev.306332466.tgz#458d303d4f7bad76c23a99a8655520df5011b3d7"
+  integrity sha512-ymXpxwXYlL4bRt3jN/5ifU3JTXMj8JJwqtv8WXaLr5PGCr7TpG40jIhyCjkaPyK4LUPfKxMTJtPov7pVPjNwjA==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
     db-migrate "^0.11.11"
     db-migrate-pg "^1.2.2"
     migrate-mongo "^8.2.2"
-    mongoose "^5.8.9"
+    mongoose "^5.12.3"
     mongoose-schema-jsonschema "^1.4.3"
 
 "@golemio/shared-bikes@1.0.0":
@@ -6206,6 +6206,19 @@ mongodb@3.6.4, mongodb@^3.5.5, mongodb@^3.6.4:
   optionalDependencies:
     saslprep "^1.0.0"
 
+mongodb@3.6.8:
+  version "3.6.8"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.6.8.tgz#3e2632af81915b3ff99b7681121ca0895e8ed407"
+  integrity sha512-sDjJvI73WjON1vapcbyBD3Ao9/VN3TKYY8/QX9EPbs22KaCSrQ5rXo5ZZd44tWJ3wl3FlnrFZ+KyUtNH6+1ZPQ==
+  dependencies:
+    bl "^2.2.1"
+    bson "^1.1.4"
+    denque "^1.4.1"
+    optional-require "^1.0.3"
+    safe-buffer "^5.1.2"
+  optionalDependencies:
+    saslprep "^1.0.0"
+
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
@@ -6217,6 +6230,24 @@ mongoose-schema-jsonschema@^1.4.3:
   integrity sha512-kC56X/tYKSPHJfW84qMbnD0HynmsM9z4CoFBoEzlcUFycxisVWrUylnRIQcqWWVK9A9nRYoTXzkoS4bHNuO+6Q==
   dependencies:
     pluralize "^8.0.0"
+
+mongoose@^5.12.3:
+  version "5.12.11"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.12.11.tgz#e4531e4075aeed86db6482b2f1b5564570934d4c"
+  integrity sha512-16TVqYhHQdZNR8RTis/8iiTPy+nJPq0UhKyBFTucLLU3PWcDLY2gAGv6aOk0LygTNhEfgNnENgUUHhjVqTuh8w==
+  dependencies:
+    "@types/mongodb" "^3.5.27"
+    bson "^1.1.4"
+    kareem "2.3.2"
+    mongodb "3.6.8"
+    mongoose-legacy-pluralize "1.0.2"
+    mpath "0.8.3"
+    mquery "3.2.5"
+    ms "2.1.2"
+    regexp-clone "1.0.0"
+    safe-buffer "5.2.1"
+    sift "13.5.2"
+    sliced "1.0.1"
 
 mongoose@^5.3.6:
   version "5.11.15"
@@ -6236,7 +6267,7 @@ mongoose@^5.3.6:
     sift "7.0.1"
     sliced "1.0.1"
 
-mongoose@^5.6.7, mongoose@^5.8.9:
+mongoose@^5.6.7:
   version "5.11.19"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.11.19.tgz#fb20ee6145f4ca9bd757f87ed3ae9e13e92effde"
   integrity sha512-+oMf4XVg+j7ygnALi7K5vWZfKvC9gs9jdN/6Y1GV5OUAc7KQWoa6hzFO7nSj5jMJlhHNvC6tcS2uU7BV5aH8Lg==
@@ -6285,6 +6316,17 @@ mquery@3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/mquery/-/mquery-3.2.4.tgz#9c5c2e285ea6c6f20673f3528973c99ee1aaa1a0"
   integrity sha512-uOLpp7iRX0BV1Uu6YpsqJ5b42LwYnmu0WeF/f8qgD/On3g0XDaQM6pfn0m6UxO6SM8DioZ9Bk6xxbWIGHm2zHg==
+  dependencies:
+    bluebird "3.5.1"
+    debug "3.1.0"
+    regexp-clone "^1.0.0"
+    safe-buffer "5.1.2"
+    sliced "1.0.1"
+
+mquery@3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/mquery/-/mquery-3.2.5.tgz#8f2305632e4bb197f68f60c0cffa21aaf4060c51"
+  integrity sha512-VjOKHHgU84wij7IUoZzFRU07IAxd5kWJaDmyUzQlbjHjyoeK5TNeeo8ZsFDtTYnSgpW6n/nMNIHvE3u8Lbrf4A==
   dependencies:
     bluebird "3.5.1"
     debug "3.1.0"
@@ -6615,6 +6657,11 @@ optimist@0.6.1:
   dependencies:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
+
+optional-require@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/optional-require/-/optional-require-1.0.3.tgz#275b8e9df1dc6a17ad155369c2422a440f89cb07"
+  integrity sha512-RV2Zp2MY2aeYK5G+B/Sps8lW5NHAzE5QClbFP15j+PWmP+T9PxlJXBOOLoSAdgwFvS4t0aMR4vpedMkbHfh0nA==
 
 optionator@^0.8.1:
   version "0.8.3"
@@ -7906,6 +7953,11 @@ shiki@^0.9.2:
   dependencies:
     onigasm "^2.2.5"
     vscode-textmate "^5.2.0"
+
+sift@13.5.2:
+  version "13.5.2"
+  resolved "https://registry.yarnpkg.com/sift/-/sift-13.5.2.tgz#24a715e13c617b086166cd04917d204a591c9da6"
+  integrity sha512-+gxdEOMA2J+AI+fVsCqeNn7Tgx3M9ZN9jdi95939l1IJ8cZsqS8sqpJyOkic2SJk+1+98Uwryt/gL6XDaV+UZA==
 
 sift@7.0.1:
   version "7.0.1"

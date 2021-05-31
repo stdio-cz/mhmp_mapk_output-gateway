@@ -2009,6 +2009,66 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
     + Attributes (403 Error)
 
 
+
+
+# Group Pedestrians 🚶
+
+## Locations and Measurements of movement  [/pedestrians/]
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+### GET locations and directions [GET /pedestrians/locations/{?locationId,locationName,limit,offset}]
+
++ Parameters
+
+    + locationId: 2 (optional, number) - Lists only locations with this ID
+    + locationName: `Rytířská 12` (optional, string) - Lists only locations with this NAME.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+   
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Pedestrians Locations)
+
+
++ Response 404 (application/json; charset=utf-8)
+
+
+
+### GET measurements of pedestrian traffic [GET /pedestrians/measurements/{?locationId,directionId,limit,offset,from,to}]
+
++ Parameters
+
+    + locationId: 1 (optional, number) - Lists only measurements for this location
+    + directionId: 3 (optional, number) - Lists only measurements for this direction
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + from: `2020-05-16T04:00:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
+    + to: `2020-05-18T04:00:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Pedestrians Measurements)
+
+
++ Response 404 (application/json; charset=utf-8)
+
+
 # Data structure
 
 ## Point (array[number])
@@ -2916,3 +2976,36 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + `description`: `Příjem odpadu` (string)
 + `id`: `ODPADPRIJEM` (string)
 + `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
+
+
+## Pedestrians Locations (object)
+
++ id: `2` (string, required) - location id
++ location_name: `Rytířská 12` (string, required)
++ lat: `50.084781715549276` (string, required)
++ lng: `14.422412102465428` (string, required)
++ address: `Na Můstku 12` (string, required)
++ city_district: `Praha 1` (string, required)
++ tech: `kamera` (string, required)
++ map_url: `https://storage.golemio.cz/intenzita-pesi-dopravy/2-map.png` (string, required)
++ photo_url: `https://storage.golemio.cz/intenzita-pesi-dopravy/2.png` (string, required)
++ measurement_start: `2020-09-02 12:00` (string, required)
++ measurement_end: `2020-09-05 12:00` (string, nullable)
++ directions (array[Pedestrians Directions])
+
+
+## Pedestrians Directions (object)
+
++ id: `2` (string, required) - direction id
++ name: `Můstek` (string, required)
++ to: 1 (number, required)
+
+
+## Pedestrians Measurements (object)
+
++ location_id: `1` (string, required)
++ direction_id: `3` (string, required)
++ value: `19` (string, required)
++ quality: `0.66666666666666666667` (string, required)
++ measured_from: `2020-07-09T09:00:37.000Z` (string, required)
++ measured_to: `2020-10-09T09:00:37.000Z` (string, required)

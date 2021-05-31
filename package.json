@@ -17,7 +17,7 @@
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
         "generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Output Gateway\" --mode file --out docs/typedoc src",
         "dredd": "dredd",
-        "lint": "eslint 'src/**/*.ts'"
+        "lint": "eslint src/**/*.ts"
     },
     "author": "Operator ICT, a.s.",
     "license": "MIT",
@@ -74,6 +74,7 @@
         "@golemio/shared-bikes": "1.0.0",
         "@golemio/shared-cars": "1.0.0",
         "@golemio/sorted-waste-stations": "1.1.1",
+        "@golemio/flow": "1.0.2-dev.302305006",
         "@golemio/traffic-cameras": "1.0.0",
         "@golemio/waste-collection-yards": "1.0.0",
         "@sentry/node": "5.15.4",

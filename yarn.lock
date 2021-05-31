@@ -493,6 +493,14 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
+"@golemio/flow@1.0.2-dev.302305006":
+  version "1.0.2-dev.302305006"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.2-dev.302305006.tgz#bd166b2a3436560a481ebbe60cde03ce67c32aca"
+  integrity sha512-XhwLmQc/DqbEXkb3h5sz6JIZlrcWopixmB7MRmOXl05N2bgKGNKPMxv0GiomRmYmFzBZQGuhxg3seogXamISiQ==
+  dependencies:
+    JSONStream "^1.0.4"
+    axios "^0.21.1"
+
 "@golemio/gardens@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.0.tgz#8a6f88497ade2fa8164b2c2a2cfb05293d249441"

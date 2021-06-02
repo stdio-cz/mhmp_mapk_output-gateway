@@ -489,10 +489,10 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/flow@1.0.2-dev.313590209":
-  version "1.0.2-dev.313590209"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.2-dev.313590209.tgz#820987ed55e6984de6389ad46f640455df25d4f0"
-  integrity sha512-IXsfdAT5ebzbYSAIRFWOWqX1NcFprqlvNTKKjqJD4LIlRuXcfUG9Zhol7A3iEgRowh/QlJca5ZekBuR3oyFoug==
+"@golemio/flow@1.0.2-dev.313632681":
+  version "1.0.2-dev.313632681"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.2-dev.313632681.tgz#4bcf32563b8e267d35615cd409890f65055ec1b0"
+  integrity sha512-tVJVhpGkyYDy9s97D/yVCtFRKzsDOw6WQR55I+0PjezES7U/ChG6wY0iIZKLX+zoOkhKqiEGC14Tahs9uqI9Ng==
   dependencies:
     JSONStream "^1.0.4"
     axios "^0.21.1"

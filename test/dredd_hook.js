@@ -191,6 +191,11 @@ hooks.before("Public Transport 🚋 > PID Departure Boards > GET Departure Board
 });
 
 hooks.before(
+    "Pedestrians 🚶 > Locations and Measurements of movement > GET locations and directions",
+    (transaction) => (transaction.skip = true)
+);
+
+hooks.before(
     "Pedestrians 🚶 > Locations and Measurements of movement > GET measurements of pedestrian traffic",
     (transaction) => (transaction.skip = true)
 );

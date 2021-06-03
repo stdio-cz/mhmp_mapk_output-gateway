@@ -2273,6 +2273,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## PID Departure Board Trip (object)
 
++ direction: `top-left` (string, required) - The equivalent of arrows that are printed on stop signs. Indicates the direction the vehicle will continue at stops where routes split up relative to the direction of motion of the vehicle. Valid values: `null` (do not display the arrow), `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`, `top-left`.
 + headsign: `Chodov` (string, required) - Trip headsign (usually the final stop).
 + id: `140_224_200302` (string, required) - GTFS trip ID.
 + is_at_stop: `true` (boolean, required) - True if vehicle is physically present in the stop. Applicable only to connections with delay available.
@@ -2302,6 +2303,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 ## PID Departure Board Stop Reference (object)
 
 + id: `U754Z1P` (string, required) - GTFS ID of the stop the vehicle is stopping at.
++ platform_code: `B` (string, required) - For trains it is the platform number the train is stopping at. `null` if not known. For other modes of transport, returns the platform code in `stops[].platform_code`.
 
 ## PID Departure Board Delay (object)
 

@@ -2025,7 +2025,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
     + locationName: `Rytířská 12` (optional, string) - Lists only locations with this NAME.
     + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
     + offset: 0 (optional, number) - Number of the first items that are skipped.
-   
+
 
 + Request (application/json; charset=utf-8)
 
@@ -2303,7 +2303,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 ## PID Departure Board Stop Reference (object)
 
 + id: `U754Z1P` (string, required) - GTFS ID of the stop the vehicle is stopping at.
-+ platform_code: `B` (string, required) - For trains it is the platform number the train is stopping at. `null` if not known. For other modes of transport, returns the platform code in `stops[].platform_code`.
++ platform_code: `B` (string, required) - For trains it is the platform number the train is stopping at. Is `null` if not known. For other modes of transport, returns the platform code from `stops[]`.
 
 ## PID Departure Board Delay (object)
 

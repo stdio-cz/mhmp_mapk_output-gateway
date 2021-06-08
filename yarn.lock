@@ -615,10 +615,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.1.tgz#83c2efbdbac61312b3b5c975024cddde9315c45a"
-  integrity sha512-qWckEwlN1WjJ767CUsx3OReFk6+RbwiLK5kTbXI1oX6C63Feur7qVRLJ3UeNZaBAkxJ2iguQaBfMAaw1yy5PoA==
+"@golemio/sorted-waste-stations@1.1.3-dev.316989394":
+  version "1.1.3-dev.316989394"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.3-dev.316989394.tgz#c4121794fb59a1632e3f2511732ad0dff307c37b"
+  integrity sha512-9HQbjaQn+IA6+Z5/SqkcMy7o/DRF5mmXwaX+rlwryYPbsTcQNigiUVOFJwQeuYKGP/iBgImEur0EOE5XG8SgrQ==
   dependencies:
     "@golemio/city-districts" "1.0.0"
     JSONStream "^1.0.4"
@@ -8533,15 +8533,10 @@ tree-kill@^1.2.2:
   resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
   integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
 
-trim-newlines@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-1.0.0.tgz#5887966bb582a4503a41eb524f7d35011815a613"
-  integrity sha1-WIeWa7WCpFA6QetST301ARgVphM=
-
-trim-newlines@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-3.0.1.tgz#260a5d962d8b752425b32f3a7db0dcacd176c144"
-  integrity sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==
+trim-newlines@^1.0.0, trim-newlines@^3.0.0, trim-newlines@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-4.0.1.tgz#caa1a0c92e86282c9cc8485ccd3ee5a6a4fbd958"
+  integrity sha512-5n5GIW0uEbjCB2PO6OoaG11rscJmLOLw12ZG9e0vBKNMToDJ2n1+AkUhJpGO2bLj3jXKa/gYTGVmilX5CCxqmA==
 
 trim-off-newlines@^1.0.0:
   version "1.0.1"

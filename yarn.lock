@@ -560,10 +560,10 @@
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@2.0.2-dev.322546091":
-  version "2.0.2-dev.322546091"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.2-dev.322546091.tgz#54cac599d4f95298def251552292217dce7ec52a"
-  integrity sha512-uhlIsOrEW4M+04sfpAyLItQGv2bN9zcygg6lPnYm9CJAtkRvj1aGV2jRs0dmzZCQadXjA89eRAs6//3KAw3W9Q==
+"@golemio/pid@2.0.2-dev.327143482":
+  version "2.0.2-dev.327143482"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.2-dev.327143482.tgz#52bb09040ecc8a23ecbb1e118873e29a431c5669"
+  integrity sha512-WJwwOn+S0ZVYeajZH6gsGoHYp9UyZswIFrCTIiDxxoW9vebQj4S61Y2WNp8awqmXobdOzfuEnHwqhE+6qsybbQ==
   dependencies:
     "@turf/turf" "^5.1.6"
     cheap-ruler "^2.5.1"

@@ -30,6 +30,7 @@ include:
           - "/docker/simple-build.yml"
           - "/k8s-golemio/helm-golemio-deploy.yml"
           - "/apiary/blueprint.yml"
+          - "/docs/golemio-gitlab-docs-pages.yml"
 
 cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -69,18 +70,3 @@ run_tests:
         - docker
     rules:
         - when: always
-
-pages:
-    stage: deploy
-    image: node:12
-    script:
-        - yarn
-        - npm run generate-docs
-        - mv docs/typedoc/* public
-    artifacts:
-        paths:
-            - public
-    rules:
-        - if: $CI_COMMIT_BRANCH == "master"
-    tags:
-        - docker

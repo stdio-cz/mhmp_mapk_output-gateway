@@ -69,13 +69,13 @@ from the application's root directory.
 To compile typescript code into js one-time (production build):
 
 ```
-npm run build
+yarn build
 ```
 
 To run the app:
 
 ```
-npm start
+yarn start
 ```
 
 #### Dev/debug
@@ -83,13 +83,13 @@ npm start
 Run via TypeScript (in this case it is not needed to build separately, application will watch for changes and restart on save):
 
 ```
-npm run dev-start
+yarn dev-start
 ```
 
 or run with a debugger:
 
 ```
-npm run dev-start-debug
+yarn dev-start-debug
 ```
 
 Runing the application in any way will load all config variables from environment variables or the .env file. To run, set all environment variables from the `.env.template` file, or copy the `.env.template` file into new `.env` file in root directory and set variables there.
@@ -109,7 +109,7 @@ For importing example data run `mongorestore -d $MONGO_DB_NAME ./db/example/mong
 To run all test defined in /test directory simply run this command:
 
 ```
-npm test
+yarn test
 ```
 
 from the application's root directory. All tests should pass with the correct data. Test data are in the `db/example` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
@@ -132,7 +132,7 @@ You can set both `LOG_LEVEL` and `DEBUG` settings in ENV variables.
 
 ## Documentation
 
-For generating documentation run `npm run generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
+For generating documentation run `yarn generate-docs`. Typedoc source code documentation is located in `docs/typedoc`.
 
 More documentation in `docs/`. If you want to add a new dataset or create new API routes, check out our existing [modules](https://gitlab.com/operator-ict/golemio/code/modules).
 

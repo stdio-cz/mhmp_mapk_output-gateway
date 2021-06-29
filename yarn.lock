@@ -418,10 +418,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.4.tgz#1f1fdd5895b2f85f7460fe44291de14f6991fc1a"
-  integrity sha512-hWFHbcHWKWLUllalsl6E13wpDewCCGmKBon1de6TNKRjJ6c6PPHrXzMocuzZbhjDgpszZQBNSx7Ye9ofhuvAKg==
+"@golemio/core@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.0.5.tgz#6af213dbc7417887fa45ca2093a063f7e55a9c21"
+  integrity sha512-POBhioxUnx0cvSV5yk2ORuA2OWb6w+y0cpTfctyY8DlZMyefE0HhaXFv2QMV6pf3qpRqMqnj+fd730ggsbh4/w==
   dependencies:
     "@golemio/errors" "^1.0.0"
     "@golemio/utils" "^1.0.0"
@@ -560,10 +560,10 @@
     "@golemio/city-districts" "1.0.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.3.tgz#f6e29a537e0c37cb258e1028e936d18273825423"
-  integrity sha512-u0UjdISKsqMEjszuBO6Uc6aoRf9ObrfQH91Qjk4r0VWAbycelp7sHXl0cxGZqz0iXupqvOtG2B4Tnaxp4D37gQ==
+"@golemio/pid@2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.4.tgz#df77e221a29de155478fdd9bdf3f348750b4573d"
+  integrity sha512-sjXTlqH5WnwCFNj0oqWiVSoT/lovv0RVIFBlw8VSU2DkK7dlQwvUfMqOdXBEO1VSKPbwijiy2fHGs0iPy+s3iw==
   dependencies:
     "@turf/turf" "^5.1.6"
     cheap-ruler "^2.5.1"
@@ -587,10 +587,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.0"
 
-"@golemio/schema-definitions@2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.7.tgz#5ae90b8a46e6c9c875b9975842d1a324a9cefc46"
-  integrity sha512-jcZ733KkRutVIP2XPN0FKCUk1YOcMYJm8abyda9gtk/hjGFJ0SD1L2KeOTkHAqZSiv6GzmcVCK6fdRBVZWAMEA==
+"@golemio/schema-definitions@2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.10.tgz#de8a81f3a5a843d5b2b215dfd02c7d915bcd2b69"
+  integrity sha512-XVOHFRbz636ZEtLZ3XcZXM2/FtDt1t1TuiioJYx9rnnUJejTZEcWzGdkwLRWxEAMdm7HvRtitpmuQh4IxsSBzA==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"

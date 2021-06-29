@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.6",
+    "version": "3.0.7",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -15,7 +15,7 @@
         "test": "mocha --exit -b --check-leaks --timeout 60000 -r ts-node/register -r dotenv/config --recursive 'test/**/*.test.ts'",
         "test-debug": "run-s 'test --inspect-brk=9230'",
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
-        "generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Output Gateway\" --mode file --out docs/typedoc src",
+        "generate-docs": "typedoc --out docs/typedoc src",
         "dredd": "dredd",
         "lint": "eslint 'src/**/*.ts'"
     },
@@ -57,7 +57,7 @@
         "@golemio/bicycle-counters": "1.0.0",
         "@golemio/bicycle-parkings": "1.0.0",
         "@golemio/city-districts": "1.0.0",
-        "@golemio/core": "1.0.4",
+        "@golemio/core": "1.0.5",
         "@golemio/exporting-module": "1.0.0",
         "@golemio/gardens": "1.0.0",
         "@golemio/medical-institutions": "1.0.1",
@@ -67,10 +67,10 @@
         "@golemio/municipal-police-stations": "1.0.0",
         "@golemio/parking-zones": "1.0.0",
         "@golemio/parkings": "1.0.3",
-        "@golemio/pid": "2.0.3",
+        "@golemio/pid": "2.0.4",
         "@golemio/playgrounds": "1.0.0",
         "@golemio/public-toilets": "1.0.0",
-        "@golemio/schema-definitions": "2.0.7",
+        "@golemio/schema-definitions": "2.0.10",
         "@golemio/shared-bikes": "1.0.0",
         "@golemio/shared-cars": "1.0.0",
         "@golemio/sorted-waste-stations": "1.1.3",

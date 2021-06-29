@@ -15,7 +15,7 @@
         "test": "mocha --exit -b --check-leaks --timeout 60000 -r ts-node/register -r dotenv/config --recursive 'test/**/*.test.ts'",
         "test-debug": "run-s 'test --inspect-brk=9230'",
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
-        "generate-docs": "npx typedoc --readme \"./README.MD\" --name \"Golemio Output Gateway\" --mode file --out docs/typedoc src",
+        "generate-docs": "typedoc --out docs/typedoc src",
         "dredd": "dredd",
         "lint": "eslint 'src/**/*.ts'"
     },

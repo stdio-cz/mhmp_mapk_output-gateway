@@ -61,4 +61,30 @@ describe("App", () => {
     it("should respond with 400 BAD REQUEST to GET /parkings/?latlng&range with bad parameters", (done) => {
         request(expressApp).get("/parkings/?latlng=50.032074,14.492015&range=asd").expect(400, done);
     });
+
+    describe("Compression", () => {
+        it("should support gzip compression", async () => {
+            const response = await request(expressApp).get("/parking/tariffs?source=korid").set("Accept-Encoding", "gzip");
+            expect(response.get("Content-Type")).to.match(/json/);
+            expect(response.get("Content-Encoding")).to.equal("gzip");
+            expect(response.get("Content-Length")).to.equal(undefined);
+            // expect(response.headers).to.include({ "content-encoding": "gzip" });
+            // expect(response.headers["content-length"]).to.equal(undefined);
+        });
+
+        it("should not compress if content length bellow threshold", async () => {
+            const response = await request(expressApp).get("/parking/tariffs?source=non-existent").set("Accept-Encoding", "gzip");
+            expect(response.get("Content-Type")).to.match(/json/);
+            expect(response.get("Content-Encoding")).to.equal(undefined);
+            expect(response.get("Content-Length")).to.equal("2");
+        });
+
+        it("should not compress if 'Accept-Encoding' is not set", async () => {
+            // rewrite Accept-Encoding as it is set by default
+            const response = await request(expressApp).get("/parking/tariffs?source=korid").set("Accept-Encoding", "");
+            expect(response.get("Content-Type")).to.match(/json/);
+            expect(response.get("Content-Encoding")).to.equal(undefined);
+            expect(response.get("Content-Length")).to.equal("2078");
+        });
+    });
 });

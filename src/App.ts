@@ -2,6 +2,7 @@
 import fs from "fs";
 import http from "http";
 import path from "path";
+import compression from "compression";
 import * as Sentry from "@sentry/node";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
@@ -112,6 +113,7 @@ export default class App {
     private middleware = (): void => {
         this.express.use(requestLogger);
         this.express.use(this.setHeaders);
+        this.express.use(compression());
         this.express.use(express.static("public"));
     };
 

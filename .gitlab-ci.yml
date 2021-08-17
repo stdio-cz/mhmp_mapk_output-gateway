@@ -53,7 +53,7 @@ run_tests:
         # 4 for MODERATE
         # 8 for HIGH
         # 16 for CRITICAL
-        # - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
+        - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build
         - export LOG_LEVEL=INFO

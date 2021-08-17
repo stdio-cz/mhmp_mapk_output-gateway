@@ -580,10 +580,10 @@
     "@golemio/city-districts" "1.0.1"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.8.tgz#39b4267d218b0f07720ccc0e59374a096ded75a1"
-  integrity sha512-wHnx3f57N++EZZKdArFxwcBhvmJTfWZ9CkYZyY2mi+DnwhQpYMfE6JYsLmSbjl5l8k+jDD1LmJGXp+56dqyPdQ==
+"@golemio/pid@2.0.9-dev.354493804":
+  version "2.0.9-dev.354493804"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.9-dev.354493804.tgz#ecc18477249f809703423b4f695a001f63dbab1a"
+  integrity sha512-fTp2Y5EOKNpt/xIcSHbNn+57eWgwiKOUISfyhmnZojOsgfVX41DMukYBMswc+sr3utrYf2PKmohxlGLESGGQqg==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"

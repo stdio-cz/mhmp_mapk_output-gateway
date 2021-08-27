@@ -67,6 +67,7 @@
         "@golemio/municipal-authorities": "1.0.1",
         "@golemio/municipal-libraries": "1.0.2",
         "@golemio/municipal-police-stations": "1.0.1",
+        "@golemio/ndic": "1.0.4-dev.360551631",
         "@golemio/parking-zones": "1.0.1",
         "@golemio/parkings": "1.0.7",
         "@golemio/pid": "2.0.9-dev.357615842",
@@ -89,6 +90,8 @@
         "hosted-git-info": "^3.0.8",
         "lodash": "^4.17.21",
         "nyc/**/browserslist": "^4.16.5",
-        "trim-newlines": "^4.0.1"
+        "trim-newlines": "^4.0.1",
+        "url-parse": ">=1.5.2",
+        "xmldom": "github:xmldom/xmldom#0.7.0"
     }
 }

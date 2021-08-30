@@ -37,7 +37,7 @@ cache:
     paths:
         - node_modules/
 
-run_tests:
+.run_tests:
     stage: build
     image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest
     services:
@@ -70,3 +70,11 @@ run_tests:
         - docker
     rules:
         - when: always
+
+run_tests:
+    extends: .run_tests
+    image: bitnami/node:12.22.1
+
+run_tests-node14:
+    extends: .run_tests
+    image: bitnami/node:14.17.5

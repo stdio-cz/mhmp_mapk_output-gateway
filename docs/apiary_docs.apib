@@ -1417,7 +1417,7 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
 
 You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array format - eg. `ids[]=1&ids[]=3`. **At least one of these IDs is required.** The maximum is 100 stops combined in one request.
 
-### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,timeFrom,preferredTimezone,orderBySchedule,showAllRoutesFirst,mode,limit,offset}]
+### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,timeFrom,preferredTimezone,mode,order,filter,skip,limit,total,offset}]
 
 + Parameters
 
@@ -1427,8 +1427,8 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + names: `Smíchovské nádraží` (optional, string) - Get results by exact name of stop (case and whitespace sensitive). May return stops of the same name from different towns.
     + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request or `timeFrom` timestamp, negative numbers set the start in the future. Use to compensate for walking distance to a stop. Default is set to 0.
     + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or `timeFrom` timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
-    + timeFrom: `2021-01-21T06:00:00` (string, optional) - Set initial timestamp for time interval given by `minutesBefore` and `minutesAfter`. Use to simulate query time different from now. Use ISO 8601 time format and URL encoded symbols: `%3A` for `:`, `%2B` for `.`, `%2F` for `+`. Time zone is set according to the `preferredTimezone` parameter. Applicable range is -6 hours +7 days from now.
-    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset as defined in the IANA Time zone database in the form of Country/City (use an URL encoded slash sign `%2F` or use an underscore _ symbol)
+    + timeFrom: `2021-01-21T06:00:00` (optional, string) - Set initial timestamp for time interval given by `minutesBefore` and `minutesAfter`. Use to simulate query time different from now. Use ISO 8601 time format and URL encoded symbols: `%3A` for `:`, `%2B` for `.`, `%2F` for `+`. Time zone is set according to the `preferredTimezone` parameter. Applicable range is -6 hours +7 days from now.
+    + preferredTimezone: `Europe%2FPrague` (optional, string) - Preferred timezone offset as defined in the IANA Time zone database in the form of Country/City (use an URL encoded slash sign `%2F` or use an underscore _ symbol)
     + mode: `departures` (optional, string) - Valid entries: `departures` (default), `arrivals`, `mixed`. Set how to handle behaviour in end stops. `departures` (default) returns all connections that depart from selected stops (does not return connections for which it is the final stop). `arrivals` returns all connections that arrive into the stops (does not return connections for which it is the first stop). `mixed` returns everything. Use `arrivals` to create dedicated arrival boards. Use `departures` for all other cases. Using `mixed` is not recomended as departures of adjoined routes will be returned twice.
     + order: `real` (optional, string) - Valid entries: `real` (default), `timetable`. Order results by predicted time including trip delay or by timetable time.
     + filter: `routeOnce` (optional, string) - Valid entries: `none` (default), `routeOnce`, `routeOnceFill`, `routeHeadingOnce`, `routeHeadingOnceFill`. Define how should be the list of departures returned. `none` returns all departures within the time and item limit. `routeOnce` returns exactly one occurence of departure for each `route_id`. Works best when querying a single stop. `routeHeadingOnce` returns one entry for each pair of `route_id` and `trip_headsign`, i.e. returns departures for routes that have multiple end stops. Works well when quering one or more stops in a node. `...Fill` attributes will do the same as their namesakes but afterwards will fill the rest of request up to `total/limit` with further departures. Use to ensure both having every line/destination represented and have the display filled with departures.
@@ -2067,6 +2067,10 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + Response 404 (application/json; charset=utf-8)
 
 
+
+
+
+
 # Data structure
 
 ## Point (array[number])
@@ -2214,7 +2218,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 ## Departure Board Stop (object)
 
 + name: `Prosecká` (string, required) - Name of station.
-+ id: `U754Z1P` (string, required) - GTFS station id.
++ id: `U754Z1P` (string, required) - GTFS stop id.
 + platform_code: `A` (string, required) - Station platform.
 + is_wheelchair_accessible: `1` (number, required) - 1 for wheelchair accessible stop.
 
@@ -2261,13 +2265,13 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## PID Departure Board Infotext (object)
 
-+ valid_from: `2019-05-18T07:38:00.000Z` (string, required, nullable) - Intended time of infotext publishing in ISO String (UTC). Does not have to represent the time the reported event starts.
-+ valid_to: `2019-05-19T07:38:00.000Z` (string, required, nullable) - Intended time of infotext removal in ISO String (UTC). Does not have to represent the time the reported event ends.
++ valid_from: `2019-05-18T07:38:00.000+02:00` (string, required, nullable) - Intended time of infotext publishing in ISO String (UTC). Does not have to represent the time the reported event starts.
++ valid_to: `2019-05-19T07:38:00.000+02:00` (string, required, nullable) - Intended time of infotext removal in ISO String (UTC). Does not have to represent the time the reported event ends.
 + text: `Nehoda na trase, odklon linek mimo tuto stanici.` (string, required) - Information text in Czech.
 + text_en: `Trips are cancelled due to accident on route.` (string, required, nullable) - Information text in English.
 + display_type: `inline` (string, required) - Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures), `general-alternate` (full screen alternates with departures).
 + related_stops (array)
-    + `U118S1` (string) - GTFS station IDs for which the infotexts apply.
+    + `U118Z1P` (string) - GTFS stop IDs for which the infotexts apply.
 
 ## PID Departure Board Trip (object)
 
@@ -2311,8 +2315,8 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## PID Departure Board Stop Time (object)
 
-+ predicted: `2019-05-18T07:38:20.000Z` (string, required) - Time of arrival/departure including realtime delay as an ISO String (UTC). Is `null` on start/end stops. Is same as scheduled time when no delay is available. Is `null` on first/last stops.
-+ scheduled: `2019-05-18T07:38:00.000Z` (string, required) - Time of arrival/departure as ISO string (UTC).
++ predicted: `2019-05-18T07:38:20.000+02:00` (string, required) - Time of arrival/departure including realtime delay as an ISO string. Is same as the scheduled time when no delay is available. Is `null` on first/last stops.
++ scheduled: `2019-05-18T07:38:00.000+02:00` (string, required) - Time of arrival/departure as ISO string.
 
 ## PID Departure Board Route (object)
 

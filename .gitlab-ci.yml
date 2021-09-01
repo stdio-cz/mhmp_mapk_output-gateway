@@ -37,7 +37,7 @@ cache:
     paths:
         - node_modules/
 
-run_tests:
+.run_tests:
     stage: build
     image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest
     services:
@@ -53,7 +53,7 @@ run_tests:
         # 4 for MODERATE
         # 8 for HIGH
         # 16 for CRITICAL
-        # - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
+        - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build
         - export LOG_LEVEL=INFO
@@ -70,3 +70,11 @@ run_tests:
         - docker
     rules:
         - when: always
+
+run_tests:
+    extends: .run_tests
+    image: bitnami/node:12.22.1
+
+run_tests-node14:
+    extends: .run_tests
+    image: bitnami/node:14.17.5

@@ -30,7 +30,6 @@ import {
     vehiclepositionsRouter,
     wasteCollectionYardsRouter,
     pedestriansRouter,
-    trafficRouter,
 } from "./routers";
 
 /**
@@ -153,7 +152,6 @@ export default class App {
         this.express.use("/pid", pidRouter);
         this.express.use("/parking", parkingsRouter);
         this.express.use("/pedestrians", pedestriansRouter);
-        this.express.use("/traffic", trafficRouter);
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);

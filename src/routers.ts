@@ -16,3 +16,4 @@ export { sortedWasteRouterPg } from "@golemio/sorted-waste-stations/dist/output-
 export { wasteCollectionYardsRouter } from "@golemio/waste-collection-yards/dist/output-gateway";
 export { parkingsRouter } from "@golemio/parkings/dist/output-gateway";
 export { pedestriansRouter } from "@golemio/flow/dist/output-gateway";
+export { trafficRouter } from "@golemio/ndic/dist/output-gateway";

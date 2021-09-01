@@ -199,3 +199,8 @@ hooks.before(
     "Pedestrians 🚶 > Locations and Measurements of movement > GET measurements of pedestrian traffic",
     (transaction) => (transaction.skip = true)
 );
+
+hooks.before(
+    "Traffic Restrictions 🚧 > Traffic Restrictions API > GET Traffic Restrictions",
+    (transaction) => (transaction.skip = true)
+);

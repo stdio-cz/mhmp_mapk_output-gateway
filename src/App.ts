@@ -3,7 +3,7 @@ import fs from "fs";
 import http from "http";
 import path from "path";
 import compression from "compression";
-import * as Sentry from "@sentry/node";
+import sentry from "@golemio/core/dist/shared/sentry";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
 import { config } from "@golemio/core/dist/output-gateway/config";
@@ -33,6 +33,7 @@ import {
     pedestriansRouter,
     trafficRouter,
 } from "./routers";
+import { initSentry } from "@golemio/core/dist/monitoring";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -51,37 +52,29 @@ export default class App {
      * Runs configuration methods on the Express instance
      */
     constructor() {
-        //
         process.on("uncaughtException", (err: Error) => {
-            Sentry.captureException(err);
+            log.error(err);
         });
-        process.on("unhandledRejection", (reason, promise) => {
-            Sentry.captureException(reason);
-        });
-        process.on("exit", (code) => {
-            Sentry.captureMessage(`Output gateway exited with code: ${code}`);
+        process.on("unhandledRejection", (reason: any) => {
+            log.error(reason);
         });
     }
 
     // Starts the application and runs the server
     public start = async (): Promise<void> => {
         try {
-            if (config.sentry_enable) {
-                Sentry.init({
-                    dsn: config.sentry_dsn,
-                    environment: process.env.NODE_ENV,
-                });
-            }
-            this.express.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
+            this.express = express();
+            initSentry(config.sentry, config.app_name, this.express);
             this.commitSHA = await this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
-            this.express = express();
             this.middleware();
             this.routes();
+            this.errorHandlers();
             this.server = http.createServer(this.express);
             // Setup error handler hook on server error
             this.server.on("error", (err: Error) => {
+                sentry.captureException(err);
                 ErrorHandler.handle(new CustomError("Could not start a server", false, "App", 1, err));
             });
             // Serve the application at the given port
@@ -90,7 +83,7 @@ export default class App {
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
         } catch (err) {
-            Sentry.captureException(err);
+            sentry.captureException(err);
             ErrorHandler.handle(err);
         }
     };
@@ -107,7 +100,6 @@ export default class App {
     };
 
     private database = async (): Promise<void> => {
-        const mongoUri: string = config.mongo_connection || "";
         await sequelizeConnection?.authenticate();
         await mongooseConnection;
         if (config.redis_enable) {
@@ -116,6 +108,8 @@ export default class App {
     };
 
     private middleware = (): void => {
+        this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
+        this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
         this.express.use(requestLogger);
         this.express.use(this.setHeaders);
         this.express.use(compression());
@@ -163,14 +157,10 @@ export default class App {
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);
         builder.BuildAllRoutes();
+    };
 
-        this.express.use(
-            Sentry.Handlers.errorHandler({
-                shouldHandleError(error: any): boolean {
-                    return true;
-                },
-            }) as express.ErrorRequestHandler
-        );
+    private errorHandlers = (): void => {
+        this.express.use(sentry.Handlers.errorHandler({ shouldHandleError: () => true }) as express.ErrorRequestHandler);
 
         // Not found error - no route was matched
         this.express.use((req, res, next) => {

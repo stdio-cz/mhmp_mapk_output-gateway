@@ -8,8 +8,16 @@ hooks.beforeAll(async function (transactions, done) {
     const bufferTrips = fs.readFileSync(__dirname + "/../node_modules/@golemio/pid/db/example/trip_updates.pb");
     const bufferVehicles = fs.readFileSync(__dirname + "/../node_modules/@golemio/pid/db/example/vehicle_positions.pb");
 
-    await redis.hset("files:gtfsRt", "trip_updates.pb", bufferTrips.toString("binary"));
-    await redis.hset("files:gtfsRt", "vehicle_positions.pb", bufferVehicles.toString("binary"));
+    await redis.RedisConnector.connect();
+    const redisClient = redis.RedisConnector.getConnection();
+    await Promise.all([
+        new Promise((done) =>
+            redisClient.hset("files:gtfsRt", "trip_updates.pb", bufferTrips.toString("binary"), () => done())
+        ),
+        new Promise((done) =>
+            redisClient.hset("files:gtfsRt", "vehicle_positions.pb", bufferVehicles.toString("binary"), () => done())
+        ),
+    ]);
     done();
 });
 

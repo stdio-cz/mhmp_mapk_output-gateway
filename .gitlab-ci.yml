@@ -60,6 +60,7 @@ cache:
         - export MONGO_CONN=$MONGO_CONN
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
         - export SENTRY_ENABLE=false
+        - export REDIS_ENABLE=true
         - export REDIS_CONN=redis://redis/
         - export SQL_DUMP_FILES=node_modules/@golemio/*/db/example/*.sql
         - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data

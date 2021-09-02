@@ -8,6 +8,7 @@ import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from 
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
 import { config } from "@golemio/core/dist/output-gateway/config";
 import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
+import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
 import { requestLogger, log } from "@golemio/core/dist/output-gateway/Logger";
 import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
 import { generalRoutes } from "./generalRoutes";
@@ -109,6 +110,9 @@ export default class App {
         const mongoUri: string = config.mongo_connection || "";
         await sequelizeConnection?.authenticate();
         await mongooseConnection;
+        if (config.redis_enable) {
+            await RedisConnector.connect();
+        }
     };
 
     private middleware = (): void => {
@@ -116,6 +120,7 @@ export default class App {
         this.express.use(this.setHeaders);
         this.express.use(compression());
         this.express.use(express.static("public"));
+        CacheMiddleware.init();
     };
 
     private routes = (): void => {

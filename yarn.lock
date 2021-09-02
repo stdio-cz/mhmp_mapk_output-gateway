@@ -432,10 +432,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.3.tgz#29f6cf8fdb0b3d76ea07a8dca10d93086b20febe"
-  integrity sha512-GIPxKwY8KHKFby3UcQi+Qp0WUj1B8pnQckBHccBMSnPhOwccFPHqYqAcgIHtZqR5AVsEu9TDSLDf6pC1rdQiVQ==
+"@golemio/core@1.1.4-dev.363947162":
+  version "1.1.4-dev.363947162"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.4-dev.363947162.tgz#c62071bce256f31db668ac06acd220b71c3c144f"
+  integrity sha512-BgF9l9Z8agK5zEujaEtf3gV3M+W+/aBBMhs+Og3mnNvcVml2NfnWpkRqwXcwcBk+lM26/n9JT/kQpLkLiQWbHg==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -595,10 +595,10 @@
     "@golemio/city-districts" "1.0.1"
     uuid-by-string "^3.0.2"
 
-"@golemio/pid@2.0.9":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.9.tgz#9e081e6cec7925fdbb6958db58b1b8bd98748824"
-  integrity sha512-xjiU0HI6RgwEVh9IUetAJeR5FW7FYBIKiGA8zTlyRxLOLZMVTJg3cDkZtJDgbPdF+2BGMBGA5G4zxP7r0nZ11A==
+"@golemio/pid@2.0.10-dev.364001343":
+  version "2.0.10-dev.364001343"
+  resolved "https://registry.yarnpkg.com/@golemio/pid/-/pid-2.0.10-dev.364001343.tgz#18639991d0adb06c0d10677844dcaf9fd42420e1"
+  integrity sha512-jIA2tL7s5swm/XGNkH7Gh6It5p3Xe26cd9MKtawUNPbtaSP1Z8FBT24rmcrXQLAXvdxXLjn7Chl0bLNZdRMAVQ==
   dependencies:
     "@turf/turf" "^6.5.0"
     JSONStream "^1.3.5"

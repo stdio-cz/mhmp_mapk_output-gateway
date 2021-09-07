@@ -34,6 +34,8 @@ import {
     trafficRouter,
 } from "./routers";
 import { initSentry } from "@golemio/core/dist/monitoring";
+import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
+import { getServiceHealth, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -43,20 +45,22 @@ export default class App {
     public express: express.Application = express();
     // The port the express app will listen on
     public port: number = parseInt(config.port || "3004", 10);
-
-    private server!: http.Server;
-
+    private server?: http.Server;
     private commitSHA!: string;
+    private lightship: Lightship;
 
     /**
      * Runs configuration methods on the Express instance
      */
     constructor() {
+        this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
         process.on("uncaughtException", (err: Error) => {
             log.error(err);
+            this.lightship.shutdown();
         });
         process.on("unhandledRejection", (reason: any) => {
             log.error(reason);
+            this.lightship.shutdown();
         });
     }
 
@@ -82,14 +86,32 @@ export default class App {
                 // Success callback
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
+            this.lightship.registerShutdownHandler(async () => {
+                log.info("Registering shutdown handler");
+                await this.gracefulShutdown();
+            });
+            this.lightship.signalReady();
         } catch (err) {
             sentry.captureException(err);
             ErrorHandler.handle(err);
         }
     };
 
+    /**
+     * Graceful shutdown - terminate connections and server
+     */
+    private gracefulShutdown = async (): Promise<void> => {
+        log.info("Graceful shutdown initiated.");
+        await mongooseConnection.then((mc) => mc.close(true));
+        await sequelizeConnection.close();
+        if (config.redis_enable) {
+            await RedisConnector.disconnect();
+        }
+        await this.stop();
+    };
+
     public stop = async (): Promise<void> => {
-        this.server.close();
+        this.server?.close();
     };
 
     private setHeaders = (req: Request, res: Response, next: NextFunction): void => {
@@ -117,20 +139,53 @@ export default class App {
         CacheMiddleware.init();
     };
 
+    private healthCheck = async () => {
+        const description = {
+            app: "Golemio Data Platform Output Gateway",
+            commitSha: this.commitSHA,
+            version: config.app_version,
+        };
+
+        const services: IServiceCheck[] = [
+            {
+                name: Service.POSTGRES,
+                check: () =>
+                    sequelizeConnection
+                        .authenticate()
+                        .then(() => true)
+                        .catch(() => false),
+            },
+            { name: Service.MONGO, check: () => mongooseConnection.then((mc) => mc.readyState === 1).catch(() => false) },
+        ];
+
+        if (config.redis_enable) {
+            services.push({ name: Service.REDIS, check: () => Promise.resolve(RedisConnector.isConnected()) });
+        }
+
+        const serviceStats = await getServiceHealth(services);
+
+        return { ...description, ...serviceStats };
+    };
+
     private routes = (): void => {
         const defaultRouter: express.Router = express.Router();
 
         // Create base url route handler
-        defaultRouter.get(["/", "/health-check", "/status"], (req, res, next) => {
-            log.silly("Health check/status called.");
-            res.json({
-                app_name: "Data Platform Output Gateway",
-                commit_sha: this.commitSHA,
-                status: "Up",
-                // Current app version (fron environment variable) according to package.json version
-                version: config.app_version,
-            });
-        });
+        defaultRouter.get(
+            ["/", "/health-check", "/status"],
+            async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+                try {
+                    const healthStats = await this.healthCheck();
+                    if (healthStats.health) {
+                        return res.json(healthStats);
+                    } else {
+                        return res.status(503).send(healthStats);
+                    }
+                } catch (err) {
+                    return res.status(503);
+                }
+            }
+        );
 
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);

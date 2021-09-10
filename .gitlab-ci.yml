@@ -19,11 +19,13 @@ variables:
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 stages:
+    - test
     - build
     - release
     - deploy
 
 include:
+    - template: Security/SAST.gitlab-ci.yml
     - template: "Workflows/Branch-Pipelines.gitlab-ci.yml"
     - project: "operator-ict/devops/gitlab-ci-pipeline"
       file:
@@ -38,7 +40,7 @@ cache:
         - node_modules/
 
 .run_tests:
-    stage: build
+    stage: test
     image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest
     services:
         - docker:dind

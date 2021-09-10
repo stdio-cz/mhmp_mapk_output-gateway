@@ -74,8 +74,8 @@ cache:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:12.22.1
+    image: bitnami/node:14.17.6
 
-run_tests-node14:
-    extends: .run_tests
-    image: bitnami/node:14.17.5
+#run_tests-node-next:
+#    extends: .run_tests
+#    image: bitnami/node:16

@@ -1,17 +1,16 @@
-// Import everything from express and assign it to the express variable
-import fs from "fs";
 import http from "http";
-import path from "path";
 import compression from "compression";
 import sentry from "@golemio/core/dist/shared/sentry";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
 import { config } from "@golemio/core/dist/output-gateway/config";
 import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
 import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
 import { requestLogger, log } from "@golemio/core/dist/output-gateway/Logger";
 import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
-import { generalRoutes } from "./generalRoutes";
+import { initSentry } from "@golemio/core/dist/monitoring";
+import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import {
     bicycleCountersRouter,
     cityDistrictsRouter,
@@ -33,26 +32,24 @@ import {
     pedestriansRouter,
     trafficRouter,
 } from "./routers";
-import { initSentry } from "@golemio/core/dist/monitoring";
-import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
-import { getServiceHealth, Service, IServiceCheck } from "@golemio/core/dist/helpers";
+import { generalRoutes } from "./general-routes";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
  */
-export default class App {
-    // Create a new express application instance
+export default class App extends BaseApp {
     public express: express.Application = express();
-    // The port the express app will listen on
     public port: number = parseInt(config.port || "3004", 10);
     private server?: http.Server;
     private commitSHA!: string;
     private lightship: Lightship;
 
     /**
-     * Runs configuration methods on the Express instance
+     * Run configuration methods on the Express instance
      */
     constructor() {
+        super();
+
         this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
         process.on("uncaughtException", (err: Error) => {
             log.error(err);
@@ -64,12 +61,14 @@ export default class App {
         });
     }
 
-    // Starts the application and runs the server
+    /**
+     * Start the application and runs the server
+     */
     public start = async (): Promise<void> => {
         try {
             this.express = express();
             initSentry(config.sentry, config.app_name, this.express);
-            this.commitSHA = await this.loadCommitSHA();
+            this.commitSHA = this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
             this.middleware();
@@ -114,13 +113,6 @@ export default class App {
         this.server?.close();
     };
 
-    private setHeaders = (req: Request, res: Response, next: NextFunction): void => {
-        res.setHeader("x-powered-by", "shem");
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
-        next();
-    };
-
     private database = async (): Promise<void> => {
         await sequelizeConnection?.authenticate();
         await mongooseConnection;
@@ -129,11 +121,23 @@ export default class App {
         }
     };
 
+    /**
+     * Set custom headers
+     */
+    private customHeaders = (_req: Request, res: Response, next: NextFunction): void => {
+        res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
+        next();
+    };
+
+    /**
+     * Bind middleware to express server
+     */
     private middleware = (): void => {
         this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
         this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
         this.express.use(requestLogger);
-        this.express.use(this.setHeaders);
+        this.express.use(this.commonHeaders);
+        this.express.use(this.customHeaders);
         this.express.use(compression());
         this.express.use(express.static("public"));
         CacheMiddleware.init();
@@ -167,6 +171,9 @@ export default class App {
         return { ...description, ...serviceStats };
     };
 
+    /**
+     * Define express server routes
+     */
     private routes = (): void => {
         const defaultRouter: express.Router = express.Router();
 
@@ -208,22 +215,26 @@ export default class App {
         this.express.use("/parking", parkingsRouter);
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);
+
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);
         builder.BuildAllRoutes();
     };
 
+    /**
+     * Define error handling middleware
+     */
     private errorHandlers = (): void => {
         this.express.use(sentry.Handlers.errorHandler({ shouldHandleError: () => true }) as express.ErrorRequestHandler);
 
         // Not found error - no route was matched
-        this.express.use((req, res, next) => {
+        this.express.use((req, _res, next) => {
             next(new CustomError("Route not found", true, "App", 404, new Error(`Called ${req.method} ${req.url}`)));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
-        this.express.use((err: any, req: Request, res: Response, next: NextFunction) => {
+        this.express.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
             const warnCodes = [400, 404];
             const errObject: ICustomErrorObject = HTTPErrorHandler.handle(
                 err,
@@ -233,22 +244,6 @@ export default class App {
             log.silly("Error caught by the router error handler.");
             res.setHeader("Content-Type", "application/json; charset=utf-8");
             res.status(errObject.error_status || 500).send(errObject);
-        });
-    };
-
-    /**
-     * Load the Commit SHA of the current build
-     *
-     * Only to be used at startup, not in runtime of the application.
-     */
-    private loadCommitSHA = async (): Promise<string> => {
-        return new Promise<string>((resolve, reject) => {
-            fs.readFile(path.join(__dirname, "..", "commitsha"), (err: NodeJS.ErrnoException | null, data: Buffer) => {
-                if (err) {
-                    return resolve("");
-                }
-                return resolve(data.toString());
-            });
         });
     };
 }

@@ -572,10 +572,10 @@
     "@golemio/city-districts" "1.0.1"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.4-dev.360551631":
-  version "1.0.4-dev.360551631"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.4-dev.360551631.tgz#d7f2e00a81f1a1a054e31832c75e93a10a7d91e2"
-  integrity sha512-CPIBiSCa2QyfKP8pFONJRxBazN3blv6ac5462bxBgTJVHSeeeeOeKwN0m1o+EXdyDGhVFRbdQg4lOmJ91Z04eQ==
+"@golemio/ndic@1.0.4-dev.380918836":
+  version "1.0.4-dev.380918836"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.4-dev.380918836.tgz#e697420f2237bf2efd766bf6b586729dccca9b3f"
+  integrity sha512-K8SpTtNKuBbc0DRj6OROp2htnSsgiPFhTQdQTgCxZTVJnS1OKDryowIHWgPtE1/WzOB47n40UUmL9G4+sjOIvw==
   dependencies:
     ajv "^8.2.0"
     xsd2jsonschema "^0.3.7"
@@ -627,10 +627,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/schema-definitions@2.0.16":
-  version "2.0.16"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.16.tgz#a055860a60299ae776b33c71da02bfee29fab53d"
-  integrity sha512-rCwLcHIBodHt3XFoV5PPQqC+jcsfJY50u82v7dZlK1ZiFgajADWzUj4YRu5GyXwpXu0EChioMCsYHSdAA/8q+g==
+"@golemio/schema-definitions@2.0.19-dev.380048448":
+  version "2.0.19-dev.380048448"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.19-dev.380048448.tgz#5f6f34969304ff8bbabe398f0bfa05302bd6fad3"
+  integrity sha512-1zCYiuWe7bfWC8+hi0hzOXfG4C8C4qDdUA/ZVe/ahrl3eCPe2xrVQNWyMCf/nkGXgVCOoEIJlgx4//DoVxyoEQ==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"

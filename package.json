@@ -17,7 +17,7 @@
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
         "generate-docs": "typedoc --out docs/typedoc src",
         "dredd": "dredd",
-        "lint": "eslint 'src/**/*.ts'"
+        "lint": "eslint src/**/*.ts"
     },
     "author": "Operator ICT, a.s.",
     "license": "MIT",
@@ -84,6 +84,7 @@
         "dotenv": "^6.1.0"
     },
     "resolutions": {
+        "ansi-regex": "^5.0.1",
         "dredd/**/underscore": "^1.12.1",
         "dredd/optimist/minimist": "^1.2.3",
         "dredd/gavel/json-pointer": "^0.6.1",

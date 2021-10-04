@@ -73,7 +73,7 @@
         "@golemio/pid": "2.0.10-dev.371739423",
         "@golemio/playgrounds": "1.0.2",
         "@golemio/public-toilets": "1.0.2",
-        "@golemio/schema-definitions": "2.0.19-dev.380048448",
+        "@golemio/schema-definitions": "2.0.19-dev.380769084",
         "@golemio/shared-bikes": "1.0.2",
         "@golemio/shared-cars": "1.0.2",
         "@golemio/sorted-waste-stations": "1.1.8",
@@ -84,6 +84,7 @@
         "dotenv": "^6.1.0"
     },
     "resolutions": {
+        "ansi-regex": "^5.0.1",
         "dredd/**/underscore": "^1.12.1",
         "dredd/optimist/minimist": "^1.2.3",
         "dredd/gavel/json-pointer": "^0.6.1",

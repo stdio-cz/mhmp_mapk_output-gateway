@@ -14,20 +14,16 @@ import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core
 import {
     bicycleCountersRouter,
     cityDistrictsRouter,
-    departureBoardsRouter,
     exportingModuleRouter,
     gardensRouter,
-    gtfsRouter,
     medicalInstitutionsRouter,
     municipalAuthoritiesRouter,
     parkingsRouter,
     parkingZonesRouter,
-    pidRouter,
     playgroundsRouter,
     sharedBikesRouter,
     sortedWasteRouter,
     sortedWasteRouterPg,
-    vehiclepositionsRouter,
     wasteCollectionYardsRouter,
     pedestriansRouter,
     trafficRouter,
@@ -198,20 +194,16 @@ export default class App extends BaseApp {
         this.express.use("/", defaultRouter);
         this.express.use("/bicyclecounters", bicycleCountersRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
-        this.express.use("/departureboards", departureBoardsRouter);
         this.express.use("/export", exportingModuleRouter);
-        this.express.use("/gtfs", gtfsRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestations", sortedWasteRouter);
         this.express.use("/sortedwastestationspg", sortedWasteRouterPg);
-        this.express.use("/vehiclepositions", vehiclepositionsRouter);
         this.express.use("/gardens", gardensRouter);
         this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
         this.express.use("/playgrounds", playgroundsRouter);
         this.express.use("/sharedbikes", sharedBikesRouter);
-        this.express.use("/pid", pidRouter);
         this.express.use("/parking", parkingsRouter);
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);

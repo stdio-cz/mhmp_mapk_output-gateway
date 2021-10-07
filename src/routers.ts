@@ -1,9 +1,5 @@
 export { bicycleCountersRouter } from "@golemio/bicycle-counters/dist/output-gateway";
 export { cityDistrictsRouter } from "@golemio/city-districts/dist/output-gateway";
-export { departureBoardsRouter } from "@golemio/pid/dist/output-gateway/departure-boards";
-export { gtfsRouter } from "@golemio/pid/dist/output-gateway/ropid-gtfs";
-export { pidRouter } from "@golemio/pid/dist/output-gateway/pid";
-export { vehiclepositionsRouter } from "@golemio/pid/dist/output-gateway/vehicle-positions";
 export { exportingModuleRouter } from "@golemio/exporting-module/dist/output-gateway";
 export { gardensRouter } from "@golemio/gardens/dist/output-gateway";
 export { medicalInstitutionsRouter } from "@golemio/medical-institutions/dist/output-gateway";

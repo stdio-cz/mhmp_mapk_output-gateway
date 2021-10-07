@@ -1,25 +1,6 @@
 const hooks = require("hooks");
-const fs = require("fs");
-const redis = require("@golemio/core/dist/output-gateway/redis");
 
 var storage = {};
-
-hooks.beforeAll(async function (transactions, done) {
-    const bufferTrips = fs.readFileSync(__dirname + "/../node_modules/@golemio/pid/db/example/trip_updates.pb");
-    const bufferVehicles = fs.readFileSync(__dirname + "/../node_modules/@golemio/pid/db/example/vehicle_positions.pb");
-
-    await redis.RedisConnector.connect();
-    const redisClient = redis.RedisConnector.getConnection();
-    await Promise.all([
-        new Promise((done) =>
-            redisClient.hset("files:gtfsRt", "trip_updates.pb", bufferTrips.toString("binary"), () => done())
-        ),
-        new Promise((done) =>
-            redisClient.hset("files:gtfsRt", "vehicle_positions.pb", bufferVehicles.toString("binary"), () => done())
-        ),
-    ]);
-    done();
-});
 
 hooks.beforeEach(function (transaction) {
     transaction.request.uri = transaction.request.uri.replace(/\?.*/g, "");
@@ -162,40 +143,6 @@ hooks.after("Public Space 🏡 > Municipal Police Stations > GET All Municipal P
 hooks.before("Public Space 🏡 > Municipal Police Stations > GET Municipal Police Station", (transaction) => {
     transaction.request.uri = transaction.request.uri.replace("72", storage["id"]);
     transaction.fullPath = transaction.fullPath.replace("72", storage["id"]);
-});
-
-hooks.after("Public Transport 🚋 > GTFS Stops > GET All GTFS Stops", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.stop_id;
-});
-
-hooks.before("Public Transport 🚋 > GTFS Stops > GET GTFS Stop", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("U118Z101P", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("U118Z101P", storage["id"]);
-});
-
-hooks.after("Public Transport 🚋 > GTFS Trips > GET All GTFS Trips", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body)[0].trip_id;
-    storage["shape_id"] = JSON.parse(transaction.real.body)[0].shape_id;
-});
-
-hooks.before("Public Transport 🚋 > GTFS Trips > GET GTFS Trip", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("991_30_190107", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("991_30_190107", storage["id"]);
-});
-
-hooks.before("Public Transport 🚋 > GTFS Shapes > GET GTFS Shape", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("L991V2", storage["shape_id"]);
-    transaction.fullPath = transaction.fullPath.replace("L991V2", storage["shape_id"]);
-});
-
-hooks.before("Public Transport 🚋 > Departure Boards > GET Departure Board", (transaction) => {
-    transaction.request.uri = `${transaction.request.uri}?ids[]=U476Z103P`;
-    transaction.fullPath = `${transaction.fullPath}?ids[]=U476Z103P`;
-});
-
-hooks.before("Public Transport 🚋 > PID Departure Boards > GET Departure Board", (transaction) => {
-    transaction.request.uri = `${transaction.request.uri}?ids[]=U476Z103P`;
-    transaction.fullPath = `${transaction.fullPath}?ids[]=U476Z103P`;
 });
 
 hooks.before(

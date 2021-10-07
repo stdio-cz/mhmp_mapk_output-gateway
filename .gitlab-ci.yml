@@ -19,11 +19,13 @@ variables:
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 stages:
+    - test
     - build
     - release
     - deploy
 
 include:
+    - template: Security/SAST.gitlab-ci.yml
     - template: "Workflows/Branch-Pipelines.gitlab-ci.yml"
     - project: "operator-ict/devops/gitlab-ci-pipeline"
       file:
@@ -38,7 +40,7 @@ cache:
         - node_modules/
 
 .run_tests:
-    stage: build
+    stage: test
     image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest
     services:
         - docker:dind
@@ -53,13 +55,14 @@ cache:
         # 4 for MODERATE
         # 8 for HIGH
         # 16 for CRITICAL
-        - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
+        # - /bin/bash -c 'yarn audit; [[ $? -ge 4 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build
         - export LOG_LEVEL=INFO
         - export MONGO_CONN=$MONGO_CONN
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
         - export SENTRY_ENABLE=false
+        - export REDIS_ENABLE=true
         - export REDIS_CONN=redis://redis/
         - export SQL_DUMP_FILES=node_modules/@golemio/*/db/example/*.sql
         - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data
@@ -73,8 +76,7 @@ cache:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:12.22.1
-
-run_tests-node14:
-    extends: .run_tests
-    image: bitnami/node:14.17.5
+    image: bitnami/node:14.17.6
+#run_tests-node-next:
+#    extends: .run_tests
+#    image: bitnami/node:16

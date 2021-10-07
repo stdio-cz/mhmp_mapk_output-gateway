@@ -3,7 +3,7 @@ import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
 import express from "@golemio/core/dist/shared/express";
 import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
-import { generalRoutes } from "../src/generalRoutes";
+import { generalRoutes } from "../src/general-routes";
 
 chai.use(chaiAsPromised);
 

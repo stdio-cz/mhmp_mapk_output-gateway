@@ -1058,6 +1058,402 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+
+# Group Public Transport 🚋
+
+![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+
+GTFS ([General Transit Feed Specification](//gtfs.org)) data about the city's public transportation schedules in form of an API.
+Publisher of the data is ROPID. Schedules are valid for upcoming ~12 days, but can change as they are updated every day.
+
+More about at [pid.cz/o-systemu/opendata](//pid.cz/o-systemu/opendata/).
+
+## GTFS Services [/gtfs/services]
+
+### GET GTFS Services [GET /gtfs/services{?limit,offset,date}]
+
++ Parameters
+    + date: `2019-01-01` (optional, string) - Filter services by specific date in format (YYYY-MM-DD).
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Service])
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Routes [/gtfs/routes]
+
+### GET All GTFS Routes [GET /gtfs/routes/{?limit,offset}]
+
++ Parameters
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Route])
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+### GET GTFS Route [GET /gtfs/routes/{id}]
+
++ Parameters
+    + `id`: `L991` (string, required)
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (GTFS Route)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Trips [/gtfs/trips]
+
+### GET All GTFS Trips [GET /gtfs/trips/{?limit,offset,stopId,date}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + stopId: U953Z102P (optional, string) - Filter trips that include specific stop.
+    + date: `2018-01-01` (optional, string) - Filter trips by specific date.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (GTFS Trip)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+### GET GTFS Trip [GET /gtfs/trips/{id}{?includeShapes,includeStops,includeStopTimes,includeService,includeRoute,date}]
+
++ Parameters
+    + `id`: `991_1151_190107` (string, required)
+    + includeShapes: true (optional, boolean) - Enrich trip response object with shapes.
+    + includeStops: true (optional, boolean) - Enrich trip response object with stops.
+    + includeStopTimes: true (optional, boolean) - Enrich trip response object with stops times.
+    + includeService: true (optional, boolean) - Enrich trip response object with service.
+    + includeRoute: true (optional, boolean) - Enrich trip response object with routes.
+    + date: `2019-01-01` (optional, string) - Filter trips by specific date in format (YYYY-MM-DD).
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (GTFS Trip)
+        + stop_times (array[GTFS Stop time])
+        + shapes (array)
+            + (Feature Point)
+                + properties (GTFS Shape)
+        + service (GTFS Service)
+        + route (GTFS Route)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Shapes [/gtfs/shapes/{id}]
+
+### GET GTFS Shape [GET]
+
++ Parameters
+    + `id`: `L991V2` (string, required) - GTFS shapes_id to filter shapes by GTFS trip
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (GTFS Shape)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Stops [/gtfs/stops]
+
+### GET All GTFS Stops [GET /gtfs/stops/{?names,ids,aswIds,cisIds,limit,offset}]
+
++ Parameters
+    + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
+    + ids: `U476Z103P` (optional, string) - Get stops by stop_id. Use with square brackets `ids[]`.
+    + aswIds: `1833_12` (optional, string) - Get stops by ASW, use `_` instead of `/` or encode the slash sign with `%2F`. Use with square brackets `aswId[]`.
+    + cisIds: `12345` (optional, number) - Get stops by CIS Id. Use with square brackets `cisId[]`.
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (GTFS Stop)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+### GET GTFS Stop [GET /gtfs/stops/{id}]
+
++ Parameters
+    + `id`: `U476Z104P` (string, required)
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (GTFS Stop)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS Stop times [/gtfs/stoptimes]
+
+### GET GTFS Stop times [GET /gtfs/stoptimes/{id}{?limit,offset,from,to,date,includeStop}]
+
++ Parameters
+    + `id`: `U118Z101P` (string, required)
+    + date: `2019-01-01` (optional, string) - Filter stop times by specific date in format (YYYY-MM-DD).
+    + from: `07:12:33` (optional, string) - Filter stop times by time departure in format (H:mm:ss).
+    + to: `12:12:33` (optional, string) - Filter stop times by time arrival in format (H:mm:ss).
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + includeStop: true (optional, boolean) - Enrich stop times response object with stop.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array[GTFS Stop time])
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## RealTime Vehicle Positions [/vehiclepositions]
+
+💡 Response comes with special header `X-Last-Modified` with timestamp value of the latest resource update.
+When you use it as `?updatedSince` query parameter you will obtain only newer data than this value.
+
+### GET All Vehicle Positions [GET /vehiclepositions{?limit,offset,includeNotTracking,includePositions,cisTripNumber,preferredTimezone,routeId,routeShortName,updatedSince}]
+
++ Parameters
+
+    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+    + includeNotTracking: true (optional, boolean) - Enrich result dataset with not tracking trip (those trips not being on track - before and after trip)
+    + includePositions: true (optional, boolean) - Enrich result dataset with positions.
+    + cisTripNumber: 1020 (number, optional) Filter result by CIS trip number
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use `_` sign)
+    + routeId: L301 (string, optional) Filter result by route id
+    + routeShortName: 381 (string, optional) Filter result by short name
+    + updatedSince: `2020-04-07T06:32:29.000Z` (string, optional) Limit results to the ones updated after (timestamp greater than)
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (object)
+        + type: FeatureCollection (string, required)
+        + features (array)
+            + (Feature Point)
+                + properties (Vehicleposition Compound)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+### GET Vehicle Position [GET /vehiclepositions/{gtfsTripId}{?includeNotTracking,includePositions,preferredTimezone}]
+
++ Parameters
+
+    + gtfsTripId: `115_107_180501` (string, required) Filter result by trip id (gtfs_trip_id)
+    + includeNotTracking: true (optional, boolean) - Enrich result dataset with not tracking trip (last tracked vehicle after its trip)
+    + includePositions: true (optional, boolean) - Enrich result dataset with positions
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign by %2F or use _ sign)
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (Feature Point)
+        + properties (Vehicleposition Compound)
+
++ Response 404 (application/json; charset=utf-8)
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## GTFS RealTime Vehicle Positions [/vehiclepositions/gtfsrt]
+
+### GET GTFS RealTime Trip Updates Protocol Buffer [GET /vehiclepositions/gtfsrt/trip_updates.pb]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/octet-stream)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+### GET GTFS RealTime Vehicle Positions Protocol Buffer [GET /vehiclepositions/gtfsrt/vehicle_positions.pb]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/octet-stream)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+## Departure Boards [/departureboards]
+
+You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. `ids[]=1&ids[]=3` when **at least one of these ids is required**. The maximum is 100 stops combined for one request.
+
+### GET Departure Board [GET /departureboards/{?ids,cisIds,aswIds,minutesBefore,minutesAfter,names,preferredTimezone,orderBySchedule,showAllRoutesFirst,limit,offset}]
+
++ Parameters
+
+    + ids: `U476Z103P` (optional, string) - Get result by stop_id (GTFS, id of specific stop)
+    + aswIds: `1833_12` (optional, string) - Get result by ASW, use `_` instead of `/` or encode the slash sign with `%2F`
+    + cisIds: `12345` (optional, number) - Get result by CIS Id
+    + minutesBefore: `10` (optional, number) - Get departures relative before to request time. Default is set to 0.
+    + minutesAfter: `60` (optional, number) - Get departures relative after the request time. Default is set to 180.
+    + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use _ sign)
+    + orderBySchedule: `false` (optional, boolean) - Order by schedule, not by real delays
+    + showAllRoutesFirst: `false` (optional, boolean) - Sort by all distinct route - trip headsign first and then by arrival time.
+    + limit: 20 (optional, number) - Limits number of retrieved items. The maximum is 1000 (default value is 20).
+    + offset: 0 (optional, number) - Number of the first items that are skipped.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+    can return empty data (empty array []) if no departures were found
+    + Attributes (array)
+        + (Departure Board)
+
++ Response 404 (application/json; charset=utf-8)
+    returns 404 if no stop was not found (by the stop_id) at all
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
+
+## PID Departure Boards [/pid]
+
+![golemioapi-version-badge](https://img.shields.io/badge/in%20beta-version-blue)
+
+You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array format - eg. `ids[]=1&ids[]=3`. **At least one of these IDs is required.** The maximum is 100 stops combined in one request.
+
+### GET Departure Board [GET /pid/departureboards/{?ids,aswIds,cisIds,names,minutesBefore,minutesAfter,timeFrom,preferredTimezone,mode,order,filter,skip,limit,total,offset}]
+
++ Parameters
+
+    + ids: `U458Z101P` (optional, string) - Get result by GTFS stop_id. Can be used to retrive individual stops and to separate departures of Prague and intercity routes, even if they depart from the same physical stop. A list of GTFS stops can be found in `stops.txt` file of the [GTFS feed](//opendata.praha.eu/dataset/jizdni-rady-pid).
+    + aswIds: `458_101` (optional, string) - Get result by ASW ID. First part of the number represents the whole node. Usually it groups the stops of the same name or all stops associated with a metro station. Also returns related train stations in the node. The second part of the number is optional and represents individual stops in the node. Use `_` instead of `/` as a separator or encode the slash sign with `%2F`. A list of ASW IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
+    + cisIds: `28004` (optional, number) - Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](//opendata.praha.eu/dataset/zastavky-a-oznacniky-pid).
+    + names: `Smíchovské nádraží` (optional, string) - Get results by exact name of stop (case and whitespace sensitive). May return stops of the same name from different towns.
+    + minutesBefore: `10` (optional, number) - Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request or `timeFrom` timestamp, negative numbers set the start in the future. Use to compensate for walking distance to a stop. Default is set to 0.
+    + minutesAfter: `60` (optional, number) - Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or `timeFrom` timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180.
+    + timeFrom: `2021-01-21T06:00:00` (optional, string) - Set initial timestamp for time interval given by `minutesBefore` and `minutesAfter`. Use to simulate query time different from now. Use ISO 8601 time format and URL encoded symbols: `%3A` for `:`, `%2B` for `.`, `%2F` for `+`. Time zone is set according to the `preferredTimezone` parameter. Applicable range is -6 hours +7 days from now.
+    + preferredTimezone: `Europe%2FPrague` (optional, string) - Preferred timezone offset as defined in the IANA Time zone database in the form of Country/City (use an URL encoded slash sign `%2F` or use an underscore _ symbol)
+    + mode: `departures` (optional, string) - Valid entries: `departures` (default), `arrivals`, `mixed`. Set how to handle behaviour in end stops. `departures` (default) returns all connections that depart from selected stops (does not return connections for which it is the final stop). `arrivals` returns all connections that arrive into the stops (does not return connections for which it is the first stop). `mixed` returns everything. Use `arrivals` to create dedicated arrival boards. Use `departures` for all other cases. Using `mixed` is not recomended as departures of adjoined routes will be returned twice.
+    + order: `real` (optional, string) - Valid entries: `real` (default), `timetable`. Order results by predicted time including trip delay or by timetable time.
+    + filter: `routeOnce` (optional, string) - Valid entries: `none` (default), `routeOnce`, `routeOnceFill`, `routeHeadingOnce`, `routeHeadingOnceFill`. Define how should be the list of departures returned. `none` returns all departures within the time and item limit. `routeOnce` returns exactly one occurence of departure for each `route_id`. Works best when querying a single stop. `routeHeadingOnce` returns one entry for each pair of `route_id` and `trip_headsign`, i.e. returns departures for routes that have multiple end stops. Works well when quering one or more stops in a node. `...Fill` attributes will do the same as their namesakes but afterwards will fill the rest of request up to `total/limit` with further departures. Use to ensure both having every line/destination represented and have the display filled with departures.
+    + skip: `canceled` (optional, string) - Valid entries: `canceled`, `atStop`, `untracked`. Skips trips with these attributes. Use multiple rules with `&skip[]=cancelled&skip[]=atStop` query parameter array form.
+    + limit: 20 (optional, number) - Limits the number of items in response. The maximum is 1000 (default value is 20).
+    + total: 20 (optional, number) - Sets the number of items that will be queried. Use in conjunction with `offset`. Up to `total - offset`, but not more than `limit` items will be then returned. If unset, is same as `limit`. The maximum is 1000 (default value is 20).
+    + offset: 0 (optional, number) - Number of the initial departures that are skipped. Useful for multi-page displays.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+    Can return empty data in departures property (empty array []) if no departures were found
+    + Attributes (PID Departure Board)
+
++ Response 404 (application/json; charset=utf-8)
+    Returns 404 if no stop was not found (by the stop_id) at all
+    + Attributes (Error)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
 # Group Traffic 🚘
 
 ## Shared Cars  [/sharedcars]

@@ -68,7 +68,7 @@ cache:
         - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data
         - cd node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -
         - NODE_ENV=production yarn code-coverage
-        # - yarn dredd
+        - yarn dredd
     tags:
         - docker
     rules:

@@ -159,3 +159,32 @@ hooks.before(
     "Traffic Restrictions 🚧 > Traffic Restrictions API > GET Traffic Restrictions",
     (transaction) => (transaction.skip = true)
 );
+
+// Skip all public transport transactions
+hooks.before("Public Transport 🚋 > GTFS Services > GET GTFS Services", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Routes > GET All GTFS Routes", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Routes > GET GTFS Route", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Trips > GET All GTFS Trips", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Trips > GET GTFS Trip", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Shapes > GET GTFS Shape", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Stops > GET All GTFS Stops", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Stops > GET GTFS Stop", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > GTFS Stop times > GET GTFS Stop times", (transaction) => (transaction.skip = true));
+hooks.before(
+    "Public Transport 🚋 > RealTime Vehicle Positions > GET All Vehicle Positions",
+    (transaction) => (transaction.skip = true)
+);
+hooks.before(
+    "Public Transport 🚋 > RealTime Vehicle Positions > GET Vehicle Position",
+    (transaction) => (transaction.skip = true)
+);
+hooks.before(
+    "Public Transport 🚋 > GTFS RealTime Vehicle Positions > GET GTFS RealTime Trip Updates Protocol Buffer",
+    (transaction) => (transaction.skip = true)
+);
+hooks.before(
+    "Public Transport 🚋 > GTFS RealTime Vehicle Positions > GET GTFS RealTime Vehicle Positions Protocol Buffer",
+    (transaction) => (transaction.skip = true)
+);
+hooks.before("Public Transport 🚋 > Departure Boards > GET Departure Board", (transaction) => (transaction.skip = true));
+hooks.before("Public Transport 🚋 > PID Departure Boards > GET Departure Board", (transaction) => (transaction.skip = true));

@@ -518,6 +518,14 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
+"@golemio/fcd@1.0.0-dev.390217720":
+  version "1.0.0-dev.390217720"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.0-dev.390217720.tgz#be5528b38088c1555992927ebb287fcc5ba20cc5"
+  integrity sha512-c1EPoHebm4tglwzwkaVwEsaWo8g8lEMAfKl0810coT6+TKefvXJJpQGiLwrRz85dVoZqWJfyCQlwtkpR9FV+Jg==
+  dependencies:
+    ajv "^8.2.0"
+    xsd2jsonschema "^0.3.7"
+
 "@golemio/flow@1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.5.tgz#0c58a752ed194fd04960778b60047f5475899db7"

@@ -15,6 +15,7 @@ import {
     bicycleCountersRouter,
     cityDistrictsRouter,
     exportingModuleRouter,
+    fcdRouter,
     gardensRouter,
     medicalInstitutionsRouter,
     municipalAuthoritiesRouter,

@@ -1,6 +1,7 @@
 export { bicycleCountersRouter } from "@golemio/bicycle-counters/dist/output-gateway";
 export { cityDistrictsRouter } from "@golemio/city-districts/dist/output-gateway";
 export { exportingModuleRouter } from "@golemio/exporting-module/dist/output-gateway";
+export { fcdRouter } from "@golemio/fcd/dist/output-gateway";
 export { gardensRouter } from "@golemio/gardens/dist/output-gateway";
 export { medicalInstitutionsRouter } from "@golemio/medical-institutions/dist/output-gateway";
 export { municipalAuthoritiesRouter } from "@golemio/municipal-authorities/dist/output-gateway";

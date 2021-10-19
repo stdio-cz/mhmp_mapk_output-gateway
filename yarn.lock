@@ -507,13 +507,13 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/exporting-module@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/exporting-module/-/exporting-module-1.0.2.tgz#e557cc19bcd528a9718b23d5291407dd19632816"
-  integrity sha512-UpHaeNNV+NUyqsDGBhzQhsxMVrB8+n5K1SmHp6JUZKy/bFyi19Pdjk/cPk4rztmXJs3/jayDMx+Mk+/mum8rXA==
+"@golemio/exporting-module@1.0.3-dev.390811166":
+  version "1.0.3-dev.390811166"
+  resolved "https://registry.yarnpkg.com/@golemio/exporting-module/-/exporting-module-1.0.3-dev.390811166.tgz#0f6cae77a578160a4ced9729f1492b9324f88593"
+  integrity sha512-mPiJveG/W4CvcSPfrLuqkn4JoAUDVzd16enS4Jv7Mb5p9X9IGvl+shDDrRqVqpWdqw2LeueTy4KqvPVQoaF3bg==
   dependencies:
     body-parser "1.19.0"
-    json2csv "^5.0.6"
+    fast-csv "^4.3.6"
     react "^16.8.0"
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
@@ -2332,11 +2332,6 @@ commander@^2.7.1, commander@^2.8.1:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
-
-commander@^6.1.0:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
-  integrity sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
 
 commander@^7.1.0:
   version "7.2.0"
@@ -4796,15 +4791,6 @@ json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
-json2csv@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/json2csv/-/json2csv-5.0.6.tgz#590e0e1b9579e59baa53bda0c0d840f4d8009687"
-  integrity sha512-0/4Lv6IenJV0qj2oBdgPIAmFiKKnh8qh7bmLFJ+/ZZHLjSeiL3fKKGX3UryvKPbxFbhV+JcYo9KUC19GJ/Z/4A==
-  dependencies:
-    commander "^6.1.0"
-    jsonparse "^1.3.1"
-    lodash.get "^4.4.2"
-
 json5@^2.1.2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
@@ -4828,7 +4814,7 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jsonparse@^1.2.0, jsonparse@^1.3.1:
+jsonparse@^1.2.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
   integrity sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=

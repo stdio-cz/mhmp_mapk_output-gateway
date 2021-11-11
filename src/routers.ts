@@ -9,7 +9,7 @@ export { parkingZonesRouter } from "@golemio/parking-zones/dist/output-gateway";
 export { playgroundsRouter } from "@golemio/playgrounds/dist/output-gateway";
 export { sharedBikesRouter } from "@golemio/shared-bikes/dist/output-gateway";
 export { sortedWasteRouterPg } from "@golemio/sorted-waste-stations/dist/output-gateway/sorted-waste-stations-pg";
-export { wasteCollectionYardsRouter } from "@golemio/waste-collection-yards/dist/output-gateway";
 export { parkingsRouter } from "@golemio/parkings/dist/output-gateway";
 export { pedestriansRouter } from "@golemio/flow/dist/output-gateway";
 export { trafficRouter } from "@golemio/ndic/dist/output-gateway";
+export { wasteCollectionYardsRouter } from "@golemio/waste-collection-yards/dist/output-gateway";

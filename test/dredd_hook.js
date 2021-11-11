@@ -99,9 +99,15 @@ hooks.before("Waste ♻️ > Sorted Waste Stations > GET Sorted Waste Station", 
     transaction.fullPath = transaction.fullPath.replace("sortedwastestations", "sortedwastestationspg");
 });
 
-hooks.before("Waste ♻️ > Sorted Waste Stations > GET All Sorted Waste Measurements", (transaction) => (transaction.skip = true));
+hooks.before("Waste ♻️ > Sorted Waste Fullness Sensors Data > GET All Sorted Waste Measurements", (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace("sortedwastestations", "sortedwastestationspg");
+    transaction.fullPath = transaction.fullPath.replace("sortedwastestations", "sortedwastestationspg");
+});
 
-hooks.before("Waste ♻️ > Sorted Waste Stations > GET All Sorted Waste Picks", (transaction) => (transaction.skip = true));
+hooks.before("Waste ♻️ > Sorted Waste Fullness Sensors Data > GET All Sorted Waste Picks", (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace("sortedwastestations", "sortedwastestationspg");
+    transaction.fullPath = transaction.fullPath.replace("sortedwastestations", "sortedwastestationspg");
+});
 
 hooks.after("Waste ♻️ > Waste Collection Yards > GET All Waste Collection Yards", (transaction) => {
     storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;

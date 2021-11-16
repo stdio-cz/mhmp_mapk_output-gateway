@@ -649,10 +649,10 @@
     "@golemio/city-districts" "1.0.1"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.5-dev.409436663":
-  version "1.0.5-dev.409436663"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.5-dev.409436663.tgz#b77bc3bd0111ee13d2d12b3f663aa20519485f3e"
-  integrity sha512-RXPGOfTyuN73jkFuuBj+092tgMWUmAcA3pbhxU1RdArc8J7HAZF/U2bBumVsfIexQTjabb0fP0SDw42ewxSGLA==
+"@golemio/ndic@1.0.5-dev.409685041":
+  version "1.0.5-dev.409685041"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.5-dev.409685041.tgz#9a430266c1ef1252e567557d9b2412d88bbf2652"
+  integrity sha512-VIpnbzCY9j4OT6l/QhdI0ZVdpAo63i1/TgEPICruqpowfyKho/kDfJigLQn8r/H/B9mppWLRWGRySTBnKE1pHQ==
   dependencies:
     "@apideck/portman" "^1.8.1"
     ajv "^8.2.0"

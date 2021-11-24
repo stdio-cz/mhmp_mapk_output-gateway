@@ -34,11 +34,6 @@ include:
           - "/apiary/blueprint.yml"
           - "/docs/golemio-gitlab-docs-pages.yml"
 
-cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
-
 .run_tests:
     stage: test
     image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest

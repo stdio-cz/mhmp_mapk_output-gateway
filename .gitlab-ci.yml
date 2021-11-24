@@ -72,6 +72,7 @@ include:
 run_tests:
     extends: .run_tests
     image: bitnami/node:14.17.6
-#run_tests-node-next:
-#    extends: .run_tests
-#    image: bitnami/node:16
+
+run_tests-node-next:
+    extends: .run_tests
+    image: bitnami/node:16.13.0

@@ -38,7 +38,7 @@
         "@types/supertest": "^2.0.7",
         "chai": "^4.2.0",
         "chai-as-promised": "^7.1.1",
-        "dredd": "^11.2.9",
+        "dredd": "^13.0.2",
         "eslint": "^7.18.0",
         "husky": "^3.0.0",
         "mocha": "^8.3.1",

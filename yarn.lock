@@ -547,10 +547,10 @@
   dependencies:
     slugify "1.3.2"
 
-"@golemio/core@1.1.8-dev.416513639":
-  version "1.1.8-dev.416513639"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.8-dev.416513639.tgz#2ed8b3a717972dcdbd1e93a9596a4789dc605b64"
-  integrity sha512-TfUZeH44e433a9T7UGEcJ0Mp8wlBJqKuP0bZGxGRT5KxKcHLwbFVuN+gN/wL2HQnrHIyijMmcYcTiAlKyZPL8g==
+"@golemio/core@1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.1.8.tgz#12d068f1e15e5e8a36d9197a590f3686d574dcf1"
+  integrity sha512-kbZ/mCUak447B3Z+wPoa6iiGLFEuYNdhJKQ8XBu7Wozqc66rvG480vK4x4F+pQhxS8Ziz/AqC+eNbTRLGlwroQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -622,10 +622,10 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/exporting-module@1.0.3-dev.390811166":
-  version "1.0.3-dev.390811166"
-  resolved "https://registry.yarnpkg.com/@golemio/exporting-module/-/exporting-module-1.0.3-dev.390811166.tgz#0f6cae77a578160a4ced9729f1492b9324f88593"
-  integrity sha512-mPiJveG/W4CvcSPfrLuqkn4JoAUDVzd16enS4Jv7Mb5p9X9IGvl+shDDrRqVqpWdqw2LeueTy4KqvPVQoaF3bg==
+"@golemio/exporting-module@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/exporting-module/-/exporting-module-1.0.3.tgz#cf6eea4a771d8ebb39414275e00b336c2495d97d"
+  integrity sha512-XGlXd5Nix3vvJSaDn/cBnaIWZBit4vH838Q6tJU2hQpAFtl21kIqxkpxdelyhfJUlBoD/5VKb1ey9zg9HA93PA==
   dependencies:
     body-parser "1.19.0"
     fast-csv "^4.3.6"
@@ -633,12 +633,13 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/fcd@1.0.0-dev.390217720":
-  version "1.0.0-dev.390217720"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.0-dev.390217720.tgz#be5528b38088c1555992927ebb287fcc5ba20cc5"
-  integrity sha512-c1EPoHebm4tglwzwkaVwEsaWo8g8lEMAfKl0810coT6+TKefvXJJpQGiLwrRz85dVoZqWJfyCQlwtkpR9FV+Jg==
+"@golemio/fcd@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.0.tgz#cebe22f6ee9ecdc025cee0cc9974c19b94b31009"
+  integrity sha512-uLLqMlT8KeMTvM6/lt5lmidVI6X4TJHzUzPTmWd88qsHmt4UXBsNnSTC5xOfdsCX7iRwErRMo+nbCJhV+MNosg==
   dependencies:
     ajv "^8.2.0"
+    xmldom "github:xmldom/xmldom#0.7.0"
     xsd2jsonschema "^0.3.7"
 
 "@golemio/flow@1.0.5":
@@ -695,10 +696,10 @@
     "@golemio/city-districts" "1.0.1"
     slugify "1.3.2"
 
-"@golemio/ndic@1.0.5-dev.418425980":
-  version "1.0.5-dev.418425980"
-  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.5-dev.418425980.tgz#c419079affa14ae954ede7c346a0746099489c29"
-  integrity sha512-a9aSfQ7CZVT/WxXFvlB1j5hXS5W3ZhKD5OZhu/Okh98FMoKN6HjXwvQ8Gsc9OGwLXH0i9iaDNgOK/R1bHteGBw==
+"@golemio/ndic@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.5.tgz#1dd205d1c11f8a06336acd9c4c2d8d08eec1d0ad"
+  integrity sha512-1gmmUngkdUAqMSC1vCFUmbn9YsGs8RQ/xnM0F2lN2aEC8OzzJbX0/aXJ7bZREiYfzlPUSa4dvpix8VhsIdXvpA==
   dependencies:
     "@apideck/portman" "^1.8.1"
     ajv "^8.2.0"
@@ -713,10 +714,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.9-dev.418153904":
-  version "1.0.9-dev.418153904"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.9-dev.418153904.tgz#1dd4aa1d070683f2fea2d82d009bf0ccc88ea0d1"
-  integrity sha512-9DKJCcRlW19EJ4AoyNHeZNB8VNmH1gzbvdPgCbEmj7bJsed2M0hFSE0RuZLZTxlnDAT2FjbYKJChgIqwHidCwA==
+"@golemio/parkings@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.9.tgz#9f2fdb61457a96abc3c06e4822df93a158368896"
+  integrity sha512-TNSkFIknTTOPZx10wUT6/5qFNT6McjXYt2WFyF5QAQoipIdw686AJd/iNtXmQM5Ke98lXizVqv6jHSui2hzQDw==
   dependencies:
     "@golemio/city-districts" "1.0.2"
     install "^0.13.0"
@@ -738,10 +739,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/schema-definitions@2.0.19":
-  version "2.0.19"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.19.tgz#5b5d754a74263506252b0314885dea285c9f01ef"
-  integrity sha512-ul1vQah1cP7o9RzCQV3566r2gA/sxOZYxrXc0FmzCzhlTc+mCzru90Lw1SyQhApm6czuYsPB7Ri0XzErCwg8xA==
+"@golemio/schema-definitions@2.0.21":
+  version "2.0.21"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.21.tgz#58c2ef1e4f0e425a66c3baeeee5f4175631ff01f"
+  integrity sha512-vACb1sQ0Qgr746B6pZaKPRGtoPJ08hoJkKOQyOVDW0gS1F+EZziqyIPTnnaWqXNbTarXQSZeJglK+y20Ck7F1g==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"

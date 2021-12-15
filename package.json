@@ -59,7 +59,7 @@
         "@golemio/bicycle-parkings": "1.0.2",
         "@golemio/city-districts": "1.0.2",
         "@golemio/core": "1.1.9-dev.425846246",
-        "@golemio/exporting-module": "1.0.3",
+        "@golemio/exporting-module": "1.0.4-dev.430030964",
         "@golemio/fcd": "1.0.1-dev.423382545",
         "@golemio/flow": "1.0.5",
         "@golemio/gardens": "1.0.2",

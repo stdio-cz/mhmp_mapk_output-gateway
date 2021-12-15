@@ -662,10 +662,10 @@
     "@typescript-eslint/parser" "^4.12.0"
     eslint-plugin-prettier "^3.3.1"
 
-"@golemio/exporting-module@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/exporting-module/-/exporting-module-1.0.3.tgz#cf6eea4a771d8ebb39414275e00b336c2495d97d"
-  integrity sha512-XGlXd5Nix3vvJSaDn/cBnaIWZBit4vH838Q6tJU2hQpAFtl21kIqxkpxdelyhfJUlBoD/5VKb1ey9zg9HA93PA==
+"@golemio/exporting-module@1.0.4-dev.429976092":
+  version "1.0.4-dev.429976092"
+  resolved "https://registry.yarnpkg.com/@golemio/exporting-module/-/exporting-module-1.0.4-dev.429976092.tgz#a4a8c2a95f3cb26fea4107ed912ac00b240afadd"
+  integrity sha512-Ysh85KvNdxTTaPFfNO/KkUl6H67bpa194Uorur8Ong6FQVqft6Wq1I15VCXNrgxAB1ShCuLVtcKHeDFHrk0TtA==
   dependencies:
     body-parser "1.19.0"
     fast-csv "^4.3.6"

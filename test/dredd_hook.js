@@ -155,11 +155,6 @@ hooks.before(
     (transaction) => (transaction.skip = true)
 );
 
-hooks.before(
-    "Traffic Restrictions 🚧 > Traffic Restrictions API > GET Traffic Restrictions",
-    (transaction) => (transaction.skip = true)
-);
-
 // Skip all public transport transactions
 hooks.before("Public Transport 🚋 > GTFS Services > GET GTFS Services", (transaction) => (transaction.skip = true));
 hooks.before("Public Transport 🚋 > GTFS Routes > GET All GTFS Routes", (transaction) => (transaction.skip = true));

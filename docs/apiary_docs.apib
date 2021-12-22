@@ -318,7 +318,7 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
-### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?sourceId}]
+### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?source}]
 
 + Parameters
 
@@ -2088,32 +2088,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 
 
-# Group Traffic Restrictions 🚧
-
-## Traffic Restrictions API [/traffic]
-
-### GET Traffic Restrictions  [GET /traffic/restrictions{?limit,offset,from,to}]
-
-+ Parameters
-
-    + limit: 5 (optional, number) - Limits number of retrieved records. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first records that are skipped.
-    + from: `2020-09-01 01:15:00.000` (optional, string) - Date in ISO8601, limits records end moment from this datetime
-    + to: `2020-10-22 01:15:00.000` (optional, string) - Date in ISO8601, limits records start moment until this datetime
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Traffic Restrictions)
-
-
-+ Response 404 (application/json; charset=utf-8)
 
 
 
@@ -3068,58 +3042,3 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + quality: `1.00000000000000000000` (string, required)
 + measured_from: `2020-08-21T17:30:00.000Z` (string, required)
 + measured_to: `2020-08-21T17:45:00.000Z` (string, required)
-
-
-
-
-
-
-## Traffic Restrictions  (object)
-
-+ modelBaseVersion: `2` (string, required)
-+ situationPublicationLight (object) - Properties of Publication
-    + lang: `cz` (string, required)
-    + publicationTime: `2021-06-21T07:28:36.000Z` (string, required)
-    + publicationCreator (object)
-        + country: `cz` (string, required)
-        + nationalIdentifier: `NDIC` (string, required)
-    + situation: (array[Traffic Restrictions Situation])
-
-
-## Traffic Restrictions Situation (object)
-
-+ id: `dc4e500c-6853-4232-a439-26889485f0bf` (string, required)
-+ situationRecord: (array[Traffic Restrictions Situation Record])
-
-
-## Traffic Restrictions Situation Record (object)
-+ situationRecordCreationTime: `2021-06-21T07:27:36.000Z` (string, required)
-+ situationRecordVersionTime: `2021-06-21T07:26:35.000Z` (string, required)
-+ startTime: `2021-06-21T05:45:00.000Z` (string, required)
-+ endTime: `2021-06-21T07:35:00.000Z` (string, required)
-+ type: `RoadOrCarriagewayOrLaneManagement` (string, required)
-+ version: `10` (string, required)
-+ generalPublicComment (object)
-    + cs: `D11 ve směru Hradec Králové, mezi 57.8 a 59.5 km, v termínu od 21. 06. 2021 07:45` (string)
-+ sourceName: `SSU` (string, required)
-+ impact (object)
-    + delays (object)
-        + type: `null` (string, required, nullable)
-        + timeValue: `null` (string, required, nullable)
-    + numberOfLanesRestricted: `null` (string, required, nullable)
-    + numberOfOperationalLanes: `null` (string, required, nullable)
-    + trafficConstructionType: `null` (string, required, nullable)
-+ alertCLinear (object)
-    + type: `AlertCMethod2Linear` (string, required, nullable)
-    + alertCLocationCountryCode: `CZ` (string, required, nullable)
-    + alertCLocationTableNumber: `25` (string, required, nullable)
-    + alertCLocationTableVersion: `8.0` (string, required, nullable)
-    + alertCDirection (object)
-        + alertCDirectionCoded: `positive` (string, required, nullable)
-    + alertCMethod2PrimaryPointLocation (object)
-        + alertCLocation (object)
-            + specificLocation: `25622` (string, required)
-    + alertCMethod2SecondaryPointLocation (object)
-        + alertCLocation (object)
-            + specificLocation: `1353` (string, required)
-+ osmPath: `[30372268, 1945960089, 1663150068, 30372270, 1945960092]` (string, required, nullable)

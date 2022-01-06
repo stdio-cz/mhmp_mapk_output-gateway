@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.15",
+    "version": "3.0.16",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -55,12 +55,12 @@
     },
     "dependencies": {
         "@golemio/air-quality-stations": "1.0.2",
-        "@golemio/bicycle-counters": "1.0.3",
+        "@golemio/bicycle-counters": "1.0.4",
         "@golemio/bicycle-parkings": "1.0.2",
         "@golemio/city-districts": "1.0.2",
-        "@golemio/core": "1.1.8",
-        "@golemio/exporting-module": "1.0.3",
-        "@golemio/fcd": "1.0.0",
+        "@golemio/core": "1.1.10",
+        "@golemio/exporting-module": "1.0.4",
+        "@golemio/fcd": "1.0.1",
         "@golemio/flow": "1.0.5",
         "@golemio/gardens": "1.0.2",
         "@golemio/medical-institutions": "1.0.5",
@@ -68,12 +68,12 @@
         "@golemio/municipal-authorities": "1.0.2",
         "@golemio/municipal-libraries": "1.0.3",
         "@golemio/municipal-police-stations": "1.0.2",
-        "@golemio/ndic": "1.0.5",
+        "@golemio/ndic": "1.0.6",
         "@golemio/parking-zones": "1.0.2",
-        "@golemio/parkings": "1.0.9",
+        "@golemio/parkings": "1.0.10",
         "@golemio/playgrounds": "1.0.2",
         "@golemio/public-toilets": "1.0.2",
-        "@golemio/schema-definitions": "2.0.21",
+        "@golemio/schema-definitions": "2.0.22",
         "@golemio/shared-bikes": "1.0.3",
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.10",
@@ -94,6 +94,8 @@
         "trim-newlines": "^4.0.1",
         "url-parse": ">=1.5.2",
         "xmldom": "github:xmldom/xmldom#0.7.0",
-        "mpath": "^0.8.4"
+        "mpath": "^0.8.4",
+        "axios": "^0.21.2",
+        "ssh2": "^1.4.0"
     }
 }

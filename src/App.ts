@@ -9,7 +9,7 @@ import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/outp
 import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
 import { requestLogger, log } from "@golemio/core/dist/output-gateway/Logger";
 import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
-import { initSentry } from "@golemio/core/dist/monitoring";
+import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
 import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import {
     bicycleCountersRouter,
@@ -37,6 +37,7 @@ export default class App extends BaseApp {
     public express: express.Application = express();
     public port: number = parseInt(config.port || "3004", 10);
     private server?: http.Server;
+    public metricsServer?: http.Server;
     private commitSHA!: string;
     private lightship: Lightship;
 
@@ -64,12 +65,14 @@ export default class App extends BaseApp {
         try {
             this.express = express();
             initSentry(config.sentry, config.app_name, this.express);
+            metricsService.init(config, log);
             this.commitSHA = this.loadCommitSHA();
             log.info(`Commit SHA: ${this.commitSHA}`);
             await this.database();
             this.middleware();
             this.routes();
             this.errorHandlers();
+            this.metricsServer = metricsService.serveMetrics();
             this.server = http.createServer(this.express);
             // Setup error handler hook on server error
             this.server.on("error", (err: Error) => {
@@ -103,6 +106,7 @@ export default class App extends BaseApp {
             await RedisConnector.disconnect();
         }
         await this.stop();
+        await this.metricsServer?.close();
     };
 
     public stop = async (): Promise<void> => {
@@ -131,6 +135,7 @@ export default class App extends BaseApp {
     private middleware = (): void => {
         this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
         this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
+        this.express.use(metricsService.metricsMiddleware());
         this.express.use(requestLogger);
         this.express.use(this.commonHeaders);
         this.express.use(this.customHeaders);
@@ -206,6 +211,8 @@ export default class App extends BaseApp {
         this.express.use("/parking", parkingsRouter);
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);
+
+        this.express.use("/fcd", fcdRouter);
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

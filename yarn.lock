@@ -11,36 +11,6 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@apideck/portman@^1.12.0":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.12.1.tgz#12aee035bb163365d00fb3bc6359c08be3362328"
-  integrity sha512-W3dkPDabgeOsKQ2qNQCQFq+3eT/wWAlquSCiD0GTHeQMDXZM1TK3w35l5lH3obeQXUH7h12LHHqFhDToLpwC6g==
-  dependencies:
-    "@apideck/better-ajv-errors" "^0.3.1"
-    "@apidevtools/swagger-parser" "^10.0.3"
-    ajv "^8.6.3"
-    axios "^0.21.4"
-    camel-case "^4.1.2"
-    chalk "^4.1.2"
-    dot-object "^2.1.4"
-    dotenv "^10.0.0"
-    faker "^5.5.3"
-    fp-ts "^2.10.5"
-    fs-extra "^10.0.0"
-    newman "^5.3.0"
-    node-emoji "^1.10.0"
-    openapi-format "^1.7.1"
-    openapi-to-postmanv2 "^2.12.0"
-    openapi-types "9.1.0"
-    ora "^5.4.1"
-    pluralize "^8.0.0"
-    postman-collection "4.1.0"
-    prompts "^2.4.1"
-    replace-in-file "^6.2.0"
-    traverse "^0.6.6"
-    yaml "^1.10.2"
-    yargs "^17.0.1"
-
 "@apideck/portman@^1.13.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@apideck/portman/-/portman-1.13.0.tgz#15266a5f9e3a40b08fbc0a62f2f6eff102b563db"
@@ -665,12 +635,12 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/fcd@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.1.tgz#9bc7c4ccbc0f158b16ea39b8567f3c1556945c60"
-  integrity sha512-Ilcx5ifUrS5/AT3BZwqazRdIKfQja2M39aGW3c7QEWq5IvUy8cSUYNJE9rQFLzR/1LF/LAK5zk6z+0gZNFlSow==
+"@golemio/fcd@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.2.tgz#57a2cdfeb022b1bd483b93c0946ec164d36198ae"
+  integrity sha512-VNEUQ7EgkJ6SBBNGHB/DjaC6f92ziGy7YhZO7NmldC+wBodzsMCHHQseg7W+cvFvsDFrIR2TcuPLy13+4hY/yQ==
   dependencies:
-    "@apideck/portman" "^1.12.0"
+    "@apideck/portman" "^1.13.0"
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
     xsd2jsonschema "^0.3.7"
@@ -772,10 +742,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/schema-definitions@2.0.22":
-  version "2.0.22"
-  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.22.tgz#3cb1a6f93c8e7932d54939ac53ad73a9cc73e60e"
-  integrity sha512-qXSYenFLx66PB/g5nBrFyIYXux8KGnvcpK2TY7NQwPb8snc5aUBZ3ob4G8GIupl1mu0Zi/HWTNzvEcdVS6tyqA==
+"@golemio/schema-definitions@2.0.23":
+  version "2.0.23"
+  resolved "https://registry.yarnpkg.com/@golemio/schema-definitions/-/schema-definitions-2.0.23.tgz#8eca3ef9d7d5f9bdf6b12c4fbca8bd864904b9a6"
+  integrity sha512-YB2uQwj2SyzFYzXT7a7VP70LZ0Yd3I1Qb65Dh4L+9XNN3lkICu9F0rP5iDkAGaqR7aFmRe29hxpHdW3aeDWb2g==
   dependencies:
     "@golemio/utils" "1.0.0"
     connection-string-parser "^1.0.3"
@@ -800,10 +770,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.11-dev.443442677":
-  version "1.1.11-dev.443442677"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.11-dev.443442677.tgz#61b378c7a49f9ba9cf8dee481b10a07ac81790a2"
-  integrity sha512-zXbTGCfmZmZF4nu+JJc+bByzorGXoWm1TorJxklr0tvPaadofR/vFC7VnvNnwlF9vDu6BdIfz3UuAfCdCyrPmg==
+"@golemio/sorted-waste-stations@1.1.11":
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.11.tgz#dab7e39252b3a521239be79e2479a69837bf2f2e"
+  integrity sha512-8Paw7Xr8u9Ag1c1P6Ir2+jO5BcWrkn11fiJmupj3kntLCpYmUIWD8zG+AZWYeCmjJ7iShSO8AZVJ7PRLfk8KvQ==
   dependencies:
     "@apideck/portman" "^1.13.0"
     "@golemio/city-districts" "1.0.2"
@@ -1938,16 +1908,6 @@ ajv@^8.2.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-ajv@^8.6.3:
-  version "8.7.1"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.7.1.tgz#52be6f1736b076074798124293618f132ad07a7e"
-  integrity sha512-gPpOObTO1QjbnN1sVMjJcp1TF9nggMfO4MBR5uQl6ZVTOaEPq5i4oq/6R9q2alMMPB3eg53wFv1RuJBLuxf3Hw==
-  dependencies:
-    fast-deep-equal "^3.1.1"
-    json-schema-traverse "^1.0.0"
-    require-from-string "^2.0.2"
-    uri-js "^4.2.2"
-
 ajv@^8.8.2:
   version "8.8.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.8.2.tgz#01b4fef2007a28bf75f0b7fc009f62679de4abbb"
@@ -2255,7 +2215,7 @@ aws4@1.11.0, aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axios@^0.21.1, axios@^0.21.2, axios@^0.21.4, axios@^0.24.0:
+axios@^0.21.1, axios@^0.21.2, axios@^0.24.0:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
@@ -4370,10 +4330,10 @@ fn.name@1.x.x:
   resolved "https://registry.yarnpkg.com/fn.name/-/fn.name-1.1.0.tgz#26cad8017967aea8731bc42961d04a3d5988accc"
   integrity sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==
 
-follow-redirects@^1.14.0:
-  version "1.14.5"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
-  integrity sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==
+follow-redirects@^1.14.0, follow-redirects@^1.14.7:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
+  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
 
 foreach@^2.0.4:
   version "2.0.5"
@@ -4425,11 +4385,6 @@ forwarded@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
-
-fp-ts@^2.10.5:
-  version "2.11.5"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.11.5.tgz#97cceb26655b1452d7088d6fb0864f84cceffbe4"
-  integrity sha512-OqlwJq1BdpB83BZXTqI+dNcA6uYk6qk4u9Cgnt64Y+XS7dwdbp/mobx8S2KXf2AXH+scNmA/UVK3SEFHR3vHZA==
 
 fp-ts@^2.11.5:
   version "2.11.6"
@@ -6880,7 +6835,7 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
-node-emoji@^1.10.0, node-emoji@^1.11.0:
+node-emoji@^1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/node-emoji/-/node-emoji-1.11.0.tgz#69a0150e6946e2f115e9d7ea4df7971e2628301c"
   integrity sha512-wo2DpQkQp7Sjm2A0cq+sN7EHKO6Sl0ctXeBdFZrL9T9+UywORbufTcTZxom8YqpLQt/FqNMUkOpkZrJVYSKD3A==
@@ -7371,15 +7326,6 @@ ono@^6.0.0:
   resolved "https://registry.yarnpkg.com/ono/-/ono-6.0.1.tgz#1bc14ffb8af1e5db3f7397f75b88e4a2d64bbd71"
   integrity sha512-5rdYW/106kHqLeG22GE2MHKq+FlsxMERZev9DCzQX1zwkxnFwBivSn5i17a5O/rDmOJOdf4Wyt80UZljzx9+DA==
 
-openapi-format@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/openapi-format/-/openapi-format-1.7.1.tgz#b32d31417cd392d067e10a15a693bba72cacf0c8"
-  integrity sha512-E/YJXwMheiOHZg4De6S/cPFILuDzZf1marA/g0mKmNLIj5BcGAZ+bd/PUdYpW+XdTmN7no98+nz8CeCjVWvxiw==
-  dependencies:
-    "@stoplight/yaml" "^4.2.2"
-    commander "^7.1.0"
-    traverse "^0.6.6"
-
 openapi-format@^1.7.2:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/openapi-format/-/openapi-format-1.8.1.tgz#396250fb0763c2d60a3e8d35655976ce3da4df2c"
@@ -7394,22 +7340,6 @@ openapi-schemas@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/openapi-schemas/-/openapi-schemas-1.0.3.tgz#0fa2f19e44ce8a1cdab9c9f616df4babe1aa026b"
   integrity sha512-KtMWcK2VtOS+nD8RKSIyScJsj8JrmVWcIX7Kjx4xEHijFYuvMTDON8WfeKOgeSb4uNG6UsqLj5Na7nKbSav9RQ==
-
-openapi-to-postmanv2@^2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/openapi-to-postmanv2/-/openapi-to-postmanv2-2.12.0.tgz#afd686ace584f41969799dada35f8ebbfaa80f3c"
-  integrity sha512-OpCIN4G15YO9cvZ+gOhwfbI6tC+KGXAP9utxOHtpqY1m9LfJRQMiYXb9DqImKthZFpclCGyWNs6zn4071Cjr/g==
-  dependencies:
-    ajv "6.12.6"
-    async "3.2.1"
-    commander "2.20.3"
-    js-yaml "3.14.1"
-    json-schema-merge-allof "0.8.1"
-    lodash "4.17.21"
-    oas-resolver-browser "2.5.2"
-    path-browserify "1.0.1"
-    postman-collection "4.0.0"
-    yaml "1.10.2"
 
 openapi-to-postmanv2@^2.13.0:
   version "2.13.0"
@@ -8189,7 +8119,7 @@ prompt@^1.0.0:
     utile "0.3.x"
     winston "2.x"
 
-prompts@^2.4.1, prompts@^2.4.2:
+prompts@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
   integrity sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==
@@ -8617,15 +8547,6 @@ repeating@^2.0.0:
   integrity sha1-UhTFOpJtNVJwdSf7q0FdvAjQbdo=
   dependencies:
     is-finite "^1.0.0"
-
-replace-in-file@^6.2.0:
-  version "6.3.2"
-  resolved "https://registry.yarnpkg.com/replace-in-file/-/replace-in-file-6.3.2.tgz#0f19835137177c89932f45df319f3539a019484f"
-  integrity sha512-Dbt5pXKvFVPL3WAaEB3ZX+95yP0CeAtIPJDwYzHbPP5EAHn+0UoegH/Wg3HKflU9dYBH8UnBC2NvY3P+9EZtTg==
-  dependencies:
-    chalk "^4.1.2"
-    glob "^7.2.0"
-    yargs "^17.2.1"
 
 request-promise-core@1.1.4:
   version "1.1.4"
@@ -10590,7 +10511,7 @@ yargs@^15.0.2, yargs@^15.1.0, yargs@^15.3.1:
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
 
-yargs@^17.0.1, yargs@^17.2.1:
+yargs@^17.2.1:
   version "17.2.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.2.1.tgz#e2c95b9796a0e1f7f3bf4427863b42e0418191ea"
   integrity sha512-XfR8du6ua4K6uLGm5S6fA+FIJom/MdJcFNVY8geLlp2v8GYbOXD4EB1tPNZsRn4vBzKGMgb5DRZMeWuFc2GO8Q==

@@ -39,7 +39,7 @@ include:
     image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest
     services:
         - docker:dind
-        - name: registry.gitlab.com/operator-ict/golemio/devops/docker-postgis/12.3:postgis3
+        - name: postgis/postgis:13-3.2
           alias: postgres
         - mongo:4.0.5
         - redis:6.0-alpine

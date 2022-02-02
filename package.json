@@ -97,6 +97,7 @@
         "mpath": "^0.8.4",
         "axios": "^0.21.2",
         "ssh2": "^1.4.0",
-        "**/axios/follow-redirects": "^1.14.7"
+        "**/axios/follow-redirects": "^1.14.7",
+        "**/@google-cloud/storage/**/node-fetch": "^2.6.7"
     }
 }

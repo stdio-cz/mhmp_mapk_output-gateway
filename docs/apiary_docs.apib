@@ -318,6 +318,8 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
+Parking tariffs endpoint follows [Datex II](https://docs.datex2.eu/) specification.
+
 ### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?source}]
 
 + Parameters
@@ -2700,9 +2702,9 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + source_id: `33` (string, required)
 + data_provider: `www.korid.cz` (string, nullable)
 + name: `Husova (u nemocnice)` (string, required)
-+ category: (Parking category) (string, nullable)
-+ date_modified: `2020-05-18T07:38:37.000Z` (string, required)
-+ address: null (string, nullable)
++ category: (Parking category, nullable)
++ date_modified: `2020-05-18T07:38:37.000Z` (string, nullable)
++ address: (Address, nullable)
 + area_served: null (string, nullable)
 + payment_url: `https://payment.com/link.html` (string, nullable)
 + total_spot_number: 180 (number, required)

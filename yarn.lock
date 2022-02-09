@@ -755,10 +755,10 @@
     mongoose "^5.12.3"
     mongoose-schema-jsonschema "^1.4.3"
 
-"@golemio/shared-bikes@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-1.0.3.tgz#a15d65ac674aee2e13f9f8595a12edeac57c338b"
-  integrity sha512-NMiKCVU6VAQYV6zgDCZnB60mXHQIqbD6b+CX7ZN40yhO8PjoAKwK2RxzmASsEo4Gt/Sqrw6qmDB3sCaJX8WsJg==
+"@golemio/shared-bikes@2.0.0-dev.467126062":
+  version "2.0.0-dev.467126062"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.0-dev.467126062.tgz#a586cf015cf56d4cd6de232e7480f7ce2d22ad03"
+  integrity sha512-/eAn0enZSbTTwexxnSp8cNjUIOcezv0sxUNH1A8marU+lAUp5xwXxlTkisd877sSBnEUjmko7WXEpGnxkR1s0Q==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"

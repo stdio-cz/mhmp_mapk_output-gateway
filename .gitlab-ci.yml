@@ -56,10 +56,23 @@ include:
         - export SENTRY_ENABLE=false
         - export REDIS_ENABLE=true
         - export REDIS_CONN=redis://redis/
-        - export SQL_DUMP_FILES=node_modules/@golemio/*/db/example/*.sql
-        - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data
-        - cd node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -
-        - rm -rf node_modules/@golemio/shared-bikes/db/example
+        - export SQL_DUMP_FILES=node_modules/@golemio/**/db/example/*.sql
+        - export MONGO_DATA_PATHS=node_modules/@golemio/**/db/example/mongo_data
+        - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/**/db/migrations/**/postgresql
+        # Run migrations from schema definitions
+        - export SCH_NPM_TAG="dev" && [[ "$CI_COMMIT_REF_NAME" == "master" ]] && export SCH_NPM_TAG="latest"
+        - export SCH_VERSION=$(npm show @golemio/schema-definitions@$SCH_NPM_TAG version)
+        - export SCH_DIR=$(mktemp -d)
+        - echo "Installing schema-definitions version $SCH_VERSION"
+        - npm i --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
+        - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
+        # Run migrations from modules
+        - yarn golemio migrate-db up --postgres
+        # Import postgres test data
+        - yarn golemio import-test-data --postgres
+        # Import mongo test data (the old way)
+        - unset SQL_DUMP_FILES
+        - yarn golemio-import-test-data
         - NODE_ENV=production yarn code-coverage
         - yarn dredd
     tags:

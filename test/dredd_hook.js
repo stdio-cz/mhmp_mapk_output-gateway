@@ -31,8 +31,8 @@ hooks.after("Traffic 🚘 > Shared Bikes > GET All Shared Bikes", (transaction) 
 });
 
 hooks.before("Traffic 🚘 > Shared Bikes > GET Shared Bike", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("homeport-0076", storage["bikeId"]);
-    transaction.fullPath = transaction.fullPath.replace("homeport-0076", storage["bikeId"]);
+    transaction.request.uri = transaction.request.uri.replace("rekola-1926", storage["bikeId"]);
+    transaction.fullPath = transaction.fullPath.replace("rekola-1926", storage["bikeId"]);
 });
 
 hooks.after("Traffic 🚘 > Bicycle Parkings > GET All Bicycle Parkings", (transaction) => {

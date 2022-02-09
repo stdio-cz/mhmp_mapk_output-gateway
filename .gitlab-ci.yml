@@ -56,9 +56,9 @@ include:
         - export SENTRY_ENABLE=false
         - export REDIS_ENABLE=true
         - export REDIS_CONN=redis://redis/
-        - export SQL_DUMP_FILES=node_modules/@golemio/**/db/example/*.sql
-        - export MONGO_DATA_PATHS=node_modules/@golemio/**/db/example/mongo_data
-        - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/**/db/migrations/**/postgresql
+        - export SQL_DUMP_FILES=node_modules/@golemio/*/db/example/*.sql
+        - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data
+        - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/*/db/migrations/**/postgresql
         # Run migrations from schema definitions
         - export SCH_NPM_TAG="dev" && [[ "$CI_COMMIT_REF_NAME" == "master" ]] && export SCH_NPM_TAG="latest"
         - export SCH_VERSION=$(npm show @golemio/schema-definitions@$SCH_NPM_TAG version)
@@ -69,7 +69,7 @@ include:
         # Run migrations from modules
         - yarn golemio migrate-db up --postgres
         # Import postgres test data
-        - yarn golemio import-test-data --postgres
+        - yarn golemio import-db-data --postgres
         # Import mongo test data (the old way)
         - unset SQL_DUMP_FILES
         - yarn golemio-import-test-data

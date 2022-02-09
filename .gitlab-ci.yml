@@ -59,6 +59,7 @@ include:
         - export SQL_DUMP_FILES=node_modules/@golemio/*/db/example/*.sql
         - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data
         - cd node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -
+        - rm -rf node_modules/@golemio/shared-bikes/db/example
         - NODE_ENV=production yarn code-coverage
         - yarn dredd
     tags:

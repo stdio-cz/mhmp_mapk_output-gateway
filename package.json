@@ -16,7 +16,7 @@
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
         "generate-docs": "typedoc --out docs/typedoc src",
         "dredd": "dredd",
-        "lint": "eslint src/**/*.ts"
+        "lint": "eslint 'src/**/*.ts'"
     },
     "author": "Operator ICT, a.s.",
     "license": "MIT",

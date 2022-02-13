@@ -17,7 +17,7 @@
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
         "generate-docs": "typedoc --out docs/typedoc src",
         "dredd": "dredd",
-        "lint": "eslint 'src/**/*.ts'"
+        "lint": "eslint src/**/*.ts"
     },
     "author": "Operator ICT, a.s.",
     "license": "MIT",
@@ -60,7 +60,7 @@
         "@golemio/city-districts": "1.0.2",
         "@golemio/core": "1.1.10",
         "@golemio/exporting-module": "1.0.4",
-        "@golemio/fcd": "1.0.2",
+        "@golemio/fcd": "1.0.3-dev.468774735",
         "@golemio/flow": "1.0.5",
         "@golemio/gardens": "1.0.2",
         "@golemio/medical-institutions": "1.0.5",

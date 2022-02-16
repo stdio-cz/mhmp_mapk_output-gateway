@@ -73,7 +73,7 @@
         "@golemio/parkings": "1.0.11",
         "@golemio/playgrounds": "1.0.2",
         "@golemio/public-toilets": "1.0.2",
-        "@golemio/schema-definitions": "2.0.23",
+        "@golemio/schema-definitions": "2.0.24",
         "@golemio/shared-bikes": "1.0.3",
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.11",

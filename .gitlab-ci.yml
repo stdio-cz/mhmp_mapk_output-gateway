@@ -79,6 +79,11 @@ include:
         - docker
     rules:
         - when: always
+    artifacts:
+        when: always
+        reports:
+            junit:
+                - junit.xml
 
 run_tests:
     extends: .run_tests

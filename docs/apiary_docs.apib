@@ -1318,7 +1318,7 @@ When you use it as `?updatedSince` query parameter you will obtain only newer da
     + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use `_` sign), default is Europe/Prague
     + routeId: L301 (string, optional) Filter result by route id
     + routeShortName: 381 (string, optional) Filter result by short name
-    + updatedSince: `2020-04-07T06:32:29Z` (string, optional) Limit results to the ones updated after (timestamp greater than)
+    + updatedSince: `2020-04-07T06:32:29+02:00` (string, optional) Limit results to the ones updated after (timestamp greater than)
 
 + Request (application/json; charset=utf-8)
 
@@ -1405,7 +1405,7 @@ You have to use query params `ids`, `cisIds` and `aswIds` in array format - eg. 
     + minutesBefore: `10` (optional, number) - Get departures relative before to request time. Default is set to 0.
     + minutesAfter: `60` (optional, number) - Get departures relative after the request time. Default is set to 180.
     + names: `Prosecká` (optional, string) - Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`.
-    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use _ sign)
+    + preferredTimezone: `Europe%2FPrague` (string, optional) - Preferred timezone offset by given Country/City (use encoded slash sign with `%2F` or use _ sign). Default is Europe/Prague. If UTC time zone is selected, the time zone offset is `Z`, like `2021-11-06T14:36:12Z`
     + orderBySchedule: `false` (optional, boolean) - Order by schedule, not by real delays
     + showAllRoutesFirst: `false` (optional, boolean) - Sort by all distinct route - trip headsign first and then by arrival time.
     + limit: 20 (optional, number) - Limits number of retrieved items. The maximum is 1000 (default value is 20).
@@ -2983,7 +2983,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
     + `route_type`: `1` (number, required) - Identifier of the route type in the GTFS static feed
     + `trip_id`: `381_51_180728` (string, required) - Identifier of the trip in the GTFS static feed
     + `trip_headsign`: `Sídliště Modřany` (string, optional, nullable) - Heading of the trip (identical to what is shown on the bus)
-+ `start_timestamp`: `2019-03-18T11:00:00Z` (string, required) - Timestamp of arrival time in first stop (UTC)
++ `start_timestamp`: `2019-03-18T11:00:00+01:00` (string, required) - Timestamp of arrival time in first stop (UTC)
 + `vehicle_type` (Vehicleposition Vehicle Type) - Type of vehicle
 + `vehicle_registration_number`: 8635 (number, required) - Four-digit identifier of the vehicle in the system
 + `wheelchair_accessible`: true (boolean, required) - Determines wheter the vehicle has wheelchair access
@@ -3003,15 +3003,15 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + `last_stop` (object) - Properties for last stop passed
     + `id`: 331 (string, required, nullable) - GTFS Static identifier of the last stop passed on the route of the trip
     + `sequence`: 11 (number, required, nullable) - Sequence number of the last stop passed on the route of the trip
-    + `arrival_time`: `2019-03-18T11:00:00Z` (string, required, nullable) - Scheduled arrival time to the last passed stop (UTC)
-    + `departure_time`: `2019-03-18T11:04:00Z` (string, required, nullable) - Scheduled departure time from the last passed stop (UTC)
+    + `arrival_time`: `2019-03-18T11:00:00+01:00` (string, required, nullable) - Scheduled arrival time to the last passed stop (UTC)
+    + `departure_time`: `2019-03-18T11:04:00+01:00` (string, required, nullable) - Scheduled departure time from the last passed stop (UTC)
 + `next_stop` (object) - Properties of the next stop on the route of the trip
     + `id`: 334 (string, required, nullable) - GTFS Static identifier of the next stop on the route of the trip
     + `sequence`: 12 (number, required, nullable) - Sequence number of the next stop on the route of the trip
-    + `arrival_time`: `2019-03-18T11:10:00Z` (string, required, nullable) - Scheduled arrival time of the next stop on the route of the trip
-    + `departure_time`: `2019-03-18T11:14:00Z` (string, required, nullable) - Scheduled departure time of the next stop on the route of the trip
+    + `arrival_time`: `2019-03-18T11:10:00+01:00` (string, required, nullable) - Scheduled arrival time of the next stop on the route of the trip
+    + `departure_time`: `2019-03-18T11:14:00+01:00` (string, required, nullable) - Scheduled departure time of the next stop on the route of the trip
 + `is_canceled`: false (boolean, nullable, required) - True, if the trip was canceled. Other fields about the position have non-defined values in case this value is true
-+ `origin_timestamp`: `2019-03-18T11:00:00Z` (string, required) - Time at which the position was sent from the vehicle (UTC)
++ `origin_timestamp`: `2019-03-18T11:00:00+01:00` (string, required) - Time at which the position was sent from the vehicle (UTC)
 + `speed`: 34 (number, optional, nullable) - Current speed of the vehicle (kilometers per hour)
 + `shape_dist_traveled`: `12.3` (string, optional, nullable) - Number of kilometers traveled on the route
 + `tracking`: false (boolean, required) - True if trip is tracked, meaning that trip is on its track.

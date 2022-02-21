@@ -16,7 +16,7 @@
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
         "generate-docs": "typedoc --out docs/typedoc src",
         "dredd": "dredd",
-        "lint": "eslint 'src/**/*.ts'"
+        "lint": "eslint \"src/**/*.ts\""
     },
     "author": "Operator ICT, a.s.",
     "license": "MIT",
@@ -62,7 +62,7 @@
         "@golemio/core": "1.2.0",
         "@golemio/exporting-module": "1.0.4",
         "@golemio/fcd": "1.0.3",
-        "@golemio/flow": "1.0.5",
+        "@golemio/flow": "1.0.6-dev.475606815",
         "@golemio/gardens": "1.0.2",
         "@golemio/medical-institutions": "1.0.5",
         "@golemio/meteosensors": "1.0.5",

@@ -2311,10 +2311,10 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## PID Departure Board Infotext (object)
 
-+ valid_from: `2019-05-18T07:38:00+02:00` (string, required, nullable) - Intended time of infotext publishing in ISO String (UTC). Does not have to represent the time the reported event starts.
-+ valid_to: `2019-05-19T07:38:00+02:00` (string, required, nullable) - Intended time of infotext removal in ISO String (UTC). Does not have to represent the time the reported event ends.
++ valid_from: `2019-05-18T07:38:00+02:00` (string, required, nullable) - Intended time of infotext publishing in ISO String (UTC). Does not have to represent the time the reported event starts. Is `null` when undefined.
++ valid_to: `2019-05-19T07:38:00+02:00` (string, required, nullable) - Intended time of infotext removal in ISO String (UTC). Does not have to represent the time the reported event ends. Is `null` when undefined.
 + text: `Nehoda na trase, odklon linek mimo tuto stanici.` (string, required) - Information text in Czech.
-+ text_en: `Trips are cancelled due to accident on route.` (string, required, nullable) - Information text in English.
++ text_en: `Trips are cancelled due to accident on route.` (string, required, nullable) - Information text in English. Is `null` when undefined.
 + display_type: `inline` (string, required) - Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures), `general-alternate` (full screen alternates with departures).
 + related_stops (array)
     + `U118Z1P` (string) - GTFS stop IDs for which the infotexts apply.

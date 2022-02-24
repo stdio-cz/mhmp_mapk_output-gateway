@@ -2303,7 +2303,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + is_at_stop: `true` (boolean, required) - True if vehicle is physically present in the stop. Applicable only to connections with delay available.
 + is_canceled: `false` (boolean, required) - True if the trip is canceled.
 + is_wheelchair_accessible: `false` (boolean, required) - True if the vehicle is wheelchair accessible.
-+ is_air_conditioned: `false` (boolean, required, nullable) - True if the vehicle is equipped with air condition.
++ is_air_conditioned: `false` (boolean, required, nullable) - True if the vehicle is equipped with air condition, false if not and null if unknown or when outside of cooling season.
 + short_name: `Os 9327` (string, required) - The number of a particular train, otherwise `null`.
 
 ## PID Departure Board Last Stop (object)
@@ -2964,7 +2964,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + `vehicle_type` (Vehicleposition Vehicle Type) - Type of vehicle
 + `vehicle_registration_number`: 8635 (number, required) - Four-digit identifier of the vehicle in the system
 + `wheelchair_accessible`: true (boolean, required) - Determines whether the vehicle has wheelchair access
-+ `air_conditioned`: true (boolean, required) - Determines whether the vehicle is equipped with air condition
++ `air_conditioned`: true (boolean, required) - True if the vehicle is equipped with air condition, false if not and null if unknown or when outside of cooling season.
 
 ## Vehicleposition Vehicle Type (object)
 + `id`: 1 (number, required) - Unique id code of type

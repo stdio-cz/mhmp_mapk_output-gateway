@@ -60,7 +60,7 @@
         "@golemio/bicycle-parkings": "1.0.2",
         "@golemio/city-districts": "1.0.2",
         "@golemio/core": "1.2.0",
-        "@golemio/exporting-module": "1.0.4",
+        "@golemio/exporting-module": "1.0.5-dev.480663943",
         "@golemio/fcd": "1.0.3",
         "@golemio/flow": "1.0.6-dev.475606815",
         "@golemio/gardens": "1.0.2",
@@ -78,7 +78,7 @@
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.11",
         "@golemio/traffic-cameras": "1.0.3",
-        "@golemio/waste-collection-yards": "1.0.1",
+        "@golemio/waste-collection-yards": "1.0.2-dev.480663805",
         "@sentry/node": "5.15.4",
         "compression": "^1.7.4",
         "dotenv": "^6.1.0"

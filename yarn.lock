@@ -736,12 +736,12 @@
     p-throttle "4.1.1"
     uuid-by-string "^3.0.2"
 
-"@golemio/playgrounds@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.2.tgz#cee406435904de3bb7e77fb39cddc631dc8b4c2a"
-  integrity sha512-ryiWHCIWj6mCkLmrWLOqy29g1kpeEKWF1F1K8OzHIuF05Oe409bx7/7b8W/FiK8u+fJvsJ6TqOujYM5mZ+I2KA==
+"@golemio/playgrounds@1.0.3-dev.486002309":
+  version "1.0.3-dev.486002309"
+  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.3-dev.486002309.tgz#a2f1c542d49304bbe744713ea1d6429aa307e889"
+  integrity sha512-6nZKhvErFuZHdQjqBO3sZ7BPBmvmajdfkYu1q9M8XpXr2BHhGqwYon3+a+2dsEyRGFYQeLXvTGQonoFFWI8f3Q==
   dependencies:
-    "@golemio/city-districts" "1.0.1"
+    "@golemio/city-districts" "1.0.2"
 
 "@golemio/public-toilets@1.0.2":
   version "1.0.2"

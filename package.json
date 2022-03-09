@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.20",
+    "version": "3.0.21",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -92,12 +92,13 @@
         "lodash": "^4.17.21",
         "nyc/**/browserslist": "^4.16.5",
         "trim-newlines": "^4.0.1",
-        "url-parse": "^1.5.6",
+        "url-parse": "^1.5.8",
         "xmldom": "github:xmldom/xmldom#0.7.0",
         "mpath": "^0.8.4",
         "axios": "^0.21.2",
         "ssh2": "^1.4.0",
         "**/axios/follow-redirects": "^1.14.7",
-        "**/@google-cloud/storage/**/node-fetch": "^2.6.7"
+        "**/@google-cloud/storage/**/node-fetch": "^2.6.7",
+        "**/xsd2jsonschema/urijs": "^1.19.10"
     }
 }

@@ -638,10 +638,10 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/fcd@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.4.tgz#a96d1de83660cece6ee1a49120c7976ac5145a42"
-  integrity sha512-M6bPa0z9T+t9SEiew6khqAJFiJZOfQRtscI39rX0VBBm5+gyKSVmFBBqukp0JhP+SpPy8/djSKBOnzTDmDTE+Q==
+"@golemio/fcd@1.0.5-dev.495524269":
+  version "1.0.5-dev.495524269"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.5-dev.495524269.tgz#8c223a710916038b11b1f9834837347d63a28a12"
+  integrity sha512-/GlvmIJzZ4hhmn1ijg1EzyjBi3MVxs+fMg8yuHcx3yWyI5esmP8zRFBVhhGmw0Bc1RUeTIahgyJe7ZB4WgHp8A==
   dependencies:
     "@apideck/portman" "^1.13.0"
     ajv "^8.2.0"

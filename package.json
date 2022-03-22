@@ -61,7 +61,7 @@
         "@golemio/city-districts": "1.0.2",
         "@golemio/core": "1.2.3",
         "@golemio/exporting-module": "1.0.5",
-        "@golemio/fcd": "1.0.5-dev.495524269",
+        "@golemio/fcd": "1.0.5-dev.498064919",
         "@golemio/flow": "1.0.6",
         "@golemio/gardens": "1.0.2",
         "@golemio/medical-institutions": "1.0.5",
@@ -97,6 +97,7 @@
         "mpath": "^0.8.4",
         "axios": "^0.21.2",
         "ssh2": "^1.4.0",
+        "minimist": "^1.2.6",
         "**/axios/follow-redirects": "^1.14.7",
         "**/@google-cloud/storage/**/node-fetch": "^2.6.7",
         "**/xsd2jsonschema/urijs": "^1.19.10"

@@ -768,10 +768,10 @@
     p-throttle "4.1.1"
     uuid-by-string "^3.0.2"
 
-"@golemio/playgrounds@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.3.tgz#b7f4fab90257f1cf0891207f3e3fd1a62d8f5efe"
-  integrity sha512-4rilmGqcvTLP8kYIsHTA6Ote0W+TbdwNhL1wlOpOqMFdfdv6N6cLNZ0M1CZKuQq+EZEZWRbnSTs3BAFrQtARGQ==
+"@golemio/playgrounds@1.0.4-dev.499900501":
+  version "1.0.4-dev.499900501"
+  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.4-dev.499900501.tgz#a24f2d1ab574898e74e543c977b7d92f07db0826"
+  integrity sha512-0byvW9ps/hUwZfv7oc0iDITX4skP+7LIogrYJxpDXVImKE3ITCDBJMWc7vOoQigGHyMNU6kf50rCfKn0y73z9g==
   dependencies:
     "@golemio/city-districts" "1.0.2"
 

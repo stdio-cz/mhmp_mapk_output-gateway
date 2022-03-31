@@ -37,6 +37,7 @@ include:
 .run_tests:
     stage: test
     image: registry.gitlab.com/operator-ict/golemio/devops/docker-node-env/master:latest
+    coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
     services:
         - docker:dind
         - name: postgis/postgis:13-3.2
@@ -83,8 +84,10 @@ include:
     artifacts:
         when: always
         reports:
-            junit:
-                - junit.xml
+            junit: junit.xml
+            coverage_report:
+                coverage_format: cobertura
+                path: coverage/cobertura-coverage.xml
 
 run_tests:
     extends: .run_tests

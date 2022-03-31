@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.22",
+    "version": "3.0.23",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -56,12 +56,12 @@
     },
     "dependencies": {
         "@golemio/air-quality-stations": "1.0.2",
-        "@golemio/bicycle-counters": "1.0.4",
+        "@golemio/bicycle-counters": "1.0.5",
         "@golemio/bicycle-parkings": "1.0.2",
-        "@golemio/city-districts": "1.0.2",
-        "@golemio/core": "1.2.3",
+        "@golemio/city-districts": "1.0.3",
+        "@golemio/core": "1.2.5",
         "@golemio/exporting-module": "1.0.5",
-        "@golemio/fcd": "1.0.4",
+        "@golemio/fcd": "1.0.5",
         "@golemio/flow": "1.0.6",
         "@golemio/gardens": "1.0.2",
         "@golemio/medical-institutions": "1.0.5",
@@ -72,7 +72,7 @@
         "@golemio/ndic": "1.0.6",
         "@golemio/parking-zones": "1.0.2",
         "@golemio/parkings": "1.0.12",
-        "@golemio/playgrounds": "1.0.3",
+        "@golemio/playgrounds": "1.0.4",
         "@golemio/public-toilets": "1.0.2",
         "@golemio/shared-bikes": "2.0.0",
         "@golemio/shared-cars": "1.0.3",
@@ -97,6 +97,7 @@
         "mpath": "^0.8.4",
         "axios": "^0.21.2",
         "ssh2": "^1.4.0",
+        "minimist": "^1.2.6",
         "**/axios/follow-redirects": "^1.14.7",
         "**/@google-cloud/storage/**/node-fetch": "^2.6.7",
         "**/xsd2jsonschema/urijs": "^1.19.10"

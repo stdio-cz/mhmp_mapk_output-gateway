@@ -7,7 +7,7 @@ export { medicalInstitutionsRouter } from "@golemio/medical-institutions/dist/ou
 export { municipalAuthoritiesRouter } from "@golemio/municipal-authorities/dist/output-gateway";
 export { parkingZonesRouter } from "@golemio/parking-zones/dist/output-gateway";
 export { playgroundsRouter } from "@golemio/playgrounds/dist/output-gateway";
-export { sharedBikesRouter, gbfsRouter as sharedBikesGbfsRouter } from "@golemio/shared-bikes/dist/output-gateway";
+export { sharedBikesRouter } from "@golemio/shared-bikes/dist/output-gateway";
 export { sortedWasteRouterPg } from "@golemio/sorted-waste-stations/dist/output-gateway/sorted-waste-stations-pg";
 export { parkingsRouter } from "@golemio/parkings/dist/output-gateway";
 export { pedestriansRouter } from "@golemio/flow/dist/output-gateway";

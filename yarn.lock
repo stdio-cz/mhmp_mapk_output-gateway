@@ -544,10 +544,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.2.tgz#f9591e50a764ca907ddfd0d726737f938f14556e"
   integrity sha512-VzL0iPYruO85VJsX9cCCFlUu6P41LiqY0Qj4LolZBZjzaqdkS6UOqfA4KHQ+qxMM32IUbJmtYy4uzwkA6PJzQw==
 
-"@golemio/bicycle-counters@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.4.tgz#8338c7b254be88992cea0710fb47d9a7dee1dc8e"
-  integrity sha512-MIQhfbmHRYnQ99HsYllQ1Ki9BaXhzlt5YpaFRITzk4CIm5QOme5rRJZK+LSnCeo182zYPCefCACiUbJk9t4Heg==
+"@golemio/bicycle-counters@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.5.tgz#250499fcf67da18bcde1c23079d1d1f1041dd3d4"
+  integrity sha512-6hluzgpFNiN+zN5vxv5sjJZiridC04xqaO5mrREITa1JGyeML9VeeYIlTGHDThSpc82LP5bxIHTZLPWHu5Ytvw==
   dependencies:
     lodash "^4.17.21"
 
@@ -572,6 +572,13 @@
   dependencies:
     slugify "1.3.2"
 
+"@golemio/city-districts@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.3.tgz#367c0583ebd6474f0e7a99dd19ce2db60f58ed6d"
+  integrity sha512-V5Hoz7fJzpbczGAm/rxcScsjW3jPzfx0Nu6Mrk6y6Xwn3X6u4EeQsrx6TuYj+YZ1a9ZoxPjdqVFryGQL19l1iQ==
+  dependencies:
+    slugify "1.3.2"
+
 "@golemio/cli@1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@golemio/cli/-/cli-1.2.1.tgz#88b5792bc9c92cee5e7eea37e13a8de3934095a7"
@@ -588,10 +595,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.3.tgz#e3ee8f67c77d28a2ea6b84b6279c49274501cfb5"
-  integrity sha512-nyQ3QPMYd6RcuGMkRRmdEyDuIY7oikA5qZSTZzpAj2pse7fjjMXBjxZGozxz+UoBGGJtVbnkKxnnH8TBGL9E2Q==
+"@golemio/core@1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.5.tgz#390f4bb07ff809ab9bb4bcf9ddfcb57353c3ed24"
+  integrity sha512-DBu5FjqPRNigkxcRabyVaebwpVuU4f3wncdlO8HQPpNLab2YsiY9qfgonho4kfzgVrqpADdd+T1gKsxTLxkuyQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -676,10 +683,10 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/fcd@1.0.5-dev.498064919":
-  version "1.0.5-dev.498064919"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.5-dev.498064919.tgz#4246d9ddf9dd4df5950162fb2cc24ae33c6c2a2c"
-  integrity sha512-cI8cPM9QAMzKAxw7wCxYeaVpqsHkGK50HbH0Hl6S4+tmsOiFrEWofmaDs/ISiUUsdRhr1b3xLRkPEm5QQsm+LQ==
+"@golemio/fcd@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.5.tgz#949b1d197c65c5db818213318cb97fb67f02a261"
+  integrity sha512-vIYp9rzJBtaPwnhIxRJyPQSv/ntgQOCZgBUUmLjL5bGI1qHB696IAhvZz3qlLVFKDD8c5WLLiC+kb4JeqW/otw==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
@@ -768,10 +775,10 @@
     p-throttle "4.1.1"
     uuid-by-string "^3.0.2"
 
-"@golemio/playgrounds@1.0.4-dev.499900501":
-  version "1.0.4-dev.499900501"
-  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.4-dev.499900501.tgz#a24f2d1ab574898e74e543c977b7d92f07db0826"
-  integrity sha512-0byvW9ps/hUwZfv7oc0iDITX4skP+7LIogrYJxpDXVImKE3ITCDBJMWc7vOoQigGHyMNU6kf50rCfKn0y73z9g==
+"@golemio/playgrounds@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.4.tgz#42039d4d8b57838017c6f55a04185f2aa900039d"
+  integrity sha512-mx2YeDCmy/IqIkpVHQK7MUNuly4uBJPfhEUoTHKBu5Vy0g6sKZ5vh0eYhQY2vMWXVAcvGJ8Kb6emnrcljcQhrg==
   dependencies:
     "@golemio/city-districts" "1.0.2"
 
@@ -782,10 +789,10 @@
   dependencies:
     "@golemio/city-districts" "1.0.1"
 
-"@golemio/shared-bikes@2.0.1-dev.505041914":
-  version "2.0.1-dev.505041914"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.1-dev.505041914.tgz#ff271c6a225e637227c89861a0f26df56bc8dd52"
-  integrity sha512-0ME/9cSwE3vdNGi3YObwv7YMKBDql+ibYwgxewyG9/kMS4QlT0yRodLI4jmdw+QUzwgwZa7asYTMo327F12Q6Q==
+"@golemio/shared-bikes@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.0.tgz#b37d37050abb8aa3a2ff71033590d34505124d5e"
+  integrity sha512-x0s7I0cUiC1cubNISLldG77sRZ4DOuAowJVP6bDOCJ+gyFdh4D9P8dfV3dQP6Qo5jF1EZ0WrdezkhsidjLqf+A==
   dependencies:
     cheap-ruler "2.5.1"
     lodash "^4.17.19"

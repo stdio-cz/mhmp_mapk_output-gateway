@@ -51,6 +51,7 @@ include:
         # TODO temporarily set level to critical
         - bash -c 'yarn audit --groups dependencies --level critical; [[ $? -ge 16 ]] && exit 1 || exit 0'
         - yarn lint
+        - yarn build-apidocs
         - yarn build
         - export LOG_LEVEL=INFO
         - export MONGO_CONN=$MONGO_CONN

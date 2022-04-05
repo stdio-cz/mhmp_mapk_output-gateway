@@ -1,6 +1,7 @@
 import http from "http";
 import compression from "compression";
 import sentry from "@golemio/core/dist/shared/sentry";
+import swaggerUi from "swagger-ui-express";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
@@ -213,8 +214,19 @@ export default class App extends BaseApp {
         this.express.use("/parking", parkingsRouter);
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);
-
         this.express.use("/fcd", fcdRouter);
+
+        // ApiDocs
+        this.express.use(
+            "/docs/openapi",
+            swaggerUi.serveFiles(require("../docs/generated/openapi.json"), {}),
+            swaggerUi.setup(require("../docs/generated/openapi.json"))
+        );
+        this.express.use(
+            "/docs/public-openapi",
+            swaggerUi.serveFiles(require("../docs/generated/public-openapi.json"), {}),
+            swaggerUi.setup(require("../docs/generated/public-openapi.json"))
+        );
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

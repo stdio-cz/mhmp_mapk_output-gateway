@@ -228,7 +228,6 @@ export default class App extends BaseApp {
             swaggerUi.setup(require("../docs/generated/public-openapi.json"))
         );
 
-                
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);
         builder.LoadData(generalRoutes);

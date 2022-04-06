@@ -1,0 +1,48 @@
+openapi: 3.0.0
+
+info:
+    title: Golemio API
+    description: >-
+        <p><img src="https://storage.golemio.cz/golemiocz/images/golemioapi_logos.png" alt="Logos" /></p>
+        <p><b>Toto je dokumentace REST API projektu pražské datové platformy Golemio.</b></p>
+        <p>Veškeré dotazy prosím směřujte na [golemio@operatorict.cz](mailto:golemio@operatorict.cz?subject=golemioapiv1)</p>
+        <p>Dokumentace je v anglickém jazyce. Více informací o projektu naleznete na [www.golemio.cz](https://www.golemio.cz/).</p>
+        <H1>Description</H1>
+        <p><b>This is documentation of RESTful API of Golemio Prague Data Plaform project.</b></p>
+        <p>Support is avalailable via <a href="mailto:golemio@operatorict.cz?subject=golemioapiv1">golemio@operatorict.cz</p>
+        <p>More about project Golemio at <a href="https://www.golemio.cz/">www.golemio.cz</a>.</p>
+        <H1>Versions</H1>
+        <p>v0.1 (current)</p>
+        <H1>General info</H1>
+        <H2>Authorization</H2>
+        <p>Generate your own token at <a href="https://api.golemio.cz/api-keys">api.golemio.cz/api-keys</a>.</p>
+        <p><b>Use the token as value of X-Access-Token header.</b></p>
+        <H1>Usage<H1>
+        <H2>Pagination</H2>
+        <p>The API returns maximum count of 10000 objects / rows for one request. You can specify lower number by adding <code>?limit</code> URL parameter.</p>
+        <p>This may vary depending on the specific route, read the description of the parameters for each route. You can only get more data using multiple reqeusts with <code>?limit&offset</code> parameters, read examples below.<p>
+        <H2>Requests rate</H2>
+        <p>By default, each API key has a rate-limit set of 10000 requests per 10 seconds.</p>
+
+    version: 1.0.0
+    contact:
+        name: Golemio Prague Data Plaform
+        email: golemio@operatorict.cz
+        url: https://golemio.cz
+
+servers:
+    - url: https://api.golemio.cz/v2
+      description: Main (production) server
+    - url: https://rabin.golemio.cz/v2
+      description: Test (development) server
+
+components:
+    securitySchemes:
+        ApiKeyAuth: # arbitrary name for the security scheme
+            type: apiKey
+            in: header
+            name: X-Access-Token # name of the header, query parameter or cookie
+
+# Apply the API key globally to all operations
+security:
+    - ApiKeyAuth: []

@@ -72,7 +72,7 @@
         "@golemio/municipal-authorities": "1.0.2",
         "@golemio/municipal-libraries": "1.0.3",
         "@golemio/municipal-police-stations": "1.0.2",
-        "@golemio/ndic": "1.0.6",
+        "@golemio/ndic": "1.0.7-dev.510055797",
         "@golemio/parking-zones": "1.0.2",
         "@golemio/parkings": "1.0.12",
         "@golemio/playgrounds": "1.0.4",

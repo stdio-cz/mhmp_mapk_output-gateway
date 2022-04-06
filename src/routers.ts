@@ -1,3 +1,4 @@
+export { airQualityRouter } from "@golemio/air-quality-stations/dist/output-gateway";
 export { bicycleCountersRouter } from "@golemio/bicycle-counters/dist/output-gateway";
 export { cityDistrictsRouter } from "@golemio/city-districts/dist/output-gateway";
 export { exportingModuleRouter } from "@golemio/exporting-module/dist/output-gateway";

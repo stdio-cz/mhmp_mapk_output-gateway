@@ -12,6 +12,7 @@ import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
 import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import {
+    airQualityRouter,
     bicycleCountersRouter,
     cityDistrictsRouter,
     exportingModuleRouter,
@@ -198,6 +199,7 @@ export default class App extends BaseApp {
 
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
+        this.express.use("/airqualitystations", airQualityRouter);
         this.express.use("/bicyclecounters", bicycleCountersRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
         this.express.use("/export", exportingModuleRouter);

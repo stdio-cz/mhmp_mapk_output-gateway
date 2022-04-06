@@ -17,16 +17,6 @@ const generalRoutes = [
         schema: SharedCars.outputMongooseSchemaObject,
     },
     {
-        collectionName: AirQualityStations.mongoCollectionName,
-        history: {
-            collectionName: AirQualityStations.history.mongoCollectionName,
-            name: AirQualityStations.history.name,
-            schema: AirQualityStations.history.outputMongooseSchemaObject,
-        },
-        name: AirQualityStations.name,
-        schema: AirQualityStations.outputMongooseSchemaObject,
-    },
-    {
         collectionName: Meteosensors.mongoCollectionName,
         name: Meteosensors.name,
         schema: Meteosensors.outputMongooseSchemaObject,

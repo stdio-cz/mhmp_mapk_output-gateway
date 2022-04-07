@@ -5,6 +5,12 @@
 dist/
 docs/typedoc/
 
+## ApiDoc generated configs gitignore rules
+openapi-merge-config.json
+public-openapi-merge-config.json
+openapi.json
+public-openapi.json
+
 ## Template gitignore rules from https://github.com/github/gitignore
 
 # Logs

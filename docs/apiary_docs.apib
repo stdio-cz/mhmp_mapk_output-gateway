@@ -150,6 +150,32 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+### GET Air Quality Index Types [GET /airqualitystations/indextypes]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Air Quality Index Type)
+
+### GET Air Quality Component Types [GET /airqualitystations/componenttypes]
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Air Quality Component Type)
+
 ## Meteosensors TSK [/meteosensors]
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
@@ -3047,3 +3073,21 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + measured_from: `2020-08-21T17:30:00.000Z` (string, required)
 + measured_to: `2020-08-21T17:45:00.000Z` (string, required)
 
+## Air Quality Index Type (object)
+
++ id: `2` (number)
++ index_code: `1B` (string)
++ limit_gte: `0.34` (number)
++ limit_lt: `0.67` (number)
++ color: `00CC00` (string)
++ color_text: `000000` (string)
++ description_cs: `velmi dobrá až dobrá` (string)
++ description_en: `very good to good` (string)
+
+## Air Quality Component Type (object)
+
++ id: `2` (number)
++ component_code: `NO2` (string)
++ unit: `µg/m³` (string)
++ description_cs: `velmi dobrá až dobrá` (string)
++ description_en: `very good to good` (string)

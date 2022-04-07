@@ -1,6 +1,7 @@
 import http from "http";
 import compression from "compression";
 import sentry from "@golemio/core/dist/shared/sentry";
+import swaggerUi from "swagger-ui-express";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
@@ -12,6 +13,7 @@ import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
 import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
 import {
+    airQualityRouter,
     bicycleCountersRouter,
     cityDistrictsRouter,
     exportingModuleRouter,
@@ -23,6 +25,7 @@ import {
     parkingZonesRouter,
     playgroundsRouter,
     sharedBikesRouter,
+    sharedBikesGbfsRouter,
     sortedWasteRouterPg,
     wasteCollectionYardsRouter,
     pedestriansRouter,
@@ -197,6 +200,7 @@ export default class App extends BaseApp {
 
         // Create specific routes with their own router
         this.express.use("/", defaultRouter);
+        this.express.use("/airqualitystations", airQualityRouter);
         this.express.use("/bicyclecounters", bicycleCountersRouter);
         this.express.use("/citydistricts", cityDistrictsRouter);
         this.express.use("/export", exportingModuleRouter);
@@ -208,11 +212,23 @@ export default class App extends BaseApp {
         this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
         this.express.use("/playgrounds", playgroundsRouter);
         this.express.use("/sharedbikes", sharedBikesRouter);
+        this.express.use("/sharedbikes/gbfs", sharedBikesGbfsRouter);
         this.express.use("/parking", parkingsRouter);
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);
-
         this.express.use("/fcd", fcdRouter);
+
+        // ApiDocs
+        this.express.use(
+            "/docs/openapi",
+            swaggerUi.serveFiles(require("../docs/generated/openapi.json"), {}),
+            swaggerUi.setup(require("../docs/generated/openapi.json"))
+        );
+        this.express.use(
+            "/docs/public-openapi",
+            swaggerUi.serveFiles(require("../docs/generated/public-openapi.json"), {}),
+            swaggerUi.setup(require("../docs/generated/public-openapi.json"))
+        );
 
         // Create general routes through builder
         const builder: RouterBuilder = new RouterBuilder(defaultRouter);

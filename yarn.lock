@@ -539,10 +539,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@golemio/air-quality-stations@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.3.tgz#50dee5efbe8ffa97cd7ce002af30d5044f30ac75"
-  integrity sha512-HLVo3NQJhGbtqGZef9EbtKgJA7LdC5XS/mUcojxpdWVEMzqczEwSRCq61k82BV+xTa6Gi8QWU4aMjVft3tOuIg==
+"@golemio/air-quality-stations@1.0.4-dev.513779784":
+  version "1.0.4-dev.513779784"
+  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.4-dev.513779784.tgz#0876a81cd1790d9a77bfb969c45b26901f21c52e"
+  integrity sha512-OhZftYGnuOdZjKh+Q2RdDbautjVmSvoUkVDO8WAedKV0h3OLZvrEbYQCT6xFvgE2RCvc+K+WePPzpcN3CPEG0g==
   dependencies:
     "@golemio/city-districts" "^1.0.4"
 

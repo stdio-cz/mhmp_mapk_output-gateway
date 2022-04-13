@@ -13,8 +13,7 @@ variables:
     APIARY_NAME_DEV: "outputgatewaydev"
     HOST_URL: "https://api.golemio.cz/v2"
     HOST_URL_DEV: "http://rabin.golemio.cz/v2"
-    K8S_PROJECT_NAME: "golemio"
-    K8S_DEPLOY_NAMESPACE: "golemio"
+    HELM_NAME: "golemio"
     K8S_DEPLOYMENT_NAME: output-gateway-v2
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
@@ -48,8 +47,7 @@ include:
         - yarn
         # Audit production dependencies for HIGH (8) vulnerabilities
         # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
-        # TODO temporarily set level to critical
-        - bash -c 'yarn audit --groups dependencies --level critical; [[ $? -ge 16 ]] && exit 1 || exit 0'
+        - bash -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build-apidocs
         - yarn build

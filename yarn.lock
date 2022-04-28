@@ -546,10 +546,10 @@
   dependencies:
     "@golemio/city-districts" "^1.0.4"
 
-"@golemio/bicycle-counters@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.5.tgz#250499fcf67da18bcde1c23079d1d1f1041dd3d4"
-  integrity sha512-6hluzgpFNiN+zN5vxv5sjJZiridC04xqaO5mrREITa1JGyeML9VeeYIlTGHDThSpc82LP5bxIHTZLPWHu5Ytvw==
+"@golemio/bicycle-counters@1.0.6-dev.526094653":
+  version "1.0.6-dev.526094653"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.6-dev.526094653.tgz#8c93f4d1ff0e3534759afe130f935bf839307231"
+  integrity sha512-Wus3Qv1Aq3lzjDHhECMBTcZsaIjjFxs5fcok3ja2mQB1iAgo82wyD/fTDZzsSJubOB94yq4qodTRhoZ+v0n2Bw==
   dependencies:
     lodash "^4.17.21"
 

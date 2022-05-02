@@ -88,26 +88,5 @@
         "fast-glob": "^3.2.11",
         "swagger-ui-express": "^4.3.0"
     },
-    "resolutions": {
-        "ansi-regex": "^5.0.1",
-        "dredd/**/underscore": "^1.12.1",
-        "dredd/optimist/minimist": "^1.2.3",
-        "dredd/gavel/json-pointer": "^0.6.1",
-        "hosted-git-info": "^3.0.8",
-        "lodash": "^4.17.21",
-        "nyc/**/browserslist": "^4.16.5",
-        "trim-newlines": "^4.0.1",
-        "url-parse": "^1.5.8",
-        "xmldom": "npm:@xmldom/xmldom@0.7.5",
-        "mpath": "^0.8.4",
-        "axios": "^0.21.2",
-        "ssh2": "^1.4.0",
-        "minimist": "^1.2.6",
-        "moment": "^2.29.2",
-        "**/axios/follow-redirects": "^1.14.7",
-        "**/@google-cloud/storage/**/node-fetch": "^2.6.7",
-        "**/xsd2jsonschema/urijs": "^1.19.11",
-        "node-forge": "^1.3.0",
-        "async": "^3.2.2"
-    }
+    "resolutions": {}
 }

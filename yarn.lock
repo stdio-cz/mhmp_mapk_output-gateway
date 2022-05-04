@@ -726,10 +726,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.0.13-dev.529946092":
-  version "1.0.13-dev.529946092"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.13-dev.529946092.tgz#f216c013bc6589350b239fd32c3486f2ea098ab4"
-  integrity sha512-Zdu+AFyVI9rsvnpgCWXuBq+bMCvIMnsczpnD+mh/fnD3o0nTnWGS7uS+EGIyeJ26cgoojmnPtLHSsgGBNbN5Ww==
+"@golemio/parkings@1.0.13-dev.530871784":
+  version "1.0.13-dev.530871784"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.0.13-dev.530871784.tgz#7ca875c4ee7cb2604fbde5d2bbb6a72647c2b64c"
+  integrity sha512-9D53UOyl+ZRHk0iVJQP4hRsFrbXrHnJzahNNFOg/9QUgaIINogTOGLQYDHvsEo+U5Q0OtyNMlEaveiPsmBKLRA==
   dependencies:
     "@golemio/city-districts" "1.0.2"
     "@turf/turf" "^6.5.0"

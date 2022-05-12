@@ -59,7 +59,7 @@
     },
     "dependencies": {
         "@golemio/air-quality-stations": "1.0.4",
-        "@golemio/bicycle-counters": "1.0.6",
+        "@golemio/bicycle-counters": "1.0.7-dev.537376461",
         "@golemio/bicycle-parkings": "1.0.2",
         "@golemio/city-districts": "1.0.4",
         "@golemio/core": "1.2.9-dev.533136017",
@@ -74,7 +74,7 @@
         "@golemio/municipal-police-stations": "1.0.2",
         "@golemio/ndic": "1.0.8",
         "@golemio/parking-zones": "1.0.2",
-        "@golemio/parkings": "1.0.13-dev.534652710",
+        "@golemio/parkings": "1.0.13-dev.537376583",
         "@golemio/playgrounds": "1.0.4",
         "@golemio/public-toilets": "1.0.2",
         "@golemio/shared-bikes": "2.0.3",

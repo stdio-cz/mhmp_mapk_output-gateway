@@ -2366,7 +2366,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 + predicted: `2019-05-18T07:38:20+02:00` (string, required) - Time of arrival/departure including realtime delay as an ISO string. Is same as the scheduled time when no delay is available. Is `null` on first/last stops.
 + scheduled: `2019-05-18T07:38:00+02:00` (string, required) - Time of arrival/departure as ISO string.
-+ minutes: `2` (string) - Number of minutes till departure. If it is less than 30 second it returns value "<1".
++ minutes: `5` (string, required) - Time to predicted departure in minutes. When smaller than one minute, displays `<1`.
 
 ## PID Departure Board Route (object)
 

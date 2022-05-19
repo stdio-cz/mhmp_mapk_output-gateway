@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.27",
+    "version": "3.0.28",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -77,7 +77,7 @@
         "@golemio/parkings": "1.1.0",
         "@golemio/playgrounds": "1.0.4",
         "@golemio/public-toilets": "1.0.2",
-        "@golemio/shared-bikes": "2.0.4",
+        "@golemio/shared-bikes": "2.0.5",
         "@golemio/shared-cars": "1.0.3",
         "@golemio/sorted-waste-stations": "1.1.11",
         "@golemio/traffic-cameras": "1.0.4",

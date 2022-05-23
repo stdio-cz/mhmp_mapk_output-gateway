@@ -505,28 +505,28 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@golemio/air-quality-stations@^1.0.5-dev.545424621":
+"@golemio/air-quality-stations@1.0.5-dev.545424621":
   version "1.0.5-dev.545424621"
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.5-dev.545424621.tgz#bc8937f84a52d4eeb492ae1b4065a8a7b429b363"
   integrity sha512-X1l+knXOowWbuZflzI/0AGmuXZPufTMmRR5LEXI9sOIumukA/4M33v0zAkk5l4M28v5r5o7s6qun8xflhqE7tQ==
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
-"@golemio/bicycle-counters@^1.0.8-dev.545424720":
+"@golemio/bicycle-counters@1.0.8-dev.545424720":
   version "1.0.8-dev.545424720"
   resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.8-dev.545424720.tgz#0232dd8deea1c18c661b7134c826e60be3c5e505"
   integrity sha512-R/KiHFmmEUjOcPFLY4W2zN47NXbrCLNRfDsoOL7B4rMRXMSz1yw5KSlet4VnWOlihYxmJCpcBgIxIkj/X2R2SQ==
   dependencies:
     lodash "^4.17.21"
 
-"@golemio/bicycle-parkings@^1.0.3-dev.545424859":
+"@golemio/bicycle-parkings@1.0.3-dev.545424859":
   version "1.0.3-dev.545424859"
   resolved "https://registry.yarnpkg.com/@golemio/bicycle-parkings/-/bicycle-parkings-1.0.3-dev.545424859.tgz#83ac5ea8decdb9e61459cf7e1fd4f9d867e58042"
   integrity sha512-6TSk121QjPJMvxVFtUEJMiAIVb1vg4+pFODDcvzy2sNYZ2BgYbAz2kkvGXt14OkqBXCC4F0z9AoH4xRyZWD7xQ==
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
-"@golemio/city-districts@1.0.5-dev.544272522", "@golemio/city-districts@^1.0.5-dev.544272522":
+"@golemio/city-districts@1.0.5-dev.544272522":
   version "1.0.5-dev.544272522"
   resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.5-dev.544272522.tgz#b31e5f62d5a528062eaba5c208e4d003654c30b4"
   integrity sha512-QgY6LMiNpSE5uDQwdfHfWJtlKvIx47MEVLMKrsKlhuKkRBACLxmo4OrvjKYCO34tRYVi3bFGGz1gGlcele4TGg==
@@ -549,7 +549,7 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@^1.2.10-dev.544242823":
+"@golemio/core@1.2.10-dev.544242823":
   version "1.2.10-dev.544242823"
   resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.10-dev.544242823.tgz#a61081d8fb0d355ae8765f237e646235c79dbf77"
   integrity sha512-cRwRHmeEDiNPzrPC3KVrc7J6eOH92hTauSR+3E0+nqSzrbNCObjOcubAFZ7iBsDfsdw8cOiRaWwoTrQbYf2MAA==
@@ -629,7 +629,7 @@
     "@typescript-eslint/parser" "^5.15.0"
     eslint-plugin-prettier "^4.0.0"
 
-"@golemio/exporting-module@^1.0.6-dev.545426919":
+"@golemio/exporting-module@1.0.6-dev.545426919":
   version "1.0.6-dev.545426919"
   resolved "https://registry.yarnpkg.com/@golemio/exporting-module/-/exporting-module-1.0.6-dev.545426919.tgz#8cb12fa2111d94b588fac58bbbe253c05cf3b5c3"
   integrity sha512-OroaIMQpWg5EbcJk53BQ+WCJK0+lpouph5fQ1NZ4IwahCZPTM7BK69AlR9pBtTF90R4F+pZUsTazGn5b6Ajp7w==
@@ -640,7 +640,7 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/fcd@^1.0.7-dev.545427196":
+"@golemio/fcd@1.0.7-dev.545427196":
   version "1.0.7-dev.545427196"
   resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7-dev.545427196.tgz#93964852521451a8c2c279d1d0d110de81cde68a"
   integrity sha512-bS5LUiov1/xKFz69Up8CKP2M5YTrLOo8UM/+RD+kIdllV67FJmpXvqW8zVhNcG36cASw4IcIvIClYQBudKmq3A==
@@ -649,19 +649,19 @@
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
 
-"@golemio/flow@^1.0.7-dev.545428301":
+"@golemio/flow@1.0.7-dev.545428301":
   version "1.0.7-dev.545428301"
   resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.7-dev.545428301.tgz#08971428e31069defb189cb801607535d6b39ee4"
   integrity sha512-hSqhkMw30xBEd9XfGhXI+3NsfxoJBh4N7y5O+gJHtnFZ5C0jH4rR62tzh5ak25drQjHGyo5miGMp7CX9am5kNA==
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/gardens@^1.0.3-dev.545449714":
+"@golemio/gardens@1.0.3-dev.545449714":
   version "1.0.3-dev.545449714"
   resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.3-dev.545449714.tgz#6ab476452263939d3929a99e791f9d798d252dd6"
   integrity sha512-GoRJg/8Ln7qmaahKd3OHa5NLisbotaI6bQdNXGX4oGvV77281oGjQxsBVobMdm+uCHLixQUc8wF0Pr0xX8Qicw==
 
-"@golemio/medical-institutions@^1.0.6-dev.545431142":
+"@golemio/medical-institutions@1.0.6-dev.545431142":
   version "1.0.6-dev.545431142"
   resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.6-dev.545431142.tgz#940570686503c8f9a773c4a3e03d2542bf354f4a"
   integrity sha512-tF6FC3NK1Bh8qKHhyVTpLhwKRhecmuWNdy/esTIT9qfiAR9iSrRIHXUdKr5+4x+iULqjXAQvjQensDKl/ML4Hg==
@@ -672,7 +672,7 @@
     lodash "^4.17.19"
     slugify "1.3.2"
 
-"@golemio/meteosensors@^1.0.6-dev.545431276":
+"@golemio/meteosensors@1.0.6-dev.545431276":
   version "1.0.6-dev.545431276"
   resolved "https://registry.yarnpkg.com/@golemio/meteosensors/-/meteosensors-1.0.6-dev.545431276.tgz#4f366e87627db56a476e8bd1424db26a2afea8d4"
   integrity sha512-qKeTjFt9Npl3KYiqGUgwey8s5Rf+Z3GIUMo5g39qdg5kcV7tye6DZqw5Rf6yvavuDZKSFkmcQgfluzw4K2dEVw==
@@ -680,21 +680,21 @@
     "@golemio/city-districts" "1.0.5-dev.544272522"
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@^1.0.3-dev.545431919":
+"@golemio/municipal-authorities@1.0.3-dev.545431919":
   version "1.0.3-dev.545431919"
   resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.3-dev.545431919.tgz#1acce1c5bd4405ee6f4e2053b1d145ce82594e2f"
   integrity sha512-alNI879KKAI9hOV2+RgSPGLMCmTnftm9/pz/HNkEJZT2eWkLXOE6uXhEb4D8cD00Yp+eUMRQXevjv4SIoQj2cQ==
   dependencies:
     lodash "^4.17.19"
 
-"@golemio/municipal-libraries@^1.0.4-dev.545432312":
+"@golemio/municipal-libraries@1.0.4-dev.545432312":
   version "1.0.4-dev.545432312"
   resolved "https://registry.yarnpkg.com/@golemio/municipal-libraries/-/municipal-libraries-1.0.4-dev.545432312.tgz#97dac4779bdab66a642475ced7c0025495dc9929"
   integrity sha512-BAvV9Iguvp6601z052OtZID17In0X7fxVGTntW5VqwHoHdTGUEsX9gHRp/7Yu0DJsI+fMK//Pk36Mk5jzeF/rQ==
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
-"@golemio/municipal-police-stations@^1.0.3-dev.545432504":
+"@golemio/municipal-police-stations@1.0.3-dev.545432504":
   version "1.0.3-dev.545432504"
   resolved "https://registry.yarnpkg.com/@golemio/municipal-police-stations/-/municipal-police-stations-1.0.3-dev.545432504.tgz#2a58486aa5dc1b244029897f340263ed7bdc49d3"
   integrity sha512-b6C3ebXPU7nkCj32u4IotKr30ZDFQ0+u4+PJhRn7wojR1lo8Zz0hr445c0Jqf/p7i7YKbc+eTsfpcwx9LYhL6w==
@@ -702,7 +702,7 @@
     "@golemio/city-districts" "1.0.5-dev.544272522"
     slugify "1.3.2"
 
-"@golemio/ndic@^1.0.10-dev.545432669":
+"@golemio/ndic@1.0.10-dev.545432669":
   version "1.0.10-dev.545432669"
   resolved "https://registry.yarnpkg.com/@golemio/ndic/-/ndic-1.0.10-dev.545432669.tgz#5d0fd82b9d92cf10373a1c93428548b18ad1ae0a"
   integrity sha512-iFS4UBzwHQrSlS71SZ18IOB19Zs0l7KylkZVTudolZYNHXS/yQND2sofN6W76SH6bAEQlM+QbxLmTVYXW/rGbw==
@@ -711,7 +711,7 @@
     ajv "^8.11.0"
     xsd2jsonschema "^0.3.7"
 
-"@golemio/parking-zones@^1.0.3-dev.545432789":
+"@golemio/parking-zones@1.0.3-dev.545432789":
   version "1.0.3-dev.545432789"
   resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.3-dev.545432789.tgz#c4c97d1d4fcbd9a0fdc56914e85b7a511c4ce6d3"
   integrity sha512-ACH5SmWsKhdiHzqA3/DAU3GVS8rtTAYtz+kERG4Bfgu1mXReTup2nP5Uv5yOre7DvOrhpiabFI+QuM2rwO81VA==
@@ -720,7 +720,7 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@^1.1.1-dev.545433737":
+"@golemio/parkings@1.1.1-dev.545433737":
   version "1.1.1-dev.545433737"
   resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.545433737.tgz#4e3f06bdd2e1903928e3da263c08c77419374eb7"
   integrity sha512-hYwrEOsUYFzTQTDmJMplveEADHL8rPFUrglCHYhjdut89gRErwnvIvhyc1MfDW4rdKSTDP1m9HViMwUWB5k88Q==
@@ -731,21 +731,21 @@
     npm "^8.1.4"
     uuid-by-string "^3.0.2"
 
-"@golemio/playgrounds@^1.0.5-dev.545434433":
+"@golemio/playgrounds@1.0.5-dev.545434433":
   version "1.0.5-dev.545434433"
   resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.5-dev.545434433.tgz#eea5e93a7ebcb9fa31e665d639c02aff2cc5320c"
   integrity sha512-I9slxgqN0WeatUWoNr4jvKtGaOz9Y0Ka2NHuHPpcOMwBftpeRmx6OYCtHaOsjZRKwxZWFpHr9c++SQ1Wkud/aQ==
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
-"@golemio/public-toilets@^1.0.3-dev.545434573":
+"@golemio/public-toilets@1.0.3-dev.545434573":
   version "1.0.3-dev.545434573"
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3-dev.545434573.tgz#150412a07bef0ef2212081cb45be3e511f440897"
   integrity sha512-SQwbUwdA0Zmk7w4ofe6PuYsATEpf/+DGNuofWfEIvWvhqFgCeD76CTqf7e7rCgxnb13+e7QJyoUvc4ABkJhSmg==
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
-"@golemio/shared-bikes@^2.0.6-dev.545435795":
+"@golemio/shared-bikes@2.0.6-dev.545435795":
   version "2.0.6-dev.545435795"
   resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.6-dev.545435795.tgz#a02b622f22a34fd79f1485dc68ee2bc58f8d4c78"
   integrity sha512-Ped02kRapHrxIHrBimNdi/Zluqu7m6JK+6Gtdm81ZVczWYdFGm4I8sqAyvQRUS71k9lmPYDE5bpIAdDulhnvjQ==
@@ -753,14 +753,14 @@
     cheap-ruler "2.5.1"
     lodash "^4.17.19"
 
-"@golemio/shared-cars@^1.0.4-dev.545436673":
+"@golemio/shared-cars@1.0.4-dev.545436673":
   version "1.0.4-dev.545436673"
   resolved "https://registry.yarnpkg.com/@golemio/shared-cars/-/shared-cars-1.0.4-dev.545436673.tgz#45f65d284ead457b7fc548f1d3226808d08ad517"
   integrity sha512-voPdOFon7Iqn3ET8ZV5w05S8HDqAubikGiIgp0bluRTLBP8P8wsd27BpBqYLzqMvYo3vbbzT7+R9GlSqmDE13A==
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@^1.1.12-dev.545436984":
+"@golemio/sorted-waste-stations@1.1.12-dev.545436984":
   version "1.1.12-dev.545436984"
   resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.12-dev.545436984.tgz#27119411cec155be45e942819b82878cc9ebb54d"
   integrity sha512-w+XoPGdKxN+34r09VHQ7rXT0czdj9zlvqtfYJQoLzx4gnoD9WuFPSv+0E55n8wJl/Xi4Io+/IZACCnT1VE33lg==
@@ -775,7 +775,7 @@
     trim-newlines "^4.0.1"
     uuid-by-string "^3.0.4"
 
-"@golemio/traffic-cameras@^1.0.5-dev.545437161":
+"@golemio/traffic-cameras@1.0.5-dev.545437161":
   version "1.0.5-dev.545437161"
   resolved "https://registry.yarnpkg.com/@golemio/traffic-cameras/-/traffic-cameras-1.0.5-dev.545437161.tgz#a709d4dd8dbc4fc336f6eaf85ccf97d7b612b9a9"
   integrity sha512-DXh46wzWIsoqX3HItSWydWN14XRBteQyndXL7wuiV8UG/2luPZ1CL/QGKia1bP8vUhE+var+GVJq7auMhNAtmg==
@@ -798,7 +798,7 @@
     mongoose "^5.6.7"
     winston "^3.2.1"
 
-"@golemio/waste-collection-yards@^1.0.3-dev.545439240":
+"@golemio/waste-collection-yards@1.0.3-dev.545439240":
   version "1.0.3-dev.545439240"
   resolved "https://registry.yarnpkg.com/@golemio/waste-collection-yards/-/waste-collection-yards-1.0.3-dev.545439240.tgz#1a57a6f00765a02869fa8486d2393c6721d0f182"
   integrity sha512-v78Xz6m1VDiJe5wdb68y6J049BR9lSHy6Sgz2P+0uWSF03fkHSCK4BMYUG40HwBtTMFnvJJ0Kvyr+PiFQbSaXQ==
@@ -1297,39 +1297,6 @@
   dependencies:
     safe-buffer "^5.0.1"
 
-"@sentry/apm@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/apm/-/apm-5.15.4.tgz#59af766d2bb4c9d98eda5ddba7a32a79ecc807a2"
-  integrity sha512-gcW225Jls1ShyBXMWN6zZyuVJwBOIQ63sI+URI2NSFsdpBpdpZ8yennIm+oMlSfb25Nzt9SId7TRSjPhlSbTZQ==
-  dependencies:
-    "@sentry/browser" "5.15.4"
-    "@sentry/hub" "5.15.4"
-    "@sentry/minimal" "5.15.4"
-    "@sentry/types" "5.15.4"
-    "@sentry/utils" "5.15.4"
-    tslib "^1.9.3"
-
-"@sentry/browser@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.15.4.tgz#5a7e7bad088556665ed8e69bceb0e18784e4f6c7"
-  integrity sha512-l/auT1HtZM3KxjCGQHYO/K51ygnlcuOrM+7Ga8gUUbU9ZXDYw6jRi0+Af9aqXKmdDw1naNxr7OCSy6NBrLWVZw==
-  dependencies:
-    "@sentry/core" "5.15.4"
-    "@sentry/types" "5.15.4"
-    "@sentry/utils" "5.15.4"
-    tslib "^1.9.3"
-
-"@sentry/core@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-5.15.4.tgz#08b617e093a636168be5aebad141d1f744217085"
-  integrity sha512-9KP4NM4SqfV5NixpvAymC7Nvp36Zj4dU2fowmxiq7OIbzTxGXDhwuN/t0Uh8xiqlkpkQqSECZ1OjSFXrBldetQ==
-  dependencies:
-    "@sentry/hub" "5.15.4"
-    "@sentry/minimal" "5.15.4"
-    "@sentry/types" "5.15.4"
-    "@sentry/utils" "5.15.4"
-    tslib "^1.9.3"
-
 "@sentry/core@6.19.7":
   version "6.19.7"
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-6.19.7.tgz#156aaa56dd7fad8c89c145be6ad7a4f7209f9785"
@@ -1341,15 +1308,6 @@
     "@sentry/utils" "6.19.7"
     tslib "^1.9.3"
 
-"@sentry/hub@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-5.15.4.tgz#cb64473725a60eec63b0be58ed1143eaaf894bee"
-  integrity sha512-1XJ1SVqadkbUT4zLS0TVIVl99si7oHizLmghR8LMFl5wOkGEgehHSoOydQkIAX2C7sJmaF5TZ47ORBHgkqclUg==
-  dependencies:
-    "@sentry/types" "5.15.4"
-    "@sentry/utils" "5.15.4"
-    tslib "^1.9.3"
-
 "@sentry/hub@6.19.7":
   version "6.19.7"
   resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-6.19.7.tgz#58ad7776bbd31e9596a8ec46365b45cd8b9cfd11"
@@ -1359,15 +1317,6 @@
     "@sentry/utils" "6.19.7"
     tslib "^1.9.3"
 
-"@sentry/minimal@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-5.15.4.tgz#113f01fefb86b7830994c3dfa7ad4889ba7b2003"
-  integrity sha512-GL4GZ3drS9ge+wmxkHBAMEwulaE7DMvAEfKQPDAjg2p3MfcCMhAYfuY4jJByAC9rg9OwBGGehz7UmhWMFjE0tw==
-  dependencies:
-    "@sentry/hub" "5.15.4"
-    "@sentry/types" "5.15.4"
-    tslib "^1.9.3"
-
 "@sentry/minimal@6.19.7":
   version "6.19.7"
   resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-6.19.7.tgz#b3ee46d6abef9ef3dd4837ebcb6bdfd01b9aa7b4"
@@ -1375,21 +1324,6 @@
   dependencies:
     "@sentry/hub" "6.19.7"
     "@sentry/types" "6.19.7"
-    tslib "^1.9.3"
-
-"@sentry/node@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-5.15.4.tgz#e7bc3962d321a12b633743200165ca5f1757cb68"
-  integrity sha512-OfdhNEvOJZ55ZkCUcVgctjaZkOw7rmLzO5VyDTSgevA4uLsPaTNXSAeK2GSQBXc5J0KdRpNz4sSIyuxOS4Z7Vg==
-  dependencies:
-    "@sentry/apm" "5.15.4"
-    "@sentry/core" "5.15.4"
-    "@sentry/hub" "5.15.4"
-    "@sentry/types" "5.15.4"
-    "@sentry/utils" "5.15.4"
-    cookie "^0.3.1"
-    https-proxy-agent "^4.0.0"
-    lru_map "^0.3.3"
     tslib "^1.9.3"
 
 "@sentry/node@^6.16.1", "@sentry/node@^6.19.7":
@@ -1417,23 +1351,10 @@
     "@sentry/utils" "6.19.7"
     tslib "^1.9.3"
 
-"@sentry/types@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.15.4.tgz#37f30e35b06e8e12ad1101f1beec3e9b88ca1aab"
-  integrity sha512-quPHPpeAuwID48HLPmqBiyXE3xEiZLZ5D3CEbU3c3YuvvAg8qmfOOTI6z4Z3Eedi7flvYpnx3n7N3dXIEz30Eg==
-
 "@sentry/types@6.19.7":
   version "6.19.7"
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-6.19.7.tgz#c6b337912e588083fc2896eb012526cf7cfec7c7"
   integrity sha512-jH84pDYE+hHIbVnab3Hr+ZXr1v8QABfhx39KknxqKWr2l0oEItzepV0URvbEhB446lk/S/59230dlUUIBGsXbg==
-
-"@sentry/utils@5.15.4":
-  version "5.15.4"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.15.4.tgz#02865ab3c9b745656cea0ab183767ec26c96f6e6"
-  integrity sha512-lO8SLBjrUDGADl0LOkd55R5oL510d/1SaI08/IBHZCxCUwI4TiYo5EPECq8mrj3XGfgCyq9osw33bymRlIDuSQ==
-  dependencies:
-    "@sentry/types" "5.15.4"
-    tslib "^1.9.3"
 
 "@sentry/utils@6.19.7":
   version "6.19.7"
@@ -3083,11 +3004,6 @@ acorn@^8.4.1, acorn@^8.7.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz#0197122c843d1bf6d0a5e83220a788f278f63c30"
   integrity sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
 
-agent-base@5:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-5.1.1.tgz#e8fb3f242959db44d63be665db7a8e739537a32c"
-  integrity sha512-TMeqbNl2fMW0nMjTEPOwe3J/PRFP4vqeoNuQMG0HlMrtm5QxKqdvAkZ1pRBQ/ulIyDD5Yq0nJ7YbdD8ey0TO3g==
-
 agent-base@6, agent-base@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.2.tgz#49fff58577cfee3f37176feab4c22e00f86d7f77"
@@ -4365,11 +4281,6 @@ cookie@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.5.0.tgz#d1f5d71adec6558c58f389987c366aa47e994f8b"
   integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
-
-cookie@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
-  integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
 
 cookie@^0.4.1:
   version "0.4.2"
@@ -6330,14 +6241,6 @@ httpreq@>=0.4.22:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/httpreq/-/httpreq-0.5.2.tgz#be6777292fa1038d7771d7c01d9a5e1219de951c"
   integrity sha512-2Jm+x9WkExDOeFRrdBCBSpLPT5SokTcRHkunV3pjKmX/cx6av8zQ0WtHUMDrYb6O4hBFzNU6sxJEypvRUVYKnw==
-
-https-proxy-agent@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-4.0.0.tgz#702b71fb5520a132a66de1f67541d9e62154d82b"
-  integrity sha512-zoDhWrkR3of1l9QAL8/scJZyLu8j/gBkcwcaQOZh7Gyh/+uJQzGVETdgT30akuwkpL8HTRfssqI3BZuV18teDg==
-  dependencies:
-    agent-base "5"
-    debug "4"
 
 https-proxy-agent@^5.0.0:
   version "5.0.1"

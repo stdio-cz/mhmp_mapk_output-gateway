@@ -526,6 +526,13 @@
   dependencies:
     "@golemio/city-districts" "1.0.5-dev.544272522"
 
+"@golemio/city-districts@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.4.tgz#5e8c06da074a5a2fd45d7cab1fd179c31cb0649d"
+  integrity sha512-+nFIHwkIrpIJhTLd3eM1PK4iRDlPxoJlS6KUxFqVO3hXuAHvsB4pr35tIoOeWAZshehn/gntyLOrS0EK3rkfkA==
+  dependencies:
+    slugify "1.3.2"
+
 "@golemio/city-districts@1.0.5-dev.544272522":
   version "1.0.5-dev.544272522"
   resolved "https://registry.yarnpkg.com/@golemio/city-districts/-/city-districts-1.0.5-dev.544272522.tgz#b31e5f62d5a528062eaba5c208e4d003654c30b4"
@@ -549,10 +556,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.10-dev.544242823":
-  version "1.2.10-dev.544242823"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.10-dev.544242823.tgz#a61081d8fb0d355ae8765f237e646235c79dbf77"
-  integrity sha512-cRwRHmeEDiNPzrPC3KVrc7J6eOH92hTauSR+3E0+nqSzrbNCObjOcubAFZ7iBsDfsdw8cOiRaWwoTrQbYf2MAA==
+"@golemio/core@1.2.10":
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.10.tgz#d48302ef0995e6b38fe2d3cfe6cb4ce311fe6c7c"
+  integrity sha512-CK/kmXgAWgE6uybSaFi/33MDGTfTejEd0WsrquGmbzvC2YcxHNL8JGPIDL6AJfvfp1n7XaNntkfykPWStlSRow==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -640,10 +647,10 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/fcd@1.0.7-dev.545427196":
-  version "1.0.7-dev.545427196"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7-dev.545427196.tgz#93964852521451a8c2c279d1d0d110de81cde68a"
-  integrity sha512-bS5LUiov1/xKFz69Up8CKP2M5YTrLOo8UM/+RD+kIdllV67FJmpXvqW8zVhNcG36cASw4IcIvIClYQBudKmq3A==
+"@golemio/fcd@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7.tgz#e3120a719a432a27c3b2dfdfc79287a43f78cf1b"
+  integrity sha512-QTyL+A8vBVRe2lGFe91/J8Bign24cF1SrQZiq/56sRyqzvmLIIxm/NrXJFspf02cdSt6lOIbK4CP3BJUwqL/ZQ==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
@@ -760,13 +767,13 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.12-dev.545436984":
-  version "1.1.12-dev.545436984"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.12-dev.545436984.tgz#27119411cec155be45e942819b82878cc9ebb54d"
-  integrity sha512-w+XoPGdKxN+34r09VHQ7rXT0czdj9zlvqtfYJQoLzx4gnoD9WuFPSv+0E55n8wJl/Xi4Io+/IZACCnT1VE33lg==
+"@golemio/sorted-waste-stations@1.1.12":
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.12.tgz#ee10d86b2d985c57987a23adefbf1caa48e1d9be"
+  integrity sha512-srRDdSXkj6X8UF+NB/29XkPTZBVnoNpIEnO4G4yV8aA2L2kpanUL0lh3rl/oUC/AkmQ916l++yz2GXSZr21agQ==
   dependencies:
     "@apideck/portman" "^1.16.1"
-    "@golemio/city-districts" "1.0.5-dev.544272522"
+    "@golemio/city-districts" "1.0.4"
     JSONStream "^1.0.4"
     axios "^0.21.2"
     lodash "^4.17.19"

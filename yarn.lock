@@ -711,10 +711,10 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.1.1-dev.564542852":
-  version "1.1.1-dev.564542852"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.564542852.tgz#fca872a235173c3d17f73ef2635ec0eccbd413db"
-  integrity sha512-3Zoq47jlnV/rJQF6AWQolsby5e1dGzuPkIH5D+vd5QUxkJUB6WUzmurmgFxOoOihRoQlYpMgA2jhc/7APo8QJA==
+"@golemio/parkings@1.1.1-dev.567930847":
+  version "1.1.1-dev.567930847"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.1.1-dev.567930847.tgz#f303291edb52f8deb2962f182d07ee3eb8cdcb52"
+  integrity sha512-0BU+1dq0K6vnYoB7nOPo9axetNNuXaeYuFmuDtcIMMxt9JIiHxLu/AdTztO/b7NB49a+jDeQWBFjesjLQLv+kA==
   dependencies:
     "@turf/turf" "^6.5.0"
     install "^0.13.0"

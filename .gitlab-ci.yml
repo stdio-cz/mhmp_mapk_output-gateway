@@ -41,7 +41,7 @@ include:
         - name: postgis/postgis:13-3.2
           alias: postgres
         - mongo:4.0.5
-        - redis:6.0-alpine
+        - redis:6.2-alpine
     script:
         - yarn
         # Audit production dependencies for HIGH (8) vulnerabilities

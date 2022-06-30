@@ -50,11 +50,7 @@ export default class App extends BaseApp {
     constructor() {
         super();
 
-        this.lightship = createLightship({
-            shutdownHandlerTimeout: config.lightship.handlerTimeout,
-            gracefulShutdownTimeout: config.lightship.shutdownTimeout,
-            shutdownDelay: config.lightship.shutdownDelay,
-        });
+        this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
         process.on("uncaughtException", (err: Error) => {
             log.error(err);
             this.lightship.shutdown();
@@ -107,13 +103,13 @@ export default class App extends BaseApp {
      */
     private gracefulShutdown = async (): Promise<void> => {
         log.info("Graceful shutdown initiated.");
-        await this.stop();
-        await this.metricsServer?.close();
         await mongooseConnection.then((mc) => mc.close(true));
         await sequelizeConnection.close();
         if (config.redis_enable) {
             await RedisConnector.disconnect();
         }
+        await this.stop();
+        await this.metricsServer?.close();
     };
 
     public stop = async (): Promise<void> => {
@@ -143,11 +139,6 @@ export default class App extends BaseApp {
         this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
         this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
         this.express.use(metricsService.metricsMiddleware());
-        this.express.use((req, res, next) => {
-            const beacon = this.lightship.createBeacon();
-            next();
-            beacon.die();
-        });
         this.express.use(requestLogger);
         this.express.use(this.commonHeaders);
         this.express.use(this.customHeaders);

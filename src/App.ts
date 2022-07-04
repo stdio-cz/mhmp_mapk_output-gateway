@@ -51,6 +51,7 @@ export default class App extends BaseApp {
         super();
 
         this.lightship = createLightship({
+            detectKubernetes: config.node_env !== "production",
             shutdownHandlerTimeout: config.lightship.handlerTimeout,
             gracefulShutdownTimeout: config.lightship.shutdownTimeout,
             shutdownDelay: config.lightship.shutdownDelay,
@@ -92,7 +93,6 @@ export default class App extends BaseApp {
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
             this.lightship.registerShutdownHandler(async () => {
-                log.info("Registering shutdown handler");
                 await this.gracefulShutdown();
             });
             this.lightship.signalReady();

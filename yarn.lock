@@ -640,10 +640,10 @@
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
 
-"@golemio/flow@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.7.tgz#f0ca11aa86446c0d1b2d6ee5323ccfb294881c2c"
-  integrity sha512-I9cvGCMWRmlkeb7/mDloBB0UKj4Vs1VapoYX7hll77JsjKWLBKvaXEP35odZcTZ8ofdB6sITZTSiYeR5igvxhg==
+"@golemio/flow@1.0.8-dev.577679507":
+  version "1.0.8-dev.577679507"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.8-dev.577679507.tgz#3807a5d810308c412ce51903054f5d9bf349fbfc"
+  integrity sha512-EW0+lYwhwp+tAu/khafhqu9+BbO1813mtFwGFTgugG6LgWQZurxZHdC1jE6Jh5tfptf8JSe70Hds1Fse5Yt4qQ==
   dependencies:
     JSONStream "^1.0.4"
 
@@ -7208,10 +7208,10 @@ moment-timezone@^0.5.26, moment-timezone@^0.5.34:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.29.1:
-  version "2.29.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
-  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+moment@2.29.4, "moment@>= 2.9.0", moment@^2.29.1:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 mongodb-restore-dump@1.0.1:
   version "1.0.1"

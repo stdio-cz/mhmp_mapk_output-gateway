@@ -22,4 +22,4 @@ RUN groupadd --system nonroot &&\
 USER nonroot
 
 EXPOSE 3000
-CMD ["yarn", "start"]
+CMD ["node", "-r",  "dotenv/config", "dist/index.js"]

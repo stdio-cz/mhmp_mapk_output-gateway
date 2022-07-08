@@ -140,14 +140,16 @@ export default class App extends BaseApp {
      * Bind middleware to express server
      */
     private middleware = (): void => {
+        this.express.use((req, res, next) => {
+            const beacon = this.lightship.createBeacon();
+            res.on("finish", () => {
+                beacon.die();
+            });
+            next();
+        });
         this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
         this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
         this.express.use(metricsService.metricsMiddleware());
-        this.express.use((req, res, next) => {
-            const beacon = this.lightship.createBeacon();
-            next();
-            beacon.die();
-        });
         this.express.use(requestLogger);
         this.express.use(this.commonHeaders);
         this.express.use(this.customHeaders);

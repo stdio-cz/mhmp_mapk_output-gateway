@@ -500,15 +500,15 @@
     lodash.isundefined "^3.0.1"
     lodash.uniq "^4.5.0"
 
-"@golemio/air-quality-stations@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.5.tgz#11c1dd2afbdc2ad0f097d1f3ba4e661bcc4517bc"
-  integrity sha512-eGMUi1saNXz6ucCTxuIRwlJ7eTPmoPtU2g4lvvqpcm24nhOYQ0H/yTl6VdycOKurKCMIYMg9Q0TKSD3hgDCM6w==
+"@golemio/air-quality-stations@1.0.6-dev.585620186":
+  version "1.0.6-dev.585620186"
+  resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6-dev.585620186.tgz#34957b5b5b4a5a3d8d947627af1985df1fae60a2"
+  integrity sha512-aESkZWTGdVtxOPmwqbu6uFN1loRfESiO+4sJ3cXOjEwlHceekPJzX8ohsOYOMA/18aFqiCcNBCv3JrurbiaXzQ==
 
-"@golemio/bicycle-counters@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.8.tgz#dedbdeb5504d220ee299e7f9f2e100408ec8cc83"
-  integrity sha512-ySb/vyJp/tSoz9uiGivJuuxRRoh9+UgRMmfk+ABYKxwjk9WLOSP2P9DSy69bGTlcZEKXGpm3swys0nkBUaT9ww==
+"@golemio/bicycle-counters@1.0.9-dev.585620124":
+  version "1.0.9-dev.585620124"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.9-dev.585620124.tgz#1312f8a302c10865f3f6156c4006b1131cc225ef"
+  integrity sha512-xklHZ3dwp3JdR0htJd3FOf0yyC5G6d/Og9RumEM1g0bSz+t0BT6cYETL/clR1jgODPAFNoGuIj4sNxltJUIMAw==
   dependencies:
     lodash "^4.17.21"
 
@@ -714,10 +714,10 @@
     "@turf/turf" "^6.5.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/playgrounds@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.5.tgz#1e1e956b932cbb50c917137a8d486f4b78180471"
-  integrity sha512-sM1XiVh1Og3SBZle40QGXQC6Ki0PadnLWaMlBwyaiiBysC3NSi7rHD65JFkj6XkRdpihmKzfJto7KvgVCoMs5A==
+"@golemio/playgrounds@1.0.6-dev.585620225":
+  version "1.0.6-dev.585620225"
+  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.6-dev.585620225.tgz#25ee0d2c105ec55c615fc016ad9f82ffac8e597a"
+  integrity sha512-r5aAIJZELiZUKM32y1OKdM93BboTx4tBIUB/Tn9xyr3QSv+hB8SGtYeHvfU9/1BsXl5hvVnZCjqeI/jIirNGCQ==
 
 "@golemio/public-toilets@1.0.3":
   version "1.0.3"

@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.32",
+    "version": "3.0.33",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -75,7 +75,7 @@
         "@golemio/municipal-police-stations": "1.0.3",
         "@golemio/ndic": "1.0.10",
         "@golemio/parking-zones": "1.0.3",
-        "@golemio/parkings": "1.2.0",
+        "@golemio/parkings": "1.2.1",
         "@golemio/playgrounds": "1.0.5",
         "@golemio/public-toilets": "1.0.3",
         "@golemio/shared-bikes": "2.0.6",
@@ -88,5 +88,7 @@
         "fast-glob": "^3.2.11",
         "swagger-ui-express": "^4.3.0"
     },
-    "resolutions": {}
+    "resolutions": {
+        "moment":"2.29.4"
+    }
 }

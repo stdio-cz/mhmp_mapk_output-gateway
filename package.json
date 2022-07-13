@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.33",
+    "version": "3.0.34",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -89,6 +89,6 @@
         "swagger-ui-express": "^4.3.0"
     },
     "resolutions": {
-        "moment":"2.29.4"
+        "moment": "2.29.4"
     }
 }

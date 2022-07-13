@@ -88,5 +88,7 @@
         "fast-glob": "^3.2.11",
         "swagger-ui-express": "^4.3.0"
     },
-    "resolutions": {}
+    "resolutions": {
+        "moment":"2.29.4"
+    }
 }

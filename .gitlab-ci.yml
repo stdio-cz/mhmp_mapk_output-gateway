@@ -18,6 +18,7 @@ variables:
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 stages:
+    - bump
     - test
     - build
     - release

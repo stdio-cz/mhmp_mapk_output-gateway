@@ -18,7 +18,7 @@ variables:
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
 stages:
-    - bump
+    - pre-test
     - test
     - build
     - release
@@ -32,6 +32,7 @@ include:
           - "/k8s-golemio/helm-golemio-deploy.yml"
           - "/apiary/blueprint.yml"
           - "/docs/golemio-gitlab-docs-pages.yml"
+          - "/npm/bump-dependencies.yml"
 
 .run_tests:
     stage: test

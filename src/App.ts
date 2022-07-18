@@ -50,7 +50,12 @@ export default class App extends BaseApp {
     constructor() {
         super();
 
-        this.lightship = createLightship({ shutdownHandlerTimeout: 10000 });
+        this.lightship = createLightship({
+            detectKubernetes: config.node_env !== "production",
+            shutdownHandlerTimeout: config.lightship.handlerTimeout,
+            gracefulShutdownTimeout: config.lightship.shutdownTimeout,
+            shutdownDelay: config.lightship.shutdownDelay,
+        });
         process.on("uncaughtException", (err: Error) => {
             log.error(err);
             this.lightship.shutdown();
@@ -88,7 +93,6 @@ export default class App extends BaseApp {
                 log.info(`Listening at http://localhost:${this.port}/`);
             });
             this.lightship.registerShutdownHandler(async () => {
-                log.info("Registering shutdown handler");
                 await this.gracefulShutdown();
             });
             this.lightship.signalReady();
@@ -103,13 +107,13 @@ export default class App extends BaseApp {
      */
     private gracefulShutdown = async (): Promise<void> => {
         log.info("Graceful shutdown initiated.");
+        await this.stop();
+        await this.metricsServer?.close();
         await mongooseConnection.then((mc) => mc.close(true));
         await sequelizeConnection.close();
         if (config.redis_enable) {
             await RedisConnector.disconnect();
         }
-        await this.stop();
-        await this.metricsServer?.close();
     };
 
     public stop = async (): Promise<void> => {
@@ -136,6 +140,13 @@ export default class App extends BaseApp {
      * Bind middleware to express server
      */
     private middleware = (): void => {
+        this.express.use((req, res, next) => {
+            const beacon = this.lightship.createBeacon();
+            res.on("finish", () => {
+                beacon.die();
+            });
+            next();
+        });
         this.express.use(sentry.Handlers.requestHandler() as express.RequestHandler);
         this.express.use(sentry.Handlers.tracingHandler() as express.RequestHandler);
         this.express.use(metricsService.metricsMiddleware());

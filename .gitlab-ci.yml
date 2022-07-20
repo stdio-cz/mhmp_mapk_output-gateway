@@ -45,7 +45,7 @@ include:
         - mongo:4.0.5
         - redis:6.2-alpine
     script:
-        - yarn
+        - yarn --ignore-scripts
         # Audit production dependencies for HIGH (8) vulnerabilities
         # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
         - bash -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
@@ -66,7 +66,7 @@ include:
         - export SCH_VERSION=$(npm show @golemio/schema-definitions@$SCH_NPM_TAG version)
         - export SCH_DIR=$(mktemp -d)
         - echo "Installing schema-definitions version $SCH_VERSION"
-        - npm i --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
+        - npm install --ignore-scripts --no-audit --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
         - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
         # Run migrations from modules
         - yarn golemio migrate-db up --postgres
@@ -75,7 +75,7 @@ include:
         # Import mongo test data (the old way)
         - unset SQL_DUMP_FILES
         - yarn golemio-import-test-data
-        - NODE_ENV=production yarn code-coverage
+        - yarn code-coverage
         - yarn dredd
     tags:
         - docker

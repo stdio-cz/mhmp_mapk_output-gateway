@@ -715,10 +715,10 @@
     "@turf/turf" "^6.5.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/playgrounds@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.5.tgz#1e1e956b932cbb50c917137a8d486f4b78180471"
-  integrity sha512-sM1XiVh1Og3SBZle40QGXQC6Ki0PadnLWaMlBwyaiiBysC3NSi7rHD65JFkj6XkRdpihmKzfJto7KvgVCoMs5A==
+"@golemio/playgrounds@1.0.6-dev.585620225":
+  version "1.0.6-dev.585620225"
+  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.6-dev.585620225.tgz#25ee0d2c105ec55c615fc016ad9f82ffac8e597a"
+  integrity sha512-r5aAIJZELiZUKM32y1OKdM93BboTx4tBIUB/Tn9xyr3QSv+hB8SGtYeHvfU9/1BsXl5hvVnZCjqeI/jIirNGCQ==
 
 "@golemio/public-toilets@1.0.3":
   version "1.0.3"

@@ -1,5 +1,3 @@
-import { resolve } from "dns";
-
 const fg = require("fast-glob");
 const fs = require("fs");
 const { protectedTags } = require("./tagsConfig");

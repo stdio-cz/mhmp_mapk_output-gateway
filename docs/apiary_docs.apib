@@ -1574,67 +1574,6 @@ You have to use query parameters `ids`, `cisIds`, `aswIds` or `names` in array f
     + Attributes (403 Error)
 
 
-## Shared Bikes [/sharedbikes]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-| Enum value | Type description (cs) | Type description (en) |
-|- |- |- |
-| 1 | kolo | bike |
-| 2 | elektrokolo | ebike |
-| 3 | skútr | scooter |
-
-### GET All Shared Bikes [GET /sharedbikes/{?latlng,range,limit,offset,updatedSince,companyName}]
-
-+ Parameters
-
-    + latlng: `50.1088538325,14.4610581741` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 70 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 5 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-    + companyName: Rekola (optional, string) - Filters all results with company.name property by this parameter.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-   + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Shared Bike)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Shared Bike [GET /sharedbikes/{id}]
-
-+ Parameters
-
-    + id: `rekola-1926` (string) - Identifier of the bike.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Shared Bike)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
 ## Bicycle Parkings [/bicycleparkings]
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)

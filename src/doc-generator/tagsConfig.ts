@@ -1,5 +1,5 @@
 // exclude the tags from Open Data API:
-const protectedTags = ["🚢 Floating Car Data", "🚶 Pedestrians", "🚧 Traffic Restrictions"];
+const protectedTags = ["🚢 Floating Car Data", "🚶 Pedestrians", "🚧 Traffic Restrictions", "🚲 Shared Bikes"];
 
 export { protectedTags };
 
@@ -21,6 +21,10 @@ export { protectedTags };
     {
       "name": "🚧 Traffic Restrictions",
       "description": "💡 NDIC Traffic Restrictions API for Intermodal Route Planner"
+    },
+    {
+      "name": "🚲 Shared Bikes",
+      "description": "💡 Locations and Description of Prague Shared Bikes"
     },
     {
       "name": "♻️ Sorted Waste Stations",

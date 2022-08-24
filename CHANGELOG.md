@@ -2,17 +2,23 @@
 
 ## [Unreleased]
 
+## [3.0.36] - 2022-08-24
+
+### Removed
+
+-   removed shared bikes from Apiary [#9](https://gitlab.com/operator-ict/golemio/code/modules/shared-bikes/-/issues/9)
+
 ## [3.0.32] - 2022-07-13
 
-- no changelog
+-   no changelog
 
 ## [3.0.31] - 2022-06-21
 
-- no changelog
+-   no changelog
 
 ## [3.0.30] - 2022-06-07
 
-- no changelog
+-   no changelog
 
 ## [3.0.26] - 2022-05-02
 

@@ -505,10 +505,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6.tgz#5003200d2a13933592e2202019b5d16738b7958f"
   integrity sha512-suPTotLAjllXOSgdwQywYNpk4Jvt+/qtCArp9978tUbRueTBejAe9JtzvK+zOH8wbk0IbCH058XlTAvQYjtgHQ==
 
-"@golemio/bicycle-counters@1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.9.tgz#e09d97f4b6f5a95f874e275a7e4b85aa827c1d8a"
-  integrity sha512-5ORNinXNp+zs0ZHvmV+LqRKcyt14fZc9xoVE/Hq901JFvBW56gzyZuxfXxRJw3+EVuujU5VFHpzAb6tJ3TsNbA==
+"@golemio/bicycle-counters@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.10.tgz#0a13a205d71a2d0082c977fbad903e9d9c1404c6"
+  integrity sha512-Ajg3TOVoBbIvzqgQBTsC2CpDhQFYZ73mGJXpBZRkHTDmTZEo/4b7x3PqAj1FGBvA3L8GmmILdtU9uq+c2vNohQ==
   dependencies:
     lodash "^4.17.21"
 
@@ -541,10 +541,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.15":
-  version "1.2.15"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.15.tgz#157bcf7acc469064a7502a3780950bb3119998ab"
-  integrity sha512-OEWAN87JwNeE/3srSYUghVdj1GAbMncD/BC6qLyukLPSaZNbnjayhPpINwWRBdK2X/poQqXpgawhsZYzGdv4CA==
+"@golemio/core@1.2.16":
+  version "1.2.16"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.16.tgz#923636db794518fd355f3227428901d2cd4d75d3"
+  integrity sha512-GhHYNmcO78Z4EL6mEi5VOs7N6qPD5cPUaqFDor0nGCgTmpSOwxfTogrzkUG9GlySUkmugLt+j7fPmQDl8/nKeQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -573,6 +573,8 @@
     aws-sdk "^2.823.0"
     axios "^0.24.0"
     basic-ftp "^4.6.6"
+    class-transformer "^0.5.1"
+    class-validator "^0.13.2"
     content-type "^1.0.4"
     debug "3.1.0"
     decompress "^4.2.1"
@@ -598,7 +600,7 @@
     redis "^3.1.1"
     request "2.88.0"
     request-promise "^4.2.5"
-    sequelize "^6.6.5"
+    sequelize "^6.21.2"
     ssh2-sftp-client "^7.1.0"
     winston "^3.3.3"
     xml2js-es6-promise "^1.1.1"
@@ -632,19 +634,19 @@
     react-dom "^16.8.0"
     react-querybuilder "^3.9.5"
 
-"@golemio/fcd@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.7.tgz#e3120a719a432a27c3b2dfdfc79287a43f78cf1b"
-  integrity sha512-QTyL+A8vBVRe2lGFe91/J8Bign24cF1SrQZiq/56sRyqzvmLIIxm/NrXJFspf02cdSt6lOIbK4CP3BJUwqL/ZQ==
+"@golemio/fcd@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.8.tgz#7f72689a8cb4cf6f6d1c322ab2883069f52800ab"
+  integrity sha512-Aj+PnhWIP5rpE2IPzntuzuRXoPKLer4Qv3XyxvTL2jzv2LlM56uNJGX+3wAWhcpOWIK9kmgw6EQUoW6+eRPWnw==
   dependencies:
     "@apideck/portman" "^1.14.2"
     ajv "^8.2.0"
     xmldom "github:xmldom/xmldom#0.7.0"
 
-"@golemio/flow@1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.9.tgz#7094291c675bd051cd640cfa0bec10fca1deed57"
-  integrity sha512-2V+EdV6AUo/AFKGFtslxcCq3vgLlIq9Lzl5QQ6VwrGUv8TT5o+WDL6/sxCDJGMkyzCyNvL+uLX6KrRod5AINqA==
+"@golemio/flow@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.10.tgz#86f9de347e3eee8d65cc2ebdee4fc4747f40db16"
+  integrity sha512-mgHtkDJHrRaDhaMGihRUqltzV6XygpDkbTTsCypWwNna90AS+YLgGSPGarFxtdbBfIYcn9Vho9dNsxUTMfnTVg==
   dependencies:
     JSONStream "^1.0.4"
 
@@ -707,18 +709,18 @@
     lodash "^4.17.19"
     object-hash "^1.3.1"
 
-"@golemio/parkings@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.1.tgz#f992e4476d54f5aaccfdb6bf5b7ad197d706a8ae"
-  integrity sha512-mZn1PctAzf7FcxoY38D/uXRsZkatzVwcMpwh9dd08iXpwpTnaE50if0iUcj4u5eBrK5DmFj88xoPySGQ2PZpNg==
+"@golemio/parkings@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@golemio/parkings/-/parkings-1.2.2.tgz#c7e995c6bd267678f14bcfd47c520e1c82f143a5"
+  integrity sha512-T7uOoGI2CnnE9dAv1KkOU/USOcydkW3ZdeCfcZOvzFSMYp2hw86zOeIOPql/KWQvOdT8BspzPxfOJYy14X3Plg==
   dependencies:
     "@turf/turf" "^6.5.0"
     uuid-by-string "^3.0.2"
 
-"@golemio/playgrounds@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.5.tgz#1e1e956b932cbb50c917137a8d486f4b78180471"
-  integrity sha512-sM1XiVh1Og3SBZle40QGXQC6Ki0PadnLWaMlBwyaiiBysC3NSi7rHD65JFkj6XkRdpihmKzfJto7KvgVCoMs5A==
+"@golemio/playgrounds@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@golemio/playgrounds/-/playgrounds-1.0.6.tgz#5ecb9f7867a680fdb5403391b5d4079d16d626c6"
+  integrity sha512-K452MsB7k2BmVh/SgOaT5HRHrjwsOC+Tu37BSG5EUA696hQI8lGYHIOVA9cXhhPsPaZ8MlXjaY3ozPZ/A+iFkQ==
 
 "@golemio/public-toilets@1.0.3":
   version "1.0.3"
@@ -3623,6 +3625,19 @@ ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
+
+class-transformer@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/class-transformer/-/class-transformer-0.5.1.tgz#24147d5dffd2a6cea930a3250a677addf96ab336"
+  integrity sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw==
+
+class-validator@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/class-validator/-/class-validator-0.13.2.tgz#64b031e9f3f81a1e1dcd04a5d604734608b24143"
+  integrity sha512-yBUcQy07FPlGzUjoLuUfIOXzgynnQPPruyK1Ge2B74k9ROwnle1E+NxLWnUv5OLU8hA/qL5leAE9XnXq3byaBw==
+  dependencies:
+    libphonenumber-js "^1.9.43"
+    validator "^13.7.0"
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -6614,6 +6629,11 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
+libphonenumber-js@^1.9.43:
+  version "1.10.13"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.13.tgz#0b5833c7fdbf671140530d83531c6753f7e0ea3c"
+  integrity sha512-b74iyWmwb4GprAUPjPkJ11GTC7KX4Pd3onpJfKxYyY8y9Rbb4ERY47LvCMEDM09WD3thiLDMXtkfDK/AX+zT7Q==
+
 lightship@^6.7.2:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/lightship/-/lightship-6.8.0.tgz#59b57c805c774ae91ec659a1c2cdf4e8be500a80"
@@ -9078,10 +9098,10 @@ sequelize-pool@^7.1.0:
   resolved "https://registry.yarnpkg.com/sequelize-pool/-/sequelize-pool-7.1.0.tgz#210b391af4002762f823188fd6ecfc7413020768"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
 
-sequelize@^6.6.5:
-  version "6.19.0"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.19.0.tgz#bea0ac091d89cbbc94cabe0797b8c1359734e2e6"
-  integrity sha512-B3oGIdpYBERDjRDm74h7Ky67f6ZLcmBXOA7HscYObiOSo4pD7VBc9mtm44wNV7unc0uk8I1d30nbZBTQCE377A==
+sequelize@^6.21.2:
+  version "6.21.4"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.21.4.tgz#8f5cb248d7cfc86ca9bf7e1f8306ac4bd83167de"
+  integrity sha512-5A0+giRhGHerTDRMsZ54TYRB8oQPWxeVscbc4USG9wRtw2Eqik0Vk0p2EVDrhoq7tmNBh2nHpd9YMfvGdwPEJw==
   dependencies:
     "@types/debug" "^4.1.7"
     "@types/validator" "^13.7.1"

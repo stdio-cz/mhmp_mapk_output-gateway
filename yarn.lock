@@ -505,12 +505,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6.tgz#5003200d2a13933592e2202019b5d16738b7958f"
   integrity sha512-suPTotLAjllXOSgdwQywYNpk4Jvt+/qtCArp9978tUbRueTBejAe9JtzvK+zOH8wbk0IbCH058XlTAvQYjtgHQ==
 
-"@golemio/bicycle-counters@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.10.tgz#0a13a205d71a2d0082c977fbad903e9d9c1404c6"
-  integrity sha512-Ajg3TOVoBbIvzqgQBTsC2CpDhQFYZ73mGJXpBZRkHTDmTZEo/4b7x3PqAj1FGBvA3L8GmmILdtU9uq+c2vNohQ==
-  dependencies:
-    lodash "^4.17.21"
+"@golemio/bicycle-counters@1.0.11-dev.622566530":
+  version "1.0.11-dev.622566530"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.11-dev.622566530.tgz#c436203d0c2d75883d4a747abfae59cf70df3d9f"
+  integrity sha512-8iPGi6sY8oS4ttUAcz9CbX8adkWYF2vv0aezju0BlVMKSbkQJaGrmnLRnwTIiGvTQl1+ex4SKILlKc1AM3ExNw==
 
 "@golemio/bicycle-parkings@1.0.3":
   version "1.0.3"
@@ -541,10 +539,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.16":
-  version "1.2.16"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.16.tgz#923636db794518fd355f3227428901d2cd4d75d3"
-  integrity sha512-GhHYNmcO78Z4EL6mEi5VOs7N6qPD5cPUaqFDor0nGCgTmpSOwxfTogrzkUG9GlySUkmugLt+j7fPmQDl8/nKeQ==
+"@golemio/core@1.2.17-dev.622549513":
+  version "1.2.17-dev.622549513"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.17-dev.622549513.tgz#1d99785f4e68255e522f31014406aae1a601b864"
+  integrity sha512-0uSG/PcFaMcRf13UixPBICOy6Q61e0slf+RolhVXpp06TUXcmkzC3bnrLX7k0bjypUtlFl7FrxWjQBgfubvvXQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
@@ -586,7 +584,6 @@
     iconv-lite "^0.6.2"
     ioredis "^4.28.5"
     lightship "^6.7.2"
-    lodash "^4.17.21"
     luxon "^2.3.2"
     moment-timezone "^0.5.26"
     mongodb-restore-dump "1.0.1"
@@ -655,14 +652,13 @@
   resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.3.tgz#6a4a2bc21e4f1109e2c2eea85cff9b41e6f35394"
   integrity sha512-IzpSSo09ELVb+LGgOfj3nFBlNYUdY25kRenkxvBJ8xBIFcJtQpcR+FLl+Pmsz9XJpOpxJZYCkyfwjfKp3MlUHQ==
 
-"@golemio/medical-institutions@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.6.tgz#f7588967e968de1840f145cbd1405800a355b1de"
-  integrity sha512-XV1PK16asDSQEyB5tpNAH2QwFaK39kCK0k7FxGpaMXYe7QPN43oLu0rMbJXjvl2Kfa5FKWSfBpOQkFi0z+LvRw==
+"@golemio/medical-institutions@1.0.7-dev.622550676":
+  version "1.0.7-dev.622550676"
+  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.7-dev.622550676.tgz#8e986a469a22c887c6a20d70c179c153348cdb0b"
+  integrity sha512-v9xP9/YmYDNhzYO6BSCkPlXqxpkoltPCOpAu8jkz5at410nt657FsrLx94Rltdp+mk+v+GOQq9jwUVNeE2WSAg==
   dependencies:
     fast-csv "^4.3.6"
     iconv-lite "0.4.24"
-    lodash "^4.17.19"
     slugify "1.3.2"
 
 "@golemio/meteosensors@1.0.6":
@@ -672,12 +668,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.3.tgz#a06c0a54e03b6312efa79ecae0d9daa9d96fea78"
-  integrity sha512-fWRSYk1ODGbB4q9YCbT0n4SdLMFGXJfGod8mdL90ev2msmAMpz+hxh3iA1ZHeR3oSRclk2VRkfL9/OuDZDbhaA==
-  dependencies:
-    lodash "^4.17.19"
+"@golemio/municipal-authorities@1.0.4-dev.622550712":
+  version "1.0.4-dev.622550712"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.4-dev.622550712.tgz#36c3a5ef30a784c4845939c8cecee6a5198b96cd"
+  integrity sha512-GFtGl+sqfYvLeJLT0f0v1U0Q+XLkS2aPlvWxxUNgEF7mQcSB/iTtbISiT5KuUv8Q8mmLsyRpw1Y2xSCLbjszLQ==
 
 "@golemio/municipal-libraries@1.0.4":
   version "1.0.4"
@@ -700,13 +694,12 @@
     ajv "^8.11.0"
     xsd2jsonschema "^0.3.7"
 
-"@golemio/parking-zones@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.3.tgz#9a96be74c8c0573d3534a21604b41654d1189fb9"
-  integrity sha512-6QOINQpVtrLoMhhIEC8lMLHscY9wMO9Kig6KTmKHB5jGSpqeLN02FdWDYz/yDvFBL+nxwjR8wNYaL+9R8wLa5w==
+"@golemio/parking-zones@1.0.4-dev.622474206":
+  version "1.0.4-dev.622474206"
+  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.4-dev.622474206.tgz#231394fc29da10bc463543227bc8c164e4d764ba"
+  integrity sha512-7m5e95zWU0dyDpDRFTUODRVUdevmlpQS3m+J8Y8izDxhxonXPsLKHQdfq9pX1YsS4Nro6Vd/aE3JzOkXHpKCwQ==
   dependencies:
     iso8601-duration "^1.2.0"
-    lodash "^4.17.19"
     object-hash "^1.3.1"
 
 "@golemio/parkings@1.2.2":
@@ -727,13 +720,12 @@
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3.tgz#0196e8479886cd8023324abae213e16ae58f8b4d"
   integrity sha512-3eE2mixwaodgb/SWiJMdxHM2H7wRTK64ESrVhNVuDZS1TeJ0xtM/acD6mYn+TUxD6peQSUAcxKffR8VqObYt3g==
 
-"@golemio/shared-bikes@2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.8.tgz#dc57b5139313802b6adece60dd9233b1c8061656"
-  integrity sha512-eDrWXMgxrCWRkrGJOteHFhs5ii2kOit2sFOCUT4CiOh5aYv5z6GfBaeeERWkwYAfMwRcIJ6nLPyQ1x7+43L7Fw==
+"@golemio/shared-bikes@2.0.9-dev.622566739":
+  version "2.0.9-dev.622566739"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.9-dev.622566739.tgz#1e0c8ec998310140d934574fe437963a4f19f3e4"
+  integrity sha512-SFLPSgP6nxccAfaIZthex5CvSq4VawMX5J7yaqUg3Zde4p3khObemM09aGk3Uphq4vuL4jQE6Fo4Z+ea0BJM6w==
   dependencies:
     cheap-ruler "2.5.1"
-    lodash "^4.17.19"
     uuid-by-string "^3.0.7"
 
 "@golemio/shared-cars@1.0.4":

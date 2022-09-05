@@ -720,10 +720,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3.tgz#0196e8479886cd8023324abae213e16ae58f8b4d"
   integrity sha512-3eE2mixwaodgb/SWiJMdxHM2H7wRTK64ESrVhNVuDZS1TeJ0xtM/acD6mYn+TUxD6peQSUAcxKffR8VqObYt3g==
 
-"@golemio/shared-bikes@2.0.9-dev.622566739":
-  version "2.0.9-dev.622566739"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.9-dev.622566739.tgz#1e0c8ec998310140d934574fe437963a4f19f3e4"
-  integrity sha512-SFLPSgP6nxccAfaIZthex5CvSq4VawMX5J7yaqUg3Zde4p3khObemM09aGk3Uphq4vuL4jQE6Fo4Z+ea0BJM6w==
+"@golemio/shared-bikes@2.0.9-dev.631436846":
+  version "2.0.9-dev.631436846"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.9-dev.631436846.tgz#4dbdaea5364f3d08424726dc9765cae3f774ebbe"
+  integrity sha512-ZkMNZ93TmeQqPJhkC8Q3NychyoGdQn8XCJB5n1IL4UACA0sW5vSZ+CSzQzO0taYE7n3GxL/ufg30nHBw8aH0wg==
   dependencies:
     cheap-ruler "2.5.1"
     uuid-by-string "^3.0.7"

@@ -78,7 +78,7 @@
         "@golemio/parkings": "1.2.2",
         "@golemio/playgrounds": "1.0.6",
         "@golemio/public-toilets": "1.0.3",
-        "@golemio/shared-bikes": "2.0.9-dev.622566739",
+        "@golemio/shared-bikes": "2.0.9-dev.631436846",
         "@golemio/shared-cars": "1.0.4",
         "@golemio/sorted-waste-stations": "1.1.13",
         "@golemio/traffic-cameras": "1.0.5",

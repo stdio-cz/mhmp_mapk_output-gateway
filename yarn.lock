@@ -505,10 +505,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/air-quality-stations/-/air-quality-stations-1.0.6.tgz#5003200d2a13933592e2202019b5d16738b7958f"
   integrity sha512-suPTotLAjllXOSgdwQywYNpk4Jvt+/qtCArp9978tUbRueTBejAe9JtzvK+zOH8wbk0IbCH058XlTAvQYjtgHQ==
 
-"@golemio/bicycle-counters@1.0.11-dev.622566530":
-  version "1.0.11-dev.622566530"
-  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.11-dev.622566530.tgz#c436203d0c2d75883d4a747abfae59cf70df3d9f"
-  integrity sha512-8iPGi6sY8oS4ttUAcz9CbX8adkWYF2vv0aezju0BlVMKSbkQJaGrmnLRnwTIiGvTQl1+ex4SKILlKc1AM3ExNw==
+"@golemio/bicycle-counters@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@golemio/bicycle-counters/-/bicycle-counters-1.0.11.tgz#b821e1a5902e96dcdb73fe6bbca293def3889592"
+  integrity sha512-XCIUY1bfrgky8ml0vF8j5/qKT6fFdEQljhe5aCtECWAl7mOjyslawgThzP8CCuSLvCUn/EqaDSbrMo/nDwv2wA==
 
 "@golemio/bicycle-parkings@1.0.3":
   version "1.0.3"
@@ -539,14 +539,14 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.17-dev.623758334":
-  version "1.2.17-dev.623758334"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.17-dev.623758334.tgz#26033595700566b302a153c42b29fccb3d8549b6"
-  integrity sha512-fP1rD41zoptW5J5yJsKMQSI1p9tl65TSzzgTy/LSchfdcwYKLahcAYAB+h3Tr4R/AhtiZaUpxxwFVdRUlnxIAA==
+"@golemio/core@1.2.17":
+  version "1.2.17"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.17.tgz#b52f59b746e2bca94f84662a174ba37500e7cca1"
+  integrity sha512-FRcmA6ZtePnSZzG2g1h6UmXZHGq8h3w6nVYITVImlpUxW3VtQveySUz8tsMCUdIHukRpO08RGjWKSXyC+5yigQ==
   dependencies:
     "@golemio/errors" "^1.0.1"
     "@golemio/utils" "^1.0.0"
-    "@golemio/validator" "0.2.4-dev.623627646"
+    "@golemio/validator" "0.2.4"
     "@google-cloud/storage" "^5.18.0"
     "@opentelemetry/api" "1.0.4"
     "@opentelemetry/exporter-jaeger" "^1.2.0"
@@ -652,10 +652,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.3.tgz#6a4a2bc21e4f1109e2c2eea85cff9b41e6f35394"
   integrity sha512-IzpSSo09ELVb+LGgOfj3nFBlNYUdY25kRenkxvBJ8xBIFcJtQpcR+FLl+Pmsz9XJpOpxJZYCkyfwjfKp3MlUHQ==
 
-"@golemio/medical-institutions@1.0.7-dev.622550676":
-  version "1.0.7-dev.622550676"
-  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.7-dev.622550676.tgz#8e986a469a22c887c6a20d70c179c153348cdb0b"
-  integrity sha512-v9xP9/YmYDNhzYO6BSCkPlXqxpkoltPCOpAu8jkz5at410nt657FsrLx94Rltdp+mk+v+GOQq9jwUVNeE2WSAg==
+"@golemio/medical-institutions@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@golemio/medical-institutions/-/medical-institutions-1.0.7.tgz#d4a3b879d88e04bf784d2b660c8b43410f28a3e1"
+  integrity sha512-13sV1ikWQeY6PwUpzKv1ZHhRU48nb6HVMysJ6sDpk9SiCeT477OSyzlQIqFXJm4L80sMql3fHGuw5WUbOJB0tg==
   dependencies:
     fast-csv "^4.3.6"
     iconv-lite "0.4.24"
@@ -668,10 +668,10 @@
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/municipal-authorities@1.0.4-dev.622550712":
-  version "1.0.4-dev.622550712"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.4-dev.622550712.tgz#36c3a5ef30a784c4845939c8cecee6a5198b96cd"
-  integrity sha512-GFtGl+sqfYvLeJLT0f0v1U0Q+XLkS2aPlvWxxUNgEF7mQcSB/iTtbISiT5KuUv8Q8mmLsyRpw1Y2xSCLbjszLQ==
+"@golemio/municipal-authorities@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.4.tgz#d7fe024e65bb444943d13e89e1e75f47f68b03a4"
+  integrity sha512-UwlkIIHoQFIeluYgUa8l9gifSlRYCzz+fzahen/AlXf2vykv9Rc+fbbGi/8YMhDuRuZGuSfR9JhP2+PBd2WbmQ==
 
 "@golemio/municipal-libraries@1.0.4":
   version "1.0.4"
@@ -694,10 +694,10 @@
     ajv "^8.11.0"
     xsd2jsonschema "^0.3.7"
 
-"@golemio/parking-zones@1.0.4-dev.626295492":
-  version "1.0.4-dev.626295492"
-  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.4-dev.626295492.tgz#3876446956e95f3341d82c58562133a867840ba1"
-  integrity sha512-gYV3bh4FI4pLOViW/dobJ5RyFyH/v4RYsbV4BiIbCb+kzzydJSUAfS1ME95dVL5aw6uIi9r8eN9UNh3ymRGUlA==
+"@golemio/parking-zones@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@golemio/parking-zones/-/parking-zones-1.0.4.tgz#0823ba323b53f652c5360bca5955f0fc6cfb1dab"
+  integrity sha512-3+bGHr2FnIUCC34WasKhtWkGk4VkSbHLs8iAayxgq8K+F2qqM1KXvfmkhh68iBExSO7nWiQOBPaWtfxIvL39OQ==
   dependencies:
     iso8601-duration "^1.2.0"
     object-hash "^1.3.1"
@@ -720,12 +720,13 @@
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3.tgz#0196e8479886cd8023324abae213e16ae58f8b4d"
   integrity sha512-3eE2mixwaodgb/SWiJMdxHM2H7wRTK64ESrVhNVuDZS1TeJ0xtM/acD6mYn+TUxD6peQSUAcxKffR8VqObYt3g==
 
-"@golemio/shared-bikes@2.0.9-dev.631436846":
-  version "2.0.9-dev.631436846"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.9-dev.631436846.tgz#4dbdaea5364f3d08424726dc9765cae3f774ebbe"
-  integrity sha512-ZkMNZ93TmeQqPJhkC8Q3NychyoGdQn8XCJB5n1IL4UACA0sW5vSZ+CSzQzO0taYE7n3GxL/ufg30nHBw8aH0wg==
+"@golemio/shared-bikes@2.0.8":
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.8.tgz#dc57b5139313802b6adece60dd9233b1c8061656"
+  integrity sha512-eDrWXMgxrCWRkrGJOteHFhs5ii2kOit2sFOCUT4CiOh5aYv5z6GfBaeeERWkwYAfMwRcIJ6nLPyQ1x7+43L7Fw==
   dependencies:
     cheap-ruler "2.5.1"
+    lodash "^4.17.19"
     uuid-by-string "^3.0.7"
 
 "@golemio/shared-cars@1.0.4":
@@ -759,10 +760,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/utils/-/utils-1.0.0.tgz#a8aab217c4c0dd65b918e77e80bf76c8f2489f18"
   integrity sha512-j7c/oiJpLvosuDN8sU0R75ZeyeFfaLqly62iNWlv+Se1cHRCFfe/YgjbWcc4EMXdS1Ssc//pn5L/UuG8PghMiw==
 
-"@golemio/validator@0.2.4-dev.623627646":
-  version "0.2.4-dev.623627646"
-  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.4-dev.623627646.tgz#8c7f2b90e80181f6685fdc2cbbe7854384951f01"
-  integrity sha512-JAuvfruSGfOS3K/GsV0pJlYkKg1bqGOSMYTY25Cc4KjCBudfDbv/zy7meMjIuvK5Il0UdTl0IJ34YX4pOaV3bA==
+"@golemio/validator@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@golemio/validator/-/validator-0.2.4.tgz#1bcfdd4724a31bcd17410b97d3a95131df0b6d2b"
+  integrity sha512-1r+yFNGYFP5CFBVJX8BPh31DPC9zRd8WXsqvaK1ta5gt29/1SRBnVUx0QrKEyD98J8J2/TNs2SDNhld7YSJ2Ww==
   dependencies:
     ajv "^6.10.2"
     debug "^4.1.1"

@@ -93,4 +93,4 @@ include:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:16.13.0
+    image: bitnami/node:16.17.0

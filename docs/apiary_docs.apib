@@ -290,7 +290,7 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 + Parameters
 
-    + id: `6` (string, required) - Id of parking location.
+    + id: `korid-20` (string, required) - Id of parking location.
 
 + Request (application/json; charset=utf-8)
 
@@ -472,7 +472,7 @@ This endpoint is now deprecated. Please use Parking Spaces endpoints.
 + Response 200 (application/json; charset=utf-8)
 
     + Attributes (Feature Point)
-        + properties (Parking)
+        + properties (Parking deprecated)
 
 + Response 404 (application/json; charset=utf-8)
     + Attributes (Error)
@@ -2551,10 +2551,26 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + valid_from: `2020-06-30T22:00:00.000Z` (string, optional, nullable)
 + valid_through: `2020-08-30T22:00:00.000Z` (string, optional, nullable)
 
+## Parking deprecated (object)
+
++ parking_type (Parking Type)
++ id: `534012` (number, required)
++ name: `Skalka 1` (string, required)
++ num_of_free_places: 0 (number, required)
++ num_of_taken_places: 63 (number, required)
++ updated_at: `2019-05-18T07:38:37.000Z` (string)
++ total_num_of_places: 63 (number, required)
++ average_occupancy (Parking Occupancy)
++ district: `praha-10` (string)
++ address (Address)
++ last_updated: 1556868553000 (number)
++ payment_link: `https://ke-utc.appspot.com/static/onstreet.html?shortname=143` (string, optional, nullable)
++ payment_shortname: `143` (string, optional, nullable)
+
 ## Parking (object)
 
 + parking_type (Parking Type)
-+ id: 534012 (number, required)
++ id: `tsk-143` (string, required)
 + name: `Skalka 1` (string, required)
 + num_of_free_places: 0 (number, required)
 + num_of_taken_places: 63 (number, required)
@@ -2619,7 +2635,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## Parking Zone (object)
 
-+ id: `P1-0111` (string, required)
++ id: `p1-0111` (string, required)
 + midpoint: 14.3933334097666, 50.0906432052142 (array[number], required)
 + name: `Rezidentní úsek - P1-0111` (string, required)
 + northeast: 14.3933334097666, 50.0906432052142 (array[number], required)
@@ -2664,9 +2680,9 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 
 ## Parking Space (object)
 
-+ id: `6` (string, required)
++ id: `korid-20` (string, required)
 + source: `korid` (string, required)
-+ source_id: `33` (string, required)
++ source_id: `20` (string, required)
 + data_provider: `www.korid.cz` (string, nullable)
 + name: `Husova (u nemocnice)` (string, required)
 + category: (Parking category, nullable)
@@ -2675,7 +2691,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + area_served: null (string, nullable)
 + payment_url: `https://payment.com/link.html` (string, nullable)
 + total_spot_number: 180 (number, required)
-+ tariff_id: 20 (number, nullable)
++ tariff_id: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, nullable)
 + valid_from: `2020-05-31T00:00:00.000Z` (string, nullable)
 + valid_to: `2022-05-31T00:00:00.000Z` (string, nullable)
 
@@ -2684,6 +2700,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + id: `10168955` (string, required)
 + source: `korid` (string, required)
 + source_id: `20` (string, required)
+* parking_id: `korid-20` (string)
 + available_spot_number: 5 (number, required)
 + closed_spot_number: 0 (number, required)
 + occupied_spot_number: 8 (number, required)

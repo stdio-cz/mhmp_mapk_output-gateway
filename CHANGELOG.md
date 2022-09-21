@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+## [3.0.38] - 2022-09-21
+
+### Changed
+
+-   Update Node.js to 16.17.0 ([code/general#418](https://gitlab.com/operator-ict/golemio/code/general/-/issues/418)
+
+### Removed
+
+-   Unused dependencies ([modules/general#5](https://gitlab.com/operator-ict/golemio/code/modules/general/-/issues/5))
+
+## [3.0.37] - 2022-09-06
+
+-   no changelog
+
 ## [3.0.36] - 2022-08-24
 
 ### Removed

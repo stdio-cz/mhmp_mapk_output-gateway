@@ -100,13 +100,9 @@ hooks.before(
     (transaction) => (transaction.skip = true)
 );
 
-hooks.after("Waste ♻️ > Waste Collection Yards > GET All Waste Collection Yards", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
-
 hooks.before("Waste ♻️ > Waste Collection Yards > GET Waste Collection Yard", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("1", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("1", storage["id"]);
+    transaction.request.uri = transaction.request.uri.replace("sberny-dvur-hlavniho-mesta-prahy-probostska", "stabilni-sberna-nebezpecnych-odpadu-areal-spol-mikapa-plus");
+    transaction.fullPath = transaction.fullPath.replace("sberny-dvur-hlavniho-mesta-prahy-probostska", "stabilni-sberna-nebezpecnych-odpadu-areal-spol-mikapa-plus");
 });
 
 hooks.after("Public Transport 🚋 > Vehicle Positions > GET All Vehicle Positions", (transaction) => {

@@ -62,7 +62,7 @@
         "@golemio/bicycle-counters": "1.0.11",
         "@golemio/bicycle-parkings": "1.0.3",
         "@golemio/city-districts": "1.0.5",
-        "@golemio/core": "1.2.18",
+        "@golemio/core": "1.2.19-dev.648810013",
         "@golemio/exporting-module": "1.0.8",
         "@golemio/fcd": "1.0.9",
         "@golemio/flow": "1.0.10",

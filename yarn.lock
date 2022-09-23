@@ -632,10 +632,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.18":
-  version "1.2.18"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.18.tgz#9f6066df92b4cf78e9fac97b4c4455100c23a7aa"
-  integrity sha512-JPbrleEOtQalQhVXTqVifRraqSmCAgMXAzZjFJ8vXaZnkv5fZMNH0E+c+rQ9BMmTABqHjhg55lGbEo4FV4A7Wg==
+"@golemio/core@1.2.19-dev.648810013":
+  version "1.2.19-dev.648810013"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.19-dev.648810013.tgz#8e33aba1e991ced9bd3ab4d3bb190e2c7ae765ae"
+  integrity sha512-5sHWmtRQXYPXMefdo3Dm6Ruo2p2wKk2szbyXAEl+h1nB/sCj46HeJ1dIViO6naiwA/Dkh6WphkKPs2Sn1NreJA==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -650,7 +650,6 @@
     "@opentelemetry/instrumentation-express" "^0.28.0"
     "@opentelemetry/instrumentation-http" "^0.27.0"
     "@opentelemetry/instrumentation-ioredis" "^0.28.0"
-    "@opentelemetry/instrumentation-redis" "^0.29.0"
     "@opentelemetry/resources" "^1.2.0"
     "@opentelemetry/sdk-trace-base" "^1.2.0"
     "@opentelemetry/sdk-trace-node" "^1.2.0"
@@ -688,7 +687,6 @@
     path-to-regexp "^6.2.0"
     pg "^8.6.0"
     prom-client "^14.0.0"
-    redis "^3.1.1"
     request "2.88.0"
     request-promise "^4.2.5"
     sequelize "^6.21.2"
@@ -1094,15 +1092,6 @@
     "@opentelemetry/instrumentation" "^0.27.0"
     "@opentelemetry/semantic-conventions" "^1.0.0"
     "@types/ioredis" "4.26.6"
-
-"@opentelemetry/instrumentation-redis@^0.29.0":
-  version "0.29.0"
-  resolved "https://registry.yarnpkg.com/@opentelemetry/instrumentation-redis/-/instrumentation-redis-0.29.0.tgz#d9d8aa768db7e4763708662fabff90b99201c35d"
-  integrity sha512-4n2DuDRasMN4HSYGyiOGXP4LnCQw/8RHkqQxP8r3arVwueY49AGFxULLEJpK72zuGJkGT7InXUBIVuu0xzgSbw==
-  dependencies:
-    "@opentelemetry/instrumentation" "^0.27.0"
-    "@opentelemetry/semantic-conventions" "^1.0.0"
-    "@types/redis" "2.8.31"
 
 "@opentelemetry/instrumentation@0.27.0", "@opentelemetry/instrumentation@^0.27.0":
   version "0.27.0"
@@ -2646,13 +2635,6 @@
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
-
-"@types/redis@2.8.31":
-  version "2.8.31"
-  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.31.tgz#c11c1b269fec132ac2ec9eb891edf72fc549149e"
-  integrity sha512-daWrrTDYaa5iSDFbgzZ9gOOzyp2AJmYK59OlG/2KGBgYWF3lfs8GDKm1c//tik5Uc93hDD36O+qLPvzDolChbA==
-  dependencies:
-    "@types/node" "*"
 
 "@types/request-promise@^4.1.45":
   version "4.1.48"
@@ -4417,7 +4399,7 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
-denque@^1.1.0, denque@^1.4.1, denque@^1.5.0:
+denque@^1.1.0, denque@^1.4.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/denque/-/denque-1.5.1.tgz#07f670e29c9a78f8faecb2566a1e2c11929c5cbf"
   integrity sha512-XwE+iZ4D6ZUB7mfYRMb5wByE8L74HCn30FBN7sWnXksWc1LO1bPDl67pBR9o/kC4z/xSNAwkMYcGgqDV3BE3Hw==
@@ -8762,7 +8744,7 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redis-commands@1.7.0, redis-commands@^1.7.0:
+redis-commands@1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.7.0.tgz#15a6fea2d58281e27b1cd1acfb4b293e278c3a89"
   integrity sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==
@@ -8778,16 +8760,6 @@ redis-parser@^3.0.0:
   integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   dependencies:
     redis-errors "^1.0.0"
-
-redis@^3.1.1:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/redis/-/redis-3.1.2.tgz#766851117e80653d23e0ed536254677ab647638c"
-  integrity sha512-grn5KoZLr/qrRQVwoSkmzdbw6pwF+/rwODtrOr6vuBRiR/f3rjSTGupbF90Zpqm2oenix8Do6RV7pYEkGwlKkw==
-  dependencies:
-    denque "^1.5.0"
-    redis-commands "^1.7.0"
-    redis-errors "^1.2.0"
-    redis-parser "^3.0.0"
 
 redlock@^4.1.0:
   version "4.2.0"

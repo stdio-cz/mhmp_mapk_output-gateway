@@ -101,8 +101,14 @@ hooks.before(
 );
 
 hooks.before("Waste ♻️ > Waste Collection Yards > GET Waste Collection Yard", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("sberny-dvur-hlavniho-mesta-prahy-probostska", "stabilni-sberna-nebezpecnych-odpadu-areal-spol-mikapa-plus");
-    transaction.fullPath = transaction.fullPath.replace("sberny-dvur-hlavniho-mesta-prahy-probostska", "stabilni-sberna-nebezpecnych-odpadu-areal-spol-mikapa-plus");
+    transaction.request.uri = transaction.request.uri.replace(
+        "sberny-dvur-hlavniho-mesta-prahy-probostska",
+        "stabilni-sberna-nebezpecnych-odpadu-areal-spol-mikapa-plus"
+    );
+    transaction.fullPath = transaction.fullPath.replace(
+        "sberny-dvur-hlavniho-mesta-prahy-probostska",
+        "stabilni-sberna-nebezpecnych-odpadu-areal-spol-mikapa-plus"
+    );
 });
 
 hooks.after("Public Transport 🚋 > Vehicle Positions > GET All Vehicle Positions", (transaction) => {
@@ -123,14 +129,15 @@ hooks.before("Public Space 🏡 > Municipal Authorities > GET Municipal Authorit
     transaction.fullPath = transaction.fullPath.replace("urad-mestske-casti-praha-10", storage["id"]);
 });
 
-hooks.after("Public Space 🏡 > Municipal Police Stations > GET All Municipal Police Stations", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
+hooks.before(
+    "Public Space 🏡 > Municipal Police Stations > GET All Municipal Police Stations",
+    (transaction) => (transaction.skip = true)
+);
 
-hooks.before("Public Space 🏡 > Municipal Police Stations > GET Municipal Police Station", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("72", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("72", storage["id"]);
-});
+hooks.before(
+    "Public Space 🏡 > Municipal Police Stations > GET Municipal Police Station",
+    (transaction) => (transaction.skip = true)
+);
 
 hooks.before(
     "Pedestrians 🚶 > Locations and Measurements of movement > GET locations and directions",

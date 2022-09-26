@@ -1,8 +1,6 @@
 import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
-import { AirQualityStations } from "@golemio/air-quality-stations/dist/schema-definitions";
 import { Meteosensors } from "@golemio/meteosensors/dist/schema-definitions";
 import { TrafficCameras } from "@golemio/traffic-cameras/dist/schema-definitions";
-import { MunicipalPoliceStations } from "@golemio/municipal-police-stations/dist/schema-definitions";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
 import { Parkings } from "@golemio/parkings/dist/schema-definitions";
 import { BicycleParkings } from "@golemio/bicycle-parkings/dist/schema-definitions";
@@ -25,11 +23,6 @@ const generalRoutes = [
         collectionName: TrafficCameras.mongoCollectionName,
         name: TrafficCameras.name,
         schema: TrafficCameras.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: MunicipalPoliceStations.mongoCollectionName,
-        name: MunicipalPoliceStations.name,
-        schema: MunicipalPoliceStations.outputMongooseSchemaObject,
     },
     {
         collectionName: PublicToilets.mongoCollectionName,

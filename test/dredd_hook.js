@@ -129,6 +129,15 @@ hooks.before("Public Space 🏡 > Municipal Authorities > GET Municipal Authorit
     transaction.fullPath = transaction.fullPath.replace("urad-mestske-casti-praha-10", storage["id"]);
 });
 
+hooks.after("Public Space 🏡 > Municipal Police Stations > GET All Municipal Police Stations", (transaction) => {
+    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
+});
+
+hooks.before("Public Space 🏡 > Municipal Police Stations > GET Municipal Police Station", (transaction) => {
+    transaction.request.uri = transaction.request.uri.replace("72", storage["id"]);
+    transaction.fullPath = transaction.fullPath.replace("72", storage["id"]);
+});
+
 hooks.before(
     "Pedestrians 🚶 > Locations and Measurements of movement > GET locations and directions",
     (transaction) => (transaction.skip = true)

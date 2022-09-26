@@ -30,6 +30,7 @@ import {
     wasteCollectionYardsRouter,
     pedestriansRouter,
     trafficRouter,
+    municipalPoliceStationsRouter,
 } from "./routers";
 import { generalRoutes } from "./general-routes";
 
@@ -228,6 +229,7 @@ export default class App extends BaseApp {
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);
         this.express.use("/fcd", fcdRouter);
+        this.express.use("/municipalpolicestations", municipalPoliceStationsRouter);
 
         // ApiDocs
         this.express.use(

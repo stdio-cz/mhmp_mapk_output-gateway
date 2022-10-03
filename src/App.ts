@@ -21,6 +21,7 @@ import {
     gardensRouter,
     medicalInstitutionsRouter,
     municipalAuthoritiesRouter,
+    municipalLibrariesRouter,
     parkingsRouter,
     parkingZonesRouter,
     playgroundsRouter,
@@ -218,6 +219,7 @@ export default class App extends BaseApp {
         this.express.use("/export", exportingModuleRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
+        this.express.use("/municipallibraries", municipalLibrariesRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestationspg", sortedWasteRouterPg);
         this.express.use("/gardens", gardensRouter);

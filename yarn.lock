@@ -632,10 +632,10 @@
     pg-connection-string "^2.5.0"
     pg-format "^1.0.4"
 
-"@golemio/core@1.2.19-dev.648810013":
-  version "1.2.19-dev.648810013"
-  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.19-dev.648810013.tgz#8e33aba1e991ced9bd3ab4d3bb190e2c7ae765ae"
-  integrity sha512-5sHWmtRQXYPXMefdo3Dm6Ruo2p2wKk2szbyXAEl+h1nB/sCj46HeJ1dIViO6naiwA/Dkh6WphkKPs2Sn1NreJA==
+"@golemio/core@1.2.19-dev.651907198":
+  version "1.2.19-dev.651907198"
+  resolved "https://registry.yarnpkg.com/@golemio/core/-/core-1.2.19-dev.651907198.tgz#a35f5805b54dcc1352e0a136846d777515c5a84d"
+  integrity sha512-Su4TXwpllZbWu4XkuRqUBPj8puEMvAFuINFv2q0vsBsRXTsMyadrbSjNYRfgXxVFXrWhrRiLRH3AXJeefuEbmA==
   dependencies:
     "@abraham/reflection" "^0.10.0"
     "@azure/storage-blob" "^12.11.0"
@@ -656,6 +656,7 @@
     "@sentry/node" "^6.19.7"
     "@sentry/tracing" "^6.19.7"
     "@types/express" "^4.16.0"
+    "@types/geojson" "^7946.0.10"
     "@types/luxon" "^2.3.1"
     "@types/request-promise" "^4.1.45"
     ajv "^8.10.0"
@@ -674,6 +675,7 @@
     express-validator "^5.3.1"
     fast-csv "^4.3.6"
     fast-glob "^3.2.5"
+    geojson "^0.5.0"
     iconv-lite "^0.6.2"
     ioredis "^4.28.5"
     lightship "^6.7.2"
@@ -763,10 +765,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/municipal-authorities/-/municipal-authorities-1.0.4.tgz#d7fe024e65bb444943d13e89e1e75f47f68b03a4"
   integrity sha512-UwlkIIHoQFIeluYgUa8l9gifSlRYCzz+fzahen/AlXf2vykv9Rc+fbbGi/8YMhDuRuZGuSfR9JhP2+PBd2WbmQ==
 
-"@golemio/municipal-libraries@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@golemio/municipal-libraries/-/municipal-libraries-1.0.4.tgz#7f95acffcb2d088955c07d7cf0fd6970b1337778"
-  integrity sha512-NuK/kpTBPYQB368TiaX6uLyap0KI5rF2nMDs4Uih2rsxBsnAhFTVFEx9n+RrCCSkOovxHFh7KDxduL1A9dB7xA==
+"@golemio/municipal-libraries@1.0.5-dev.656915294":
+  version "1.0.5-dev.656915294"
+  resolved "https://registry.yarnpkg.com/@golemio/municipal-libraries/-/municipal-libraries-1.0.5-dev.656915294.tgz#833db6f4c3b81ff5c78efd499b045493a24e56c0"
+  integrity sha512-gytcC9q+h6Ajd5+KYcJtSkj6Xgz+tHY3OsnNumM4u6FeyunGkIGHJzRU+huq7+UKttvIhTVRKF+s+Ed9hJXc9g==
 
 "@golemio/municipal-police-stations@1.0.4-dev.652195852":
   version "1.0.4-dev.652195852"
@@ -2549,6 +2551,11 @@
   version "7946.0.8"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.8.tgz#30744afdb385e2945e22f3b033f897f76b1f12ca"
   integrity sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA==
+
+"@types/geojson@^7946.0.10":
+  version "7946.0.10"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.10.tgz#6dfbf5ea17142f7f9a043809f1cd4c448cb68249"
+  integrity sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==
 
 "@types/ioredis@4.26.6":
   version "4.26.6"

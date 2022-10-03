@@ -4,7 +4,6 @@ import { TrafficCameras } from "@golemio/traffic-cameras/dist/schema-definitions
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
 import { Parkings } from "@golemio/parkings/dist/schema-definitions";
 import { BicycleParkings } from "@golemio/bicycle-parkings/dist/schema-definitions";
-import { MunicipalLibraries } from "@golemio/municipal-libraries/dist/schema-definitions";
 
 // Configuration of the routes to be dynamically created by RouterBuilder
 const generalRoutes = [
@@ -43,11 +42,6 @@ const generalRoutes = [
         collectionName: BicycleParkings.mongoCollectionName,
         name: BicycleParkings.name,
         schema: BicycleParkings.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: MunicipalLibraries.mongoCollectionName,
-        name: MunicipalLibraries.name,
-        schema: MunicipalLibraries.outputMongooseSchemaObject,
     },
 ];
 

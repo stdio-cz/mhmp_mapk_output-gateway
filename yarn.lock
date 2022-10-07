@@ -811,10 +811,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/public-toilets/-/public-toilets-1.0.3.tgz#0196e8479886cd8023324abae213e16ae58f8b4d"
   integrity sha512-3eE2mixwaodgb/SWiJMdxHM2H7wRTK64ESrVhNVuDZS1TeJ0xtM/acD6mYn+TUxD6peQSUAcxKffR8VqObYt3g==
 
-"@golemio/shared-bikes@2.0.9":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.9.tgz#97fec806b52bcc13e66d85afb106a251555b632b"
-  integrity sha512-an5jD97rtwJIHYuhNLmwipXPbIJq3+IJeqHH6hcMtRSMFsSfTDY3rGvSv0Mfm6gnnh6KXJn/qrlTSvHuyiSxgw==
+"@golemio/shared-bikes@2.0.10-dev.661089966":
+  version "2.0.10-dev.661089966"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.10-dev.661089966.tgz#0b7720301e19ba00ea277aea5d22a63e90c0e784"
+  integrity sha512-fvCtc8e2SLp6JZQelCr3Y50UoGhJ5cL1Pp1RlIyMLyZyUX4U6T8tPd7N6V9aWRCN264LeDqvR5FtHDfHkv+82Q==
   dependencies:
     uuid-by-string "^3.0.7"
 

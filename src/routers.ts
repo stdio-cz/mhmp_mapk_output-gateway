@@ -14,3 +14,5 @@ export { parkingsRouter } from "@golemio/parkings/dist/output-gateway";
 export { pedestriansRouter } from "@golemio/flow/dist/output-gateway";
 export { trafficRouter } from "@golemio/ndic/dist/output-gateway";
 export { wasteCollectionYardsRouter } from "@golemio/waste-collection-yards/dist/output-gateway";
+export { municipalPoliceStationsRouter } from "@golemio/municipal-police-stations/dist/output-gateway";
+export { municipalLibrariesRouter } from "@golemio/municipal-libraries/dist/output-gateway";

@@ -21,6 +21,7 @@ import {
     gardensRouter,
     medicalInstitutionsRouter,
     municipalAuthoritiesRouter,
+    municipalLibrariesRouter,
     parkingsRouter,
     parkingZonesRouter,
     playgroundsRouter,
@@ -30,6 +31,7 @@ import {
     wasteCollectionYardsRouter,
     pedestriansRouter,
     trafficRouter,
+    municipalPoliceStationsRouter,
 } from "./routers";
 import { generalRoutes } from "./general-routes";
 
@@ -217,6 +219,7 @@ export default class App extends BaseApp {
         this.express.use("/export", exportingModuleRouter);
         this.express.use("/medicalinstitutions", medicalInstitutionsRouter);
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
+        this.express.use("/municipallibraries", municipalLibrariesRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestationspg", sortedWasteRouterPg);
         this.express.use("/gardens", gardensRouter);
@@ -228,6 +231,7 @@ export default class App extends BaseApp {
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);
         this.express.use("/fcd", fcdRouter);
+        this.express.use("/municipalpolicestations", municipalPoliceStationsRouter);
 
         // ApiDocs
         this.express.use(

@@ -1,12 +1,9 @@
 import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
-import { AirQualityStations } from "@golemio/air-quality-stations/dist/schema-definitions";
 import { Meteosensors } from "@golemio/meteosensors/dist/schema-definitions";
 import { TrafficCameras } from "@golemio/traffic-cameras/dist/schema-definitions";
-import { MunicipalPoliceStations } from "@golemio/municipal-police-stations/dist/schema-definitions";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
 import { Parkings } from "@golemio/parkings/dist/schema-definitions";
 import { BicycleParkings } from "@golemio/bicycle-parkings/dist/schema-definitions";
-import { MunicipalLibraries } from "@golemio/municipal-libraries/dist/schema-definitions";
 
 // Configuration of the routes to be dynamically created by RouterBuilder
 const generalRoutes = [
@@ -27,11 +24,6 @@ const generalRoutes = [
         schema: TrafficCameras.outputMongooseSchemaObject,
     },
     {
-        collectionName: MunicipalPoliceStations.mongoCollectionName,
-        name: MunicipalPoliceStations.name,
-        schema: MunicipalPoliceStations.outputMongooseSchemaObject,
-    },
-    {
         collectionName: PublicToilets.mongoCollectionName,
         name: PublicToilets.name,
         schema: PublicToilets.outputMongooseSchemaObject,
@@ -50,11 +42,6 @@ const generalRoutes = [
         collectionName: BicycleParkings.mongoCollectionName,
         name: BicycleParkings.name,
         schema: BicycleParkings.outputMongooseSchemaObject,
-    },
-    {
-        collectionName: MunicipalLibraries.mongoCollectionName,
-        name: MunicipalLibraries.name,
-        schema: MunicipalLibraries.outputMongooseSchemaObject,
     },
 ];
 

@@ -69,9 +69,9 @@ include:
         - npm install --ignore-scripts --no-audit --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
         - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
         # Run migrations from modules
-        - yarn golemio migrate-db up --postgres
+        - yarn golemio migrate-db up
         # Import postgres test data
-        - yarn golemio import-db-data --postgres
+        - yarn golemio import-db-data
         # Import mongo test data (the old way)
         - unset SQL_DUMP_FILES
         - yarn golemio-import-test-data

@@ -100,6 +100,11 @@ hooks.before(
     (transaction) => (transaction.skip = true)
 );
 
+hooks.before(
+    "Waste ♻️ > Sorted Waste Fullness Sensors Data > GET All Sorted Waste Pick Days",
+    (transaction) => (transaction.skip = true)
+);
+
 hooks.before("Waste ♻️ > Waste Collection Yards > GET Waste Collection Yard", (transaction) => {
     transaction.request.uri = transaction.request.uri.replace(
         "sberny-dvur-hlavniho-mesta-prahy-probostska",

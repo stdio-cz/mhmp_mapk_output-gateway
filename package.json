@@ -64,7 +64,7 @@
         "@golemio/city-districts": "1.0.5",
         "@golemio/core": "1.2.20",
         "@golemio/exporting-module": "1.0.8",
-        "@golemio/fcd": "1.0.9",
+        "@golemio/fcd": "1.0.10-dev.675484084",
         "@golemio/flow": "1.0.10",
         "@golemio/gardens": "1.0.3",
         "@golemio/medical-institutions": "1.0.7",

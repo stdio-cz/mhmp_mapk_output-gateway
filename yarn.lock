@@ -829,10 +829,10 @@
   dependencies:
     cheap-ruler "2.5.1"
 
-"@golemio/sorted-waste-stations@1.1.15":
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.15.tgz#718bf26ae20fef051fc4ff1f66baeaf5b1ca9daf"
-  integrity sha512-Ab/UmCRUqyYQQU2awaegCbTiG+VKJBlgKqhJTuGEo0WZWkkhOirqHysEj6yxc5+PI8ldNuFBzhbUbBkaUudFHw==
+"@golemio/sorted-waste-stations@1.1.16-dev.676291478":
+  version "1.1.16-dev.676291478"
+  resolved "https://registry.yarnpkg.com/@golemio/sorted-waste-stations/-/sorted-waste-stations-1.1.16-dev.676291478.tgz#1f571f27dec07718717c876116a2294a739d6861"
+  integrity sha512-ZpCr/DyjiiIHeVG6UDk5qiBgfvHDoi3k1wXgLPFQBEmsazWHt5qxqYo5FekYFX9yU1SgN7gNJBeboTZ+r8oVpw==
   dependencies:
     JSONStream "^1.0.4"
     lodash "^4.17.19"

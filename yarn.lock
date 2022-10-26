@@ -820,10 +820,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.6-dev.676523897.tgz#a81c90a0c854f2c70575ce66b68fce06b42a3b0e"
   integrity sha512-khfT4CHyxdEvBfqKD2YaMhGtw8jasZ/IA1QbvHGoTkfxFLBg8I9n9zI7jo5ojKQ+lkALO/pUsK1AN9DLX5bCwA==
 
-"@golemio/shared-bikes@2.0.10":
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.10.tgz#982efb2f10f8d773617910acd8d8ad71b3b7eb8b"
-  integrity sha512-ZIzxzSVASetMuCY6n5+bLWFnN0YjYmmn16GVJmVlcc64029sIRj25hCR69Bfq1oeoRpB9gSWuBKPEGBLXZ4UEQ==
+"@golemio/shared-bikes@2.0.11-dev.677607783":
+  version "2.0.11-dev.677607783"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.11-dev.677607783.tgz#67388bc37b0cf82f50fe49fc70f685c490b0ebde"
+  integrity sha512-ubhFU6CuGfBSSh2mTp/sJeBGKbSg5N+gnH+hMRLknu2coM1ZHdb234tqFvfu0SnkPLm8K2t363XErvgDEaWAsg==
   dependencies:
     uuid-by-string "^3.0.7"
 

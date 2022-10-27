@@ -94,3 +94,8 @@ include:
 run_tests:
     extends: .run_tests
     image: bitnami/node:16.17.0
+
+run_tests-node-next:
+    extends: .run_tests
+    image: bitnami/node:18.11.0
+    allow_failure: true

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.0.40] - 2022-11-03
+
 ### Changed
 
 -   Update TypeScript to v4.7.2

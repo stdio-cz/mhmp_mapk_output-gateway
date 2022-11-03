@@ -100,6 +100,11 @@ hooks.before(
     (transaction) => (transaction.skip = true)
 );
 
+hooks.before(
+    "Waste ♻️ > Sorted Waste Fullness Sensors Data > GET All Sorted Waste Pick Days",
+    (transaction) => (transaction.skip = true)
+);
+
 hooks.before("Waste ♻️ > Waste Collection Yards > GET Waste Collection Yard", (transaction) => {
     transaction.request.uri = transaction.request.uri.replace(
         "sberny-dvur-hlavniho-mesta-prahy-probostska",
@@ -120,14 +125,12 @@ hooks.before("Public Transport 🚋 > Vehicle Positions > GET Vehicle Position",
     transaction.fullPath = transaction.fullPath.replace("100381", storage["id"]);
 });
 
-hooks.after("Public Space 🏡 > Municipal Authorities > GET All Municipal Authorities", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
+hooks.after(
+    "Public Space 🏡 > Municipal Authorities > GET All Municipal Authorities",
+    (transaction) => (transaction.skip = true)
+);
 
-hooks.before("Public Space 🏡 > Municipal Authorities > GET Municipal Authority", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("urad-mestske-casti-praha-10", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("urad-mestske-casti-praha-10", storage["id"]);
-});
+hooks.before("Public Space 🏡 > Municipal Authorities > GET Municipal Authority", (transaction) => (transaction.skip = true));
 
 hooks.before(
     "Public Space 🏡 > Municipal Police Stations > GET All Municipal Police Stations",

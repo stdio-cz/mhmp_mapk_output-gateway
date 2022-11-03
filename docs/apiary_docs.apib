@@ -1923,6 +1923,27 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + Response 403 (application/json; charset=utf-8)
     + Attributes (403 Error)
 
+### GET All Sorted Waste Pick Days [GET /sortedwastestations/pickdays/{?sensoneoCode,knskoId}]
+
++ Parameters
+
+    + sensoneoCode: `0001/ 002C01583` (optional, string) - Lists only picks from container with this sensor ID
+    + knskoId: `15292` (optional, string) - Lists only picks from container with this ID.
+
++ Request (application/json; charset=utf-8)
+
+    + Headers
+
+            x-access-token: YOUR_ACCESS_TOKEN
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Attributes (array)
+        + (Sorted Waste PickDay)
+
++ Response 403 (application/json; charset=utf-8)
+    + Attributes (403 Error)
+
 ## Waste Collection Yards [/wastecollectionyards]
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
@@ -2849,6 +2870,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + sensor_code: `0006/ 016C00214` (string, optional)
 + sensor_supplier: `sensoneo` (string, optional)
 + sensor_id: `29790` (string, optional)
++ updated_at: 1666667824020 (number)
 
 ## Sorted Waste Station Container Cleaning Frequency (object)
 
@@ -2888,6 +2910,13 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + percent_before: 61 (number)
 + percent_now: 0 (number)
 + event_driven: false (boolean)
++ updated_at: `1666667824020` (string)
+
+## Sorted Waste PickDay (object)
+
++ knsko_id: `15292` (number, required) - container id
++ sensoneo_code: `0001/ 002C01583` (string, required) - sensor code
++ generated_dates: `2021-01-28` (array, required) - list of pick dates
 
 ## Sorted Waste Measurement (object)
 
@@ -2900,6 +2929,7 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + measured_at_utc: `2019-05-17T15:11:27.000Z` (string, required)
 + prediction_utc: `2019-05-18T07:38:37.000Z` (string) - vendor prediction of maximum fullness
 + firealarm: 0 (number)
++ updated_at: 1666667824020 (number)
 
 ## Traffic Camera (object)
 

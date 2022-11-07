@@ -44,14 +44,11 @@ hooks.before("Traffic 🚘 > Traffic Cameras > GET Traffic Camera", (transaction
     transaction.fullPath = transaction.fullPath.replace("404032", storage["id"]);
 });
 
-hooks.after("Public Space 🏡 > Gardens > GET All Gardens", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
+hooks.before("Public Space 🏡 > Gardens > GET All Gardens", (transaction) => (transaction.skip = true));
 
-hooks.before("Public Space 🏡 > Gardens > GET Garden", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("frantiskanska-zahrada", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("frantiskanska-zahrada", storage["id"]);
-});
+hooks.before("Public Space 🏡 > Gardens > GET Garden", (transaction) => (transaction.skip = true));
+
+hooks.before("Public Space 🏡 > Gardens > GET All Gardens Properties", (transaction) => (transaction.skip = true));
 
 hooks.after("Public Space 🏡 > Medical Institutions > GET All Medical Institutions", (transaction) => {
     storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;

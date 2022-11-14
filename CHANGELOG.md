@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [3.0.41] - 2022-11-14
+
+### Added
+
+-   Added warning for migration to Swagger UI
+
+### Removed
+
+-   Removed PID documentation and replaced by link to Swagger UI
+
 ## [3.0.40] - 2022-11-03
 
 ### Changed

@@ -1423,17 +1423,17 @@
   resolved "https://registry.yarnpkg.com/@golemio/fcd/-/fcd-1.0.10.tgz#97809f98a0e9c386b57b82208b45a902829821d9"
   integrity sha512-LRpSrTm9eB6j3B5TxVTc60QBiM0FdYkMBwvwjy3a9dMAyymJsVsumlS6Me8mYfoMOQ5YC7c6GZdUuMfeE2F5pA==
 
-"@golemio/flow@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.10.tgz#86f9de347e3eee8d65cc2ebdee4fc4747f40db16"
-  integrity sha512-mgHtkDJHrRaDhaMGihRUqltzV6XygpDkbTTsCypWwNna90AS+YLgGSPGarFxtdbBfIYcn9Vho9dNsxUTMfnTVg==
+"@golemio/flow@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@golemio/flow/-/flow-1.0.11.tgz#cfee2b3136a07e4d4148fb69d4f72588c5c5c452"
+  integrity sha512-GqqmadKz4kanaYsqLUpAnVorenSjJvDaZPD+0YgomnnlHn0blq1vhCe6+dP3g46SViVSBmHTAR4nEOXTik1Baw==
   dependencies:
     JSONStream "^1.0.4"
 
-"@golemio/gardens@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.0.3.tgz#6a4a2bc21e4f1109e2c2eea85cff9b41e6f35394"
-  integrity sha512-IzpSSo09ELVb+LGgOfj3nFBlNYUdY25kRenkxvBJ8xBIFcJtQpcR+FLl+Pmsz9XJpOpxJZYCkyfwjfKp3MlUHQ==
+"@golemio/gardens@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@golemio/gardens/-/gardens-1.1.0.tgz#d699600edc3e90750d7b7e45722fc7a6415e109b"
+  integrity sha512-VSO/FMYEWt0NGTzTszSmdE8nC9JwoCQ9Oj6TL8Y5JNgn9Dalgg/AE08OXSLcWtFlXM+z7fPyHd44QWxVm5jzlw==
 
 "@golemio/medical-institutions@1.0.7":
   version "1.0.7"
@@ -1509,10 +1509,10 @@
   resolved "https://registry.yarnpkg.com/@golemio/rush-hour-aggregation/-/rush-hour-aggregation-1.0.6.tgz#584cea14d0d15067995444dc438f1db36e9eb58b"
   integrity sha512-oyq4ldBihA+Kke9g8tTtQVZ2R806nKifrueapjUI9UwQ/k7Fx4ezpGaZNfhuxtdH+mYqYY0G4BonR1i+uoQa8g==
 
-"@golemio/shared-bikes@2.0.11":
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.11.tgz#95be535e555281e5ac7780d4ad139bde19c3051c"
-  integrity sha512-wRYwWESZ3ZV9cowRC4Sq9v8mTaGpRu4zRmT+LdGBXSSXzGa9uDs7eM3lqufwEMlwQmszpF4SeSv4zd4fftFo4A==
+"@golemio/shared-bikes@2.0.12":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@golemio/shared-bikes/-/shared-bikes-2.0.12.tgz#21fe05d137cdd63a754b92bc9268a2932b4538c0"
+  integrity sha512-7k4lLqjVEjiN64RH4xtbAC3A6GA7o4TAYNydbOAxoFEbCVi/yRHBNUv2LVwxg+FCQlBBw56Nt8C2IzPNjG5ywg==
   dependencies:
     uuid-by-string "^3.0.7"
 

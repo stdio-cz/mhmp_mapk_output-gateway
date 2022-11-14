@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.0.40",
+    "version": "3.0.41",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -65,8 +65,8 @@
         "@golemio/core": "1.2.21",
         "@golemio/exporting-module": "1.0.8",
         "@golemio/fcd": "1.0.10",
-        "@golemio/flow": "1.0.10",
-        "@golemio/gardens": "1.0.3",
+        "@golemio/flow": "1.0.11",
+        "@golemio/gardens": "1.1.0",
         "@golemio/medical-institutions": "1.0.7",
         "@golemio/meteosensors": "1.0.6",
         "@golemio/municipal-authorities": "1.0.5",
@@ -78,7 +78,7 @@
         "@golemio/playgrounds": "1.0.6",
         "@golemio/public-toilets": "1.0.3",
         "@golemio/rush-hour-aggregation": "1.0.6",
-        "@golemio/shared-bikes": "2.0.11",
+        "@golemio/shared-bikes": "2.0.12",
         "@golemio/shared-cars": "1.0.4",
         "@golemio/sorted-waste-stations": "1.1.16",
         "@golemio/traffic-cameras": "1.0.5",

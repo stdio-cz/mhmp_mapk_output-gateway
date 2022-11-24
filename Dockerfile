@@ -12,7 +12,6 @@ WORKDIR /app
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/docs/generated /app/docs/generated
-COPY public public
 COPY package.json ./
 
 # Create a non-root user

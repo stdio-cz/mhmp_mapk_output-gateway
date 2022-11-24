@@ -156,7 +156,6 @@ export default class App extends BaseApp {
         this.express.use(this.commonHeaders);
         this.express.use(this.customHeaders);
         this.express.use(compression());
-        this.express.use(express.static("public"));
         CacheMiddleware.init();
     };
 

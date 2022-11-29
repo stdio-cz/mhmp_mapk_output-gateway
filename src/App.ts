@@ -87,7 +87,7 @@ export default class App extends BaseApp {
             // Setup error handler hook on server error
             this.server.on("error", (err: Error) => {
                 sentry.captureException(err);
-                ErrorHandler.handle(new CustomError("Could not start a server", false, "App", 1, err));
+                ErrorHandler.handle(new CustomError("Could not start a server", false, "App", 1, err), log);
             });
             // Serve the application at the given port
             this.server.listen(this.port, () => {
@@ -100,7 +100,7 @@ export default class App extends BaseApp {
             this.lightship.signalReady();
         } catch (err) {
             sentry.captureException(err);
-            ErrorHandler.handle(err);
+            ErrorHandler.handle(err, log);
         }
     };
 
@@ -156,7 +156,6 @@ export default class App extends BaseApp {
         this.express.use(this.commonHeaders);
         this.express.use(this.customHeaders);
         this.express.use(compression());
-        this.express.use(express.static("public"));
         CacheMiddleware.init();
     };
 
@@ -267,8 +266,8 @@ export default class App extends BaseApp {
             const warnCodes = [400, 404];
             const errObject: ICustomErrorObject = HTTPErrorHandler.handle(
                 err,
-                warnCodes.includes(err.code) ? "warn" : "error",
-                log
+                log,
+                warnCodes.includes(err.code) ? "warn" : "error"
             );
             log.silly("Error caught by the router error handler.");
             res.setHeader("Content-Type", "application/json; charset=utf-8");

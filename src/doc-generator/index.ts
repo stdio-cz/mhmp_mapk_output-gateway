@@ -21,7 +21,7 @@ mergeConfigPreparator
     .makeConfigs()
     .then((result) => log.info(result))
     .catch((error) => {
-        ErrorHandler.handle(error);
+        ErrorHandler.handle(error, log);
     });
 
 // next steps:

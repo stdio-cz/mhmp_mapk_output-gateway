@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [3.0.42] - 2022-11-29
+
+### Changed
+
+-   Stop serving `/.well-known/security.txt`
+
+### Removed
+
+-   Remove Express serve-static middleware ([vp/og#1](https://gitlab.com/operator-ict/golemio/code/vp/output-gateway/-/issues/1))
+
 ## [3.0.41] - 2022-11-14
 
 ### Added

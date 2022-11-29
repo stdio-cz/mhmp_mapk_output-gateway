@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.0.42] - 2022-11-29
+
 ### Changed
 
 -   Stop serving `/.well-known/security.txt`

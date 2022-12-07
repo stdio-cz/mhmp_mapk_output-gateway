@@ -62,7 +62,7 @@
         "@golemio/bicycle-counters": "1.0.12",
         "@golemio/bicycle-parkings": "1.0.4",
         "@golemio/city-districts": "1.0.6",
-        "@golemio/core": "1.2.22",
+        "@golemio/core": "1.2.23",
         "@golemio/exporting-module": "1.0.9",
         "@golemio/fcd": "1.0.11",
         "@golemio/flow": "1.1.0",
@@ -78,7 +78,7 @@
         "@golemio/playgrounds": "1.0.7",
         "@golemio/public-toilets": "1.0.4",
         "@golemio/rush-hour-aggregation": "1.0.7",
-        "@golemio/shared-bikes": "2.0.13-dev.700495307",
+        "@golemio/shared-bikes": "2.0.13",
         "@golemio/shared-cars": "1.0.5",
         "@golemio/sorted-waste-stations": "1.1.17",
         "@golemio/traffic-cameras": "1.0.6",
@@ -90,6 +90,7 @@
         "swagger-ui-express": "^4.3.0"
     },
     "resolutions": {
-        "moment": "2.29.4"
+        "moment": "2.29.4",
+        "**/body-parser/qs": "^6.7.3"
     }
 }

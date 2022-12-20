@@ -12,7 +12,7 @@
         "build-minimal": "tsc --sourceMap false --declaration false",
         "build-watch": "tsc --watch --preserveWatchOutput",
         "build-apidocs": "ts-node -r dotenv/config ./src/doc-generator/index.ts && openapi-merge-cli --config ./src/doc-generator/generated-merge-configs/openapi-merge-config.json && openapi-merge-cli --config ./src/doc-generator/generated-merge-configs/public-openapi-merge-config.json",
-        "test": "mocha --exit -b --check-leaks --timeout 60000 -r ts-node/register -r dotenv/config --recursive 'test/**/*.test.ts' --reporter mocha-junit-reporter --reporter-options mochaFile=junit.xml",
+        "test": "mocha --exit -b --check-leaks --timeout 60000 -r ts-node/register --file 'test/setup.ts' -r dotenv/config --recursive 'test/**/*.test.ts' --reporter mocha-junit-reporter --reporter-options mochaFile=junit.xml",
         "test-debug": "run-s 'test --inspect-brk=9230'",
         "code-coverage": "nyc run-s 'test -r source-map-support/register'",
         "generate-docs": "typedoc --out docs/typedoc src",

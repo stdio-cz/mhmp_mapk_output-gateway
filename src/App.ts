@@ -1,17 +1,18 @@
-import http from "http";
-import compression from "compression";
-import sentry from "@golemio/core/dist/shared/sentry";
-import swaggerUi from "swagger-ui-express";
+import { BaseApp, getServiceHealth, IServiceCheck, Service } from "@golemio/core/dist/helpers";
+import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
+import { config } from "@golemio/core/dist/output-gateway/config/config";
+import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
+import { log, requestLogger } from "@golemio/core/dist/output-gateway/Logger";
+import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
+import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
+import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
-import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
-import { config } from "@golemio/core/dist/output-gateway/config";
-import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
-import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
-import { requestLogger, log } from "@golemio/core/dist/output-gateway/Logger";
-import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
-import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
-import { getServiceHealth, BaseApp, Service, IServiceCheck } from "@golemio/core/dist/helpers";
+import sentry from "@golemio/core/dist/shared/sentry";
+import compression from "compression";
+import http from "http";
+import swaggerUi from "swagger-ui-express";
+import { generalRoutes } from "./general-routes";
 import {
     airQualityRouter,
     bicycleCountersRouter,
@@ -22,18 +23,18 @@ import {
     medicalInstitutionsRouter,
     municipalAuthoritiesRouter,
     municipalLibrariesRouter,
+    municipalPoliceStationsRouter,
     parkingsRouter,
     parkingZonesRouter,
-    playgroundsRouter,
-    sharedBikesRouter,
-    sharedBikesGbfsRouter,
-    sortedWasteRouterPg,
-    wasteCollectionYardsRouter,
     pedestriansRouter,
+    playgroundsRouter,
+    sharedBikesGbfsRouter,
+    sharedBikesRouter,
+    sortedWasteRouterPg,
     trafficRouter,
-    municipalPoliceStationsRouter,
+    wasteCollectionLegacyRouter,
+    wasteCollectionYardsRouter,
 } from "./routers";
-import { generalRoutes } from "./general-routes";
 
 /**
  * Entry point of the application. Creates and configures an ExpressJS web server.
@@ -51,7 +52,6 @@ export default class App extends BaseApp {
      */
     constructor() {
         super();
-
         this.lightship = createLightship({
             detectKubernetes: config.node_env !== "production",
             shutdownHandlerTimeout: config.lightship.handlerTimeout,
@@ -222,6 +222,7 @@ export default class App extends BaseApp {
         this.express.use("/parkingzones", parkingZonesRouter);
         this.express.use("/sortedwastestationspg", sortedWasteRouterPg);
         this.express.use("/gardens", gardensRouter);
+        this.express.use("/wastecollectionlegacy", wasteCollectionLegacyRouter);
         this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
         this.express.use("/playgrounds", playgroundsRouter);
         this.express.use("/sharedbikes", sharedBikesRouter);

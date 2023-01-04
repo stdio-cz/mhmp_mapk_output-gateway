@@ -1,3 +1,6 @@
+// Load reflection lib
+import "@golemio/core/dist/shared/_global";
+
 // To run this config preparation logic, run script `yarn build-apidocs`
 //
 // It creates 2 config files:

@@ -2,9 +2,9 @@
 
 ## [Unreleased]
 
-### Changed
-
 ## [3.0.44] - 2023-01-04
+
+### Changed
 
 -   update golemio/core with dependency injection
 

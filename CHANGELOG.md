@@ -4,6 +4,8 @@
 
 ### Changed
 
+## [3.0.44] - 2023-01-04
+
 -   update golemio/core with dependency injection
 
 ## [3.0.43] - 2022-21-07

@@ -74,9 +74,9 @@ include:
         - yarn golemio import-db-data
         # Import mongo test data (the old way)
         - unset SQL_DUMP_FILES
-        # - yarn golemio-import-test-data
+        - yarn golemio-import-test-data
         - yarn code-coverage
-        # - yarn dredd
+        - yarn dredd
     tags:
         - docker
     rules:

@@ -48,7 +48,7 @@ include:
         - yarn --ignore-scripts
         # Audit production dependencies for HIGH (8) vulnerabilities
         # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
-        - bash -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
+        - sh -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
         - yarn lint
         - yarn build-apidocs
         - yarn build
@@ -67,7 +67,7 @@ include:
         - export SCH_DIR=$(mktemp -d)
         - echo "Installing schema-definitions version $SCH_VERSION"
         - npm install --ignore-scripts --no-audit --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
-        - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
+        - sh -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
         # Run migrations from modules
         - yarn golemio migrate-db up --silent
         # Import postgres test data
@@ -93,9 +93,9 @@ include:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:16.17.0
+    image: node:16.17.0-alpine
 
 run_tests-node-next:
     extends: .run_tests
-    image: bitnami/node:18.11.0
+    image: node:18.11.0-alpine
     allow_failure: true

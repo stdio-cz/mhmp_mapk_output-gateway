@@ -25,6 +25,11 @@
         "type": "git",
         "url": "https://gitlab.com/operator-ict/golemio/code/output-gateway"
     },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0",
+        "yarn": "Use npm!"
+    },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
@@ -89,8 +94,7 @@
         "fast-glob": "^3.2.11",
         "swagger-ui-express": "^4.3.0"
     },
-    "resolutions": {
-        "moment": "2.29.4",
-        "**/body-parser/qs": "^6.7.3"
+    "overrides": {
+        "qs": "^6.7.3"
     }
 }

@@ -5,6 +5,7 @@
 ### Changed
 
 -   Docker image optimization
+-   Migrate to npm
 
 ## [3.0.44] - 2023-01-04
 

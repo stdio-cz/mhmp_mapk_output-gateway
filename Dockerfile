@@ -2,21 +2,21 @@ FROM node:16.17.0-alpine AS build
 WORKDIR /app
 
 # JS BUILD
-COPY package.json yarn.lock tsconfig.json ./
+COPY .npmrc package.json package-lock.json tsconfig.json ./
 COPY src src
 RUN mkdir -p docs/generated
-RUN yarn --ignore-scripts && \
-    yarn build-apidocs && \
-    yarn build-minimal
+RUN npm install --ignore-scripts --progress=false && \
+    npm run build-apidocs && \
+    npm run build-minimal
 
 FROM node:16.17.0-alpine
 WORKDIR /app
 
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/docs/generated /app/docs/generated
-COPY package.json yarn.lock  ./
-RUN yarn --ignore-scripts --production --cache-folder .yarn-cache && \
-    rm -rf .yarn-cache yarn.lock
+COPY .npmrc package.json package-lock.json  ./
+RUN npm install --ignore-scripts --progress=false --omit=dev --cache .npm-cache && \
+    rm -rf .npm-cache .npmrc package-lock.json
 
 # FAKETIME
 # USER root

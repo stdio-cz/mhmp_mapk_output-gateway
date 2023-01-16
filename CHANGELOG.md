@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [3.0.45] - 2023-01-04
+
+### Added
+
+-   swagger docs blacklist
+
 ## [3.0.44] - 2023-01-04
 
 ### Changed

@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+-   Docker image optimization
+-   Migrate to npm
+
 ## [3.0.45] - 2023-01-04
 
 ### Added

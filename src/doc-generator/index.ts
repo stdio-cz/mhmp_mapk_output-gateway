@@ -1,15 +1,15 @@
 // Load reflection lib
 import "@golemio/core/dist/shared/_global";
 
-// To run this config preparation logic, run script `yarn build-apidocs`
+// To run this config preparation logic, run script `npm run build-apidocs`
 //
 // It creates 2 config files:
 // "./src/doc-generator/generated-merge-configs/openapi-merge-config.json"
 // "./src/doc-generator/generated-merge-configs/public-openapi-merge-config.json"
 //
 // To make apiDocs merge using prepared configs:
-// yarn openapi-merge-cli --config './src/doc-generator/generated-merge-configs/openapi-merge-config.json'
-// yarn openapi-merge-cli --config './src/doc-generator/generated-merge-configs/public-openapi-merge-config.json'
+// npx openapi-merge-cli --config './src/doc-generator/generated-merge-configs/openapi-merge-config.json'
+// npx openapi-merge-cli --config './src/doc-generator/generated-merge-configs/public-openapi-merge-config.json'
 //
 // It creates 2 swagger files:
 // "./docs/generated/openapi.json"
@@ -28,5 +28,5 @@ mergeConfigPreparator
     });
 
 // next steps:
-// yarn openapi-merge-cli --config './src/doc-generator/generated-merge-configs/openapi-merge-config.json'
-// yarn openapi-merge-cli --config './src/doc-generator/generated-merge-configs/public-openapi-merge-config.json'
+// npx openapi-merge-cli --config './src/doc-generator/generated-merge-configs/openapi-merge-config.json'
+// npx openapi-merge-cli --config './src/doc-generator/generated-merge-configs/public-openapi-merge-config.json'

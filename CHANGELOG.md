@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.1.0] - 2023-01-23
+
 ### Changed
 
 -   Docker image optimization

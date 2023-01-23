@@ -17,6 +17,13 @@ variables:
     K8S_DEPLOYMENT_NAME: output-gateway-v2
     K8S_DEPLOYMENT_IMAGE_TAG: $CI_PIPELINE_ID
 
+cache:
+    key:
+        files:
+            - package-lock.json
+    paths:
+        - node_modules
+
 stages:
     - pre-test
     - test
@@ -45,13 +52,12 @@ include:
           alias: mongo
         - redis:6.2-alpine
     script:
-        - yarn --ignore-scripts
-        # Audit production dependencies for HIGH (8) vulnerabilities
-        # https://classic.yarnpkg.com/en/docs/cli/audit/#toc-yarn-audit
-        - bash -c 'yarn audit --groups dependencies --level high; [[ $? -ge 8 ]] && exit 1 || exit 0'
-        - yarn lint
-        - yarn build-apidocs
-        - yarn build
+        - npm install --ignore-scripts --progress=false
+        # Audit production dependencies for HIGH vulnerabilities
+        - npm audit --omit dev --audit-level high
+        - npm run lint
+        - npm run build-apidocs
+        - npm run build
         - export LOG_LEVEL=INFO
         - export MONGO_CONN=$MONGO_CONN
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
@@ -67,16 +73,16 @@ include:
         - export SCH_DIR=$(mktemp -d)
         - echo "Installing schema-definitions version $SCH_VERSION"
         - npm install --ignore-scripts --no-audit --prefix $SCH_DIR @golemio/schema-definitions@$SCH_VERSION
-        - bash -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
+        - sh -c "cd $SCH_DIR/node_modules/@golemio/schema-definitions && npm run migrate-postgres-db >/dev/null && cd -"
         # Run migrations from modules
-        - yarn golemio migrate-db up --silent
+        - npx golemio migrate-db up --silent
         # Import postgres test data
-        - yarn golemio import-db-data
+        - npx golemio import-db-data
         # Import mongo test data (the old way)
         - unset SQL_DUMP_FILES
-        # - yarn golemio-import-test-data
-        - yarn code-coverage
-        # - yarn dredd
+        - npx golemio-import-test-data
+        - npm run code-coverage
+        - npm run dredd
     tags:
         - docker
     rules:
@@ -93,9 +99,9 @@ include:
 
 run_tests:
     extends: .run_tests
-    image: bitnami/node:16.17.0
+    image: node:16.17.0-alpine
 
 run_tests-node-next:
     extends: .run_tests
-    image: bitnami/node:18.11.0
+    image: node:18.11.0-alpine
     allow_failure: true

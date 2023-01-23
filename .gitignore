@@ -4,6 +4,7 @@
 .vscode
 dist/
 docs/typedoc/
+yarn.lock
 
 ## ApiDoc generated configs gitignore rules
 openapi-merge-config.json

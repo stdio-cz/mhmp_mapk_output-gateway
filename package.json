@@ -95,6 +95,7 @@
         "swagger-ui-express": "^4.3.0"
     },
     "overrides": {
+        "async": "^3.2.2",
         "qs": "^6.7.3"
     }
 }

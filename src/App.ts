@@ -25,6 +25,7 @@ import {
     municipalLibrariesRouter,
     municipalPoliceStationsRouter,
     parkingsRouter,
+    tskParkingLotsLegacyRouter,
     parkingZonesRouter,
     pedestriansRouter,
     playgroundsRouter,
@@ -228,6 +229,7 @@ export default class App extends BaseApp {
         this.express.use("/sharedbikes", sharedBikesRouter);
         this.express.use("/sharedbikes/gbfs", sharedBikesGbfsRouter);
         this.express.use("/parking", parkingsRouter);
+        this.express.use("/parkings", tskParkingLotsLegacyRouter);
         this.express.use("/pedestrians", pedestriansRouter);
         this.express.use("/traffic", trafficRouter);
         this.express.use("/fcd", fcdRouter);

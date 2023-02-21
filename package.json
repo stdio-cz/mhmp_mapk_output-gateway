@@ -66,7 +66,7 @@
         "@golemio/air-quality-stations": "1.1.0",
         "@golemio/bicycle-counters": "1.1.0",
         "@golemio/bicycle-parkings": "1.1.0",
-        "@golemio/city-districts": "1.1.0",
+        "@golemio/city-districts": "1.2.0-dev.781381039",
         "@golemio/core": "1.5.0",
         "@golemio/exporting-module": "1.1.0",
         "@golemio/fcd": "1.1.0",

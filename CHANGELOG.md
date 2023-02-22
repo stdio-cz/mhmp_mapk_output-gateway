@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [3.3.1] - 2023-02-22
+
+-   No changelog
+
+
 ## [3.3.0] - 2023-02-13
 
 -   No changelog

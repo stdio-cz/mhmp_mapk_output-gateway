@@ -74,6 +74,7 @@
         "@golemio/gardens": "1.2.0-dev.781472835",
         "@golemio/medical-institutions": "1.1.2-dev.785537629",
         "@golemio/meteosensors": "1.1.0-dev.781509059",
+        "@golemio/microclimate": "1.1.2-dev.788237500",
         "@golemio/municipal-authorities": "1.1.0-dev.781651794",
         "@golemio/municipal-libraries": "1.2.2-dev.785537823",
         "@golemio/municipal-police-stations": "1.2.2-dev.785538001",

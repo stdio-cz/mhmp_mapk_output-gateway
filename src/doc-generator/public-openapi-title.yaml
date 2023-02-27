@@ -1,18 +1,25 @@
 openapi: 3.0.0
 
 info:
-    title: Golemio API
+    title: Open Data Golemio API
     description: >-
         <p><img src="https://storage.golemio.cz/golemiocz/images/golemioapi_logos.png" alt="Logos" /></p>
         <p><b>Toto je dokumentace REST API projektu pražské datové platformy Golemio.</b></p>
-        <p>Veškeré dotazy prosím směřujte na [golemio@operatorict.cz](mailto:golemio@operatorict.cz?subject=golemioapiv1)</p>
-        <p>Dokumentace je v anglickém jazyce. Více informací o projektu naleznete na [www.golemio.cz](https://www.golemio.cz/).</p>
+        <p>Veškeré dotazy prosím směřujte na <a href="mailto:golemio@operatorict.cz?subject=golemioapi">golemio@operatorict.cz</a>.</p>
+        <p>Dokumentace je v anglickém jazyce. Více informací o projektu naleznete na <a href="https://www.golemio.cz/">www.golemio.cz</a>.</p>
+
         <H1>Description</H1>
         <p><b>This is documentation of RESTful API of Golemio Prague Data Plaform project.</b></p>
-        <p>Support is avalailable via <a href="mailto:golemio@operatorict.cz?subject=golemioapiv1">golemio@operatorict.cz</p>
+        <p>Support is avalailable via <a href="mailto:golemio@operatorict.cz?subject=golemioapi">golemio@operatorict.cz</a></p>
         <p>More about project Golemio at <a href="https://www.golemio.cz/">www.golemio.cz</a>.</p>
-        <H1>Versions</H1>
-        <p>v0.1 (current)</p>
+
+        <H2>Golemio API documentation:</H2>
+
+        <li><a href="https://api.golemio.cz/v2/docs/openapi/">Main Golemio API</a></li>
+        <li><a href="https://api.golemio.cz/v2/docs/public-openapi/">Open Data Golemio API</a></li>
+        <li><a href="https://api.golemio.cz/v2/pid/docs/openapi/">Public Transport Golemio Output Gateway API</a></li>
+        <li><a href="https://api.golemio.cz/v2/pid/input/docs/openapi/">Public Transport Golemio Input Gateway API</a></li>
+
         <H1>General info</H1>
         <H2>Authorization</H2>
         <p>Generate your own token at <a href="https://api.golemio.cz/api-keys">api.golemio.cz/api-keys</a>.</p>

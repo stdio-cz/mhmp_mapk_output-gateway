@@ -5,6 +5,7 @@ export { exportingModuleRouter } from "@golemio/exporting-module/dist/output-gat
 export { fcdRouter } from "@golemio/fcd/dist/output-gateway";
 export { gardensRouter } from "@golemio/gardens/dist/output-gateway";
 export { medicalInstitutionsRouter } from "@golemio/medical-institutions/dist/output-gateway";
+export { microclimateRouter } from "@golemio/microclimate/dist/output-gateway";
 export { municipalAuthoritiesRouter } from "@golemio/municipal-authorities/dist/output-gateway";
 export { parkingZonesRouter } from "@golemio/parking-zones/dist/output-gateway";
 export { playgroundsRouter } from "@golemio/playgrounds/dist/output-gateway";

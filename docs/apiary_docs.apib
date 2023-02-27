@@ -8,6 +8,11 @@ FORMAT: 1A
 
 **⚠️ Warning! As of November 1, 2022, the API documentation is being migrated to the new Swagger UI. Links to the current documentation of individual endpoints can always be found under the given category.**
 
+> Swagger UI dokumentace:
+> - [Main Golemio Output Gateway API](https://api.golemio.cz/v2/docs/openapi/)
+> - [Open Data Golemio Output Gateway API](https://api.golemio.cz/v2/docs/public-openapi/)
+> - [Public Transport Golemio Output Gateway API](https://api.golemio.cz/v2/pid/docs/openapi/)
+
 Toto je dokumentace REST API projektu pražské datové platformy Golemio.
 
 Veškeré dotazy prosím směřujte na [golemio@operatorict.cz](mailto:golemio@operatorict.cz?subject=golemioapiv1)
@@ -98,87 +103,9 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 # Group Air Quality 🌦
 
-## Air Quality Stations CHMI [/airqualitystations]
+**Air Quality Stations CHMI [/airqualitystations]**
 
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Air Quality CHMI Stations [GET /airqualitystations/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Air Quality Station)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Air Quality Stations CHMI History [GET /airqualitystations/history/{?from,to,limit,offset,sensorId}]
-
-+ Parameters
-
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-    + sensorId: `12345` (optional, string) - Limits data measured up by sensor with this id
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Air Quality Station History)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Air Quality Index Types [GET /airqualitystations/indextypes]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Air Quality Index Type)
-
-### GET Air Quality Component Types [GET /airqualitystations/componenttypes]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Air Quality Component Type)
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/Air%20Quality%20%F0%9F%8C%A6)
 
 ## Meteosensors TSK [/meteosensors]
 
@@ -238,165 +165,9 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 # Group Parking 🅿️
 
-## Parking Spaces [/parking]
+**Parking Spaces [/parking]**
 
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-#### Parking categories
-
-&nbsp;
-
-**_Parking zones_**
-| Category | Category description (cs) | Category description (en) |
-| - | - | - |
-| zone_residential| rezidentní zóna (modrá) | residential area (blue) |
-| zone_visitors| návštěvnická zóna area (oranžová) | visitor area (orange) |
-| zone_mixed| smížená zóna area (fialová) | mixed area (purple) |
-| zone_other| iné | other |
-
-**_Parking lots_**
-| Category | Category description (cs) | Category description (en) |
-| - | - | - |
-| park_and_ride | P+R parkoviště | P+R parking |
-| park_paid_private | placené parkoviště | paid private parking |
-
-### GET All Parking Spaces [GET /parking/{?latlng,range,source,sourceId,category,limit,offset}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + source: `korid` (optional, string) - Filter by data provider.
-    + sourceId: `1` (optional, string) - Filter by parking group id. Unique per data provider.
-    + category: `park_and_ride` (optional, array) - Filter by parking type. Use with square brackets `category[]`
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Polygon)
-                + properties (Parking Space)
-
-+ Response 403 (application/json; charset=utf-8)
-
-    + Attributes (403 Error)
-
-### GET Parking Space [GET /parking/{id}]
-
-+ Parameters
-
-    + id: `korid-20` (string, required) - Id of parking location.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Polygon)
-        + properties (Parking Space)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-
-    + Attributes (403 Error)
-
-## Parking Spaces Measurements [/parking/measurements]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Parking Spaces Measurements [GET /parking/measurements{?sourceId,from,to,limit,offset,source}]
-
-+ Parameters
-
-    + source: `korid` (optional, string) - Filter by data provider.
-    + sourceId: `1` (optional, string) - Filter by parking group id. Unique per data provider.
-    + from: `2021-02-26T12:01:00.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime.
-    + to: `2021-02-26T12:03:00.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime.
-    + limit: 10 (optional, number) - Limits number of retrieved items.
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Parking Measurement)
-
-+ Response 403 (application/json; charset=utf-8)
-
-    + Attributes (403 Error)
-
-## Parking Spaces Tariffs [/parking/tariffs]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-Parking tariffs endpoint follows [Datex II](https://docs.datex2.eu/) specification.
-
-### GET All Parking Spaces Tariffs [GET /parking/tariffs/{?source}]
-
-+ Parameters
-
-    + source: `korid` (optional, string) - Filter by data provider.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Parking Space Tariff)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-
-    + Attributes (403 Error)
-
-### GET Parking Space Tariff [GET /parking/tariffs/{tariffId}]
-
-+ Parameters
-
-    + tariffId: `b184865e-5a5e-5465-abc1-4fab6bc56a77` (string, required) - Id of parking tariff.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Parking Space Tariff)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-
-    + Attributes (403 Error)
-
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%F0%9F%85%BF%EF%B8%8F%20Parking)
 
 ## Parking Lots [/parkings]
 
@@ -567,380 +338,25 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 
 # Group Public Space 🏡
 
-## Gardens [/gardens]
+**Gardens [/gardens]**
 
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%F0%9F%8C%B3%20Gardens)
 
-### GET All Gardens [GET /gardens/{?latlng,range,districts,limit,offset,updatedSince}]
+**Medical Institutions [/medicalinstitutions]**
 
-+ Parameters
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%F0%9F%8F%A5%20Medical%20Institutions)
 
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
+**Municipal Authorities [/municipalauthorities]**
 
-+ Request (application/json; charset=utf-8)
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%F0%9F%8F%9B%20Municipal%20Authorities)
 
-    + Headers
+**Municipal Police Stations [/municipalpolicestations]**
 
-            x-access-token: YOUR_ACCESS_TOKEN
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%F0%9F%91%AE%20Municipal%20Police%20Stations)
 
-+ Response 200 (application/json; charset=utf-8)
+**Playgrounds [/playgrounds]**
 
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Garden)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Garden [GET /gardens/{id}]
-
-+ Parameters
-
-    + id: `frantiskanska-zahrada` (string) - Identifier of the garden.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Garden)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET All Gardens Properties [GET /gardens/properties]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Garden Property)
-
-## Medical Institutions [/medicalinstitutions]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Medical Institutions [GET /medicalinstitutions/{?latlng,range,districts,group,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
-    + group: `pharmacies` (optional, enum[string]) - Filter by group of types of the medical institution.
-        + Members
-            + `pharmacies`
-            + `health_care`
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Medical Institution)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Medical Institution [GET /medicalinstitutions/{id}]
-
-+ Parameters
-
-    + id: `2526713200064203-fakultni-nemocnice-v-motole` (string) - Identifier of the medical institution.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Medical Institution)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET All Medical Institution Types [GET /medicalinstitutions/types]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Body
-
-            {
-                "pharmacies": [
-                    "Nemocniční lékárna s odbornými pracovišti",
-                    "Lékárna",
-                    "Lékárna s odbornými pracovišti",
-                    "Výdejna",
-                    "Vojenská lékárna",
-                    "Vojenská lékárna s OOVL",
-                    "Nemocniční lékárna",
-                    "Lékárna s odbornými pracovišti s OOVL",
-                    "Nemocniční lékárna s OOVL",
-                    "Nemocniční lékárna s odbor. pracovišti s OOVL",
-                    "Odloučené oddělení výdeje léčivých přípravků",
-                    "Lékárna s OOVL",
-                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení",
-                    "Lékárna s odborným pracovištěm, která zásobuje lůžková zdravotnická zařízení s OOVL",
-                    "Lékárna zásobujicí zařízení ústavní péče",
-                    "Lékárna zásobujicí zařízení ústavní péče s OOVL"
-                ],
-                "health_care": [
-                    "Fakultní nemocnice",
-                    "Nemocnice",
-                    "Ostatní ambulantní zařízení",
-                    "Ostatní zdravotnická zařízení",
-                    "Zdravotní záchranná služba",
-                    "Zdravotnické středisko"
-                ]
-            }
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Municipal Authorities [/municipalauthorities]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Municipal Authorities [GET /municipalauthorities/{?latlng,range,districts,type,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
-    + type: `municipality` (optional, enum[string]) - Filter by group of types of the municipal authorities.
-        + Members
-            + `municipality`
-            + `city-hall`
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Municipal Authority)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Municipal Authority [GET /municipalauthorities/{id}]
-
-+ Parameters
-
-    + id: `urad-mestske-casti-praha-10` (string) - Identifier of the municipality.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Municipal Authority)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET All Municipal Authority Waiting Queues [GET /municipalauthorities/{id}/queues]
-
-+ Parameters
-
-    + id: `skoduv-palac` (string) - Identifier of the municipality.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Municipal Authority Queues)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Municipal Police Stations [/municipalpolicestations]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Municipal Police Stations [GET /municipalpolicestations/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Municipal Police Station)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Municipal Police Station [GET /municipalpolicestations/{id}]
-
-+ Parameters
-
-    + id: 72 (number) - Identifier of the police station.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Municipal Police Station)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Playgrounds [/playgrounds]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Playgrounds [GET /playgrounds/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Playground)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Playground [GET /playgrounds/{id}]
-
-+ Parameters
-
-    + id: 72 (number) - Identifier of the playground.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Playground)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET All Playgrounds Properties [GET /playgrounds/properties]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Playground Property)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%F0%9F%8F%B8%20Playgrounds)
 
 ## Prague City Districts [/citydistricts]
 
@@ -1000,7 +416,9 @@ GeoJSON format of all polygons for on-street parking zones. Tariffs for each zon
 
 ## Public Toilets [/publictoilets]
 
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+![golemioapi-deprecated-badge](https://img.shields.io/badge/-Deprecated-red)
+
+This endpoint is now deprecated.
 
 ### GET All Public Toilets [GET /publictoilets/{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -1189,7 +607,9 @@ API documentation was moved to [api.golemio.cz/v2/pid/docs/openapi/](https://api
 
 ## Bicycle Parkings [/bicycleparkings]
 
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+![golemioapi-deprecated-badge](https://img.shields.io/badge/-Deprecated-red)
+
+This endpoint is now deprecated.
 
 ### GET All Bicycle Parkings [GET /bicycleparkings/{?latlng,range,limit,offset,updatedSince}]
 
@@ -1245,102 +665,13 @@ API documentation was moved to [api.golemio.cz/v2/pid/docs/openapi/](https://api
 
 ![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
 
-| Vendor | Vendor id prefix | Measurement time aggregation | Temperature availability |
-| - | - | - | - |
-| Camea | `camea-` | 5 minutes | available |
-| EcoCounter | `ecoCounter-` | 15 minutes | not available |
-
-⚠️ Measurements of vendor Camea are every day at 5:00am (UTC) validated and recalculated and can change then.
-
-### GET All Bicycle Counters [GET /bicyclecounters/{?latlng,range,limit,offset}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Bicycle Counter)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-+ Response 400
-    + Attributes (Error)
-
-### GET Bicycle Counters Detections [GET /bicyclecounters/detections{?from,to,id,aggregate,limit,offset,id}]
-
-+ Parameters
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-    + aggregate: `true` (optional, boolean) - sum aggregated by directions_id is returned
-    + id: `camea-BC_ZA-BO` (array[string]) - direction ids
-
-
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Bicycle Counter Detections)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-+ Response 400
-    + Attributes (Error)
-
-
-### GET Bicycle Counters Temperatures [GET /bicyclecounters/temperatures{?from,to,id,aggregate,limit,offset,id}]
-
-+ Parameters
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-    + aggregate: `true` (optional, boolean) -  average aggregated by locations_id is returned
-    + id: `camea-BC_ZA-KLBO` (array[string]) - location ids
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-     + (Bicycle Counter Temperatures)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-+ Response 400
-    + Attributes (Error)
+https://api.golemio.cz/v2/docs/public-openapi/#/Bicycle%20Counter
 
 ## Traffic Cameras [/trafficcameras]
 
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+![golemioapi-deprecated-badge](https://img.shields.io/badge/-Deprecated-red)
+
+This endpoint is now deprecated.
 
 ### GET All Traffic Cameras [GET /trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
 
@@ -1396,296 +727,13 @@ API documentation was moved to [api.golemio.cz/v2/pid/docs/openapi/](https://api
 
 # Group Waste ♻️
 
-## Sorted Waste Stations [/sortedwastestations/]
+**Sorted Waste Stations [/sortedwastestations/]**
 
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%E2%99%BB%EF%B8%8F%20Waste%20Collection)
 
-💡 About 400 containers are equiped with IoT sensors that measure their fullness. Use `?onlyMonitored` parameter to retrieve only these monitored containers.
-More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu).
+**Waste Collection Yards [/wastecollectionyards]**
 
-**Station accessibility**
-
-| Enum value | Description (cs) | Description (en) |
-| - | - | - |
-| 1 | volně | accessible |
-| 2 | obyvatelům domu | only for house residents |
-| 3 | neznámá dostupnost | unknown |
-
-**Trash type**
-| Enum value | Description (cs) | Description (en) |
-| - | - | - |
-| 1 | Barevné sklo | Tinted glass |
-| 2 | Elektrozařízení | Electric waste |
-| 3 | Kovy | Metals |
-| 4 | Nápojové kartóny | Beverage cartons |
-| 5 | Papír | Paper |
-| 6 | Plast | Plastics |
-| 7 | Čiré sklo | Clear glass |
-| 8 | Textil | Textiles |
-
-**Container types**
-
-| Values |
-| - |
-| 1100 NPU Okřínek SV |
-| 1100 mini H SV |
-| 1100 normální HV |
-| 120 normální HV |
-| 1500 M 1,5 SV |
-| 2000 NPU Okřínek SV |
-| 2150 MEVA SV |
-| 240 normální HV |
-| 2500 Reflex SV |
-| 3000 Podzemní SV |
-| 3200 Reflex SV |
-| 3200 Schaffer SV |
-| 3300 GFA DUO SV |
-| 3350 Atomium Reflex SV |
-| 4000 Podzemní SV |
-
-**Cleaning Frequency**
-
-| Value | 1st digit - period duration | 2nd digit - frequency | Description |
-| - | - | - | - |
-| `13` | `1` | `3` | 3 times per 1 week |
-| `61` | `6` | `1` | Once per 6 weeks |
-
-### GET All Sorted Waste Stations [GET /sortedwastestations/{?latlng,range,districts,accessibility,limit,offset,onlyMonitored,id,knskoId}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, string) - Filter by Prague city districts (slug) separated by comma.
-    + accessibility: 1 (optional, string) - Filter by accessibility id.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + onlyMonitored: true (optional, boolean) - Filter only stations with at least one "smart" container with sensor for measurements and pickups
-    + id: `0a292077-4dbd-501a-ac60-d11c80e889c5` (optional, string) - Main identifier of the station.
-    + knskoId: `15288` (optional, string) - KNSKO identifier of the station.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Sorted Waste Station)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-## Sorted Waste Fullness Sensors Data [/sortedwastestations]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-💡 About 400 containers are equipped with IoT sensors that measure their fullness. Use these endpoints to get measurements from these devices.
-More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu).
-
-### GET All Sorted Waste Measurements [GET /sortedwastestations/measurements/{?containerId,limit,offset,from,to,knskoId}]
-
-+ Parameters
-
-    + containerId: `1a90b0e0-fabb-5e2e-8cb5-101bee0353dc` (optional, string) - Lists only measurements from container with this ID
-    + knskoId: `19196` (optional, string) - Lists only measurements from container with this KNSKO ID.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Sorted Waste Measurement)
-
-### GET All Sorted Waste Picks [GET /sortedwastestations/picks/{?containerId,limit,offset,from,to,knskoId}]
-
-+ Parameters
-
-    + containerId: `1a90b0e0-fabb-5e2e-8cb5-101bee0353dc` (optional, string) - Lists only picks from container with this ID
-    + knskoId: `19196` (optional, string) - Lists only picks from container with this KNSKO ID.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2019-05-16T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2019-05-18T04:27:58.000Z` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Sorted Waste Pick)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET All Sorted Waste Pick Days [GET /sortedwastestations/pickdays/{?sensoneoCode,knskoId}]
-
-+ Parameters
-
-    + sensoneoCode: `0001/ 002C01583` (optional, string) - Lists only picks from container with this sensor ID
-    + knskoId: `15292` (optional, string) - Lists only picks from container with this ID.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Sorted Waste PickDay)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-## Waste Collection Yards [/wastecollectionyards]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Waste Collection Yards [GET /wastecollectionyards/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Waste Collection Yard)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Waste Collection Yard [GET /wastecollectionyards/{id}]
-
-+ Parameters
-
-    + id: `sberny-dvur-hlavniho-mesta-prahy-probostska` (string) - Identifier of the Waste Collection Yard.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Waste Collection Yard)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET All Waste Collection Yards Properties [GET /wastecollectionyards/properties]
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Waste Collection Yard Property)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-
-
-
-# Group Pedestrians 🚶
-
-## Locations and Measurements of movement  [/pedestrians]
-
-### GET locations and directions [GET /pedestrians/locations/{?locationId,locationName,limit,offset}]
-
-+ Parameters
-
-    + locationId: 2 (optional, number) - Lists only locations with this ID
-    + locationName: `Rytířská 12` (optional, string) - Lists only locations with this NAME.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Pedestrians Locations)
-
-
-+ Response 404 (application/json; charset=utf-8)
-
-
-
-### GET measurements of pedestrian traffic [GET /pedestrians/measurements/{?locationId,directionId,limit,offset,from,to}]
-
-+ Parameters
-
-    + locationId: 0 (optional, number) - Lists only measurements for this location
-    + directionId: 4 (optional, number) - Lists only measurements for this direction
-    + limit: 1 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + from: `2020-09-01 01:15:00.000` (optional, string) - Date in ISO8601, limits data measured from this datetime
-    + to: `2020-10-22 01:15:00.000` (optional, string) - Date in ISO8601, limits data measured up until this datetime
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (array)
-        + (Pedestrians Measurements)
-
-
-+ Response 404 (application/json; charset=utf-8)
-
+API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/%E2%99%BB%EF%B8%8F%20Waste%20Collection%20Yards)
 
 
 
@@ -1745,62 +793,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + address_region: `Holešovice` (string)
 + address_country: `Česko` (string)
 
-## Air Quality Station (object)
-
-+ id: ACHOA (string, required)
-+ district: `praha-11` (string)
-+ measurement
-  + AQ_hourly_index: 3 (number)
-  + components (array[Air Quality Station Component])
-+ name: `Praha 4-Chodov` (string, required)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-
-## Air Quality Station Component (object)
-
-+ averaged_time
-  + averaged_hours: 1 (number)
-  + value: 10.7 (number),
-+ type: NO2 (string)
-
-## Air Quality Station History (object)
-
-+ id: ACHOA (string, required)
-+ measurement
-  + AQ_hourly_index: 3 (number)
-  + components (array[Air Quality Station Component])
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-
-## Bicycle Counter (object)
-
-+ id: `camea-BC_AT-STLA` (string, required)
-+ name: `Altetická` (string, required)
-+ route: `A140` (string)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ directions (array[Bicycle Counter Direction])
-
-## Bicycle Counter Detections (object)
-
-+ id: `camea-BC_ZA-BO` (string) - direcrion_id
-+ value: 3 (number)
-+ value_pedestrians: 7 (number)
-+ locations_id: `camea-BC_PN-VYBR` (string)
-+ measured_from: `2019-05-18T07:38:37.000Z` (string)
-+ measured_to: `2019-05-18T07:38:37.000Z` (string)
-+ measurement_count: `1` (number)
-
-## Bicycle Counter Temperatures (object)
-
-+ id: `camea-BC_AT-STLA` (string) - location_id
-+ value: 3 (number)
-+ measured_from: `2019-05-18T07:38:37.000Z` (string)
-+ measured_to: `2019-05-18T07:38:37.000Z` (string)
-+ measurement_count: `1` (number)
-
-## Bicycle Counter Direction (object)
-
-+ id: `BC_AT_ST` (string, required) - direction ID
-+ name: `Strahov` (string) - direction name
-
 ## Bicycle Parking (object)
 
 + district: `praha-4` (string)
@@ -1820,56 +812,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + slug: `praha-brezineves` (string, required)
 + updated_at: `2019-05-18T07:38:37.000Z` (string)
 
-## Garden (object)
-
-+ address (Address)
-+ description: `Mozartova busta v zahradě legendární usedlosti stojí na vyvýšeném, trochu zvláštním, místě, jakoby stranou pomyslné hlavní osy podlouhlého pozemku. Mistr, byť pouze v kamenné podobě, tak má dokonalý přehled o dění v zahradě, ale současně překrásný výhled na stráně vrchu Mrázovka.` (string)
-+ district: `praha-5` (string)
-+ id: `betramka` (string, required)
-+ image (Garden Image)
-+ name: `Betramka` (string, required)
-+ properties (array[Garden Property])
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ url: `http://www.praha.eu/jnp/cz/co_delat_v_praze/parky/bertramka/bertramka_text.html` (string)
-
-## Garden Image (object)
-
-+ url: `http://www.praha.eu/public/5c/7c/31/96820_4_bertramka_08.jpg` (string)
-
-## Garden Property (object)
-
-+ id: `doba` (string, required)
-+ description: `Otevírací doba` (string, optional)
-+ value: `Celoročně duben až říjen 9-18 hod., listopad až březen 9:30-16 hod.` (string)
-
-## Medical Institution (object)
-
-+ address (Address)
-+ district: `praha-4` (string, nullable)
-+ email (array[string])
-+ id: `04995142000-benu-lekarna` (string, required)
-+ institution_code: `04995142000` (string, required)
-+ name: `BENU Lékárna` (string, required)
-+ opening_hours (array[Opening Hours])
-+ pharmacy_code: `04996100` (string)
-+ telephone (array[string])
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ type (Medical Institution Type)
-+ web (array[string])
-
-## Medical Institution Address (object)
-
-+ city: `Praha 4` (string, required)
-+ formatted: `Olbrachtova 2006/9, 140 00 Praha 4` (string, required)
-+ street: `Olbrachtova 2006/9` (string, required)
-+ zip: `140 00` (string, required)
-
-## Medical Institution Type (object)
-
-+ description: `Lékárna` (string)
-+ group: `pharmacies` (string)
-+ id: `Z` (string, required)
-
 ## Meteosensor (object)
 
 + air_temperature: 18.95 (number)
@@ -1882,53 +824,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + wind_direction: 230 (number)
 + wind_speed: 2.08 (number)
 + district: `praha-2` (string)
-
-## Municipal Authority (object)
-
-+ image (Municipal Authority Image)
-+ email (array[string])
-+ telephone (array[string])
-+ web (array[string])
-+ address (Address)
-+ agendas (array[Municipal Authority Agenda])
-+ district: `praha-1` (string)
-+ id: `magistrat-hlavniho-mesta-prahy` (string, required)
-+ name: `Magistrát hlavního města Prahy` (string, required)
-+ official_board: `http://www.praha.eu/jnp/cz/o_meste/magistrat/deska/index.html` (string)
-+ opening_hours (array[Opening Hours])
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ type (Municipal Authority Type)
-
-## Municipal Authority Type (object)
-
-+ description: `Obecní úřad` (string)
-+ id: `municipality` (string, required)
-
-## Municipal Authority Image (object)
-
-+ mimetype: `image/png` (string)
-+ size: 714603 (number)
-+ url: https://www.mojepraha.eu/images/municipal-authorities/VJXPN4RVrTLnkih5.png (string)
-
-## Municipal Authority Agenda (object)
-
-+ keywords (array[string])
-+ description: `Pronájem bytových a nebytových prostor` (string)
-+ long_description (string)
-
-## Municipal Authority Queues (object)
-
-+ last_updated: `2019+04-30T09:56:00+02:00` (string, required)
-+ municipal_authority_id: `skoduv-palac` (string, required)
-+ served_activities (array[Municipal Authority Activities])
-+ updated_at: `2019-04-30T09:56:00+02:00` (string, required)
-+ title: `Monitoring odbavování klientů ve Škodově paláci` (string, required)
-
-## Municipal Authority Activities (object)
-
-+ activity: `OSV: CzechPoint` (string, required)
-+ number_of_person_in_queue: 0 (number, required)
-+ number_of_serving_counters: 5 (number, required)
 
 ## Municipal Library (object)
 
@@ -1956,15 +851,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + description: `Bezbariérový přístup pro vozíčkáře i rodiče s kočárky` (string, optional, nullable)
 + id: 3 (number, required)
 + name: `Bezbariérový přístup` (string, required)
-
-## Municipal Police Station (object)
-
-+ cadastral_area: `Staré Město` (string, required)
-+ id: `stare-mesto-lodecka-2` (string, required)
-+ note: `Přestupky` (string)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ district: `praha-1` (string)
-+ address (Address)
 
 ## Opening Hours (object)
 
@@ -2160,28 +1046,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + allowed_fuel_type: `electricity, petrol, lpg` (string, nullable)
 + charge: (array[Parking Space Tariff Charge])
 
-## Playground (object)
-
-+ image (Playground Image)
-+ content: `Popis: Asi 300 m od prodejny Lidl v Hornoměcholupské ulici se na okraji louky rozkládá první hřiště (43.A). Tvoří ho...` (string, required)
-+ id: 72 (number, required)
-+ name: `Hostivařský lesopark (východní část) - hřiště 43.B` (string, required)
-+ perex: `Trasa je vhodným polodenním rodinným výletem.` (string)
-+ properties (array[Playground Property])
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ url: `http://www.hristepraha.cz/hriste/mapa/hostivarsky-lesopark-vychodni-cast-hriste-43-b` (string, required)
-+ district: `praha-15` (string)
-+ address (Address)
-
-## Playground Image (object)
-
-+ url: `http://www.hristepraha.cz/images/img/2d73f6832f5ce39fc5987d27d9f4541fo.jpg` (string)
-
-## Playground Property (object)
-
-+ id: 6 (number, required)
-+ description: `WC na hřišti nebo v bezprostřední blízkosti` (string)
-
 ## Public Toilet (object)
 
 - id: 18 (number, required)
@@ -2190,31 +1054,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 - updated_at: `2019-05-18T07:38:37.000Z` (string)
 - district: `praha-13` (string)
 - address (Address)
-
-## Shared Bike (object)
-
-+ company (Shared Bike Company)
-+ estimated_trip_length_in_km: 41 (number)
-+ id: `homeport-0223` (string, required)
-+ in_rack: true (boolean)
-+ label (string, required)
-+ location_note (string, nullable)
-+ name: `0223` (string)
-+ res_url: `https://freebike.app.link?bikeId=0223&system=praha` (string, required)
-+ type (Shared Bike Type)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-
-## Shared Bike Company (object)
-
-+ email (string, nullable)
-+ name: `HOMEPORT` (string, required)
-+ phone (string, nullable)
-+ web: `prague.freebike.com` (string, required)
-
-## Shared Bike Type (object)
-
-+ description: `ebike` (string)
-+ id: 2 (number, required)
 
 ## Shared Car (object)
 
@@ -2243,98 +1082,6 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + description: `benzín` (string)
 + id: 1 (number, required)
 
-## Sorted Waste Station (object)
-
-+ accessibility (Sorted Waste Station Accessibility)
-+ containers (array[Sorted Waste Station Container])
-+ district: `praha-13` (string)
-+ id: `dd08a6a7-1241-568a-9b1b-f384d69c358a` (string, required)
-+ name: `Sběrný dvůr hl. m. Prahy – areál skládky Ďáblice` (string, required)
-+ station_number: `0001/ 001` (string)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ is_monitored: true (boolean, optional) - contains at least one container which is monitored with sensor
-+ knsko_id: 3497 (number)
-
-## Sorted Waste Station Accessibility (object)
-
-+ description: `Příjem odpadu` (string, required)
-+ id: 1 (number, required)
-
-## Sorted Waste Station Container (object)
-
-+ cleaning_frequency (Sorted Waste Station Container Cleaning Frequency)
-+ company (Sorted Waste Station Container Company)
-+ container_type: 3000 L Podzemní - SV (string)
-+ description (string)
-+ trash_type (Sorted Waste Station Container Trash Type)
-+ last_measurement (Sorted Waste Station Last Measurement, optional)
-+ last_pick (Sorted Waste Station Last Pick, optional)
-+ knsko_id: 15288 (number)
-+ container_id: `dc532519-f2bd-5ab2-b049-132bad684dab` (string, optional)
-+ sensor_code: `0006/ 016C00214` (string, optional)
-+ sensor_supplier: `sensoneo` (string, optional)
-+ sensor_id: `29790` (string, optional)
-+ updated_at: 1666667824020 (number)
-
-## Sorted Waste Station Container Cleaning Frequency (object)
-
-+ id: 21 (number)
-+ duration: `P2W` (string)
-+ frequency: 1 (number)
-
-## Sorted Waste Station Container Company (object)
-
-+ email (string)
-+ name (string)
-+ phone (string)
-+ web (string)
-
-## Sorted Waste Station Last Pick (object)
-
-+ pick_at_utc: `2019-07-09T09:00:37.000Z` (string)
-
-## Sorted Waste Station Last Measurement (object)
-
-+ measured_at_utc: `2019-08-27T14:00:32.000Z` (string)
-+ percent_calculated: 62 (number)
-+ prediction_utc: `2019-05-18T07:38:37.000Z` (string)
-
-## Sorted Waste Station Container Trash Type (object)
-
-+ description: `Čiré sklo` (string, required)
-+ id: 7 (number, required)
-
-## Sorted Waste Pick (object)
-
-+ id: `41fa5890-527a-5c5f-8fc3-2ecd6bd4a8fa` (string, required) - container id
-+ pick_minfilllevel: 30 (number)
-+ decrease: 20 (number)
-+ sensor_code: `0005/ 025C00155` (string, required)
-+ pick_at_utc: `2019-05-18T04:27:58.000Z` (string, required)
-+ percent_before: 61 (number)
-+ percent_now: 0 (number)
-+ event_driven: false (boolean)
-+ updated_at: `1666667824020` (string)
-
-## Sorted Waste PickDay (object)
-
-+ knsko_id: `15292` (number, required) - container id
-+ sensoneo_code: `0001/ 002C01583` (string, required) - sensor code
-+ generated_dates: `2021-01-28` (array, required) - list of pick dates
-
-## Sorted Waste Measurement (object)
-
-+ id: `41fa5890-527a-5c5f-8fc3-2ecd6bd4a8fa` (string, required) - container id
-+ sensor_code: `0009/ 157C00353` (string, required)
-+ percent_calculated: 67 (number, required)
-+ upturned: 0 (number)
-+ temperature: 15 (number)
-+ battery_status: 3.76 (number)
-+ measured_at_utc: `2019-05-17T15:11:27.000Z` (string, required)
-+ prediction_utc: `2019-05-18T07:38:37.000Z` (string) - vendor prediction of maximum fullness
-+ firealarm: 0 (number)
-+ updated_at: 1666667824020 (number)
-
 ## Traffic Camera (object)
 
 + image (Traffic Camera Image)
@@ -2351,73 +1098,3 @@ More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/proj
 + file_size: 20072 (number, required)
 + type: `image/jpeg` (string)
 + url: `http://www.tsk-praha.cz/cams/cam606748.jpg?1557229128000` (string, required)
-
-## Waste Collection Yard (object)
-
-+ properties (array[Waste Collection Yard Property])
-+ address (Address)
-+ contact: `236 04 00 11, 236 04 00 00` (string, required)
-+ id: `sberny-dvur-hlavniho-mesta-prahy-probostska` (string, required)
-+ name: `Sběrný dvůr hlavního města Prahy Proboštská` (string, required)
-+ operating_hours: `Po - Pá 8:30 - 18:00 hod., 8:30 - 17:00 hod. v zimním období, So 8:30 - 15:00 hod.` (string, required)
-+ operator: `KOMWAG, a.s.` (string, required)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ type: `SDHMP` (string, required)
-+ district: `praha-8` (string)
-
-## Waste Collection Yard Property (object)
-
-+ `description`: `Příjem odpadu` (string)
-+ `id`: `ODPADPRIJEM` (string)
-+ `value`: `objemný odpad (nábytek, zařízení domácnosti), kovy, dřevo, odpad z údržby zeleně, suť z bytových úprav, papír, sklo, plasty, nebezpečné odpady, pneumatiky, použitý textil, obuv a oděvy` (string)
-
-## Pedestrians Locations (object)
-
-+ id: `2` (string, required) - location id
-+ location_name: `Rytířská 12` (string, required)
-+ lat: `50.084781715549276` (string, required)
-+ lng: `14.422412102465428` (string, required)
-+ address: `Na Můstku 12` (string, required)
-+ city_district: `Praha 1` (string, required)
-+ tech: `kamera` (string, required)
-+ map_url: `https://storage.golemio.cz/intenzita-pesi-dopravy/2-map.png` (string, required)
-+ photo_url: `https://storage.golemio.cz/intenzita-pesi-dopravy/2.png` (string, required)
-+ measurement_start: `2020-09-02 12:00` (string, required)
-+ measurement_end: `2020-09-05 12:00` (string, nullable)
-+ directions (array[Pedestrians Directions])
-
-
-## Pedestrians Directions (object)
-
-+ id: `2` (string, required) - direction id
-+ name: `Můstek` (string, required)
-+ to: 1 (number, required)
-
-
-## Pedestrians Measurements (object)
-
-+ location_id: `1` (string, required)
-+ direction_id: `3` (string, required)
-+ value: `114` (string, required)
-+ quality: `1.00000000000000000000` (string, required)
-+ measured_from: `2020-08-21T17:30:00.000Z` (string, required)
-+ measured_to: `2020-08-21T17:45:00.000Z` (string, required)
-
-## Air Quality Index Type (object)
-
-+ id: `2` (number)
-+ index_code: `1B` (string)
-+ limit_gte: `0.34` (number)
-+ limit_lt: `0.67` (number)
-+ color: `00CC00` (string)
-+ color_text: `000000` (string)
-+ description_cs: `velmi dobrá až dobrá` (string)
-+ description_en: `very good to good` (string)
-
-## Air Quality Component Type (object)
-
-+ id: `2` (number)
-+ component_code: `NO2` (string)
-+ unit: `µg/m³` (string)
-+ description_cs: `velmi dobrá až dobrá` (string)
-+ description_en: `very good to good` (string)

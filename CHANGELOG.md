@@ -2,10 +2,19 @@
 
 ## [Unreleased]
 
+## [3.4.0] - 2023-02-27
+
+### Changed
+
+-   Update Node.js to v18.14.0, Express to v4.18.2 ([core#50](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/50))
+
+### Fixed
+
+-   Update apiary and openapi docs
+
 ## [3.3.1] - 2023-02-22
 
 -   No changelog
-
 
 ## [3.3.0] - 2023-02-13
 

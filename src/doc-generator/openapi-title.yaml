@@ -1,7 +1,7 @@
 openapi: 3.0.0
 
 info:
-    title: Golemio Output Gateway API
+    title: Golemio API
     description: >-
         <p><img src="https://storage.golemio.cz/golemiocz/images/golemioapi_logos.png" alt="Logos" /></p>
         <p><b>Toto je dokumentace REST API projektu pražské datové platformy Golemio.</b></p>
@@ -15,8 +15,8 @@ info:
 
         <H2>Golemio API documentation:</H2>
 
-        <li><a href="https://api.golemio.cz/v2/docs/openapi/">Main Golemio Output Gateway API</a></li>
-        <li><a href="https://api.golemio.cz/v2/docs/public-openapi/">Open Data Golemio Output Gateway API</a></li>
+        <li><a href="https://api.golemio.cz/v2/docs/openapi/">Main Golemio API</a></li>
+        <li><a href="https://api.golemio.cz/v2/docs/public-openapi/">Open Data Golemio API</a></li>
         <li><a href="https://api.golemio.cz/v2/pid/docs/openapi/">Public Transport Golemio Output Gateway API</a></li>
         <li><a href="https://api.golemio.cz/v2/pid/input/docs/openapi/">Public Transport Golemio Input Gateway API</a></li>
 

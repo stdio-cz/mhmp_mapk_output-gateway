@@ -17,7 +17,7 @@ info:
 
         <li><a href="https://api.golemio.cz/v2/docs/openapi/">Main Golemio API</a></li>
         <li><a href="https://api.golemio.cz/v2/docs/public-openapi/">Open Data Golemio API</a></li>
-        <li><a href="https://api.golemio.cz/v2/pid/docs/openapi/">Public Transport Golemio Output Gateway API</a></li>
+        <li><a href="https://api.golemio.cz/v2/pid/docs/openapi/">Public Transport Golemio API</a></li>
         <li><a href="https://api.golemio.cz/v2/pid/input/docs/openapi/">Public Transport Golemio Input Gateway API</a></li>
 
         <H1>General info</H1>

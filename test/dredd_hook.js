@@ -124,6 +124,11 @@ hooks.before(
     (transaction) => (transaction.skip = true)
 );
 
+// Skip all parking transactions until test data are fixed
+hooks.before("Parking 🅿️ > Parking Lots > GET All Parking Lots", (transaction) => (transaction.skip = true));
+hooks.before("Parking 🅿️ > Parking Lots > GET Parking Lots History", (transaction) => (transaction.skip = true));
+hooks.before("Parking 🅿️ > Parking Lots > GET Parking Lot", (transaction) => (transaction.skip = true));
+
 // Skip all public transport transactions
 hooks.before("Public Transport 🚋 > GTFS Services > GET GTFS Services", (transaction) => (transaction.skip = true));
 hooks.before("Public Transport 🚋 > GTFS Routes > GET All GTFS Routes", (transaction) => (transaction.skip = true));

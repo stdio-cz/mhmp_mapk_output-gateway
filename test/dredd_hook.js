@@ -77,31 +77,6 @@ hooks.before("Public Space 🏡 > Public Toilets > GET Public Toilet", (transact
     transaction.fullPath = transaction.fullPath.replace("72", storage["id"]);
 });
 
-hooks.before("Waste ♻️ > Sorted Waste Stations > GET All Sorted Waste Stations", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("sortedwastestations", "sortedwastestationspg");
-    transaction.fullPath = transaction.fullPath.replace("sortedwastestations", "sortedwastestationspg");
-});
-
-hooks.before("Waste ♻️ > Sorted Waste Stations > GET Sorted Waste Station", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("sortedwastestations", "sortedwastestationspg");
-    transaction.fullPath = transaction.fullPath.replace("sortedwastestations", "sortedwastestationspg");
-});
-
-hooks.before(
-    "Waste ♻️ > Sorted Waste Fullness Sensors Data > GET All Sorted Waste Measurements",
-    (transaction) => (transaction.skip = true)
-);
-
-hooks.before(
-    "Waste ♻️ > Sorted Waste Fullness Sensors Data > GET All Sorted Waste Picks",
-    (transaction) => (transaction.skip = true)
-);
-
-hooks.before(
-    "Waste ♻️ > Sorted Waste Fullness Sensors Data > GET All Sorted Waste Pick Days",
-    (transaction) => (transaction.skip = true)
-);
-
 hooks.before("Waste ♻️ > Waste Collection Yards > GET Waste Collection Yard", (transaction) => {
     transaction.request.uri = transaction.request.uri.replace(
         "sberny-dvur-hlavniho-mesta-prahy-probostska",

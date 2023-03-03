@@ -32,7 +32,6 @@ import {
     playgroundsRouter,
     sharedBikesGbfsRouter,
     sharedBikesRouter,
-    sortedWasteRouterPg,
     trafficRouter,
     wasteCollectionLegacyRouter,
     wasteCollectionYardsRouter,
@@ -222,9 +221,8 @@ export default class App extends BaseApp {
         this.express.use("/municipalauthorities", municipalAuthoritiesRouter);
         this.express.use("/municipallibraries", municipalLibrariesRouter);
         this.express.use("/parkingzones", parkingZonesRouter);
-        this.express.use("/sortedwastestationspg", sortedWasteRouterPg);
         this.express.use("/gardens", gardensRouter);
-        this.express.use("/wastecollectionlegacy", wasteCollectionLegacyRouter);
+        this.express.use("/sortedwastestations", wasteCollectionLegacyRouter);
         this.express.use("/wastecollectionyards", wasteCollectionYardsRouter);
         this.express.use("/playgrounds", playgroundsRouter);
         this.express.use("/sharedbikes", sharedBikesRouter);

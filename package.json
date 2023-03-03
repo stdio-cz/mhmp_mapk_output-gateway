@@ -33,8 +33,8 @@
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@golemio/cli": "1.4.2-dev.781736252",
-        "@golemio/eslint-config": "1.1.1-dev.781716625",
+        "@golemio/cli": "1.4.2",
+        "@golemio/eslint-config": "1.1.0",
         "@types/chai": "^4.1.7",
         "@types/chai-as-promised": "^7.1.0",
         "@types/compression": "^1.7.1",
@@ -86,7 +86,6 @@
         "@golemio/rush-hour-aggregation": "1.1.2-dev.789821886",
         "@golemio/shared-bikes": "2.1.2-dev.789822060",
         "@golemio/shared-cars": "1.1.2-dev.789822228",
-        "@golemio/sorted-waste-stations": "1.2.2-dev.789822456",
         "@golemio/traffic-cameras": "1.1.2-dev.789822586",
         "@golemio/waste-collection": "1.1.3-dev.789825016",
         "@golemio/waste-collection-yards": "1.2.2-dev.789830588",

@@ -1,5 +1,3 @@
-import { blacklistedModules } from "./blacklistConfig";
-
 const fg = require("fast-glob");
 const fs = require("fs");
 const { protectedTags } = require("./tagsConfig");
@@ -44,9 +42,8 @@ export class MergeConfigPreparator {
     public makeConfigs = async (): Promise<string | -1> => {
         // Get path for each module openapi.yaml
         const modulesDocsPathEntries = await fg(["node_modules/@golemio/**/docs/openapi.yaml"], { dot: true });
-        const modulesDocsPathEntriesFiltered = modulesDocsPathEntries.filter((el: string) => !blacklistedModules.includes(el));
 
-        modulesDocsPathEntriesFiltered.forEach((element: string) => {
+        modulesDocsPathEntries.forEach((element: string) => {
             this.mergeConfig.inputs.push({
                 inputFile: `../../../${element}`,
             });

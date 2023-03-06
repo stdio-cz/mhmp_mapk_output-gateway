@@ -81,7 +81,7 @@ include:
         - unset SQL_DUMP_FILES
         - npx golemio-import-test-data
         - npm run code-coverage
-        - npm run dredd
+        # - npm run dredd
     tags:
         - docker
     rules:

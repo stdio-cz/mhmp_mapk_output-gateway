@@ -52,8 +52,7 @@ include:
     script:
         - npm install --ignore-scripts --progress=false
         # Audit production dependencies for HIGH vulnerabilities
-        # TODO temporarily switch off audit
-        - npm audit --omit dev --audit-level none
+        - npm audit --omit dev --audit-level high
         - npm run lint
         - npm run build-apidocs
         - npm run build
@@ -100,7 +99,7 @@ run_tests:
     extends: .run_tests
     image: node:18.14.0-alpine
 
-run_tests-node-next:
-    extends: .run_tests
-    image: node:19.6.0-alpine
-    allow_failure: true
+# run_tests-node-next:
+#     extends: .run_tests
+#     image: node:19.6.0-alpine
+#     allow_failure: true

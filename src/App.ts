@@ -21,6 +21,7 @@ import {
     fcdRouter,
     gardensRouter,
     medicalInstitutionsRouter,
+    microclimateRouter,
     municipalAuthoritiesRouter,
     municipalLibrariesRouter,
     municipalPoliceStationsRouter,
@@ -232,6 +233,7 @@ export default class App extends BaseApp {
         this.express.use("/traffic", trafficRouter);
         this.express.use("/fcd", fcdRouter);
         this.express.use("/municipalpolicestations", municipalPoliceStationsRouter);
+        this.express.use("/microclimate", microclimateRouter);
 
         // ApiDocs
         this.express.use(

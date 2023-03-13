@@ -10,7 +10,7 @@ const protectedTags = [
 
 export { protectedTags };
 
-//  ALL Actual tags at 24/02/23:
+//  ALL Actual tags at 27/02/23:
 /*
     "tags": [
       {
@@ -74,6 +74,10 @@ export { protectedTags };
       {
         "name": "♻️ Waste Collection Yards",
         "description": "💡 Locations and Description of Waste Collection Yards"
-      }
+      },
+      {
+          "name": "🌡️ Microclimate",
+          "description": "💡 Microclimate Sensors Info"
+        }
     ]
   */

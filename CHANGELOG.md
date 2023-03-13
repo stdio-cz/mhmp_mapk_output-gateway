@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [3.4.2] - 2023-03-13
+
+### Added
+
+-   Microclimate API ([microclimate#2](https://gitlab.com/operator-ict/golemio/code/modules/microclimate/-/issues/2))
+
 ## [3.4.1] - 2023-03-06
 
 ### Removed

@@ -1,4 +1,3 @@
-import { SharedCars } from "@golemio/shared-cars/dist/schema-definitions";
 import { Meteosensors } from "@golemio/meteosensors/dist/schema-definitions";
 import { TrafficCameras } from "@golemio/traffic-cameras/dist/schema-definitions";
 import { PublicToilets } from "@golemio/public-toilets/dist/schema-definitions";
@@ -6,12 +5,6 @@ import { BicycleParkings } from "@golemio/bicycle-parkings/dist/schema-definitio
 
 // Configuration of the routes to be dynamically created by RouterBuilder
 const generalRoutes = [
-    {
-        collectionName: SharedCars.mongoCollectionName,
-        expire: 30000,
-        name: SharedCars.name,
-        schema: SharedCars.outputMongooseSchemaObject,
-    },
     {
         collectionName: Meteosensors.mongoCollectionName,
         name: Meteosensors.name,

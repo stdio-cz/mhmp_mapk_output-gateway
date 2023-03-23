@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+-   Add shared cars router as a replacement of deprecated shared-cars module ([shared-bikes#14](https://gitlab.com/operator-ict/golemio/code/modules/shared-bikes/-/issues/14))
+
 ## [3.4.4] - 2023-03-22
 
 -   No changelog

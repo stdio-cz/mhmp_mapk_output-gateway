@@ -1,6 +1,6 @@
 {
     "name": "@golemio/output-gateway",
-    "version": "3.4.4",
+    "version": "3.4.5",
     "description": "Output gateway for Golemio data platform",
     "main": "index.js",
     "scripts": {
@@ -84,10 +84,10 @@
         "@golemio/playgrounds": "1.1.2-dev.789827119",
         "@golemio/public-toilets": "1.1.2-dev.789821540",
         "@golemio/rush-hour-aggregation": "1.1.2-dev.789821886",
-        "@golemio/shared-bikes": "2.1.6-dev.815526023",
+        "@golemio/shared-bikes": "2.1.7-dev.818814668",
         "@golemio/shared-cars": "1.1.2-dev.789822228",
         "@golemio/traffic-cameras": "1.1.2-dev.789822586",
-        "@golemio/waste-collection": "1.1.8-dev.814256544",
+        "@golemio/waste-collection": "1.1.10-dev.818814869",
         "@golemio/waste-collection-yards": "1.2.2-dev.789830588",
         "compression": "^1.7.4",
         "dotenv": "^6.1.0",

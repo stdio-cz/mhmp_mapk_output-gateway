@@ -9,7 +9,11 @@ export { microclimateRouter } from "@golemio/microclimate/dist/output-gateway";
 export { municipalAuthoritiesRouter } from "@golemio/municipal-authorities/dist/output-gateway";
 export { parkingZonesRouter } from "@golemio/parking-zones/dist/output-gateway";
 export { playgroundsRouter } from "@golemio/playgrounds/dist/output-gateway";
-export { sharedBikesRouter, gbfsRouter as sharedBikesGbfsRouter } from "@golemio/shared-bikes/dist/output-gateway";
+export {
+    sharedBikesRouter,
+    gbfsRouter as sharedBikesGbfsRouter,
+    sharedCarsRouter,
+} from "@golemio/shared-bikes/dist/output-gateway";
 export { parkingsRouter, tskParkingLotsLegacyRouter } from "@golemio/parkings/dist/output-gateway";
 export { pedestriansRouter } from "@golemio/flow/dist/output-gateway";
 export { trafficRouter } from "@golemio/ndic/dist/output-gateway";

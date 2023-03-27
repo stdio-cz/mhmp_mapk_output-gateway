@@ -14,10 +14,10 @@ export { protectedTags };
 /*
     "tags": [
       {
-        "name": "Air Quality 🌦"
+        "name": "Bicycle Counter"
       },
       {
-        "name": "Bicycle Counter"
+        "name": "Air Quality 🌦"
       },
       {
         "name": "📤 Exporting Module",
@@ -38,6 +38,10 @@ export { protectedTags };
       {
         "name": "🏥 Medical Institutions",
         "description": "💡 Locations and Description of Medical Institutions"
+      },
+      {
+        "name": "🌡️ Microclimate",
+        "description": "💡 Microclimate Sensors Info"
       },
       {
         "name": "🏛 Municipal Authorities",
@@ -68,16 +72,16 @@ export { protectedTags };
         "description": "💡 General Bikeshare Feed Specification"
       },
       {
+        "name": "🚘 Shared Cars",
+        "description": "💡 Locations and Description of Prague Shared Cars"
+      },
+      {
         "name": "♻️ Waste Collection",
-        "description": "💡 Some containers are equipped with IoT sensors that measure their fullness. Use `?onlyMonitored` parameter to retrieve only these monitored containers. More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu)."
+        "description": "💡 Some containers are equipped with IoT sensors that measure their fullness. Use `?onlyMonitored=true` to retrieve only these monitored containers. More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu)."
       },
       {
         "name": "♻️ Waste Collection Yards",
         "description": "💡 Locations and Description of Waste Collection Yards"
-      },
-      {
-          "name": "🌡️ Microclimate",
-          "description": "💡 Microclimate Sensors Info"
-        }
+      }
     ]
   */

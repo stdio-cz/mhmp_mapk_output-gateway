@@ -17,14 +17,15 @@ hooks.before("Public Space 🏡 > Prague City Districts > GET District", (transa
     transaction.fullPath = transaction.fullPath.replace("praha-1", storage["districtSlug"]);
 });
 
-hooks.after("Traffic 🚘 > Shared Cars > GET All Shared Cars", (transaction) => {
-    storage["carId"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
+hooks.before(
+    "Traffic 🚘 > Shared Cars > GET All Shared Cars",
+    (transaction) => (transaction.skip = true)
+);
 
-hooks.before("Traffic 🚘 > Shared Cars > GET Shared Car", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("1BF8210", storage["carId"]);
-    transaction.fullPath = transaction.fullPath.replace("1BF8210", storage["carId"]);
-});
+hooks.before(
+    "Traffic 🚘 > Shared Cars > GET Shared Car",
+    (transaction) => (transaction.skip = true)
+);
 
 hooks.after("Traffic 🚘 > Bicycle Parkings > GET All Bicycle Parkings", (transaction) => {
     storage["bicycleParkingId"] = JSON.parse(transaction.real.body).features[0].properties.id;

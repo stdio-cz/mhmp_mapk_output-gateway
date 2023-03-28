@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+-   Inspect utils for remote debugging ([output-gateway#219](https://gitlab.com/operator-ict/golemio/code/output-gateway/-/issues/219))
+
 ## [3.4.5] - 2023-03-27
 
 ### Added

@@ -27,15 +27,6 @@ hooks.before(
     (transaction) => (transaction.skip = true)
 );
 
-hooks.after("Traffic 🚘 > Bicycle Parkings > GET All Bicycle Parkings", (transaction) => {
-    storage["bicycleParkingId"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
-
-hooks.before("Traffic 🚘 > Bicycle Parkings > GET Bicycle Parking", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("282743091", storage["bicycleParkingId"]);
-    transaction.fullPath = transaction.fullPath.replace("282743091", storage["bicycleParkingId"]);
-});
-
 hooks.after("Traffic 🚘 > Traffic Cameras > GET All Traffic Cameras", (transaction) => {
     storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
 });
@@ -65,15 +56,6 @@ hooks.after("Public Space 🏡 > Playgrounds > GET All Playgrounds", (transactio
 });
 
 hooks.before("Public Space 🏡 > Playgrounds > GET Playground", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("72", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("72", storage["id"]);
-});
-
-hooks.after("Public Space 🏡 > Public Toilets > GET All Public Toilets", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
-
-hooks.before("Public Space 🏡 > Public Toilets > GET Public Toilet", (transaction) => {
     transaction.request.uri = transaction.request.uri.replace("72", storage["id"]);
     transaction.fullPath = transaction.fullPath.replace("72", storage["id"]);
 });

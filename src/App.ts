@@ -4,7 +4,6 @@ import { config } from "@golemio/core/dist/output-gateway/config/config";
 import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
 import { log, requestLogger } from "@golemio/core/dist/output-gateway/Logger";
 import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
-import { RouterBuilder } from "@golemio/core/dist/output-gateway/routes";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
 import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
@@ -12,7 +11,6 @@ import sentry from "@golemio/core/dist/shared/sentry";
 import compression from "compression";
 import http from "http";
 import swaggerUi from "swagger-ui-express";
-import { generalRoutes } from "./general-routes";
 import {
     airQualityRouter,
     bicycleCountersRouter,
@@ -246,11 +244,6 @@ export default class App extends BaseApp {
             swaggerUi.serveFiles(require("../docs/generated/public-openapi.json"), {}),
             swaggerUi.setup(require("../docs/generated/public-openapi.json"))
         );
-
-        // Create general routes through builder
-        const builder: RouterBuilder = new RouterBuilder(defaultRouter);
-        builder.LoadData(generalRoutes);
-        builder.BuildAllRoutes();
     };
 
     /**

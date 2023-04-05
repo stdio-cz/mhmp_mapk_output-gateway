@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+-   removed modules: bicycle-parkings, parking-zones, public-toilets
+
 ## [3.4.7] - 2023-04-03
 
 -   No changelog

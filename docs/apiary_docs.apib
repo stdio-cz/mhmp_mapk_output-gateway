@@ -107,62 +107,6 @@ Multiple values of the same parameter of type array are evaluated as OR (results
 
 API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://api.golemio.cz/v2/docs/public-openapi/#/Air%20Quality%20%F0%9F%8C%A6)
 
-## Meteosensors TSK [/meteosensors]
-
-![golemioapi-opendata-badge](https://img.shields.io/badge/opendata-available-green)
-
-### GET All Meteosensors TSK [GET /meteosensors/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters out all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Meteosensor)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Meteosensor TSK [GET /meteosensors/{id}]
-
-+ Parameters
-
-    + id: 531801 (number) - Identifier of the meteosensor.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Meteosensor)
-
-+ Response 404 (application/json; charset=utf-8)
-
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
 # Group Parking 🅿️
 
 **Parking Spaces [/parking]**
@@ -406,63 +350,6 @@ API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://
 
 https://api.golemio.cz/v2/docs/public-openapi/#/Bicycle%20Counter
 
-## Traffic Cameras [/trafficcameras]
-
-![golemioapi-deprecated-badge](https://img.shields.io/badge/-Deprecated-red)
-
-This endpoint is now deprecated.
-
-### GET All Traffic Cameras [GET /trafficcameras/{?latlng,range,districts,limit,offset,updatedSince}]
-
-+ Parameters
-
-    + latlng: `50.124935,14.457204` (optional, string) - Sorting by location (Latitude and Longitude separated by comma, latitude first).
-    + range: 5000 (optional, number) - Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-    + districts: `praha-4` (optional, array) - Filter by Prague city districts (slug) separated by comma.
-    + limit: 10 (optional, number) - Limits number of retrieved items. The maximum is 10000 (default value).
-    + offset: 0 (optional, number) - Number of the first items that are skipped.
-    + updatedSince: `2019-05-18T07:38:37.000Z` (optional, string) - Filters all results with older updated_at than this parameter
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-   + Attributes (object)
-        + type: FeatureCollection (string, required)
-        + features (array)
-            + (Feature Point)
-                + properties (Traffic Camera)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
-### GET Traffic Camera [GET /trafficcameras/{id}]
-
-+ Parameters
-
-    + id: 404032 (number) - Identifier of the camera.
-
-+ Request (application/json; charset=utf-8)
-
-    + Headers
-
-            x-access-token: YOUR_ACCESS_TOKEN
-
-+ Response 200 (application/json; charset=utf-8)
-
-    + Attributes (Feature Point)
-        + properties (Traffic Camera)
-
-+ Response 404 (application/json; charset=utf-8)
-    + Attributes (Error)
-
-+ Response 403 (application/json; charset=utf-8)
-    + Attributes (403 Error)
-
 
 # Group Waste ♻️
 
@@ -550,19 +437,6 @@ API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://
 + name: `Praha-Březiněves` (string, required)
 + slug: `praha-brezineves` (string, required)
 + updated_at: `2019-05-18T07:38:37.000Z` (string)
-
-## Meteosensor (object)
-
-+ air_temperature: 18.95 (number)
-+ humidity: 31 (number)
-+ id: 531802 (number, required)
-+ last_updated: 1556806121000 (number, required)
-+ name: `Bulhar` (string, required)
-+ road_temperature: 34.55 (number)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-+ wind_direction: 230 (number)
-+ wind_speed: 2.08 (number)
-+ district: `praha-2` (string)
 
 ## Municipal Library (object)
 
@@ -793,47 +667,3 @@ API documentation was moved to [api.golemio.cz/v2/docs/public-openapi/](https://
 - updated_at: `2019-05-18T07:38:37.000Z` (string)
 - district: `praha-13` (string)
 - address (Address)
-
-## Shared Car (object)
-
-+ availability (Shared Car Availability)
-+ company (Shared Car Company)
-+ fuel (Shared Car Fuel)
-+ id: `9B99149` (string, required)
-+ name: `Škoda Citigo` (string, required)
-+ res_url: `https://autonapul.zemtu.com/app/#/?rz=9B99149` (string, required)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string)
-
-## Shared Car Availability (object)
-
-+ description: `ihned` (string)
-+ id: 1 (number, required)
-
-## Shared Car Company (object)
-
-+ email: `autonapul@autonapul.cz` (string)
-+ name: `Autonapůl` (string, required)
-+ phone: `+420 778 470 898` (string)
-+ web: `https://www.autonapul.cz/` (string, required)
-
-## Shared Car Fuel (object)
-
-+ description: `benzín` (string)
-+ id: 1 (number, required)
-
-## Traffic Camera (object)
-
-+ image (Traffic Camera Image)
-+ id: 606748 (number, required)
-+ last_updated: 1557229128000 (number, required) - timestamp of last update by vendor
-+ name: `DP - Kobylisy C - BUS MHD DP` (string, required)
-+ updated_at: `2019-05-18T07:38:37.000Z` (string) - timestamp of requesting vendor API
-+ district: `praha-8` (string)
-+ address (Address)
-
-## Traffic Camera Image (object)
-
-+ data: `data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQAB.........pgf//Z` (string)
-+ file_size: 20072 (number, required)
-+ type: `image/jpeg` (string)
-+ url: `http://www.tsk-praha.cz/cams/cam606748.jpg?1557229128000` (string, required)

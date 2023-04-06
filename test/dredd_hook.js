@@ -17,25 +17,6 @@ hooks.before("Public Space 🏡 > Prague City Districts > GET District", (transa
     transaction.fullPath = transaction.fullPath.replace("praha-1", storage["districtSlug"]);
 });
 
-hooks.before(
-    "Traffic 🚘 > Shared Cars > GET All Shared Cars",
-    (transaction) => (transaction.skip = true)
-);
-
-hooks.before(
-    "Traffic 🚘 > Shared Cars > GET Shared Car",
-    (transaction) => (transaction.skip = true)
-);
-
-hooks.after("Traffic 🚘 > Traffic Cameras > GET All Traffic Cameras", (transaction) => {
-    storage["id"] = JSON.parse(transaction.real.body).features[0].properties.id;
-});
-
-hooks.before("Traffic 🚘 > Traffic Cameras > GET Traffic Camera", (transaction) => {
-    transaction.request.uri = transaction.request.uri.replace("404032", storage["id"]);
-    transaction.fullPath = transaction.fullPath.replace("404032", storage["id"]);
-});
-
 hooks.before("Public Space 🏡 > Gardens > GET All Gardens", (transaction) => (transaction.skip = true));
 
 hooks.before("Public Space 🏡 > Gardens > GET Garden", (transaction) => (transaction.skip = true));

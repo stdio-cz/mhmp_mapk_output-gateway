@@ -7,6 +7,10 @@
 -   removed modules: bicycle-parkings, parking-zones, public-toilets, shared-cars, meteosensors, traffic-cameras
 -   removed general-routes
 
+## [3.4.7] - 2023-04-03
+
+-   No changelog
+
 ## [3.4.6] - 2023-03-29
 
 ### Added

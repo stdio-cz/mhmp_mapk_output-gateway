@@ -1,7 +1,7 @@
 import { BaseApp, getServiceHealth, IServiceCheck, Service } from "@golemio/core/dist/helpers";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
 import { config } from "@golemio/core/dist/output-gateway/config/config";
-import { mongooseConnection, sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
+import { sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
 import { log, requestLogger } from "@golemio/core/dist/output-gateway/Logger";
 import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
@@ -110,7 +110,6 @@ export default class App extends BaseApp {
         log.info("Graceful shutdown initiated.");
         await this.stop();
         await this.metricsServer?.close();
-        await mongooseConnection.then((mc) => mc.close(true));
         await sequelizeConnection.close();
         if (config.redis_enable) {
             await RedisConnector.disconnect();
@@ -123,7 +122,6 @@ export default class App extends BaseApp {
 
     private database = async (): Promise<void> => {
         await sequelizeConnection?.authenticate();
-        await mongooseConnection;
         if (config.redis_enable) {
             await RedisConnector.connect();
         }
@@ -174,7 +172,6 @@ export default class App extends BaseApp {
                         .then(() => true)
                         .catch(() => false),
             },
-            { name: Service.MONGO, check: () => mongooseConnection.then((mc) => mc.readyState === 1).catch(() => false) },
         ];
 
         if (config.redis_enable) {

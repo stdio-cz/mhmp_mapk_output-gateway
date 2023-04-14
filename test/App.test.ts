@@ -35,7 +35,6 @@ describe("App", () => {
 
     it("should have all config variables set", () => {
         expect(config).not.to.be.undefined;
-        expect(config.mongo_connection).not.to.be.undefined;
     });
 
     it("should have health check on /", (done) => {

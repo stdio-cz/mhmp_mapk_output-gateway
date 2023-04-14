@@ -18,7 +18,6 @@ Developed by http://operatorict.cz
 ### Prerequisites
 
 -   Docker Engine (https://docs.docker.com/)
--   Mongo (https://www.mongodb.com)
 -   Postgres (https://www.postgresql.org/)
 -   PostGIS (https://postgis.net/)
 -   Golemio Schema Definitions
@@ -33,7 +32,6 @@ Developed by http://operatorict.cz
 docker run --rm \
     -p 3004:3004 \ # expose port 3004
     -e PORT=3004 \
-    -e MONGO_CONN: mongodb://user:pass@mongo.dp_database:27017/dataplatform?authSource=admin \
     -e POSTGRES_CONN: postgres://user:pass@postgres.dp_database/dataplatform \
     output-gateway # docker image label (defined by step 1)
 ```
@@ -43,7 +41,6 @@ docker run --rm \
 ### Prerequisites
 
 -   node.js (https://nodejs.org)
--   Mongo (https://www.mongodb.com)
 -   Postgres (https://www.postgresql.org/)
 -   PostGIS (https://postgis.net/)
 -   TypeScript (https://www.typescriptlang.org/)
@@ -101,7 +98,7 @@ Application is now running locally on port 3004 or on port specified in the envi
 
 Example data are stored in `db/example/`.
 
-For importing example data run `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` and `psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql`.
+For importing example data run `psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f db/example/sql_dump.sql`.
 
 ## Tests
 
@@ -111,7 +108,7 @@ To run all test defined in /test directory simply run this command:
 npm run test
 ```
 
-from the application's root directory. All tests should pass with the correct data. Test data are in the `db/example` directory. You can import them using the `mongorestore -d $MONGO_DB_NAME ./db/example/mongo_data/dataplatform` command. More: https://docs.mongodb.com/manual/reference/program/mongorestore/
+from the application's root directory. All tests should pass with the correct data. Test data are in the `db/example` directory.
 
 You can also test the API against the Apiary documentation using `dredd` (https://dredd.org). To run the tests, make sure the app will be run on port 3004 (setting ENV variable or leaving the default) and run
 

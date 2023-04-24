@@ -81,7 +81,7 @@
         "@golemio/playgrounds": "1.1.2-dev.789827119",
         "@golemio/rush-hour-aggregation": "1.1.2-dev.827352659",
         "@golemio/shared-bikes": "2.1.9-dev.837364176",
-        "@golemio/waste-collection": "1.2.1-dev.836242614",
+        "@golemio/waste-collection": "1.2.2-dev.844732164",
         "@golemio/waste-collection-yards": "1.2.2-dev.789830588",
         "compression": "^1.7.4",
         "dotenv": "^6.1.0",

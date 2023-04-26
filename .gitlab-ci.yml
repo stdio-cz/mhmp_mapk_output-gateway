@@ -5,8 +5,6 @@ variables:
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: test-pass
     POSTGRES_DB: testdb
-    MONGO_CONN: "mongodb://mongo:27017/dataplatform"
-    MONGO_TIMEOUT: 60000
     APIARY_NAME: "golemioapi"
     APIARY_NAME_DEV: "outputgatewaydev"
     HOST_URL: "https://api.golemio.cz/v2"
@@ -46,8 +44,6 @@ include:
     services:
         - name: postgis/postgis:13-3.2-alpine
           alias: postgres
-        - name: mvertes/alpine-mongo:4.0.5-0
-          alias: mongo
         - redis:6.2-alpine
     script:
         - npm install --ignore-scripts --progress=false
@@ -57,13 +53,11 @@ include:
         - npm run build-apidocs
         - npm run build
         - export LOG_LEVEL=INFO
-        - export MONGO_CONN=$MONGO_CONN
         - export POSTGRES_CONN=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB
         - export SENTRY_ENABLE=false
         - export REDIS_ENABLE=true
         - export REDIS_CONN=redis://redis/
         - export SQL_DUMP_FILES=node_modules/@golemio/*/db/example/*.sql
-        - export MONGO_DATA_PATHS=node_modules/@golemio/*/db/example/mongo_data
         - export POSTGRES_MIGRATIONS_DIR=node_modules/@golemio/*/db/migrations/**/postgresql
         # Run migrations from schema definitions
         - export SCH_NPM_TAG="dev" && [[ "$CI_COMMIT_REF_NAME" == "master" ]] && export SCH_NPM_TAG="latest"
@@ -76,9 +70,6 @@ include:
         - npx golemio migrate-db up --silent
         # Import postgres test data
         - npx golemio import-db-data
-        # Import mongo test data (the old way)
-        - unset SQL_DUMP_FILES
-        - npx golemio-import-test-data
         - npm run code-coverage
         - npm run dredd
     tags:

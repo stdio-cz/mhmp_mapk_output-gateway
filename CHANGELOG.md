@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [3.5.1] - 2023-04-26
+
 ### Removed
 
 -   Remove Mongo ([core#66](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/66))

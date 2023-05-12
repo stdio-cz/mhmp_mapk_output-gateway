@@ -29,7 +29,7 @@ info:
         <p>The API returns maximum count of 10000 objects / rows for one request. You can specify lower number by adding <code>?limit</code> URL parameter.</p>
         <p>This may vary depending on the specific route, read the description of the parameters for each route. You can only get more data using multiple reqeusts with <code>?limit&offset</code> parameters, read examples below.<p>
         <H2>Requests rate</H2>
-        <p>By default, each API key has a rate-limit set of 10000 requests per 10 seconds.</p>
+        <p>By default, each API key has a rate-limit set of 100 requests per 10 seconds.</p>
         <H2>Open Data</H2>
         <p><img src="https://img.shields.io/badge/opendata-available-green" alt="golemioapi-opendata-badge" /></p>
         <p>This badge means it is available for public use as Open Data.</p>

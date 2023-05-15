@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [3.5.2] - 2023-05-15
+
+### Fixed
+
+-   memory leak in Cache middleware
+
 ## [3.5.1] - 2023-04-26
 
 ### Removed

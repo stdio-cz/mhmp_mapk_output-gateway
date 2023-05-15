@@ -88,7 +88,7 @@ include:
 
 run_tests:
     extends: .run_tests
-    image: node:18.12.1-alpine
+    image: node:18.14.0-alpine
 
 # run_tests-node-next:
 #     extends: .run_tests

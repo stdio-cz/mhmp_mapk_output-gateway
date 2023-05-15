@@ -1,4 +1,4 @@
-FROM node:18.12.1-alpine AS build
+FROM node:18.14.0-alpine AS build
 WORKDIR /app
 
 # JS BUILD
@@ -9,7 +9,7 @@ RUN npm install --ignore-scripts --progress=false && \
     npm run build-apidocs && \
     npm run build-minimal
 
-FROM node:18.12.1-alpine
+FROM node:18.14.0-alpine
 WORKDIR /app
 
 COPY --from=build /app/dist /app/dist

@@ -5,7 +5,13 @@ import { sequelizeConnection } from "@golemio/core/dist/output-gateway/database"
 import { log, requestLogger } from "@golemio/core/dist/output-gateway/Logger";
 import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
-import { CustomError, ErrorHandler, HTTPErrorHandler, ICustomErrorObject } from "@golemio/core/dist/shared/golemio-errors";
+import {
+    ErrorHandler,
+    FatalError,
+    GeneralError,
+    HTTPErrorHandler,
+    IGolemioError,
+} from "@golemio/core/dist/shared/golemio-errors";
 import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
 import sentry from "@golemio/core/dist/shared/sentry";
 import compression from "compression";
@@ -86,7 +92,7 @@ export default class App extends BaseApp {
             // Setup error handler hook on server error
             this.server.on("error", (err: Error) => {
                 sentry.captureException(err);
-                ErrorHandler.handle(new CustomError("Could not start a server", false, "App", 1, err), log);
+                ErrorHandler.handle(new FatalError("Could not start a server", "App", err), log);
             });
             // Serve the application at the given port
             this.server.listen(this.port, () => {
@@ -251,17 +257,13 @@ export default class App extends BaseApp {
 
         // Not found error - no route was matched
         this.express.use((req, _res, next) => {
-            next(new CustomError("Route not found", true, "App", 404, new Error(`Called ${req.method} ${req.url}`)));
+            next(new GeneralError("Route not found", "App", new Error(`Called ${req.method} ${req.url}`), 404));
         });
 
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
             const warnCodes = [400, 404];
-            const errObject: ICustomErrorObject = HTTPErrorHandler.handle(
-                err,
-                log,
-                warnCodes.includes(err.code) ? "warn" : "error"
-            );
+            const errObject: IGolemioError = HTTPErrorHandler.handle(err, log, warnCodes.includes(err.code) ? "warn" : "error");
             log.silly("Error caught by the router error handler.");
             res.setHeader("Content-Type", "application/json; charset=utf-8");
             res.status(errObject.error_status || 500).send(errObject);

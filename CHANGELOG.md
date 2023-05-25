@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+-   Update golemio errors ([core#62](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/62))
+
 ## [3.5.3] - 2023-05-17
 
 -   No changelog

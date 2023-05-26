@@ -10,14 +10,16 @@ const protectedTags = [
 
 export { protectedTags };
 
-//  ALL Actual tags at 27/02/23:
+//  ALL Actual tags at 2023-05.26:
 /*
     "tags": [
       {
-        "name": "Bicycle Counter"
+        "name": "🌦 Air Quality",
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Air Quality Stations in Prague"
       },
       {
-        "name": "Air Quality 🌦"
+        "name": "🧮 Bicycle Counters",
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Measurements of Bicycle Counters in Prague"
       },
       {
         "name": "📤 Exporting Module",
@@ -33,23 +35,27 @@ export { protectedTags };
       },
       {
         "name": "🌳 Gardens",
-        "description": "💡 Locations and Description of Gardens"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Gardens"
       },
       {
         "name": "🏥 Medical Institutions",
-        "description": "💡 Locations and Description of Medical Institutions"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Medical Institutions"
       },
       {
         "name": "🌡️ Microclimate",
-        "description": "💡 Microclimate Sensors Info"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Microclimate Sensors Info"
       },
       {
         "name": "🏛 Municipal Authorities",
-        "description": "💡 Locations and Description of Municipal Authorities"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Municipal Authorities"
+      },
+      {
+        "name": "🏢️ Municipal Libraries",
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Municipal Libraries"
       },
       {
         "name": "👮 Municipal Police Stations",
-        "description": "💡 Locations and Description of Municipal Police Stations"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Municipal Police Stations"
       },
       {
         "name": "🚧 Traffic Restrictions",
@@ -57,11 +63,11 @@ export { protectedTags };
       },
       {
         "name": "🅿️ Parking",
-        "description": "<p>💡 Parkings, parking zones, tarifs, measurements.</p>"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Parkings, parking zones, tarifs, measurements."
       },
       {
         "name": "🏸 Playgrounds",
-        "description": "💡 Locations and Description of Playgrounds"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Playgrounds"
       },
       {
         "name": "🚲 Shared Bikes",
@@ -73,15 +79,15 @@ export { protectedTags };
       },
       {
         "name": "🚘 Shared Cars",
-        "description": "💡 Locations and Description of Prague Shared Cars"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Prague Shared Cars"
       },
       {
         "name": "♻️ Waste Collection",
-        "description": "💡 Some containers are equipped with IoT sensors that measure their fullness. Use `?onlyMonitored=true` to retrieve only these monitored containers. More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu)."
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Some containers are equipped with IoT sensors that measure their fullness. Use `?onlyMonitored=true` to retrieve only these monitored containers. More about this project at [Chytrý svoz odpadu](https://www.smartprague.eu/projekty/chytry-svoz-odpadu)."
       },
       {
         "name": "♻️ Waste Collection Yards",
-        "description": "💡 Locations and Description of Waste Collection Yards"
+        "description": "<img src=\"https://img.shields.io/badge/opendata-available-green\" alt=\"golemioapi-opendata-badge\" /> 💡 Locations and Description of Waste Collection Yards"
       }
     ]
   */

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+-   Update apiary/openapi docs
+
 ## [3.5.3] - 2023-05-17
 
 -   No changelog

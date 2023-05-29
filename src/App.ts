@@ -263,7 +263,7 @@ export default class App extends BaseApp {
         // Error handler to catch all errors sent by routers (propagated through next(err))
         this.express.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
             const warnCodes = [400, 404];
-            const errObject: IGolemioError = HTTPErrorHandler.handle(err, log, warnCodes.includes(err.code) ? "warn" : "error");
+            const errObject: IGolemioError = HTTPErrorHandler.handle(err, log, warnCodes.includes(err.status) ? "warn" : "error");
             log.silly("Error caught by the router error handler.");
             res.setHeader("Content-Type", "application/json; charset=utf-8");
             res.status(errObject.error_status || 500).send(errObject);

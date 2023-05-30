@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [3.5.4] - 2023-05-30
+
+-   No changelog
+
 ## [3.5.3] - 2023-05-17
 
 -   No changelog

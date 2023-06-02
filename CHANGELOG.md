@@ -5,6 +5,7 @@
 
 -   Update apiary/openapi docs
 -   Update golemio errors ([core#62](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/62))
+-   Refactoring connectors ([core#17](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/17)) 
 
 ## [3.5.5] - 2023-05-31
 

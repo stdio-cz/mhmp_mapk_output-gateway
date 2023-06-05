@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+
+## [3.5.6] - 2023-06-05
+
 ### Changed
 
 -   Update apiary/openapi docs

@@ -76,7 +76,7 @@
         "@golemio/municipal-authorities": "1.1.4-dev.884560140",
         "@golemio/municipal-libraries": "1.2.5-dev.882981723",
         "@golemio/municipal-police-stations": "1.2.5-dev.884560464",
-        "@golemio/ndic": "1.1.6-dev.884560634",
+        "@golemio/ndic": "1.1.6-dev.891959070",
         "@golemio/parkings": "1.4.15-dev.889388337",
         "@golemio/playgrounds": "1.1.5-dev.884562078",
         "@golemio/rush-hour-aggregation": "1.1.4-dev.884898489",

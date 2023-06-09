@@ -1,11 +1,22 @@
 # Changelog
 
 ## [Unreleased]
+
+### Changed
+
+-   Typescript version update to 5.1.3 ([core#70](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/70))
+-   Refactoring connectors ([core#17](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/17))
+
+## [3.5.7] - 2023-06-07
+
+-   No changelog
+
+## [3.5.6] - 2023-06-05
+
 ### Changed
 
 -   Update apiary/openapi docs
 -   Update golemio errors ([core#62](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/62))
--   Refactoring connectors ([core#17](https://gitlab.com/operator-ict/golemio/code/modules/core/-/issues/17)) 
 
 ## [3.5.5] - 2023-05-31
 

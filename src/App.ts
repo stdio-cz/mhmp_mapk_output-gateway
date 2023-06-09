@@ -1,8 +1,9 @@
-import { BaseApp, getServiceHealth, IServiceCheck, Service } from "@golemio/core/dist/helpers";
+import { BaseApp, IServiceCheck, Service, getServiceHealth } from "@golemio/core/dist/helpers";
+import { IDatabaseConnector } from "@golemio/core/dist/helpers/data-access/postgres/IDatabaseConnector";
 import { initSentry, metricsService } from "@golemio/core/dist/monitoring";
-import { config } from "@golemio/core/dist/output-gateway/config/config";
-import { sequelizeConnection } from "@golemio/core/dist/output-gateway/database";
 import { log, requestLogger } from "@golemio/core/dist/output-gateway/Logger";
+import { config } from "@golemio/core/dist/output-gateway/config/config";
+import { ContainerToken, OutputGatewayContainer } from "@golemio/core/dist/output-gateway/ioc";
 import { CacheMiddleware, RedisConnector } from "@golemio/core/dist/output-gateway/redis";
 import express, { NextFunction, Request, Response } from "@golemio/core/dist/shared/express";
 import {
@@ -12,7 +13,7 @@ import {
     HTTPErrorHandler,
     IGolemioError,
 } from "@golemio/core/dist/shared/golemio-errors";
-import { createLightship, Lightship } from "@golemio/core/dist/shared/lightship";
+import { Lightship, createLightship } from "@golemio/core/dist/shared/lightship";
 import sentry from "@golemio/core/dist/shared/sentry";
 import compression from "compression";
 import http from "http";
@@ -51,6 +52,7 @@ export default class App extends BaseApp {
     public metricsServer?: http.Server;
     private commitSHA!: string;
     private lightship: Lightship;
+    private postgresConnector: IDatabaseConnector;
 
     /**
      * Run configuration methods on the Express instance
@@ -71,6 +73,7 @@ export default class App extends BaseApp {
             log.error(reason);
             this.lightship.shutdown();
         });
+        this.postgresConnector = OutputGatewayContainer.resolve<IDatabaseConnector>(ContainerToken.PostgresDatabase);
     }
 
     /**
@@ -116,10 +119,7 @@ export default class App extends BaseApp {
         log.info("Graceful shutdown initiated.");
         await this.stop();
         await this.metricsServer?.close();
-        await sequelizeConnection.close();
-        if (config.redis_enable) {
-            await RedisConnector.disconnect();
-        }
+        OutputGatewayContainer.dispose();
     };
 
     public stop = async (): Promise<void> => {
@@ -127,7 +127,7 @@ export default class App extends BaseApp {
     };
 
     private database = async (): Promise<void> => {
-        await sequelizeConnection?.authenticate();
+        await this.postgresConnector.connect();
         if (config.redis_enable) {
             await RedisConnector.connect();
         }
@@ -172,11 +172,7 @@ export default class App extends BaseApp {
         const services: IServiceCheck[] = [
             {
                 name: Service.POSTGRES,
-                check: () =>
-                    sequelizeConnection
-                        .authenticate()
-                        .then(() => true)
-                        .catch(() => false),
+                check: () => this.postgresConnector.isConnected(),
             },
         ];
 
